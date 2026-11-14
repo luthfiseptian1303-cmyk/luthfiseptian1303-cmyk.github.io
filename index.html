@@ -1439,5 +1439,23 @@
     }
   </style>
   <script>(function(){try{var root=document.documentElement;function on(){root.classList.add("dock-on")}var tb=document.getElementById("tourBtn"),mb=document.getElementById("mtourBtn");if(tb)tb.addEventListener("click",on);if(mb)mb.addEventListener("click",on);var sub=document.querySelector(".hero .sub");if(!sub||!("IntersectionObserver" in window)){on();return}new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)on()})},{threshold:0}).observe(sub)}catch(e){document.documentElement.classList.add("dock-on")}})();</script>
-  </body>
+  
+<style id="v5-skin">
+/* ===== CARLLAB V5 SKIN - sistem 10 visual, 15 Nov 2026 ===== */
+:root,html.ovt:root{--accent:#1C7A33;--on-accent:#ffffff;--line-strong:#B9B9AE;--deep:#0C2B1E;--acc-bright:#43B968;--bord:#121210;--grid-op:.14;--halftone-op:.12;--bg:#F5F5F3;--bg-raise:#ffffff}
+:root[data-theme=dark],html.ovt:root[data-theme=dark]{--bg:#08130D;--bg-raise:#0C2B1E;--surface:#0D2318;--surface-2:#123324;--ink:#F2F5F0;--ink-soft:#B9C9BC;--ink-faint:#8FA896;--line:#1E4630;--line-strong:#2A5A40;--accent:#43B968;--on-accent:#0C2B1E;--nav-bg:rgba(8,19,13,.88);--bord:#2A5A40;--grid-op:.18;--ghost-stroke:#2A5A40;--scan-op:.3}
+.s-newcode,.s-forge,.s-lwd,.s-lead{--accent:#1C7A33;--accent-soft:rgba(28,122,51,.12)}
+:root[data-theme=dark] .s-newcode,:root[data-theme=dark] .s-forge,:root[data-theme=dark] .s-lwd,:root[data-theme=dark] .s-lead{--accent:#43B968;--accent-soft:rgba(67,185,104,.14)}
+html.ovt .hero::before{opacity:.14}
+html.ovt .hero h1,html.ovt .hero h1 span,html.ovt .hero h1 .u-teal,html.ovt .hero h1 .u-orange,html.ovt .hero h1 .u-purple,html.ovt .hero h1 .u-green{font-family:Archivo,"Plus Jakarta Sans",system-ui,sans-serif;font-weight:900}
+.u-teal::after,.u-orange::after,.u-purple::after,.u-green::after{background:var(--accent)!important}
+.btn.primary{background:var(--accent);border-color:var(--bord);color:var(--on-accent)}
+.mascot-hero{background:var(--deep);box-shadow:8px 8px 0 var(--bord)}
+.mascot-corner{background:var(--deep);box-shadow:5px 5px 0 var(--bord)}
+.hero-panel,.hp-tile,.ov-card,.ex-card,.sr-card,.price-card,.le-card,.le-panel,.step{border:1.5px solid var(--bord)}
+:root[data-theme=dark]{--bg:#08130D!important;--bg-raise:#0C2B1E!important;--surface:#0D2318!important;--surface-2:#123324!important;--line:#1E4630!important;--line-strong:#2A5A40!important;--ink-soft:#B9C9BC!important;--ink-faint:#8FA896!important}
+:root[data-theme=dark] .topnav{background:rgba(8,19,13,.96)}
+.btn,.hero-panel,.hp-tile,.ov-card,.ex-card,.sr-card,.price-card,.step,.badge,.rq-chip,.le-chip,.le-card,.le-panel,.help-panel,.quiz-step{border-radius:0!important}
+</style>
+</body>
 </html>
