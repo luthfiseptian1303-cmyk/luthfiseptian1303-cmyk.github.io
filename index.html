@@ -11,7 +11,7 @@
 <meta property="og:description" content="Websites, browser games, brands and lead systems — designed and built by one person, from Jakarta for clients anywhere.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carllab.web.id/">
-<meta property="og:image" content="https://carllab.web.id/og-image.png">
+<meta property="og:image" content="https://carllab.web.id/og-image.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23142'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23B9C0C8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -329,10 +329,7 @@ html{scrollbar-width:thin;scrollbar-color:#0E2A5C #050505}
 
 <style id="rombak-round">
 /* ROMBAK ROUND 15 Nov — layout & imagery only; black + dongker tokens untouched */
-.svc-row{grid-template-columns:64px 1fr auto auto}
-.svc-thumb{width:148px;height:96px;overflow:hidden;border:1px solid var(--lineD);display:block}
-.svc-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.82);transform:scale(1.02);transition:transform .5s var(--ease),filter .4s}
-.svc-row:hover .svc-thumb img{transform:scale(1.09);filter:saturate(1)}
+.svc-row{grid-template-columns:64px 1fr auto}
 .about-grid{grid-template-columns:1fr}
 .about-txt{max-width:840px}
 .live-sub{margin-top:14px;color:var(--mutd);max-width:56ch;font-size:16.5px}
@@ -346,7 +343,7 @@ html{scrollbar-width:thin;scrollbar-color:#0E2A5C #050505}
 .browser img{width:100%;display:block;aspect-ratio:3/2;object-fit:cover;object-position:50% 0}
 .live-cta{margin-top:24px}
 #about b{color:#fff}
-@media(max-width:860px){.svc-row{grid-template-columns:44px 1fr auto}.svc-thumb{display:none}}
+@media(max-width:860px){.svc-row{grid-template-columns:44px 1fr auto}}
 @media(max-width:560px){.svc-row{grid-template-columns:36px 1fr auto}}
 </style>
 
@@ -447,6 +444,7 @@ html{scrollbar-color:#3A3F45 #050505}
 @media (max-width:860px){}
 @media (prefers-reduced-motion: reduce){.sign path{stroke-dashoffset:0;transition:none}.egg{display:none}}
 </style>
+<style id="perf-round">.mq-off .track{animation-play-state:paused!important}</style>
 </head>
 <body>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
@@ -507,7 +505,7 @@ html{scrollbar-color:#3A3F45 #050505}
     </div>
     <div class="hero-fig">
       <div class="frame" data-rv="portrait">
-        <img class="pimg" id="heroImg" src="hero-poster.jpg" alt="Illustrated portrait of Luthfi Septian with a laptop, Jakarta skyline at dusk" fetchpriority="high">
+        <img class="pimg" id="heroImg" src="hero-poster.webp" alt="Illustrated portrait of Luthfi Septian with a laptop, Jakarta skyline at dusk" fetchpriority="high">
         <div class="hero-cap"><b>Luthfi Septian</b> · <span data-t="capRole">Founder, CarlLab</span></div>
       </div>
     </div>
@@ -532,25 +530,21 @@ html{scrollbar-color:#3A3F45 #050505}
       <a class="svc-row" href="#order" data-svc="Website" data-rv="x-80">
         <span class="num">01</span>
         <span><h3 data-t="s1t">Websites</h3><p data-t="s1p">Company sites, landing pages, and online stores — one concept drawn from your business, fast on any phone, and pointed at one clear action.</p></span>
-        <span class="svc-thumb" aria-hidden="true"><img src="work-carllab.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="#order" data-svc="Browser game" data-rv="x-80">
         <span class="num">02</span>
         <span><h3 data-t="s2t">Browser games</h3><p data-t="s2p">Playable brand experiences and small games that run in any browser — no install, no app store, just a link people can play and share.</p></span>
-        <span class="svc-thumb" aria-hidden="true"><img src="work-pulau.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="#order" data-svc="Brand & logo" data-rv="x-80">
         <span class="num">03</span>
         <span><h3 data-t="s3t">Brand &amp; logo</h3><p data-t="s3p">Logos and identity systems drawn for one specific business — its name, its customers, its shelves — never pulled from a template.</p></span>
-        <span class="svc-thumb" aria-hidden="true"><img src="work-momirel.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="#order" data-svc="Lead system" data-rv="x-80">
         <span class="num">04</span>
         <span><h3 data-t="s4t">Lead systems</h3><p data-t="s4p">A pipeline that tidies scattered leads, scores them, and prepares follow-up drafts. Drafts only — you review and press send yourself.</p></span>
-        <span class="svc-thumb" aria-hidden="true"><img src="work-leadengine.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
         <span class="tag" data-t="s4tag">The same system I run my own studio on</span>
       </a>
@@ -801,7 +795,8 @@ function onScroll(){ root.classList.toggle("scrolled", window.scrollY>40); }
 window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
 /* ---------- smooth scroll (Lenis) ---------- */
 var lenis=null, reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-if(window.Lenis && !reduced){
+var lowPower=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;
+if(window.Lenis && !reduced && !lowPower){
   lenis=new Lenis({ lerp:.15, smoothWheel:true });
   window.__lenis=lenis;
   (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
@@ -970,5 +965,13 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
 })();
 </script>
 
+<script id="perf-js">
+(function(){
+  var mqs=document.querySelectorAll(".mq, .mq2");
+  if(!("IntersectionObserver" in window)||!mqs.length) return;
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("mq-off", !e.isIntersecting); }); },{rootMargin:"120px"});
+  mqs.forEach(function(m){ io.observe(m); });
+})();
+</script>
 </body>
 </html>
