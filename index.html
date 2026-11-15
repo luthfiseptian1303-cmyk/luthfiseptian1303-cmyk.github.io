@@ -25,7 +25,7 @@
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"CarlLab","description":"One-person studio: websites, browser games, brand identities and lead systems.","url":"https://carllab.web.id/","email":"luthfiseptian1303@gmail.com","areaServed":"Worldwide","knowsLanguage":["id","en"]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost?","acceptedAnswer":{"@type":"Answer","text":"It depends on scope. You receive a written price breakdown before work begins, and that figure never changes mid-way without your approval. There are no prices on this page because no two businesses need the same thing."}},{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"The exact schedule is written in the quote, matched to the queue and the level of difficulty. The studio's working capacity is up to 40 hours per week, and you hear from me at every stage — never silence followed by a sudden delivery."}},{"@type":"Question","name":"Can I request revisions?","acceptedAnswer":{"@type":"Answer","text":"Yes. The number of revision rounds is agreed up front and written into the quote, so both sides are clear from day one."}},{"@type":"Question","name":"Does the lead system message my leads automatically?","acceptedAnswer":{"@type":"Answer","text":"Never. The system only prepares follow-up drafts. You review every message yourself, and you press send — no message ever goes out without your approval."}},{"@type":"Question","name":"Can I order more than one service at once?","acceptedAnswer":{"@type":"Answer","text":"Yes — for example a website with a logo, a promo mini-game, and your leads tidied into one pipeline. Just mention everything in one message; the details are combined into a single quote."}},{"@type":"Question","name":"How is it paid?","acceptedAnswer":{"@type":"Answer","text":"The payment terms are part of the written quote, agreed before any work begins. Nothing is charged automatically through this website — you always approve the quote first."}},{"@type":"Question","name":"Can I update the site myself afterwards?","acceptedAnswer":{"@type":"Answer","text":"That depends on what we build, and it is settled in the quote. Every handover includes a walkthrough of how everything works — and if you would rather not touch it, small updates can come back to the studio."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost?","acceptedAnswer":{"@type":"Answer","text":"It depends on scope. You receive a written price breakdown before work begins, and that figure never changes mid-way without your approval. There are no prices on this page because no two businesses need the same thing."}},{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"The exact schedule is written in the quote, matched to the queue and the level of difficulty. The studio's working capacity is up to 40 hours per week, and Carl keeps you posted at every stage — never silence followed by a sudden delivery."}},{"@type":"Question","name":"Can I request revisions?","acceptedAnswer":{"@type":"Answer","text":"Yes. The number of revision rounds is agreed up front and written into the quote, so both sides are clear from day one."}},{"@type":"Question","name":"Does the lead system message my leads automatically?","acceptedAnswer":{"@type":"Answer","text":"Never. The system only prepares follow-up drafts. You review every message yourself, and you press send — no message ever goes out without your approval."}},{"@type":"Question","name":"Can I order more than one service at once?","acceptedAnswer":{"@type":"Answer","text":"Yes — for example a website with a logo, a promo mini-game, and your leads tidied into one pipeline. Just mention everything in one message; the details are combined into a single quote."}},{"@type":"Question","name":"How is it paid?","acceptedAnswer":{"@type":"Answer","text":"The payment terms are part of the written quote, agreed before any work begins. Nothing is charged automatically through this website — you always approve the quote first."}},{"@type":"Question","name":"Can I update the site myself afterwards?","acceptedAnswer":{"@type":"Answer","text":"That depends on what we build, and it is settled in the quote. Every handover includes a walkthrough of how everything works — and if you would rather not touch it, small updates can come back to the studio."}}]}
 </script>
 <style>
 :root{
@@ -464,6 +464,11 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
 }
 @media (prefers-reduced-motion: reduce){.sticky-cta{transition:none}}
 </style>
+<style id="carl-motion">
+@keyframes carlFloat{from{translate:0 0}to{translate:0 -12px}}
+html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.55,1) infinite alternate}
+@media (prefers-reduced-motion: reduce){.hero-fig img.pimg{animation:none!important}}
+</style>
 </head>
 <body>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
@@ -511,10 +516,10 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
       <span class="avail"><span class="dot"></span><span data-t="avail">Available for new projects</span><span class="avail-t" id="availTime"></span></span>
       <p class="eyebrow" style="margin-top:28px" data-t="heroEyebrow">CarlLab · Indonesia</p>
       <h1 data-rv="y40"><span data-t="h1a">Websites, games</span><br><span data-t="h1b">&amp; brands</span><br><span class="g" data-t="h1c">— built by one</span><br><span class="g" data-t="h1d">pair of hands.</span></h1>
-      <p class="role" data-rv="y40" data-t="heroRole">I am a designer and developer who works solo, end to end: the person you talk to is the person who designs, builds, and delivers. No account managers, no handoffs, no telephone game.</p>
+      <p class="role" data-rv="y40" data-t="heroRole">Carl is a designer and developer who works solo, end to end: the person you talk to is the person who designs, builds, and delivers. No account managers, no handoffs, no telephone game.</p>
       <div class="hero-cta" data-rv="y40">
         <a class="btn" href="#order" data-t="ctaStart">Start a project</a>
-        <a class="btn ghost" href="#about" data-t="ctaWork">About me</a>
+        <a class="btn ghost" href="#about" data-t="ctaWork">About Carl</a>
       </div>
       <div class="hero-meta" data-rv="y40">
         <span data-t="metaBase">Based in Indonesia</span>
@@ -524,8 +529,8 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
     </div>
     <div class="hero-fig">
       <div class="frame" data-rv="portrait">
-        <img class="pimg" id="heroImg" src="hero-poster.webp" alt="Illustrated portrait with a laptop, city skyline at dusk" fetchpriority="high">
-        <div class="hero-cap"><span data-t="capRole">Founder, CarlLab</span></div>
+        <img class="pimg" id="heroImg" src="hero-poster.webp" alt="Illustrated portrait of Carl with a laptop, city skyline at dusk" fetchpriority="high">
+        <div class="hero-cap"><span data-t="capRole">Carl · CarlLab</span></div>
       </div>
     </div>
   </div>
@@ -542,7 +547,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
       <span class="eyebrow" data-t="svcEyebrow">Services</span>
-      <h2 data-t="svcTitle">What I do</h2>
+      <h2 data-t="svcTitle">What Carl does</h2>
     </div>
     <div class="svc-list">
       <a class="svc-row" href="#order" data-svc="Website" data-rv="x-80">
@@ -564,7 +569,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
         <span class="num">04</span>
         <span><h3 data-t="s4t">Lead systems</h3><p data-t="s4p">A pipeline that tidies scattered leads, scores them, and prepares follow-up drafts. Drafts only — you review and press send yourself.</p></span>
         <span class="arr">&#8599;</span>
-        <span class="tag" data-t="s4tag">The same system I run my own studio on</span>
+        <span class="tag" data-t="s4tag">The same system CarlLab runs on</span>
       </a>
     </div>
   </div>
@@ -586,7 +591,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
     </div>
   </div>
   <div class="wrap">
-    <figure class="desk" id="deskFig" hidden><img src="desk.jpg" alt="My work desk"><figcaption data-t="deskCap">My work desk — where every project on this page was built.</figcaption></figure>
+    <figure class="desk" id="deskFig" hidden><img src="desk.jpg" alt="My work desk"><figcaption data-t="deskCap">Carl's work desk — where every project on this page was built.</figcaption></figure>
   </div>
 </section>
 
@@ -611,7 +616,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
       <div class="step" data-rv="y40"><div class="n">01</div><h4 data-t="p1t">Listen</h4><p data-t="p1p">We talk about your business first — customers, shelves, numbers. Templates come last, if at all.</p></div>
       <div class="step" data-rv="y40"><div class="n">02</div><h4 data-t="p2t">Design</h4><p data-t="p2p">One concept, drawn from what makes your business yours. You see it as a real page, not a moodboard.</p></div>
       <div class="step" data-rv="y40"><div class="n">03</div><h4 data-t="p3t">Build</h4><p data-t="p3p">Light, fast pages that open anywhere — checked on a real phone before you ever see them.</p></div>
-      <div class="step" data-rv="y40"><div class="n">04</div><h4 data-t="p4t">Launch &amp; care</h4><p data-t="p4p">Live and verified from outside, then kept tidy. You hear from me at every stage, never silence.</p></div>
+      <div class="step" data-rv="y40"><div class="n">04</div><h4 data-t="p4t">Launch &amp; care</h4><p data-t="p4p">Live and verified from outside, then kept tidy. Carl keeps you posted at every stage, never silence.</p></div>
     </div>
   </div>
 </section>
@@ -625,14 +630,14 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
     </div>
     <div class="faq-list">
       <details class="faq" data-rv="x60"><summary><span data-t="q1">How much does it cost?</span><span class="pm">+</span></summary><p class="a" data-t="qa1">It depends on scope. You receive a written price breakdown before work begins, and that figure never changes mid-way without your approval. There are no prices on this page because no two businesses need the same thing.</p></details>
-      <details class="faq" data-rv="x60"><summary><span data-t="q2">How long does it take?</span><span class="pm">+</span></summary><p class="a" data-t="qa2">The exact schedule is written in the quote, matched to the queue and the level of difficulty. The studio's working capacity is up to 40 hours per week, and you hear from me at every stage — never silence followed by a sudden delivery.</p></details>
+      <details class="faq" data-rv="x60"><summary><span data-t="q2">How long does it take?</span><span class="pm">+</span></summary><p class="a" data-t="qa2">The exact schedule is written in the quote, matched to the queue and the level of difficulty. The studio's working capacity is up to 40 hours per week, and Carl keeps you posted at every stage — never silence followed by a sudden delivery.</p></details>
       <details class="faq" data-rv="x60"><summary><span data-t="q3">Can I request revisions?</span><span class="pm">+</span></summary><p class="a" data-t="qa3">Yes. The number of revision rounds is agreed up front and written into the quote, so both sides are clear from day one.</p></details>
       <details class="faq" data-rv="x60"><summary><span data-t="q4">Does the lead system message my leads automatically?</span><span class="pm">+</span></summary><p class="a" data-t="qa4">Never. The system only prepares follow-up drafts. You review every message yourself, and you press send — no message ever goes out without your approval.</p></details>
       <details class="faq" data-rv="x60"><summary><span data-t="q5">Can I order more than one service at once?</span><span class="pm">+</span></summary><p class="a" data-t="qa5">Yes — for example a website with a logo, a promo mini-game, and your leads tidied into one pipeline. Just mention everything in one message; the details are combined into a single quote.</p></details>
       <details class="faq" data-rv="x60"><summary><span data-t="q6">How is it paid?</span><span class="pm">+</span></summary><p class="a" data-t="qa6">The payment terms are part of the written quote, agreed before any work begins. Nothing is charged automatically through this website — you always approve the quote first.</p></details>
       <details class="faq" data-rv="x60"><summary><span data-t="q7">Can I update the site myself afterwards?</span><span class="pm">+</span></summary><p class="a" data-t="qa7">That depends on what we build, and it is settled in the quote. Every handover includes a walkthrough of how everything works — and if you would rather not touch it, small updates can come back to the studio.</p></details>
     </div>
-    <div class="faq-end" data-rv="y40"><p data-t="faqEnd">Still curious? Email me &mdash; I reply myself.</p><a class="btn ghost" href="#order" data-t="faqEndBtn">Start a project</a></div>
+    <div class="faq-end" data-rv="y40"><p data-t="faqEnd">Still curious? Email CarlLab &mdash; Carl replies himself.</p><a class="btn ghost" href="#order" data-t="faqEndBtn">Start a project</a></div>
   </div>
 </section>
 
@@ -641,11 +646,11 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
       <span class="eyebrow" data-t="ordEyebrow">Start a project</span>
-      <h2 data-t="ordTitle">Tell me what you are building</h2>
+      <h2 data-t="ordTitle">Tell Carl what you are building</h2>
     </div>
     <div class="order-grid">
       <div class="order-side" data-rv="y40">
-        <p data-t="ordSide">One message is enough to start. Tell me what your business does and what you need — I reply with questions, a written quote, and a schedule. No obligation, no pressure.</p>
+        <p data-t="ordSide">One message is enough to start. Tell Carl what your business does and what you need — he replies with questions, a written quote, and a schedule. No obligation, no pressure.</p>
         <ul>
           <li data-t="ordLi1">Written quote before any work begins</li>
           <li data-t="ordLi2">Replies from the person who builds it</li>
@@ -660,8 +665,8 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
           </ul>
         </div>
         <div class="bw">
-          <div><div class="bwk" data-t="bw1t">What to include</div><p data-t="bw1p">Tell me what your business sells, who it is for, and anything you already have — a logo, photos, an old site. Rough is fine.</p></div>
-          <div><div class="bwk" data-t="bw2t">What happens next</div><p data-t="bw2p">I read it myself, reply with questions or a first direction, and you receive a written quote before any work begins.</p></div>
+          <div><div class="bwk" data-t="bw1t">What to include</div><p data-t="bw1p">Tell Carl what your business sells, who it is for, and anything you already have — a logo, photos, an old site. Rough is fine.</p></div>
+          <div><div class="bwk" data-t="bw2t">What happens next</div><p data-t="bw2p">Carl reads it himself, replies with questions or a first direction, and you receive a written quote before any work begins.</p></div>
           <div><div class="bwk" data-t="bw3t">Cost</div><p data-t="bw3p">Every project is quoted in writing once the scope is clear, so the number you approve is the number you pay.</p></div>
         </div>
       </div>
@@ -682,7 +687,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
         <textarea id="fDetail" name="detail" required></textarea>
         <label for="fDeadline" data-t="fDlL">Deadline (if any)</label>
         <input id="fDeadline" name="deadline" type="text">
-        <p class="send-promise" data-t="sendPromise">I read it myself and reply within a day.</p>
+        <p class="send-promise" data-t="sendPromise">Carl reads it himself and replies within a day.</p>
         <button class="btn" type="submit" data-t="fSend">Send by email</button>
         <p class="form-note" data-t="fNote">The button opens your email app with everything filled in — nothing is sent until you press send there. No email app? Copy the address from the footer instead.</p>
       </form>
@@ -749,14 +754,14 @@ var ID={
 navServices:"Layanan",navWork:"Karya",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",
 avail:"Terbuka untuk proyek baru",heroEyebrow:"CarlLab · Indonesia",
 h1a:"Website, game",h1b:"& brand",h1c:"— dibangun oleh",h1d:"sepasang tangan.",
-heroRole:"Saya desainer dan developer yang bekerja solo, dari awal sampai akhir: orang yang kamu ajak bicara adalah orang yang mendesain, membangun, dan menyerahkan hasilnya. Tanpa account manager, tanpa oper-operan, tanpa salah sambung.",
-ctaStart:"Mulai proyek",ctaWork:"Tentang saya",metaBase:"Berbasis di Indonesia",metaWorld:"Melayani seluruh dunia",metaLang:"Bahasa Indonesia / English",capRole:"Pendiri, CarlLab",scroll:"Gulir ke bawah",
-svcEyebrow:"Layanan",svcTitle:"Yang saya kerjakan",
+heroRole:"Carl adalah desainer dan developer yang bekerja solo, dari awal sampai akhir: orang yang kamu ajak bicara adalah orang yang mendesain, membangun, dan menyerahkan hasilnya. Tanpa account manager, tanpa oper-operan, tanpa salah sambung.",
+ctaStart:"Mulai proyek",ctaWork:"Tentang Carl",metaBase:"Berbasis di Indonesia",metaWorld:"Melayani seluruh dunia",metaLang:"Bahasa Indonesia / English",capRole:"Carl · CarlLab",scroll:"Gulir ke bawah",
+svcEyebrow:"Layanan",svcTitle:"Yang dikerjakan Carl",
 s1t:"Website",s1p:"Situs perusahaan, landing page, dan toko online — satu konsep yang digambar dari bisnismu, cepat di HP mana pun, dan mengarah ke satu tindakan yang jelas.",
 s2t:"Game browser",s2p:"Pengalaman brand yang bisa dimainkan dan game kecil yang jalan di browser mana pun — tanpa install, tanpa app store, cukup satu tautan untuk dimainkan dan dibagikan.",
 s3t:"Brand & logo",s3p:"Logo dan sistem identitas yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya — tidak pernah diambil dari template.",
 s4t:"Sistem lead",s4p:"Pipeline yang merapikan lead yang berserakan, memberi skor, dan menyiapkan draf tindak lanjut. Hanya draf — kamu yang meninjau dan menekan kirim sendiri.",
-s4tag:"Sistem yang sama yang kupakai menjalankan studioku",
+s4tag:"Sistem yang sama yang dipakai CarlLab sendiri",
 workEyebrow:"Karya pilihan",workTitle:"Proyek terbaru",kProduct:"Produk",kClient:"Klien",kConcept:"Konsep",kProto:"Prototipe",kStudio:"Studio sendiri",
 w1p:"Sistem manajemen lead dengan pipeline tujuh tahap, skor prioritas, dan draf tindak lanjut yang menunggu manusia menekan kirim.",
 w2p:"Brand dan website untuk dapur dessert rumahan di BSD — logo ibu & anak yang digambar tangan, dari cerita pemiliknya sendiri.",
@@ -782,15 +787,15 @@ q6:"Bagaimana pembayarannya?",qa6:"Ketentuan pembayaran adalah bagian dari penaw
 q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",
 navProcess:"Proses",
 bw1t:"Yang perlu disertakan",bw1p:"Ceritakan bisnismu menjual apa, untuk siapa, dan apa yang sudah kamu punya — logo, foto, situs lama. Kasar juga tidak apa-apa.",
-bw2t:"Yang terjadi sesudahnya",bw2p:"Pesanmu kubaca sendiri, kubalas dengan pertanyaan atau arah pertama, dan kamu menerima penawaran tertulis sebelum ada pekerjaan yang dimulai.",
+bw2t:"Yang terjadi sesudahnya",bw2p:"Pesanmu dibaca langsung oleh Carl, dibalas dengan pertanyaan atau arah pertama, dan kamu menerima penawaran tertulis sebelum ada pekerjaan yang dimulai.",
 bw3t:"Biaya",bw3p:"Setiap proyek diberi harga tertulis begitu ruang lingkupnya jelas, jadi angka yang kamu setujui adalah angka yang kamu bayar.",
-mf1:"Satu orang.",mf2:"Tanpa perantara.",mf3:"Yang kamu ajak bicara adalah yang membangunnya.",faqEnd:"Masih penasaran? Tulis email saja — saya sendiri yang membalas.",faqEndBtn:"Mulai proyek",skip:"Lewati ke konten",pillTxt:"Pesan →",liveEyebrow:"Produk live",liveTitle:"Satu produk, sudah berjalan",liveSub:"Lead Engine bukan mockup — aplikasi pipeline lead yang benar-benar bekerja, live di situs ini. Buka dan coba data demonya.",liveBtn:"Buka aplikasinya \u2197",deskCap:"Meja kerja saya — tempat semua proyek di halaman ini dibangun.",
+mf1:"Satu orang.",mf2:"Tanpa perantara.",mf3:"Yang kamu ajak bicara adalah yang membangunnya.",faqEnd:"Masih penasaran? Tulis email saja — Carl sendiri yang membalas.",faqEndBtn:"Mulai proyek",skip:"Lewati ke konten",pillTxt:"Pesan →",liveEyebrow:"Produk live",liveTitle:"Satu produk, sudah berjalan",liveSub:"Lead Engine bukan mockup — aplikasi pipeline lead yang benar-benar bekerja, live di situs ini. Buka dan coba data demonya.",liveBtn:"Buka aplikasinya \u2197",deskCap:"Meja kerja Carl — tempat semua proyek di halaman ini dibangun.",
 ordEyebrow:"Mulai proyek",ordTitle:"Ceritakan yang sedang kamu bangun",
-ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — saya balas dengan pertanyaan, penawaran tertulis, dan jadwal. Tanpa kewajiban, tanpa tekanan.",
+ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — Carl membalas dengan pertanyaan, penawaran tertulis, dan jadwal. Tanpa kewajiban, tanpa tekanan.",
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",
 fNameL:"Nama kamu",fContactL:"Email atau WhatsApp",fSvcL:"Kamu butuh apa?",oWeb:"Website",oGame:"Game browser",oBrand:"Brand & logo",oLead:"Sistem lead",oOther:"Hal lain",
 fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim lewat email",fNote:"Tombol ini membuka aplikasi email kamu dengan semua sudah terisi — tidak ada yang terkirim sampai kamu menekan kirim di sana. Tidak punya aplikasi email? Salin alamatnya dari footer.",
-copyMail:"Salin email",sendPromise:"Kubaca sendiri dan kubalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",
+copyMail:"Salin email",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",
 };
 var EN={};
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
@@ -954,6 +959,7 @@ document.getElementById("orderForm").addEventListener("submit",function(){ try{ 
       var open=h>=8&&h<22, idLang=(typeof curLang==="function"&&curLang()==="id");
       stTxt.textContent=open?(idLang?"Buka — dibalas dalam sehari":"Open — replies within a day"):(idLang?"Tutup — kembali pukul 08:00 WIB":"Closed — back at 08:00 WIB");
       if(stDot) stDot.style.background=open?"#B9C0C8":"#55565C";
+      document.documentElement.classList.toggle("carl-working",!!open);
     }catch(e){}
   }
   studio(); setInterval(studio,30000);
