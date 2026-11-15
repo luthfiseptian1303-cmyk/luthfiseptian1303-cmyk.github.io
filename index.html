@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050505">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>CarlLab — Websites, Games, Brands & Lead Systems</title>
 <meta name="description" content="CarlLab is a one-person studio: websites, browser games, brand identities and lead systems, designed and built end to end by one pair of hands.">
 <link rel="canonical" href="https://carllab.web.id/">
@@ -438,6 +440,12 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
 .wc i{font-style:normal;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8B9096}
 .wc b{font-size:13.5px;font-weight:500;color:#D9DEE4;font-variant-numeric:tabular-nums;letter-spacing:.04em}
 </style>
+<style id="grow-round">
+.copy-mail{display:inline-block;margin-top:8px;background:none;border:1px solid #3A3F45;border-radius:999px;color:#B9C0C8;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 13px;cursor:pointer;transition:border-color .18s,color .18s}
+.copy-mail:hover{border-color:#9AA3AD;color:#E3E6E9}
+.wc-you i{color:#E3E6E9}
+.wc-you-tag{font-style:normal;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#050505;background:#B9C0C8;border-radius:999px;padding:2px 7px;margin-left:3px;align-self:center}
+</style>
 </head>
 <body>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
@@ -687,6 +695,7 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
         <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>
+        <button class="copy-mail" id="copyMail" type="button" data-t="copyMail">Copy email</button>
       </div>
     </div>
     <div class="wclocks" role="group" aria-label="World clocks">
@@ -757,7 +766,7 @@ ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — 
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",
 fNameL:"Nama kamu",fContactL:"Email atau WhatsApp",fSvcL:"Kamu butuh apa?",oWeb:"Website",oGame:"Game browser",oBrand:"Brand & logo",oLead:"Sistem lead",oOther:"Hal lain",
 fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim lewat email",fNote:"Tombol ini membuka aplikasi email kamu dengan semua sudah terisi — tidak ada yang terkirim sampai kamu menekan kirim di sana.",
-wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",
+copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",
 };
 var EN={};
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
@@ -774,6 +783,13 @@ function applyLang(l){
 }
 document.getElementById("langId").addEventListener("click",function(){ applyLang("id"); });
 document.getElementById("langEn").addEventListener("click",function(){ applyLang("en"); });
+var cmBtn=document.getElementById("copyMail");
+if(cmBtn){ cmBtn.addEventListener("click",function(){
+  var em="luthfiseptian1303@gmail.com", done=function(){ var old=cmBtn.textContent; cmBtn.textContent=(curLang()==="id"?"Tersalin":"Copied"); setTimeout(function(){ cmBtn.textContent=old; },1600); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(em).then(done,done); }
+  else{ var ta=document.createElement("textarea"); ta.value=em; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); }catch(e){} ta.remove(); done(); }
+}); }
+try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 if(curLang()==="id") applyLang("id");
 /* ---------- marquee ---------- */
 var words=["Website Design","Browser Games","Brand & Logo","Lead Systems"];
@@ -825,6 +841,12 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var body=["Name / Nama: "+v("fName"),"Contact / Kontak: "+v("fContact"),"Service / Layanan: "+v("fService"),"Deadline / Tenggat: "+(v("fDeadline")||"-"),"","Project / Proyek:",v("fDetail")].join("\n");
   location.href="mailto:luthfiseptian1303@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
 });
+/* ---------- order form draft: autosaved in this browser only ---------- */
+var DKEY="carllab-v18-draft", dids=["fName","fContact","fService","fDetail","fDeadline"], dT=null;
+function dSave(){ try{ var o={}; dids.forEach(function(i){ o[i]=document.getElementById(i).value; }); localStorage.setItem(DKEY,JSON.stringify(o)); }catch(e){} }
+try{ var dOld=JSON.parse(localStorage.getItem(DKEY)||"null"); if(dOld){ dids.forEach(function(i){ if(dOld[i]) document.getElementById(i).value=dOld[i]; }); } }catch(e){}
+dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener("input",function(){ clearTimeout(dT); dT=setTimeout(dSave,350); }); el.addEventListener("change",dSave); });
+document.getElementById("orderForm").addEventListener("submit",function(){ try{ localStorage.removeItem(DKEY); }catch(e){} });
 })();
 </script>
 <script>
@@ -915,6 +937,22 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var wcEls=document.querySelectorAll("[data-wc]");
   function wcTick(){ var now=new Date(); for (var i=0;i<wcEls.length;i++){ var k=wcEls[i].getAttribute("data-wc"); try{ wcEls[i].textContent=new Intl.DateTimeFormat("en-GB",{timeZone:wcZones[k],hour:"2-digit",minute:"2-digit"}).format(now); }catch(e){} } }
   if (wcEls.length){ wcTick(); setInterval(wcTick,30000); }
+  var youTag=null;
+  function markYou(){
+    var tz=""; try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""; }catch(e){}
+    var map={"Asia/Jakarta":"id","Asia/Pontianak":"id","Asia/Makassar":"id","Asia/Jayapura":"id","Europe/London":"uk","America/New_York":"us","Asia/Tokyo":"jp","Australia/Sydney":"au","Australia/Melbourne":"au","Australia/Brisbane":"au","Australia/Canberra":"au","Australia/Perth":"au"};
+    var k=map[tz];
+    if(!k){ var mine=new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit"}).format(new Date()), hits=[];
+      for (var i=0;i<wcEls.length;i++){ if(wcEls[i].textContent===mine) hits.push(wcEls[i].getAttribute("data-wc")); }
+      if(hits.length===1) k=hits[0]; }
+    if(!k) return;
+    var b=document.querySelector("[data-wc=\""+k+"\"]"); if(!b) return;
+    var wrap=b.parentNode; wrap.classList.add("wc-you");
+    youTag=document.createElement("em"); youTag.className="wc-you-tag"; wrap.appendChild(youTag);
+    youLabel();
+  }
+  function youLabel(){ if(!youTag) return; var idm=false; try{ idm=localStorage.getItem("carllab-v18-lang")==="id"; }catch(e){} youTag.textContent=idm?"kamu":"you"; }
+  if (wcEls.length){ markYou(); setInterval(youLabel,30000); }
 })();
 </script>
 
