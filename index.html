@@ -166,7 +166,6 @@ footer.site{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,90px
 .foot-grid a{display:block;color:#D7DFD8;text-decoration:none;padding:4px 0;font-size:15.5px;transition:color .18s}
 .foot-grid a:hover{color:#A9C3EE}
 .foot-brand p{color:#A9B6AB;font-size:15.5px;max-width:24em;margin-top:12px}
-.foot-clock{font-family:"Space Mono",monospace;font-size:15px;color:#D7DFD8}
 .foot-word{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(64px,14.5vw,208px);line-height:.82;letter-spacing:-.02em;color:var(--paper);border-top:1px solid #33453A;padding-top:26px}
 .foot-base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px;font-family:"Space Mono",monospace;font-size:12px;color:#8B9A8E;letter-spacing:.05em}
 /* ---------- reveals (JS-only pre-states) ---------- */
@@ -280,9 +279,6 @@ details.faq summary .pm{color:var(--amber)}
 #about .about-points>div{border-color:rgba(255,255,255,.45)}
 #about .apoint h4{color:#fff}
 #about .apoint p{color:#C9DBF7}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px;border-top:2px solid rgba(255,255,255,.4);padding-top:30px}
-.stat .n{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(44px,5.6vw,80px);line-height:1;color:#fff}
-.stat .l{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A9C3EE;margin-top:10px}
 /* Manifesto: line-mask reveal */
 .manifesto{padding:clamp(90px,11vw,150px) 0}
 .manifesto .lm{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
@@ -409,40 +405,22 @@ html{scrollbar-color:#3A3F45 #050505}
 #order .order-side li{color:#23272C}
 .hero-cap{background:linear-gradient(165deg,#B9C0C8,#9AA3AD 60%,#C9CED4);color:#0B0B0B}
 .foot-word{background:linear-gradient(180deg,#E3E6E9 0%,#AEB4BC 45%,#6E757D 55%,#B9C0C8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sign path{stroke:#B9C0C8}
-.bdot{background:#B9C0C8}
 </style>
 
 <style id="uniq-round">
 /* ===== UNIQ ROUND 15 Nov 21:59 WIB — identitas khas CarlLab ===== */
 #about,#order{position:relative}
-.board{border-bottom:1px solid var(--lineD);background:#030303}
-.board-in{display:flex;gap:clamp(22px,5vw,76px);flex-wrap:wrap;padding-top:20px;padding-bottom:20px}
-.bcell .bk{display:block;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mutd);margin-bottom:6px}
-.bcell .bv{font-size:16.5px;font-weight:600;color:var(--txtd)}
-.bdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#B9C0C8;margin-right:9px;vertical-align:2px}
 60%{opacity:1;transform:rotate(-7deg) scale(.94)}100%{opacity:.92;transform:rotate(-7deg) scale(1)}}
 .desk{margin-top:46px;max-width:600px}
 .desk[hidden]{display:none!important}
 .desk img{width:100%;display:block;border:2px solid #0B0B0B;box-shadow:8px 8px 0 rgba(0,0,0,.85)}
 .desk figcaption{font-family:"Space Mono",monospace;font-size:12px;color:#55503F;margin-top:12px;letter-spacing:.03em}
-.foot-coords{font-family:"Space Mono",monospace;font-size:12px;color:#9A9AA0;margin-top:10px;letter-spacing:.04em}
-.foot-extra{display:flex;justify-content:space-between;gap:clamp(28px,5vw,64px);flex-wrap:wrap;border-top:1px solid var(--lineD);padding-top:30px;margin-bottom:clamp(40px,5vw,64px)}
-.buildlog h5{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#8B8B91;margin-bottom:14px}
-.buildlog p{font-family:"Space Mono",monospace;font-size:12.5px;color:#C9C9CE;line-height:1.5;padding:5px 0}
-.signoff{display:flex;flex-direction:column;gap:2px}
-.sign-cap{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8B8B91}
-.sign{display:block;width:200px;height:70px;margin:2px 0 0 -6px}
-.sign path{fill:none;stroke:#B9C0C8;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1s cubic-bezier(.05,.7,.1,1)}
-.sign path.sp2{transition-delay:.35s}.sign path.sp3{transition-delay:.7s;transition-duration:.7s}
-.sign.draw path{stroke-dashoffset:0}
-.sign-name{font-family:"Space Mono",monospace;font-size:12px;color:#C9C9CE;letter-spacing:.05em}
 .egg{position:fixed;bottom:14px;left:0;z-index:1500;pointer-events:none;animation:eggWalk 4.6s linear forwards}
 .egg svg{display:block;animation:eggBob .24s steps(2) infinite alternate}
 @keyframes eggWalk{from{transform:translateX(-70px)}to{transform:translateX(105vw)}}
 @keyframes eggBob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
 @media (max-width:860px){}
-@media (prefers-reduced-motion: reduce){.sign path{stroke-dashoffset:0;transition:none}.egg{display:none}}
+@media (prefers-reduced-motion: reduce){.egg{display:none}}
 </style>
 <style id="perf-round">.mq-off .track{animation-play-state:paused!important}</style>
 <style id="rapih-round">
@@ -527,7 +505,6 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
 </section>
 
 <!-- MARQUEE -->
-<div class="board" data-rv="y40"><div class="wrap board-in"><div class="bcell"><span class="bk" data-t="boardNowL">This week in the workshop</span><span class="bv" data-t="boardNow">Rebuilding the CarlLab site — v18</span></div><div class="bcell"><span class="bk" data-t="boardSlotL">Project queue</span><span class="bv"><i class="bdot"></i><span data-t="boardSlot">Next slot open — no queue</span></span></div></div></div>
 <div class="marquee" aria-hidden="true"><div class="track" id="mqTrack"></div></div>
 
 <!-- SERVICES -->
@@ -581,11 +558,6 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
     </div>
   </div>
   <div class="wrap">
-    <div class="stats" data-rv="y40">
-      <div class="stat"><div class="n">4</div><div class="l" data-t="st1l">Services offered</div></div>
-      <div class="stat"><div class="n">40</div><div class="l" data-t="st2l">Hours a week available</div></div>
-      <div class="stat"><div class="n">2</div><div class="l" data-t="st3l">Languages — Indonesian &amp; English</div></div>
-    </div>
     <figure class="desk" id="deskFig" hidden><img src="desk.jpg" alt="My work desk in Jakarta Barat"><figcaption data-t="deskCap">My work desk in Jakarta Barat — where every project on this page was built.</figcaption></figure>
   </div>
 </section>
@@ -690,10 +662,8 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
       <div class="foot-brand">
         <a class="logo" href="#top" style="color:var(--paper)"><i></i>CarlLab</a>
         <p data-t="footTag">One-person studio of Luthfi Septian — websites, games, brands, and lead systems from Jakarta.</p>
-        <p class="foot-clock" style="margin-top:18px">Jakarta — <span id="jkClock">--:--:--</span> WIB</p>
-        <p class="foot-status"><span class="st-dot" id="stDot"></span><span id="studioStatus">Studio status</span></p>
-        <p class="foot-coords">6.2294° S, 106.6590° E — Joglo, Jakarta Barat</p>
-      </div>
+                <p class="foot-status"><span class="st-dot" id="stDot"></span><span id="studioStatus">Studio status</span></p>
+              </div>
       <div>
         <h5 data-t="footSite">Site</h5>
         <a href="#services" data-t="navServices">Services</a>
@@ -715,12 +685,10 @@ form.order{background:linear-gradient(172deg,#E9ECEF 0%,#C9CED4 58%,#B4BAC1 100%
         <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>
       </div>
     </div>
-    <div class="foot-extra"><div class="buildlog"><h5 data-t="blH">Build log</h5><p data-t="bl1">v18 · 15 Nov 2026 — Rebuilt as a one-person studio; black + chrome theme.</p><p data-t="bl2">v12.7 · 15 Nov 2026 — 3D tower + product video (the previous live version).</p></div><div class="signoff"><span class="sign-cap" data-t="signCap">Built &amp; signed by</span><svg class="sign" viewBox="0 0 240 84" aria-hidden="true"><path class="sp1" pathLength="100" d="M28 68 C40 24 58 10 55 28 C52 44 30 52 24 44 C20 38 34 33 48 36"/><path class="sp2" pathLength="100" d="M118 30 C104 16 84 22 88 36 C92 49 116 46 114 60 C112 74 88 76 80 62"/><path class="sp3" pathLength="100" d="M16 76 C80 88 170 84 228 66"/></svg><span class="sign-name">Luthfi Septian · Founder</span></div></div>
-    <div class="foot-word" data-rv="y40">CarlLab</div>
+        <div class="foot-word" data-rv="y40">CarlLab</div>
     <div class="foot-base">
       <span>© 2026 CarlLab — Luthfi Septian</span>
-      <span data-t="footMade">Designed &amp; built by hand in Jakarta</span>
-    </div>
+          </div>
   </div>
 </footer>
 
@@ -772,13 +740,13 @@ navProcess:"Proses",
 bw1t:"Yang perlu disertakan",bw1p:"Ceritakan bisnismu menjual apa, untuk siapa, dan apa yang sudah kamu punya — logo, foto, situs lama. Kasar juga tidak apa-apa.",
 bw2t:"Yang terjadi sesudahnya",bw2p:"Pesanmu kubaca sendiri, kubalas dengan pertanyaan atau arah pertama, dan kamu menerima penawaran tertulis sebelum ada pekerjaan yang dimulai.",
 bw3t:"Biaya",bw3p:"Setiap proyek diberi harga tertulis begitu ruang lingkupnya jelas, jadi angka yang kamu setujui adalah angka yang kamu bayar.",
-st1l:"Layanan ditawarkan",st2l:"Jam per minggu tersedia",st3l:"Bahasa — Indonesia & Inggris",mf1:"Satu orang.",mf2:"Tanpa perantara.",mf3:"Yang kamu ajak bicara adalah yang membangunnya.",faqEnd:"Masih penasaran? Tulis email saja — saya sendiri yang membalas.",faqEndBtn:"Mulai proyek",skip:"Lewati ke konten",pillTxt:"Pesan →",liveEyebrow:"Produk live",liveTitle:"Satu produk, sudah berjalan",liveSub:"Lead Engine bukan mockup — aplikasi pipeline lead yang benar-benar bekerja, live di situs ini. Buka dan coba data demonya.",liveBtn:"Buka aplikasinya \u2197",boardNowL:"Minggu ini di bengkel",boardNow:"Membangun ulang situs CarlLab — v18",boardSlotL:"Antrian proyek",boardSlot:"Slot berikutnya terbuka — tanpa antrian",blH:"Catatan pembangunan",bl1:"v18 · 15 Nov 2026 — Dibangun ulang jadi studio satu orang; tema hitam + chrome.",bl2:"v12.7 · 15 Nov 2026 — Menara 3D + video produk (versi live sebelumnya).",deskCap:"Meja kerja saya di Jakarta Barat — tempat semua proyek di halaman ini dibangun.",signCap:"Dibangun & ditandatangani oleh",
+mf1:"Satu orang.",mf2:"Tanpa perantara.",mf3:"Yang kamu ajak bicara adalah yang membangunnya.",faqEnd:"Masih penasaran? Tulis email saja — saya sendiri yang membalas.",faqEndBtn:"Mulai proyek",skip:"Lewati ke konten",pillTxt:"Pesan →",liveEyebrow:"Produk live",liveTitle:"Satu produk, sudah berjalan",liveSub:"Lead Engine bukan mockup — aplikasi pipeline lead yang benar-benar bekerja, live di situs ini. Buka dan coba data demonya.",liveBtn:"Buka aplikasinya \u2197",deskCap:"Meja kerja saya di Jakarta Barat — tempat semua proyek di halaman ini dibangun.",
 ordEyebrow:"Mulai proyek",ordTitle:"Ceritakan yang sedang kamu bangun",
 ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — saya balas dengan pertanyaan, penawaran tertulis, dan jadwal. Tanpa kewajiban, tanpa tekanan.",
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",
 fNameL:"Nama kamu",fContactL:"Email atau WhatsApp",fSvcL:"Kamu butuh apa?",oWeb:"Website",oGame:"Game browser",oBrand:"Brand & logo",oLead:"Sistem lead",oOther:"Hal lain",
 fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim lewat email",fNote:"Tombol ini membuka aplikasi email kamu dengan semua sudah terisi — tidak ada yang terkirim sampai kamu menekan kirim di sana.",
-footTag:"Studio satu orang milik Luthfi Septian — website, game, brand, dan sistem lead dari Jakarta.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",footMade:"Didesain & dibangun dengan tangan di Jakarta"
+footTag:"Studio satu orang milik Luthfi Septian — website, game, brand, dan sistem lead dari Jakarta.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",
 };
 var EN={};
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
@@ -837,14 +805,6 @@ document.querySelectorAll("[data-svc]").forEach(function(a){
     var sel=document.getElementById("fService"); if(sel) sel.value=a.getAttribute("data-svc");
   });
 });
-/* ---------- clock ---------- */
-function tick(){
-  try{
-    var t=new Date().toLocaleTimeString("en-GB",{timeZone:"Asia/Jakarta",hour12:false});
-    document.getElementById("jkClock").textContent=t;
-  }catch(e){}
-}
-tick(); setInterval(tick,1000);
 /* ---------- order form -> mailto ---------- */
 document.getElementById("orderForm").addEventListener("submit",function(e){
   e.preventDefault();
@@ -955,7 +915,6 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     var io = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add(cls); io.unobserve(en.target); } }); }, { threshold: .35 });
     els.forEach(function(el){ io.observe(el); });
   }
-  arm(".sign", "draw");
   var logo = document.querySelector(".logo"), lc = 0, lt = 0;
   var EGGSVG = '<svg width="56" height="56" viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="1" height="1" fill="#191919"/><rect x="5" y="0" width="1" height="1" fill="#191919"/><rect x="6" y="0" width="1" height="1" fill="#191919"/><rect x="7" y="0" width="1" height="1" fill="#191919"/><rect x="8" y="0" width="1" height="1" fill="#191919"/><rect x="9" y="0" width="1" height="1" fill="#191919"/><rect x="3" y="1" width="1" height="1" fill="#191919"/><rect x="4" y="1" width="1" height="1" fill="#191919"/><rect x="5" y="1" width="1" height="1" fill="#191919"/><rect x="6" y="1" width="1" height="1" fill="#191919"/><rect x="7" y="1" width="1" height="1" fill="#191919"/><rect x="8" y="1" width="1" height="1" fill="#191919"/><rect x="9" y="1" width="1" height="1" fill="#191919"/><rect x="10" y="1" width="1" height="1" fill="#191919"/><rect x="3" y="2" width="1" height="1" fill="#191919"/><rect x="4" y="2" width="1" height="1" fill="#E8B98A"/><rect x="5" y="2" width="1" height="1" fill="#E8B98A"/><rect x="6" y="2" width="1" height="1" fill="#E8B98A"/><rect x="7" y="2" width="1" height="1" fill="#E8B98A"/><rect x="8" y="2" width="1" height="1" fill="#E8B98A"/><rect x="9" y="2" width="1" height="1" fill="#E8B98A"/><rect x="10" y="2" width="1" height="1" fill="#191919"/><rect x="3" y="3" width="1" height="1" fill="#191919"/><rect x="4" y="3" width="1" height="1" fill="#E8B98A"/><rect x="5" y="3" width="1" height="1" fill="#111111"/><rect x="6" y="3" width="1" height="1" fill="#E8B98A"/><rect x="7" y="3" width="1" height="1" fill="#E8B98A"/><rect x="8" y="3" width="1" height="1" fill="#111111"/><rect x="9" y="3" width="1" height="1" fill="#E8B98A"/><rect x="10" y="3" width="1" height="1" fill="#191919"/><rect x="4" y="4" width="1" height="1" fill="#E8B98A"/><rect x="5" y="4" width="1" height="1" fill="#E8B98A"/><rect x="6" y="4" width="1" height="1" fill="#E8B98A"/><rect x="7" y="4" width="1" height="1" fill="#E8B98A"/><rect x="8" y="4" width="1" height="1" fill="#E8B98A"/><rect x="9" y="4" width="1" height="1" fill="#E8B98A"/><rect x="5" y="5" width="1" height="1" fill="#E8B98A"/><rect x="6" y="5" width="1" height="1" fill="#E8B98A"/><rect x="7" y="5" width="1" height="1" fill="#E8B98A"/><rect x="8" y="5" width="1" height="1" fill="#E8B98A"/><rect x="3" y="6" width="1" height="1" fill="#161616"/><rect x="4" y="6" width="1" height="1" fill="#161616"/><rect x="5" y="6" width="1" height="1" fill="#161616"/><rect x="6" y="6" width="1" height="1" fill="#161616"/><rect x="7" y="6" width="1" height="1" fill="#161616"/><rect x="8" y="6" width="1" height="1" fill="#161616"/><rect x="9" y="6" width="1" height="1" fill="#161616"/><rect x="10" y="6" width="1" height="1" fill="#161616"/><rect x="2" y="7" width="1" height="1" fill="#E8B98A"/><rect x="3" y="7" width="1" height="1" fill="#161616"/><rect x="4" y="7" width="1" height="1" fill="#161616"/><rect x="5" y="7" width="1" height="1" fill="#161616"/><rect x="6" y="7" width="1" height="1" fill="#161616"/><rect x="7" y="7" width="1" height="1" fill="#161616"/><rect x="8" y="7" width="1" height="1" fill="#161616"/><rect x="9" y="7" width="1" height="1" fill="#161616"/><rect x="10" y="7" width="1" height="1" fill="#161616"/><rect x="11" y="7" width="1" height="1" fill="#E8B98A"/><rect x="2" y="8" width="1" height="1" fill="#E8B98A"/><rect x="3" y="8" width="1" height="1" fill="#161616"/><rect x="4" y="8" width="1" height="1" fill="#161616"/><rect x="5" y="8" width="1" height="1" fill="#161616"/><rect x="6" y="8" width="1" height="1" fill="#161616"/><rect x="7" y="8" width="1" height="1" fill="#161616"/><rect x="8" y="8" width="1" height="1" fill="#161616"/><rect x="9" y="8" width="1" height="1" fill="#161616"/><rect x="10" y="8" width="1" height="1" fill="#161616"/><rect x="11" y="8" width="1" height="1" fill="#E8B98A"/><rect x="4" y="9" width="1" height="1" fill="#161616"/><rect x="5" y="9" width="1" height="1" fill="#161616"/><rect x="6" y="9" width="1" height="1" fill="#161616"/><rect x="7" y="9" width="1" height="1" fill="#161616"/><rect x="8" y="9" width="1" height="1" fill="#161616"/><rect x="9" y="9" width="1" height="1" fill="#161616"/><rect x="4" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="5" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="6" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="7" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="8" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="9" y="10" width="1" height="1" fill="#0E2A5C"/><rect x="4" y="11" width="1" height="1" fill="#0E2A5C"/><rect x="5" y="11" width="1" height="1" fill="#0E2A5C"/><rect x="8" y="11" width="1" height="1" fill="#0E2A5C"/><rect x="9" y="11" width="1" height="1" fill="#0E2A5C"/><rect x="4" y="12" width="1" height="1" fill="#0E2A5C"/><rect x="5" y="12" width="1" height="1" fill="#0E2A5C"/><rect x="8" y="12" width="1" height="1" fill="#0E2A5C"/><rect x="9" y="12" width="1" height="1" fill="#0E2A5C"/><rect x="3" y="13" width="1" height="1" fill="#0B0B0B"/><rect x="4" y="13" width="1" height="1" fill="#0B0B0B"/><rect x="5" y="13" width="1" height="1" fill="#0B0B0B"/><rect x="9" y="13" width="1" height="1" fill="#0B0B0B"/><rect x="10" y="13" width="1" height="1" fill="#0B0B0B"/><rect x="11" y="13" width="1" height="1" fill="#0B0B0B"/></svg>';
   function spawnEgg(){
