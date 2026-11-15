@@ -797,7 +797,7 @@ window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
 var lenis=null, reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var lowPower=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4;
 if(window.Lenis && !reduced && !lowPower){
-  lenis=new Lenis({ lerp:.15, smoothWheel:true });
+  lenis=new Lenis({ lerp:.15, smoothWheel:false });
   window.__lenis=lenis;
   (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
 }
