@@ -916,8 +916,7 @@ function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "
 function applyLang(l){
   document.querySelectorAll("[data-t],[data-ph]").forEach(function(el){
     var k=el.getAttribute("data-t");
-    if(k){ if(l==="id" && ID[k]) el.innerHTML=ID[k];
-    else if(l==="en"){ if(el.dataset.en===undefined) el.dataset.en=el.innerHTML; el.innerHTML=el.dataset.en; } }
+    if(k){ if(el.dataset.en===undefined) el.dataset.en=el.innerHTML; if(l==="id" && ID[k]) el.innerHTML=ID[k]; else if(l==="en") el.innerHTML=el.dataset.en; }
     var ph=el.getAttribute("data-ph");
     if(ph){ if(el.dataset.enPh===undefined) el.dataset.enPh=el.getAttribute("placeholder")||""; el.setAttribute("placeholder",(l==="id"&&ID[ph])?ID[ph]:el.dataset.enPh); }
   });
