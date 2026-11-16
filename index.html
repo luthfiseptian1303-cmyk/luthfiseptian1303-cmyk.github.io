@@ -612,7 +612,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <span class="tag" data-t="s4tag">The same system CarlLab runs on</span>
       </a>
     </div>
-      <p class="svc-details"><span data-t="svcDetPre">Want the details first?</span> <a href="websites.html" data-t="s1t">Websites</a> &middot; <a href="browser-games.html" data-t="s2t">Browser games</a> &middot; <a href="brand-logo.html" data-t="s3t">Brand &amp; logo</a> &middot; <a href="lead-systems.html" data-t="s4t">Lead systems</a></p>
+      <p class="svc-details"><span data-t="svcDetPre">Want the details first?</span> <a href="websites.html" data-t="s1t">Websites</a> &middot; <a href="browser-games.html" data-t="s2t">Browser games</a> &middot; <a href="brand-logo.html" data-t="s3t">Brand &amp; logo</a> &middot; <a href="lead-systems.html" data-t="s4t">Lead systems</a> &middot; <a href="website-readiness-check.html" data-t="rcLink">Website Readiness Check</a></p>
   </div>
 </section>
 
@@ -865,7 +865,7 @@ document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
 /* ---------- i18n ---------- */
 var ID={
-navServices:"Layanan",pathEyebrow:"Mulai di sini",pathTitle:"Tiga pertanyaan, satu jalur kerja",pathSub:"Bingung butuh layanan yang mana? Jawab tiga pertanyaan. Carl memetakan urutan kerjanya, lalu memasukkan hasilnya ke formulir pemesanan untukmu.",pq1:"Brand-mu sekarang posisinya di mana?",pq1a:"Belum punya logo",pq1b:"Sudah ada, tapi berantakan",pq1c:"Brand sudah siap",pq2:"Yang paling kamu butuhkan sekarang apa?",pq2a:"Website",pq2b:"Game promosi untuk brand",pq2c:"Lead lebih banyak, ditindaklanjuti dengan benar",pq2d:"Belum yakin",pq3:"Apa yang sudah kamu punya?",pq3a:"Foto dan teks sudah siap",pq3b:"Sebagian",pq3c:"Belum ada apa-apa",pathHint:"Jalurmu muncul di sini setelah ketiganya dijawab.",pathResT:"Jalur kerjamu",pathSend:"Kirim jalur ini ke formulir pemesanan",pathReset:"Ulangi dari awal",navWork:"Karya",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",
+rcLink:"Cek Kesiapan Website",navServices:"Layanan",pathEyebrow:"Mulai di sini",pathTitle:"Tiga pertanyaan, satu jalur kerja",pathSub:"Bingung butuh layanan yang mana? Jawab tiga pertanyaan. Carl memetakan urutan kerjanya, lalu memasukkan hasilnya ke formulir pemesanan untukmu.",pq1:"Brand-mu sekarang posisinya di mana?",pq1a:"Belum punya logo",pq1b:"Sudah ada, tapi berantakan",pq1c:"Brand sudah siap",pq2:"Yang paling kamu butuhkan sekarang apa?",pq2a:"Website",pq2b:"Game promosi untuk brand",pq2c:"Lead lebih banyak, ditindaklanjuti dengan benar",pq2d:"Belum yakin",pq3:"Apa yang sudah kamu punya?",pq3a:"Foto dan teks sudah siap",pq3b:"Sebagian",pq3c:"Belum ada apa-apa",pathHint:"Jalurmu muncul di sini setelah ketiganya dijawab.",pathResT:"Jalur kerjamu",pathSend:"Kirim jalur ini ke formulir pemesanan",pathReset:"Ulangi dari awal",navWork:"Karya",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",
 avail:"Terbuka untuk proyek baru",heroEyebrow:"CarlLab · Indonesia",
 h1a:"Website, game",h1b:"& brand",h1c:"— dibangun oleh",h1d:"sepasang tangan.",
 heroRole:"Carl adalah desainer dan developer yang bekerja solo, dari awal sampai akhir: orang yang kamu ajak bicara adalah orang yang mendesain, membangun, dan menyerahkan hasilnya. Tanpa account manager, tanpa oper-operan, tanpa salah sambung.",
@@ -1279,6 +1279,27 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
     var el=document.getElementById(id);
     if(el) el.addEventListener("click",function(){ setTimeout(render,0); });
   });
+})();
+</script>
+
+<script id="readiness-consumer">
+(function(){
+  "use strict";
+  try{
+    var raw=localStorage.getItem("carllab-readiness"); if(!raw) return;
+    var r=JSON.parse(raw); localStorage.removeItem("carllab-readiness");
+    if(!r || !r.text) return;
+    var det=document.getElementById("fDetail"), svc=document.getElementById("fService");
+    if(svc && r.svc){ for(var i=0;i<svc.options.length;i++){ if(svc.options[i].value===r.svc){ svc.selectedIndex=i; break; } }
+      svc.dispatchEvent(new Event("change",{bubbles:true})); }
+    if(det){
+      var marker="\u2014 From the readiness check / Dari cek kesiapan \u2014";
+      var v=det.value, k=v.indexOf(marker);
+      if(k>=0) v=v.slice(0,k).replace(/\s+$/,"");
+      det.value=(v? v+"\n\n" : "")+r.text;
+      det.dispatchEvent(new Event("input",{bubbles:true}));
+    }
+  }catch(e){}
 })();
 </script>
 </body>
