@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://carllab.web.id/sitemap.xml
