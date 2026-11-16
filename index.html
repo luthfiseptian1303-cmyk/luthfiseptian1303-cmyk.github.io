@@ -1193,18 +1193,31 @@ document.getElementById("orderForm").addEventListener("submit",function(){ try{ 
     grid.querySelectorAll(".popt").forEach(function(o){ o.setAttribute("aria-pressed","false"); });
     render();
   });
+  function curLabel(q){
+    var b=grid.querySelector('.pq[data-q="'+q+'"] .popt[aria-pressed="true"]');
+    return b? b.textContent.trim() : (labels[q]||"-");
+  }
+  function stripOldPath(v){
+    var m="\u2014 From the pathfinder / Dari pemeta jalur \u2014";
+    var i=v.indexOf(m); if(i<0) return v;
+    var j=v.indexOf("Path / Jalur:",i); if(j<0) return v;
+    var k=v.indexOf("\n",j); var end=(k<0)? v.length : k;
+    var before=v.slice(0,i).replace(/\s+$/,""), after=v.slice(end).replace(/^\n+/,"");
+    return before&&after? before+"\n\n"+after : before+after;
+  }
   document.getElementById("pathSend").addEventListener("click",function(){
     var steps=res._steps||compute(); if(!steps.length) return;
     var pathTxt=steps.map(function(st,i){ return (i+1)+") "+SVC[st.k].name; }).join("  ");
     var summary=["\u2014 From the pathfinder / Dari pemeta jalur \u2014",
-      "Brand: "+(labels.brand||"-"),
-      "Goal / Tujuan: "+(labels.goal||"-"),
-      "Assets / Aset: "+(labels.assets||"-"),
+      "Brand / Merek: "+curLabel("brand"),
+      "Goal / Tujuan: "+curLabel("goal"),
+      "Assets / Aset: "+curLabel("assets"),
       "Path / Jalur: "+pathTxt].join("\n");
     var svc=document.getElementById("fService"), det=document.getElementById("fDetail");
     if(svc){ svc.value=SVC[steps[0].k].form; svc.dispatchEvent(new Event("change",{bubbles:true})); }
     if(det){
-      det.value=(det.value? det.value.replace(/\s+$/,"")+"\n\n" : "")+summary;
+      var base=stripOldPath(det.value);
+      det.value=(base? base+"\n\n" : "")+summary;
       det.dispatchEvent(new Event("input",{bubbles:true}));
     }
     var ord=document.getElementById("order");
