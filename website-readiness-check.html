@@ -835,11 +835,11 @@ if(curLang()==="id") applyLang("id"); else applyLang("en");
   var QS=["rq1","rq2","rq3","rq4","rq5","rq6"];
   var AREA={en:["Offer","Brand","Contact path","Proof","Assets","Follow-up"],
             id:["Penawaran","Brand","Jalur kontak","Bukti","Aset","Tindak lanjut"]};
-  var ROUTE={rq1:{form:"Website",name:"Website \u2014 NewCode"},
-             rq2:{form:"Brand & logo",name:"Brand & logo \u2014 LWD Studio"},
+  var ROUTE={rq1:{form:"Website",name:"Website"},
+             rq2:{form:"Brand & logo",name:"Brand & logo"},
              rq3:{form:"Lead system",name:"Lead system \u2014 Lead Engine"},
-             rq4:{form:"Website",name:"Website \u2014 NewCode"},
-             rq5:{form:"Brand & logo",name:"Brand & logo \u2014 LWD Studio"},
+             rq4:{form:"Website",name:"Website"},
+             rq5:{form:"Brand & logo",name:"Brand & logo"},
              rq6:{form:"Lead system",name:"Lead system \u2014 Lead Engine"}};
   var BAND={
     en:{a:["Ready to build","The chain holds end to end. A website now multiplies what already works instead of papering over gaps."],
@@ -876,7 +876,7 @@ if(curLang()==="id") applyLang("id"); else applyLang("en");
     QS.forEach(function(q){ total+=ans[q]; if(weak===null || ans[q]<ans[weak]) weak=q; });
     var band= total>=10 ? "a" : (total>=6 ? "b" : "c");
     var route, fixKey;
-    if(band==="a" && ans[weak]===2){ route={form:"Website",name:"Website \u2014 NewCode"}; fixKey="none"; }
+    if(band==="a" && ans[weak]===2){ route={form:"Website",name:"Website"}; fixKey="none"; }
     else { route=ROUTE[weak]; fixKey=weak; }
     return {total:total, weak:weak, band:band, route:route, fixKey:fixKey};
   }
