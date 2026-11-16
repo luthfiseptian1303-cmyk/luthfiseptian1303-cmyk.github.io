@@ -521,6 +521,26 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 @media(max-width:560px){.inc-list li{grid-template-columns:36px 1fr}}
 </style>
 
+<style id="demo-round">
+.demo-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(36px,5vw,84px);align-items:center}
+.demo-lede{font-size:clamp(16.5px,1.5vw,19px);line-height:1.65;color:#C9CED4;max-width:34em}
+.demo-specs{list-style:none;margin:30px 0 0;padding:0;border-top:2px solid #2E3237}
+.demo-specs li{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 4px;border-bottom:1px solid #2E3237}
+.demo-specs .n{font-family:"Space Mono",monospace;font-size:13px;color:#9AA3AD;padding-top:3px}
+.demo-specs h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:17.5px;letter-spacing:-.01em;color:#E3E6E9;text-transform:uppercase;margin:0 0 5px}
+.demo-specs p{margin:0;color:#9AA3AD;font-size:15px;line-height:1.6}
+.demo-hint{margin-top:22px;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#767D85}
+.demo-cap{margin-top:28px;text-align:center;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.06em;color:#767D85}
+.demo-phone{width:min(350px,88vw);margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
+.demo-screen{position:relative;border-radius:32px;overflow:hidden;background:#FAF5EC;height:620px}
+.demo-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:96px;height:20px;background:#101012;border-radius:0 0 13px 13px;z-index:8}
+@media(max-width:900px){.demo-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.demo-screen{height:560px}}
+
+.demo-screen iframe{width:100%;height:100%;border:0;display:block;background:#FAF5EC}
+.demo-fullwrap{text-align:center;margin-top:12px}
+.demo-full{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#B9C0C8;text-decoration:none;border-bottom:1px solid #3A4149;padding-bottom:2px}
+</style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -592,6 +612,33 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
       <li><span class="n">04</span><span data-t="inc4">Live on your own domain, with the main access in your hands.</span></li>
       <li><span class="n">05</span><span data-t="inc5">A walkthrough at handover, so you know how everything works.</span></li>
     </ul>
+  </div>
+</section>
+<section class="blk" id="demo">
+  <div class="wrap">
+    <div class="sec-head" data-rv="y40">
+      <span class="eyebrow" data-t="demoEye">Live sample</span>
+      <h2 data-t="demoH">Proof you can touch</h2>
+    </div>
+    <div class="demo-grid">
+      <div data-rv="y40">
+        <p class="demo-lede" data-t="demoP">Below is a complete CarlLab website, shrunk into a phone: LARAS, a digital wedding invitation — the kind of site a client receives, running exactly as their guests would open it. Lift the envelope. The countdown reads the real date, the gallery enlarges, the RSVP wall answers. This is the demo version; the seller's tools stay locked.</p>
+        <ul class="demo-specs">
+          <li><span class="n">01</span><div><h3 data-t="demo1t">A real page, not a picture</h3><p data-t="demo1p">Everything in the frame is live: the envelope opens, the petals fall, the music plays, the photo gallery opens full-size.</p></div></li>
+          <li><span class="n">02</span><div><h3 data-t="demo2t">Alive to the real clock</h3><p data-t="demo2p">The countdown ticks toward the actual wedding day — Saturday, 13 February 2027 — and the streaming section switches itself to live when the reception starts. Nobody updates it by hand.</p></div></li>
+          <li><span class="n">03</span><div><h3 data-t="demo3t">Every guest gets their own door</h3><p data-t="demo3p">A personal link puts the guest's name on the cover and their table on the seating map, and their RSVP lands on the wall instantly — the same machinery a CarlLab site runs for sign-ups, orders or bookings.</p></div></li>
+        </ul>
+        <p class="demo-hint" data-t="demoHint">Scroll inside the frame &middot; tap &ldquo;Open Invitation&rdquo;</p>
+      </div>
+      <div class="demo-phone" data-rv="y40">
+        <div class="demo-screen">
+          <div class="demo-notch" aria-hidden="true"></div>
+          <iframe src="laras-demo.html" title="Laras — contoh undangan digital oleh CarlLab" loading="lazy" style="width:100%;height:100%;border:0;display:block;background:#f4efe2"></iframe>
+        </div>
+      </div>
+    </div>
+    <p class="demo-cap" data-t="demoCap">Laras — a fictional wedding invitation (Raka &amp; Sekar), demo version. The full template's seller tools are locked.</p>
+    <p class="demo-fullwrap"><a class="demo-full" href="laras-demo.html" target="_blank" rel="noopener" data-t="demoFull">Open the sample full-screen &#8599;</a></p>
   </div>
 </section>
 <section class="blk">
@@ -698,7 +745,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={wrcP:"Dua menit, enam pertanyaan: Cek Kesiapan Website menilai penawaran, brand, jalur kontak, bukti, aset, dan tindak lanjutmu — lalu menyebut satu perbaikan yang paling penting lebih dulu.",wrcB:"Mulai ceknya",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Setiap website CarlLab mulai dari satu pertanyaan: pengunjung harus melakukan apa di sini? Kata-kata, urutan seksi, dan tombolnya disusun mengelilingi satu tindakan itu — lalu halamannya dibangun cukup ringan untuk terbuka cepat di HP mana pun, di mana pun.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Bisnismu perlu ditemukan dan dihubungi dari HP — profil perusahaan, landing page untuk satu penawaran, atau toko kecil — dan kamu ingin ia berada di domainmu sendiri, atas namamu.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh platform besar — akun member, pembayaran dalam skala besar, aplikasi web khusus. Carl akan mengatakannya dalam balasan, bukan menjual halaman yang tidak sanggup memikulnya.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Satu kalimat tujuan, teks dan foto apa pun yang kamu punya, dan target tanggal kalau ada. Domain atau hosting belum perlu — keduanya dipasang atas namamu sebagai langkah pertama.",inc1:"Satu konsep yang digambar dari bisnismu — bukan template yang ditempeli namamu.",inc2:"Situs perusahaan, landing page, dan toko online — dalam Bahasa Indonesia, Inggris, atau keduanya.",inc3:"Dicek di HP sungguhan sebelum kamu melihatnya; yang Carl cek adalah yang pengunjungmu dapatkan.",inc4:"Tayang di domainmu sendiri, dengan akses utama di tanganmu.",inc5:"Penjelasan menyeluruh saat serah terima, supaya kamu tahu cara kerja semuanya.",pgQ1:"Apa yang Carl butuhkan dariku untuk mulai?",pgA1:"Satu kalimat tujuan, teks dan foto apa pun yang sudah kamu punya, dan target tanggal kalau ada. Draf kasar pun cukup — Carl menyusunnya bersamamu. Daftar lengkapnya ada di <a href=\"panduan-memilih-jasa-pembuatan-website.html\">panduan memilih jasa pembuatan website</a>.",pgQ2:"Apakah aku perlu domain dan hosting dulu?",pgA2:"Tidak. Kalau belum punya, Carl memasangnya atas namamu sebagai langkah pertama pembangunan — biaya penyedianya adalah biayamu dengan harga penyedia, dan tercantum di penawaran, terpisah dari pekerjaan Carl.",pgQ3:"Siapa pemilik website dan akun-akunnya?",pgA3:"Kamu — domain, hosting, dan setiap akun didaftarkan atas namamu, dengan akses utama di tanganmu. Carl bekerja di dalamnya sebagai tamu; kalau suatu saat kamu pindah, semuanya ikut denganmu."};
+var ID={demoEye:"Contoh langsung",demoH:"Bukti yang bisa disentuh",demoP:"Di bawah ini website CarlLab utuh, diperkecil ke dalam sebuah HP: LARAS, undangan pernikahan digital — persis seperti yang diterima klien, berjalan persis seperti saat tamunya membukanya. Angkat sampulnya. Hitung mundurnya membaca tanggal sungguhan, galerinya membesar, dinding RSVP-nya menjawab. Ini versi demo; perangkat penjualnya tetap terkunci.",demo1t:"Halaman sungguhan, bukan gambar",demo1p:"Semua di dalam bingkai ini hidup: sampulnya terbuka, kelopaknya jatuh, musiknya berbunyi, galeri fotonya membuka penuh.",demo2t:"Hidup mengikuti jam sungguhan",demo2p:"Hitung mundurnya berjalan menuju hari pernikahan sungguhan — Sabtu, 13 Februari 2027 — dan seksi siarannya beralih sendiri menjadi sedang tayang saat resepsi dimulai. Tak perlu ada yang memperbaruinya dengan tangan.",demo3t:"Setiap tamu punya pintunya sendiri",demo3p:"Tautan pribadi menaruh nama tamu di sampul dan mejanya di denah tempat duduk, dan RSVP-nya langsung tampil di dinding — mesin yang sama dengan yang dijalankan situs CarlLab untuk pendaftaran, pesanan, atau reservasi.",demoHint:"Gulir di dalam bingkai \u00B7 ketuk \u201cBuka Undangan\u201d",demoFull:"Buka contohnya layar penuh",demoCap:"Laras — undangan pernikahan fiktif (Raka & Sekar), versi demo. Perangkat penjual templat lengkapnya terkunci.",wrcP:"Dua menit, enam pertanyaan: Cek Kesiapan Website menilai penawaran, brand, jalur kontak, bukti, aset, dan tindak lanjutmu — lalu menyebut satu perbaikan yang paling penting lebih dulu.",wrcB:"Mulai ceknya",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Setiap website CarlLab mulai dari satu pertanyaan: pengunjung harus melakukan apa di sini? Kata-kata, urutan seksi, dan tombolnya disusun mengelilingi satu tindakan itu — lalu halamannya dibangun cukup ringan untuk terbuka cepat di HP mana pun, di mana pun.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Bisnismu perlu ditemukan dan dihubungi dari HP — profil perusahaan, landing page untuk satu penawaran, atau toko kecil — dan kamu ingin ia berada di domainmu sendiri, atas namamu.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh platform besar — akun member, pembayaran dalam skala besar, aplikasi web khusus. Carl akan mengatakannya dalam balasan, bukan menjual halaman yang tidak sanggup memikulnya.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Satu kalimat tujuan, teks dan foto apa pun yang kamu punya, dan target tanggal kalau ada. Domain atau hosting belum perlu — keduanya dipasang atas namamu sebagai langkah pertama.",inc1:"Satu konsep yang digambar dari bisnismu — bukan template yang ditempeli namamu.",inc2:"Situs perusahaan, landing page, dan toko online — dalam Bahasa Indonesia, Inggris, atau keduanya.",inc3:"Dicek di HP sungguhan sebelum kamu melihatnya; yang Carl cek adalah yang pengunjungmu dapatkan.",inc4:"Tayang di domainmu sendiri, dengan akses utama di tanganmu.",inc5:"Penjelasan menyeluruh saat serah terima, supaya kamu tahu cara kerja semuanya.",pgQ1:"Apa yang Carl butuhkan dariku untuk mulai?",pgA1:"Satu kalimat tujuan, teks dan foto apa pun yang sudah kamu punya, dan target tanggal kalau ada. Draf kasar pun cukup — Carl menyusunnya bersamamu. Daftar lengkapnya ada di <a href=\"panduan-memilih-jasa-pembuatan-website.html\">panduan memilih jasa pembuatan website</a>.",pgQ2:"Apakah aku perlu domain dan hosting dulu?",pgA2:"Tidak. Kalau belum punya, Carl memasangnya atas namamu sebagai langkah pertama pembangunan — biaya penyedianya adalah biayamu dengan harga penyedia, dan tercantum di penawaran, terpisah dari pekerjaan Carl.",pgQ3:"Siapa pemilik website dan akun-akunnya?",pgA3:"Kamu — domain, hosting, dan setiap akun didaftarkan atas namamu, dengan akses utama di tanganmu. Carl bekerja di dalamnya sebagai tamu; kalau suatu saat kamu pindah, semuanya ikut denganmu."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -784,6 +831,7 @@ if(scta){ var upd=function(){ var openOv=mo&&mo.classList.contains("open"); scta
 if(curLang()==="id") applyLang("id"); else applyLang("en");
 })();
 </script>
+
 
 </body>
 </html>
