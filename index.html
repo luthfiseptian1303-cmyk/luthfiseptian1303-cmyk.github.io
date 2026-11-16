@@ -137,14 +137,14 @@ section.blk{padding:var(--sec) 0}
 .about-txt p b{color:var(--ink)}
 .about-points{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
 .apoint{border-top:2px solid var(--ink);padding-top:14px}
-.apoint h4{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:16px;letter-spacing:-.01em;margin-bottom:6px}
+.apoint h3{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:16px;letter-spacing:-.01em;margin-bottom:6px}
 .apoint p{font-size:14.5px;margin:0}
 /* ---------- process ---------- */
 #process{background:var(--ink);color:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 #process .eyebrow{color:#9DB4A4}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .step .n{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(38px,4vw,58px);color:var(--amber);line-height:1}
-.step h4{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:19px;margin:14px 0 8px;letter-spacing:-.01em}
+.step h3{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;font-size:19px;margin:14px 0 8px;letter-spacing:-.01em}
 .step p{color:#B9B9C0;font-size:15.5px}
 /* ---------- faq ---------- */
 .faq-list{border-top:2px solid var(--ink)}
@@ -174,7 +174,7 @@ form.order .btn{margin-top:26px;width:100%;justify-content:center;cursor:pointer
 /* ---------- footer ---------- */
 footer.site{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,90px) 0 34px}
 .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:clamp(24px,4vw,56px);margin-bottom:clamp(44px,6vw,72px)}
-.foot-grid h5{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#8B9A8E;margin-bottom:16px}
+.foot-grid h2{font-family:"Space Mono",monospace;font-size:11.5px;font-weight:700;line-height:inherit;letter-spacing:.14em;text-transform:uppercase;color:#8B9A8E;margin-bottom:16px}
 .foot-grid a{display:block;color:#D7DFD8;text-decoration:none;padding:4px 0;font-size:15.5px;transition:color .18s}
 .foot-grid a:hover{color:#A9C3EE}
 .foot-brand p{color:#A9B6AB;font-size:15.5px;max-width:24em;margin-top:12px}
@@ -289,7 +289,7 @@ details.faq summary .pm{color:var(--amber)}
 #about .about-txt p{color:#DCE8FA}
 #about .about-fig img{border-color:#fff;box-shadow:8px 8px 0 #020A1A}
 #about .about-points>div{border-color:rgba(255,255,255,.45)}
-#about .apoint h4{color:#fff}
+#about .apoint h3{color:#fff}
 #about .apoint p{color:#C9DBF7}
 /* Manifesto: line-mask reveal */
 .manifesto{padding:clamp(90px,11vw,150px) 0}
@@ -382,7 +382,7 @@ header.site nav a:hover{color:#B9C0C8}
 #about{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
 #about .eyebrow{color:#6E767F}
 #about .about-txt p{color:#23272C}
-#about .apoint h4{color:#0B0B0B}
+#about .apoint h3{color:#0B0B0B}
 #about .apoint p{color:#33383E}
 #about .about-points>div{border-color:rgba(0,0,0,.4)}
 #about b{color:#000}
@@ -400,7 +400,7 @@ details.faq summary .pm{color:#9AA3AD}
 form.order input,form.order select,form.order textarea{color:#0B0B0B;border-bottom-color:rgba(0,0,0,.4)}
 form.order input:focus,form.order select:focus,form.order textarea:focus{border-bottom-color:#0B0B0B}
 #order .btn{background:#0B0B0B;color:#C9CED4;border-color:#0B0B0B;box-shadow:4px 4px 0 rgba(0,0,0,.35)}
-.foot-grid h5{color:#8B9096}
+.foot-grid h2{color:#8B9096}
 .foot-grid a{color:#C9CED4}
 .foot-grid a:hover{color:#B9C0C8}
 .mlink{color:#C9CED4}
@@ -569,7 +569,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
     </div>
     <div class="hero-fig">
       <div class="frame" data-rv="portrait">
-        <img class="pimg" id="heroImg" src="hero-poster.webp" alt="Illustrated portrait of Carl with a laptop, city skyline at dusk" fetchpriority="high">
+        <img class="pimg" id="heroImg" src="hero-poster.webp" alt="Illustrated portrait of Carl with a laptop, city skyline at dusk" width="840" height="1680" fetchpriority="high">
         <div class="hero-cap"><span data-t="capRole">Carl · CarlLab</span></div>
       </div>
     </div>
@@ -625,9 +625,9 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
       <span class="eyebrow" data-t="aboutEyebrow">About</span>
       <h2 data-rv="y40" data-t="aboutTitle">One person, the whole pipeline</h2>
       <div class="about-points">
-        <div class="apoint" data-rv="y40"><h4 data-t="ap1t">Direct</h4><p data-t="ap1p">You talk to the person who does the work — replies come from the builder, not a relay.</p></div>
-        <div class="apoint" data-rv="y40"><h4 data-t="ap2t">Bilingual</h4><p data-t="ap2p">Projects run in Bahasa Indonesia or English, whichever your customers read.</p></div>
-        <div class="apoint" data-rv="y40"><h4 data-t="ap3t">End to end</h4><p data-t="ap3p">Design, code, launch, and care — one pair of hands, one standard of finish.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap1t">Direct</h3><p data-t="ap1p">You talk to the person who does the work — replies come from the builder, not a relay.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap2t">Bilingual</h3><p data-t="ap2p">Projects run in Bahasa Indonesia or English, whichever your customers read.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap3t">End to end</h3><p data-t="ap3p">Design, code, launch, and care — one pair of hands, one standard of finish.</p></div>
       </div>
     </div>
   </div>
@@ -654,10 +654,10 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
     </div>
     <div class="steps">
       <div class="proc-line" aria-hidden="true"><i id="procFill"></i></div>
-      <div class="step" data-rv="y40"><div class="n">01</div><h4 data-t="p1t">Listen</h4><p data-t="p1p">We talk about your business first — customers, shelves, numbers. Templates come last, if at all.</p></div>
-      <div class="step" data-rv="y40"><div class="n">02</div><h4 data-t="p2t">Design</h4><p data-t="p2p">One concept, drawn from what makes your business yours. You see it as a real page, not a moodboard.</p></div>
-      <div class="step" data-rv="y40"><div class="n">03</div><h4 data-t="p3t">Build</h4><p data-t="p3p">Light, fast pages that open anywhere — checked on a real phone before you ever see them.</p></div>
-      <div class="step" data-rv="y40"><div class="n">04</div><h4 data-t="p4t">Launch &amp; care</h4><p data-t="p4p">Live and verified from outside, then kept tidy. Carl keeps you posted at every stage, never silence.</p></div>
+      <div class="step" data-rv="y40"><div class="n">01</div><h3 data-t="p1t">Listen</h3><p data-t="p1p">We talk about your business first — customers, shelves, numbers. Templates come last, if at all.</p></div>
+      <div class="step" data-rv="y40"><div class="n">02</div><h3 data-t="p2t">Design</h3><p data-t="p2p">One concept, drawn from what makes your business yours. You see it as a real page, not a moodboard.</p></div>
+      <div class="step" data-rv="y40"><div class="n">03</div><h3 data-t="p3t">Build</h3><p data-t="p3p">Light, fast pages that open anywhere — checked on a real phone before you ever see them.</p></div>
+      <div class="step" data-rv="y40"><div class="n">04</div><h3 data-t="p4t">Launch &amp; care</h3><p data-t="p4p">Live and verified from outside, then kept tidy. Carl keeps you posted at every stage, never silence.</p></div>
     </div>
   </div>
 </section>
@@ -821,21 +821,21 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
                 <p class="foot-status"><span class="st-dot" id="stDot"></span><span id="studioStatus">Studio status</span></p>
               </div>
       <div>
-        <h5 data-t="footSite">Site</h5>
+        <h2 data-t="footSite">Site</h2>
         <a href="#services" data-t="navServices">Services</a>
         <a href="#about" data-t="navAbout">About</a>
         <a href="#faq" data-t="navFaq">FAQ</a>
         <a href="#order" data-t="navOrder">Start a project</a>
       </div>
       <div>
-        <h5 data-t="footSvc">Services</h5>
+        <h2 data-t="footSvc">Services</h2>
         <a href="websites.html" data-t="s1t">Websites</a>
         <a href="browser-games.html" data-t="s2t">Browser games</a>
         <a href="brand-logo.html" data-t="s3t">Brand &amp; logo</a>
         <a href="lead-systems.html" data-t="s4t">Lead systems</a>
       </div>
       <div>
-        <h5 data-t="footElse">Elsewhere</h5>
+        <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
         <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>

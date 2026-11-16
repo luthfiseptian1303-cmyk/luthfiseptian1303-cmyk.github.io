@@ -169,7 +169,7 @@ form.order .btn{margin-top:26px;width:100%;justify-content:center;cursor:pointer
 /* ---------- footer ---------- */
 footer.site{background:var(--ink);color:var(--paper);padding:clamp(56px,7vw,90px) 0 34px}
 .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:clamp(24px,4vw,56px);margin-bottom:clamp(44px,6vw,72px)}
-.foot-grid h5{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#8B9A8E;margin-bottom:16px}
+.foot-grid h2{font-family:"Space Mono",monospace;font-size:11.5px;font-weight:700;line-height:inherit;letter-spacing:.14em;text-transform:uppercase;color:#8B9A8E;margin-bottom:16px}
 .foot-grid a{display:block;color:#D7DFD8;text-decoration:none;padding:4px 0;font-size:15.5px;transition:color .18s}
 .foot-grid a:hover{color:#A9C3EE}
 .foot-brand p{color:#A9B6AB;font-size:15.5px;max-width:24em;margin-top:12px}
@@ -395,7 +395,7 @@ details.faq summary .pm{color:#9AA3AD}
 form.order input,form.order select,form.order textarea{color:#0B0B0B;border-bottom-color:rgba(0,0,0,.4)}
 form.order input:focus,form.order select:focus,form.order textarea:focus{border-bottom-color:#0B0B0B}
 #order .btn{background:#0B0B0B;color:#C9CED4;border-color:#0B0B0B;box-shadow:4px 4px 0 rgba(0,0,0,.35)}
-.foot-grid h5{color:#8B9096}
+.foot-grid h2{color:#8B9096}
 .foot-grid a{color:#C9CED4}
 .foot-grid a:hover{color:#B9C0C8}
 .mlink{color:#C9CED4}
@@ -479,7 +479,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .popt[aria-pressed="true"]{background:linear-gradient(165deg,#B9C0C8,#878E96 55%,#C9CED4);border-color:transparent;color:#0B0B0B;font-weight:600}
 .path-result{margin-top:22px;border:1px solid var(--lineD);background:var(--surfd);border-radius:6px;padding:26px 24px;opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
 .path-result.show{opacity:1;transform:none}
-.path-result h3{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd)}
+.path-result h2{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd);line-height:inherit}
 .path-steps{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:12px}
 .path-steps li{display:flex;gap:14px;align-items:baseline}
 .path-steps .n{font-family:"Space Mono",monospace;font-size:13px;color:#0B0B0B;background:linear-gradient(165deg,#B9C0C8,#878E96 55%,#C9CED4);border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(3px);font-weight:700}
@@ -538,7 +538,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .popt[aria-pressed="true"]{background:linear-gradient(165deg,#B9C0C8,#878E96 55%,#C9CED4);border-color:transparent;color:#0B0B0B;font-weight:600}
 .path-result{margin-top:22px;border:1px solid var(--lineD);background:var(--surfd);border-radius:6px;padding:26px 24px;opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
 .path-result.show{opacity:1;transform:none}
-.path-result h3{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd)}
+.path-result h2{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd);line-height:inherit}
 .path-hint{margin-top:22px;color:var(--mutd);font-size:14.5px;border:1px dashed var(--lineD);border-radius:6px;padding:18px 20px}
 .path-actions{display:flex;gap:14px;align-items:center;margin-top:22px;flex-wrap:wrap}
 .path-reset{appearance:none;background:none;border:none;color:var(--mutd);font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.06em;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
@@ -556,7 +556,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .rc-dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--mutd);display:inline-block}
 .rc-dot.on{background:#C9CED4;border-color:#C9CED4}
 .rc-fix{margin-top:20px;border:1px solid var(--lineD);border-radius:6px;padding:18px 20px}
-.rc-fix h4{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd);margin-bottom:8px}
+.rc-fix h3{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mutd);margin-bottom:8px}
 .rc-fix p{line-height:1.65;color:var(--txtd);font-size:15.5px}
 .rc-note{margin-top:12px;color:#8FD0A0;font-size:13.5px}
 @media (max-width:860px){.rc-grid{grid-template-columns:1fr}}
@@ -663,12 +663,12 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
     </div>
     <p class="path-hint" id="rcHint" data-t="rcHint">Your score appears here once all six are answered.</p>
     <div class="path-result" id="rcResult" hidden>
-      <h3 data-t="rcResT">Your readiness</h3>
+      <h2 data-t="rcResT">Your readiness</h2>
       <div class="rc-score"><span class="rc-num" id="rcNum">0</span><span class="rc-den">/ 12</span><span class="rc-bar"><i id="rcBar"></i></span></div>
       <p class="rc-band" id="rcBand"></p>
       <p class="rc-bandp" id="rcBandP"></p>
       <ul class="rc-rows" id="rcRows"></ul>
-      <div class="rc-fix"><h4 data-t="rcFixT">Fix this first</h4><p id="rcFix"></p></div>
+      <div class="rc-fix"><h3 data-t="rcFixT">Fix this first</h3><p id="rcFix"></p></div>
       <div class="path-actions">
         <a class="btn" id="rcSend" href="/#order"><span data-t="rcSend">Send this result to Carl</span> <span aria-hidden="true">&#8594;</span></a>
         <button type="button" class="path-reset" id="rcCopy" data-t="rcCopy">Copy result</button>
@@ -699,21 +699,21 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <p class="foot-status"><span class="st-dot" id="stDot"></span><span id="studioStatus">Studio status</span></p>
       </div>
       <div>
-        <h5 data-t="footSite">Site</h5>
+        <h2 data-t="footSite">Site</h2>
         <a href="/#services" data-t="navServices">Services</a>
         <a href="/#about" data-t="navAbout">About</a>
         <a href="/#faq" data-t="navFaq">FAQ</a>
         <a href="/#order" data-t="navOrder">Start a project</a>
       </div>
       <div>
-        <h5 data-t="footSvc">Services</h5>
+        <h2 data-t="footSvc">Services</h2>
         <a href="websites.html" data-t="s1t">Websites</a>
         <a href="browser-games.html" data-t="s2t">Browser games</a>
         <a href="brand-logo.html" data-t="s3t">Brand &amp; logo</a>
         <a href="lead-systems.html" data-t="s4t">Lead systems</a>
       </div>
       <div>
-        <h5 data-t="footElse">Elsewhere</h5>
+        <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
         <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>
