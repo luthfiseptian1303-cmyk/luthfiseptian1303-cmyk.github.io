@@ -668,10 +668,10 @@ body.vip #openBtn{background:linear-gradient(135deg,#caa25e,#8a6c34);color:#fff;
       <h3 style="font-size:21px;font-weight:400;margin-top:26px" data-v="regTitle">Registry Kado — Patungan Terbuka</h3>
       <p style="font-size:13px;line-height:1.7;color:#5c5a4c;margin-top:6px" data-v="regLede">Untuk yang ingin memberi kado yang pasti terpakai: patungan terbuka untuk empat kebutuhan rumah baru kami. Ketuk untuk ikut — bar bergerak langsung.</p>
       <div class="reg">
-        <div class="regitem rv" data-pct="78"><h5 data-v="r1n">Dana Bulan Madu — Bali</h5><div class="rt">Target Rp7.500.000</div><div class="bar"><i style="width:78%"></i></div><div class="regrow"><span class="regpct num">78%</span><button class="regbtn" type="button" data-v="regBtn">Ikut Patungan +5%</button></div></div>
-        <div class="regitem rv" data-pct="62"><h5 data-v="r2n">Mesin Cuci untuk Rumah Baru</h5><div class="rt">Target Rp3.200.000</div><div class="bar"><i style="width:62%"></i></div><div class="regrow"><span class="regpct num">62%</span><button class="regbtn" type="button" data-v="regBtn2">Ikut Patungan +5%</button></div></div>
-        <div class="regitem rv" data-pct="45"><h5 data-v="r3n">Kulkas Dua Pintu</h5><div class="rt">Target Rp4.800.000</div><div class="bar"><i style="width:45%"></i></div><div class="regrow"><span class="regpct num">45%</span><button class="regbtn" type="button" data-v="regBtn3">Ikut Patungan +5%</button></div></div>
-        <div class="regitem rv" data-pct="30"><h5 data-v="r4n">Peralatan Dapur Lengkap</h5><div class="rt">Target Rp1.500.000</div><div class="bar"><i style="width:30%"></i></div><div class="regrow"><span class="regpct num">30%</span><button class="regbtn" type="button" data-v="regBtn4">Ikut Patungan +5%</button></div></div>
+        <div class="regitem rv" data-pct="78"><h5 data-v="r1n">Dana Bulan Madu — Bali</h5><div class="rt" data-rp="7500000">Target Rp7.500.000</div><div class="bar"><i style="width:78%"></i></div><div class="regrow"><span class="regpct num">78%</span><button class="regbtn" type="button" data-v="regBtn">Ikut Patungan +5%</button></div></div>
+        <div class="regitem rv" data-pct="62"><h5 data-v="r2n">Mesin Cuci untuk Rumah Baru</h5><div class="rt" data-rp="3200000">Target Rp3.200.000</div><div class="bar"><i style="width:62%"></i></div><div class="regrow"><span class="regpct num">62%</span><button class="regbtn" type="button" data-v="regBtn2">Ikut Patungan +5%</button></div></div>
+        <div class="regitem rv" data-pct="45"><h5 data-v="r3n">Kulkas Dua Pintu</h5><div class="rt" data-rp="4800000">Target Rp4.800.000</div><div class="bar"><i style="width:45%"></i></div><div class="regrow"><span class="regpct num">45%</span><button class="regbtn" type="button" data-v="regBtn3">Ikut Patungan +5%</button></div></div>
+        <div class="regitem rv" data-pct="30"><h5 data-v="r4n">Peralatan Dapur Lengkap</h5><div class="rt" data-rp="1500000">Target Rp1.500.000</div><div class="bar"><i style="width:30%"></i></div><div class="regrow"><span class="regpct num">30%</span><button class="regbtn" type="button" data-v="regBtn4">Ikut Patungan +5%</button></div></div>
       </div>
     </div>
   </section>
@@ -1061,6 +1061,10 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(function(el){
     var k=el.getAttribute("data-i"); if(!T[LANG][k])return;
     if(k==="clFam") el.innerHTML=T[LANG][k]; else el.textContent=T[LANG][k];
+  });
+  document.querySelectorAll(".rt[data-rp]").forEach(function(el){
+    var n=+el.getAttribute("data-rp");
+    el.textContent=(LANG==="en")?("Target $"+Math.round(n/18000)):("Target Rp"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"."));
   });
   $("langBtn").textContent=(LANG==="id")?"EN":"ID";
   document.documentElement.lang=LANG;
