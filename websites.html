@@ -584,7 +584,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
   </nav>
   <div class="menu-foot">
     <span>Indonesia</span>
-    <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>
+    <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
   </div>
 </div>
 <main id="main">
@@ -745,7 +745,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
-        <a href="mailto:luthfiseptian1303@gmail.com">luthfiseptian1303@gmail.com</a>
+        <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
         <button class="copy-mail" id="copyMail" type="button" data-t="copyMail">Copy email</button>
       </div>
     </div>
@@ -844,7 +844,7 @@ setInterval(function(){ studio(); wcTick(); youLabel(); },30000);
 /* copy email */
 var cm=document.getElementById("copyMail");
 if(cm) cm.addEventListener("click",function(){
-  var addr="luthfiseptian1303@gmail.com", done=function(){ var old=cm.innerHTML; cm.textContent=curLang()==="id"?"Tersalin":"Copied"; setTimeout(function(){ cm.innerHTML=old; },1600); };
+  var addr="hello@carllab.web.id", done=function(){ var old=cm.innerHTML; cm.textContent=curLang()==="id"?"Tersalin":"Copied"; setTimeout(function(){ cm.innerHTML=old; },1600); };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(addr).then(done).catch(function(){ fallback(); }); } else fallback();
   function fallback(){ var ta=document.createElement("textarea"); ta.value=addr; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); }catch(e){} document.body.removeChild(ta); done(); }
 });
