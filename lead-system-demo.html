@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>ArusDetail — Lead System Demo · CarlLab</title>
+<meta name="robots" content="noindex">
+    <style>
+      :root{
+        --bg:#101211; --surface:#171917; --card:#1E201D; --card2:#24261F;
+        --bone:#EDE8DB; --muted:#A49E8D; --line:#2C2E2A;
+        --amber:#E0A526; --amber-dim:#8a6a1d; --green:#8FC97F; --red:#E4572E;
+        --r-s:8px; --r-m:16px; --r-pill:999px;
+        --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;
+        --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;background:var(--bg);color:var(--bone);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+      button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]),textarea{font-family:inherit}
+      button,select,input,textarea{min-height:40px}
+      :focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:4px}
+      ::selection{background:var(--amber);color:#101211}
+
+      .hazard{height:8px;background:repeating-linear-gradient(-45deg,var(--amber) 0 16px,#0a0b0a 16px 32px)}
+      .wrap{max-width:1280px;margin:0 auto;padding:0 24px 96px}
+
+      /* ---------- header ---------- */
+      header.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line)}
+      .brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+      .brand svg{flex:none}
+      .brand .bname{font-size:20px;font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+      .brand .bsub{font-family:var(--mono);font-size:12.8px;color:var(--muted);letter-spacing:.04em}
+      .clockbox{text-align:right}
+      .clock{font-family:var(--mono);font-size:20px;font-weight:700;line-height:1.1}
+      .status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.8px;color:var(--muted)}
+      .dot{width:8px;height:8px;border-radius:var(--r-pill);background:var(--green);flex:none}
+      .dot.closed{background:var(--red)}
+      .langtoggle{display:flex;border:1px solid var(--line);border-radius:var(--r-pill);overflow:hidden}
+      .langtoggle button{background:transparent;border:0;color:var(--muted);font-family:var(--mono);font-size:12.8px;font-weight:700;padding:8px 16px;cursor:pointer;min-height:40px}
+      .langtoggle button[aria-pressed="true"]{background:var(--amber);color:#101211}
+
+      /* ---------- hero ---------- */
+      .hero{padding:40px 0 8px}
+      .demoflag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--amber-dim);color:var(--amber);border-radius:var(--r-pill);padding:4px 16px;font-family:var(--mono);font-size:12.8px;font-weight:700;letter-spacing:.06em}
+      h1.display{font-size:clamp(39.1px,7vw,76.3px);line-height:.98;letter-spacing:-0.03em;font-weight:800;margin:16px 0 16px;max-width:14ch}
+      h1.display .amber{color:var(--amber)}
+      .hero p.lede{font-size:20px;color:var(--muted);max-width:62ch;margin:0}
+      .hero p.lede strong{color:var(--bone)}
+
+      /* ---------- KPI ---------- */
+      .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:32px 0 8px}
+      .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:16px}
+      .kpi .klabel{font-family:var(--mono);font-size:12.8px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;line-height:1.35;min-height:2.6em}
+      .kpi .kval{font-size:31.25px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;margin-top:8px}
+      .kpi .kval small{font-size:16px;color:var(--muted);font-weight:600}
+      .kpi.alert .kval{color:var(--red)}
+      .kpi.hot .kval{color:var(--amber)}
+
+      /* ---------- sections / cards ---------- */
+      section{margin-top:40px}
+      .sec-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+      .sec-head h2{font-size:25px;font-weight:800;letter-spacing:-0.02em;margin:0;line-height:1.15}
+      .sec-head .hint{color:var(--muted);font-size:16px}
+      .sec-head .count{font-family:var(--mono);font-size:12.8px;color:var(--amber);border:1px solid var(--amber-dim);border-radius:var(--r-pill);padding:2px 12px}
+      .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:24px}
+      .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+
+      /* ---------- form ---------- */
+      form .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .field{margin-bottom:16px}
+      .field label{display:block;font-family:var(--mono);font-size:12.8px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+      .field input,.field select,.field textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);color:var(--bone);padding:8px 12px;font-size:16px}
+      .field textarea{min-height:72px;resize:vertical}
+      .field .err{color:var(--red);font-size:12.8px;font-family:var(--mono);margin-top:4px;display:none}
+      .field.invalid input,.field.invalid select{border-color:var(--red)}
+      .field.invalid .err{display:block}
+      .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r-s);border:1px solid var(--line);background:var(--card);color:var(--bone);font-size:16px;font-weight:700;padding:8px 16px;cursor:pointer;min-height:44px;text-decoration:none}
+      .btn:hover{border-color:var(--muted)}
+      .btn.primary{background:var(--amber);border-color:var(--amber);color:#101211}
+      .btn.primary:hover{background:#eeb93c}
+      .btn.danger{color:var(--red);border-color:#5a2c1e}
+      .btn.small{min-height:40px;font-size:12.8px;font-family:var(--mono);padding:4px 12px}
+      .btn:disabled{opacity:.45;cursor:not-allowed}
+      .btnrow{display:flex;gap:8px;flex-wrap:wrap}
+
+      /* ---------- toolbar ---------- */
+      .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;margin-bottom:16px}
+      .toolbar input[type="search"],.toolbar select{background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);color:var(--bone);padding:8px 12px;font-size:16px}
+      .toolbar input[type="search"]{flex:1 1 200px}
+      .toolbar .spacer{flex:1}
+
+      /* ---------- board ---------- */
+      .board{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:start}
+      .col{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;min-height:120px}
+      .col h3{font-family:var(--mono);font-size:12.8px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;display:flex;justify-content:space-between;align-items:center}
+      .col h3 .n{background:var(--card);border:1px solid var(--line);border-radius:var(--r-pill);padding:0 8px;color:var(--amber)}
+      .col .colsum{font-family:var(--mono);font-size:12.8px;color:var(--muted);margin-bottom:16px}
+      .lead{background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:16px;margin-bottom:8px;cursor:pointer;text-align:left;width:100%;color:var(--bone);display:block}
+      .lead:hover{border-color:var(--muted)}
+      .lead .lname{font-weight:700;font-size:16px;line-height:1.3}
+      .lead .lpkg{color:var(--muted);font-size:12.8px;font-family:var(--mono);margin-top:2px}
+      .lead .lrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+      .lead .lval{font-weight:800}
+      .score{font-family:var(--mono);font-size:12.8px;font-weight:700;border-radius:var(--r-pill);padding:2px 8px;border:1px solid}
+      .score.hot{color:var(--amber);border-color:var(--amber-dim)}
+      .score.warm{color:var(--bone);border-color:var(--muted)}
+      .score.cold{color:var(--muted);border-color:var(--line)}
+      .chip{font-family:var(--mono);font-size:12.8px;border-radius:var(--r-pill);padding:2px 8px;background:var(--card2);color:var(--muted);border:1px solid var(--line)}
+      .chip.due{color:var(--bone)}
+      .chip.overdue{color:#fff;background:var(--red);border-color:var(--red);font-weight:700}
+      .lead select{margin-top:8px;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-s);color:var(--bone);padding:4px 8px;font-size:12.8px;font-family:var(--mono);min-height:36px}
+      .empty{color:var(--muted);font-family:var(--mono);font-size:12.8px;padding:8px 0}
+
+      /* ---------- queue ---------- */
+      .qitem{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);padding:16px;margin-bottom:8px}
+      .qitem .qmain{flex:1 1 280px;min-width:0}
+      .qitem .qname{font-weight:700}
+      .qitem .qdraft{color:var(--muted);font-size:12.8px;font-family:var(--mono);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .qitem .qbtns{display:flex;gap:8px;flex-wrap:wrap}
+
+      /* ---------- automation ---------- */
+      .pitlights{display:flex;gap:8px;margin-bottom:16px}
+      .pit{width:16px;height:16px;border-radius:var(--r-pill);background:var(--card2);border:1px solid var(--line)}
+      .pit.on{background:var(--amber);border-color:var(--amber)}
+      .pit.done{background:var(--green);border-color:var(--green)}
+      .steps{list-style:none;margin:0 0 16px;padding:0}
+      .steps li{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+      .steps li:last-child{border-bottom:0}
+      .steps li.active{color:var(--bone)}
+      .steps li.done{color:var(--muted)}
+      .steps li .st{font-family:var(--mono);font-size:12.8px;border:1px solid var(--line);border-radius:var(--r-pill);padding:0 8px;flex:none}
+      .steps li.done .st{color:var(--green);border-color:var(--green)}
+      .steps li.active .st{color:var(--amber);border-color:var(--amber)}
+      .progress{height:8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-pill);overflow:hidden;margin-bottom:16px}
+      .progress i{display:block;height:100%;width:0;background:var(--amber);transition:width .5s ease}
+      .log{background:#0b0c0b;border:1px solid var(--line);border-radius:var(--r-s);padding:16px;font-family:var(--mono);font-size:12.8px;line-height:1.7;max-height:224px;overflow:auto;color:var(--muted);white-space:pre-wrap;word-break:break-word}
+      .log .ok{color:var(--green)} .log .warn{color:var(--amber)}
+
+      /* ---------- reports ---------- */
+      .funnel .frow2{display:grid;grid-template-columns:120px 1fr 90px;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+      .funnel .frow2:last-child{border-bottom:0}
+      .funnel .flabel{font-family:var(--mono);font-size:12.8px;text-transform:uppercase;letter-spacing:.05em}
+      .funnel .fbar{height:16px;background:var(--card);border-radius:var(--r-s);overflow:hidden}
+      .funnel .fbar i{display:block;height:100%;background:var(--amber)}
+      .funnel .fbar i.green{background:var(--green)} .funnel .fbar i.red{background:var(--red)}
+      .funnel .fval{font-family:var(--mono);font-size:12.8px;text-align:right;color:var(--muted)}
+      table.src{width:100%;border-collapse:collapse}
+      table.src th,table.src td{padding:8px;text-align:left;border-bottom:1px solid var(--line);font-size:16px}
+      table.src th{font-family:var(--mono);font-size:12.8px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+      table.src td.num,table.src th.num{text-align:right;font-family:var(--mono)}
+
+      /* ---------- settings ---------- */
+      details.settings summary{cursor:pointer;font-size:20px;font-weight:800;letter-spacing:-0.01em;padding:8px 0;min-height:44px}
+      .setgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+
+      /* ---------- drawer ---------- */
+      .overlay{position:fixed;inset:0;background:rgba(5,6,5,.65);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40}
+      .overlay.open{opacity:1;pointer-events:auto}
+      .drawer{position:fixed;top:0;right:0;height:100dvh;width:min(448px,100vw);background:var(--surface);border-left:1px solid var(--line);z-index:50;transform:translateX(102%);transition:transform .3s ease;overflow-y:auto;padding:24px}
+      .drawer.open{transform:translateX(0)}
+      .drawer h2{font-size:25px;margin:0 0 4px;letter-spacing:-0.02em;line-height:1.15}
+      .drawer .dsub{color:var(--muted);font-family:var(--mono);font-size:12.8px}
+      .drawer h3{font-family:var(--mono);font-size:12.8px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:24px 0 8px}
+      .kv{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--line);font-size:16px}
+      .kv span:first-child{color:var(--muted)}
+      .kv span:last-child{font-weight:600;text-align:right}
+      .bar-row{display:grid;grid-template-columns:110px 1fr 36px;gap:12px;align-items:center;padding:4px 0;font-size:12.8px;font-family:var(--mono)}
+      .bar-row .bar{height:8px;background:var(--card);border-radius:var(--r-pill);overflow:hidden}
+      .bar-row .bar i{display:block;height:100%;background:var(--amber);width:0;transition:width .7s ease}
+      .bar-row .pts{text-align:right;color:var(--muted)}
+      .nba{background:var(--card);border:1px solid var(--amber-dim);border-radius:var(--r-s);padding:16px}
+      .nba .nba-t{font-weight:700}
+      .nba .nba-d{color:var(--muted);font-size:12.8px;margin-top:4px}
+      .draft{background:#0b0c0b;border:1px solid var(--line);border-radius:var(--r-s);padding:16px;font-size:16px;white-space:pre-wrap;word-break:break-word}
+      .timeline{list-style:none;margin:0;padding:0}
+      .timeline li{padding:8px 0 8px 16px;border-left:2px solid var(--line);position:relative;font-size:16px}
+      .timeline li::before{content:"";position:absolute;left:-5px;top:16px;width:8px;height:8px;border-radius:var(--r-pill);background:var(--amber)}
+      .timeline .tt{font-family:var(--mono);font-size:12.8px;color:var(--muted);display:block}
+      .drawer textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--r-s);color:var(--bone);padding:8px 12px;font-size:16px;min-height:80px;resize:vertical}
+      .drawer .close-x{position:absolute;top:16px;right:16px}
+
+      /* ---------- sticky bar / toast ---------- */
+      .stickybar{display:none}
+      .toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(480px,calc(100vw - 32px))}
+      .toast{background:var(--card2);border:1px solid var(--amber-dim);color:var(--bone);border-radius:var(--r-s);padding:12px 16px;font-size:16px;box-shadow:0 8px 32px rgba(0,0,0,.5);width:100%;text-align:center}
+      footer.foot{margin-top:48px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:12.8px;font-family:var(--mono);line-height:1.7}
+
+      @media (max-width:1100px){
+        .kpis{grid-template-columns:repeat(3,1fr)}
+        .board{grid-template-columns:repeat(2,1fr)}
+        .grid-2{grid-template-columns:1fr}
+        .setgrid{grid-template-columns:1fr 1fr}
+      }
+      @media (max-width:760px){
+        .wrap{padding:0 16px 120px}
+        .kpis{grid-template-columns:repeat(2,1fr)}
+        .board{grid-template-columns:1fr}
+        form .frow{grid-template-columns:1fr}
+        .setgrid{grid-template-columns:1fr}
+        .clockbox{text-align:left}
+        .clockbox .clock{font-size:16px}
+        .stickybar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--surface);border-top:1px solid var(--line);padding:8px;gap:8px}
+        .stickybar button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--bone);border-radius:var(--r-s);font-family:var(--mono);font-size:12.8px;font-weight:700;min-height:48px;cursor:pointer;position:relative}
+        .stickybar .badge{position:absolute;top:4px;right:8px;background:var(--red);color:#fff;border-radius:var(--r-pill);font-size:12.8px;padding:0 6px;line-height:1.6}
+        .toasts{bottom:80px}
+        .funnel .frow2{grid-template-columns:88px 1fr 72px}
+      }
+      @media (prefers-reduced-motion:reduce){
+        html{scroll-behavior:auto}
+        *,*::before,*::after{transition:none!important;animation:none!important}
+      }
+    </style>
+  <style>#demoBar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#E0A526;color:#191405;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-align:center;padding:8px 12px;text-transform:uppercase}body{padding-top:32px}@media(max-width:600px){#demoBar{font-size:10px;letter-spacing:.08em;line-height:1.45;padding:7px 10px}body{padding-top:48px}}</style>
+</head>
+  <body>
+<div id="demoBar">SAMPLE SYSTEM · The ArusDetail lead system by CarlLab — demo version</div>
+    <div class="hazard" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="top">
+        <div class="brand">
+          <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="8" fill="none" stroke="#E0A526" stroke-width="2"/><path d="M8 26 L20 10 L32 26" fill="none" stroke="#EDE8DB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="29" r="2.6" fill="#E0A526"/></svg>
+          <div>
+            <div class="bname">ArusDetail</div>
+            <div class="bsub" data-i18n="brandSub">LEAD COCKPIT · STUDIO DETAILING</div>
+          </div>
+        </div>
+        <div class="clockbox">
+          <div class="clock" id="clock">--:--:--</div>
+          <div class="status"><span class="dot" id="openDot"></span><span id="openText">…</span></div>
+        </div>
+        <div class="langtoggle" role="group" aria-label="Language / Bahasa">
+          <button type="button" id="langId" aria-pressed="true">ID</button>
+          <button type="button" id="langEn" aria-pressed="false">EN</button>
+        </div>
+      </header>
+
+      <div class="hero">
+        <span class="demoflag" data-i18n="demoFlag">DEMO — DATA CONTOH, BERJALAN LOKAL, TIDAK ADA PESAN YANG DIKIRIM OTOMATIS</span>
+        <h1 class="display"><span data-i18n="heroA">Leads masuk.</span><br /><span class="amber" data-i18n="heroB">Sistem yang mengejar.</span></h1>
+        <p class="lede" data-i18n="heroLede">Setiap pertanyaan masuk diberi waktu, skor, dan langkah berikutnya sebelum dingin. Coba formulirnya, jalankan automasinya, geser kartunya — semua terjadi di browser ini.</p>
+      </div>
+
+      <div class="kpis" id="kpis" aria-live="polite"></div>
+
+      <div class="grid-2">
+        <section id="intakeSec" aria-labelledby="intakeH">
+          <div class="sec-head"><h2 id="intakeH" data-i18n="intakeTitle">Simulasi lead masuk</h2><span class="hint" data-i18n="intakeHint">Seperti form di iklan / bio Instagram studio</span></div>
+          <form class="panel" id="intakeForm" novalidate>
+            <div class="frow">
+              <div class="field" id="f-name">
+                <label for="inName" data-i18n="fName">Nama</label>
+                <input id="inName" type="text" autocomplete="name" placeholder="cth. Rizky Pratama" />
+                <div class="err" data-i18n="eName">Nama wajib diisi (min. 2 huruf).</div>
+              </div>
+              <div class="field" id="f-phone">
+                <label for="inPhone" data-i18n="fPhone">WhatsApp</label>
+                <input id="inPhone" type="tel" autocomplete="tel" placeholder="08xx / +62…" />
+                <div class="err" data-i18n="ePhone">Nomor tidak valid — gunakan format 08… atau +62…</div>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="field">
+                <label for="inPkg" data-i18n="fPkg">Paket</label>
+                <select id="inPkg"></select>
+              </div>
+              <div class="field">
+                <label for="inVehicle" data-i18n="fVehicle">Ukuran kendaraan</label>
+                <select id="inVehicle">
+                  <option value="small" data-i18n="vehSmall">Kecil (hatchback / city car) · ×1.0</option>
+                  <option value="suv" data-i18n="vehSuv">SUV / crossover · ×1.15</option>
+                  <option value="mpv" data-i18n="vehMpv">MPV / besar · ×1.25</option>
+                </select>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="field">
+                <label for="inUrgency" data-i18n="fUrgency">Urgensi</label>
+                <select id="inUrgency">
+                  <option value="today" data-i18n="urgToday">Hari ini</option>
+                  <option value="week" selected data-i18n="urgWeek">Minggu ini</option>
+                  <option value="month" data-i18n="urgMonth">Bulan ini</option>
+                  <option value="browsing" data-i18n="urgBrowse">Cuma tanya dulu</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="inSource" data-i18n="fSource">Sumber</label>
+                <select id="inSource">
+                  <option value="instagram">Instagram</option>
+                  <option value="google">Google</option>
+                  <option value="referral" data-i18n="srcReferral">Referral / rekomendasi</option>
+                  <option value="walkin">Walk-in</option>
+                  <option value="tiktok">TikTok</option>
+                </select>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="field">
+                <label for="inBudget" data-i18n="fBudget">Kisaran budget</label>
+                <select id="inBudget">
+                  <option value="b1">&lt; Rp 1 jt</option>
+                  <option value="b2">Rp 1–2 jt</option>
+                  <option value="b3" selected>Rp 2–3,5 jt</option>
+                  <option value="b4">Rp 3,5–5 jt</option>
+                  <option value="b5">&gt; Rp 5 jt</option>
+                  <option value="flex" data-i18n="budFlex">Fleksibel, lihat hasil dulu</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="inDate" data-i18n="fDate">Tanggal diinginkan</label>
+                <input id="inDate" type="date" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="inNotes" data-i18n="fNotes">Catatan</label>
+              <textarea id="inNotes" placeholder="cth. Ada baret halus di pintu kiri, mau sekalian dicek."></textarea>
+            </div>
+            <button class="btn primary" type="submit" style="width:100%" data-i18n="submitLead">Masukkan lead → skor & rute otomatis</button>
+          </form>
+        </section>
+
+        <section id="autoSec" aria-labelledby="autoH">
+          <div class="sec-head"><h2 id="autoH" data-i18n="autoTitle">Automasi: bereskan data berantakan</h2></div>
+          <div class="panel">
+            <p style="margin:0 0 16px;color:var(--muted)" data-i18n="autoDesc">Satu klik memuat 10 baris mentah dari spreadsheet (nomor duplikat beda format, sumber kosong, paket ditulis bebas), lalu membersihkan, menggabungkan, memberi skor, dan memasukkannya ke papan.</p>
+            <div class="pitlights" id="pitLights" aria-hidden="true"><span class="pit"></span><span class="pit"></span><span class="pit"></span><span class="pit"></span><span class="pit"></span></div>
+            <ol class="steps" id="autoSteps">
+              <li data-step="0"><span class="st">01</span><span data-i18n="step0">Muat 10 baris mentah</span></li>
+              <li data-step="1"><span class="st">02</span><span data-i18n="step1">Normalisasi nomor WhatsApp</span></li>
+              <li data-step="2"><span class="st">03</span><span data-i18n="step2">Gabung duplikat</span></li>
+              <li data-step="3"><span class="st">04</span><span data-i18n="step3">Petakan paket dari teks bebas</span></li>
+              <li data-step="4"><span class="st">05</span><span data-i18n="step4">Skor & masukkan ke papan</span></li>
+            </ol>
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="autoProgWrap"><i id="autoProg"></i></div>
+            <div class="btnrow" style="margin-bottom:16px">
+              <button class="btn primary" type="button" id="runAuto" data-i18n="runAuto">Jalankan automasi</button>
+              <span class="chip" id="autoSummary" style="align-self:center"></span>
+            </div>
+            <div class="log" id="autoLog" aria-live="polite">—</div>
+          </div>
+        </section>
+      </div>
+
+      <section id="boardSec" aria-labelledby="boardH">
+        <div class="sec-head"><h2 id="boardH" data-i18n="boardTitle">Papan pipeline</h2><span class="hint" data-i18n="boardHint">Klik kartu untuk detail · ubah tahap dari dropdown kartu</span></div>
+        <div class="toolbar" role="search">
+          <input type="search" id="qSearch" data-i18n-ph="searchPh" placeholder="Cari nama / nomor / paket…" aria-label="Search" />
+          <select id="qStage" aria-label="Stage filter"></select>
+          <select id="qSource" aria-label="Source filter"></select>
+          <select id="qPrio" aria-label="Priority filter">
+            <option value="all" data-i18n="prioAll">Semua prioritas</option>
+            <option value="hot" data-i18n="prioHot">Panas (≥70)</option>
+            <option value="warm" data-i18n="prioWarm">Hangat (45–69)</option>
+            <option value="cold" data-i18n="prioCold">Dingin (&lt;45)</option>
+          </select>
+          <select id="qSort" aria-label="Sort">
+            <option value="score" data-i18n="sortScore">Skor tertinggi</option>
+            <option value="value" data-i18n="sortValue">Nilai terbesar</option>
+            <option value="due" data-i18n="sortDue">Follow-up terdekat</option>
+            <option value="newest" data-i18n="sortNew">Terbaru</option>
+          </select>
+          <span class="spacer"></span>
+          <button class="btn small" type="button" id="btnSummary" data-i18n="btnSummary">Salin ringkasan</button>
+          <button class="btn small" type="button" id="btnCsv">Export CSV</button>
+          <button class="btn small" type="button" id="btnBackup">Backup JSON</button>
+          <button class="btn small" type="button" id="btnImport" data-i18n="btnImport">Import JSON</button>
+          <input type="file" id="fileImport" accept="application/json" hidden />
+          <button class="btn small danger" type="button" id="btnReset" data-i18n="btnReset">Reset demo</button>
+        </div>
+        <div class="board" id="board"></div>
+      </section>
+
+      <section id="queueSec" aria-labelledby="queueH">
+        <div class="sec-head"><h2 id="queueH" data-i18n="queueTitle">Antrian follow-up</h2><span class="count" id="queueCount">0</span><span class="hint" data-i18n="queueHint">Jatuh tempo ≤ 24 jam atau terlambat · terlambat dulu, lalu skor tertinggi</span></div>
+        <div id="queueList"></div>
+      </section>
+
+      <div class="grid-2">
+        <section aria-labelledby="repH">
+          <div class="sec-head"><h2 id="repH" data-i18n="repTitle">Laporan: corong pipeline</h2></div>
+          <div class="panel funnel" id="funnel"></div>
+        </section>
+        <section aria-labelledby="srcH">
+          <div class="sec-head"><h2 id="srcH" data-i18n="srcTitle">Performa sumber</h2></div>
+          <div class="panel" style="overflow-x:auto">
+            <table class="src">
+              <thead><tr><th data-i18n="thSource">Sumber</th><th class="num" data-i18n="thLeads">Lead</th><th class="num" data-i18n="thHot">Panas</th><th class="num" data-i18n="thDeal">Nilai deal</th></tr></thead>
+              <tbody id="srcBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section aria-labelledby="setH">
+        <div class="panel">
+          <details class="settings" id="settingsBox">
+            <summary id="setH" data-i18n="setTitle">Pengaturan — harga paket, SLA & kurs demo</summary>
+            <p style="color:var(--muted);margin:8px 0 0" data-i18n="setDesc">Mengubah harga atau kurs menghitung ulang nilai & skor semua lead secara langsung.</p>
+            <div class="setgrid" id="setGrid"></div>
+            <div class="setgrid">
+              <div class="field"><label for="setSla" data-i18n="setSla">SLA respons pertama (menit)</label><input id="setSla" type="number" min="1" max="1440" /></div>
+              <div class="field"><label for="setKurs" data-i18n="setKurs">Kurs demo USD (Rp per $1)</label><input id="setKurs" type="number" min="1000" step="100" /></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <footer class="foot" data-i18n="foot">ArusDetail adalah studio fiktif. Semua nama, nomor, dan angka di halaman ini data contoh yang dibuat untuk demo; tidak ada pesan yang benar-benar dikirim dan tidak ada data yang meninggalkan browser ini.</footer>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dName" hidden>
+      <button class="btn small close-x" type="button" id="drawerClose" aria-label="Close">✕</button>
+      <div id="drawerBody"></div>
+    </aside>
+
+    <nav class="stickybar" aria-label="Quick actions">
+      <button type="button" id="sbAdd" data-i18n="sbAdd">+ Lead</button>
+      <button type="button" id="sbAuto" data-i18n="sbAuto">Automasi</button>
+      <button type="button" id="sbQueue"><span data-i18n="sbQueue">Follow-up</span><span class="badge" id="sbBadge" hidden>0</span></button>
+      <button type="button" id="sbBoard" data-i18n="sbBoard">Papan</button>
+    </nav>
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <script>
+    "use strict";
+    /* ================= constants ================= */
+    var LS_KEY = "arusdetail-lead-v1";
+    var STAGES = ["new","contacted","booking","deal","lost"];
+    var STAGE_PROB = {new:0.10, contacted:0.30, booking:0.60, deal:1, lost:0};
+    var PKG_POINTS = {wash:8, interior:14, polish:20, full:24, coating:30};
+    var URG_POINTS = {today:25, week:18, month:10, browsing:4};
+    var SRC_POINTS = {referral:15, walkin:12, google:10, instagram:8, tiktok:6, unknown:5};
+    var VEH_MULT = {small:1.0, suv:1.15, mpv:1.25};
+    var BUDGETS = {b1:{max:1000000}, b2:{max:2000000}, b3:{max:3500000}, b4:{max:5000000}, b5:{max:Infinity}, flex:{max:Infinity}};
+    var DEFAULT_SETTINGS = {prices:{wash:350000, interior:850000, polish:1850000, full:2800000, coating:4500000}, sla:30, kurs:18000};
+
+    var I18N = {
+      id:{
+        brandSub:"LEAD COCKPIT · STUDIO DETAILING",
+        demoFlag:"DEMO — DATA CONTOH, BERJALAN LOKAL, TIDAK ADA PESAN YANG DIKIRIM OTOMATIS",
+        heroA:"Leads masuk.", heroB:"Sistem yang mengejar.",
+        heroLede:"Setiap pertanyaan masuk diberi waktu, skor, dan langkah berikutnya sebelum dingin. Coba formulirnya, jalankan automasinya, geser kartunya — semua terjadi di browser ini.",
+        openNow:"Buka · tutup 20.00 WIB", closedNow:"Tutup · buka 09.00 WIB",
+        kActive:"Lead aktif", kHot:"Lead panas ≥70", kDue:"Follow-up jatuh tempo", kValue:"Nilai pipeline", kForecast:"Prakiraan tertimbang", kDeals:"Deal selesai",
+        intakeTitle:"Simulasi lead masuk", intakeHint:"Seperti form di iklan / bio Instagram studio",
+        fName:"Nama", fPhone:"WhatsApp", fPkg:"Paket", fVehicle:"Ukuran kendaraan", fUrgency:"Urgensi", fSource:"Sumber", fBudget:"Kisaran budget", fDate:"Tanggal diinginkan", fNotes:"Catatan",
+        eName:"Nama wajib diisi (min. 2 huruf).", ePhone:"Nomor tidak valid — gunakan format 08… atau +62…",
+        vehSmall:"Kecil (hatchback / city car) · ×1.0", vehSuv:"SUV / crossover · ×1.15", vehMpv:"MPV / besar · ×1.25",
+        urgToday:"Hari ini", urgWeek:"Minggu ini", urgMonth:"Bulan ini", urgBrowse:"Cuma tanya dulu",
+        srcReferral:"Referral / rekomendasi", budFlex:"Fleksibel, lihat hasil dulu",
+        submitLead:"Masukkan lead → skor & rute otomatis",
+        autoTitle:"Automasi: bereskan data berantakan",
+        autoDesc:"Satu klik memuat 10 baris mentah dari spreadsheet (nomor duplikat beda format, sumber kosong, paket ditulis bebas), lalu membersihkan, menggabungkan, memberi skor, dan memasukkannya ke papan.",
+        step0:"Muat 10 baris mentah", step1:"Normalisasi nomor WhatsApp", step2:"Gabung duplikat", step3:"Petakan paket dari teks bebas", step4:"Skor & masukkan ke papan",
+        runAuto:"Jalankan automasi", running:"Berjalan…",
+        boardTitle:"Papan pipeline", boardHint:"Klik kartu untuk detail · ubah tahap dari dropdown kartu",
+        searchPh:"Cari nama / nomor / paket…",
+        prioAll:"Semua prioritas", prioHot:"Panas (≥70)", prioWarm:"Hangat (45–69)", prioCold:"Dingin (<45)",
+        sortScore:"Skor tertinggi", sortValue:"Nilai terbesar", sortDue:"Follow-up terdekat", sortNew:"Terbaru",
+        fStageAll:"Semua tahap", fSourceAll:"Semua sumber",
+        btnSummary:"Salin ringkasan", btnImport:"Import JSON", btnReset:"Reset demo",
+        queueTitle:"Antrian follow-up", queueHint:"Jatuh tempo ≤ 24 jam atau terlambat · terlambat dulu, lalu skor tertinggi",
+        queueEmpty:"Antrian bersih — tidak ada follow-up yang jatuh tempo. Kerja bagus.",
+        repTitle:"Laporan: corong pipeline", srcTitle:"Performa sumber",
+        thSource:"Sumber", thLeads:"Lead", thHot:"Panas", thDeal:"Nilai deal",
+        setTitle:"Pengaturan — harga paket, SLA & kurs demo", setDesc:"Mengubah harga atau kurs menghitung ulang nilai & skor semua lead secara langsung.",
+        setSla:"SLA respons pertama (menit)", setKurs:"Kurs demo USD (Rp per $1)", setPrice:"Harga — ",
+        foot:"ArusDetail adalah studio fiktif. Semua nama, nomor, dan angka di halaman ini data contoh yang dibuat untuk demo; tidak ada pesan yang benar-benar dikirim dan tidak ada data yang meninggalkan browser ini.",
+        sbAdd:"+ Lead", sbAuto:"Automasi", sbQueue:"Follow-up", sbBoard:"Papan",
+        stage:{new:"Baru", contacted:"Dihubungi", booking:"Booking", deal:"Deal", lost:"Hilang"},
+        pkg:{wash:"Cuci & Wax", interior:"Interior Deep Clean", polish:"Poles & Paint Correction", full:"Full Detailing", coating:"Ceramic Coating"},
+        src:{instagram:"Instagram", google:"Google", referral:"Referral", walkin:"Walk-in", tiktok:"TikTok", unknown:"Tidak diketahui"},
+        urg:{today:"Hari ini", week:"Minggu ini", month:"Bulan ini", browsing:"Cuma tanya"},
+        veh:{small:"Kecil", suv:"SUV", mpv:"MPV"},
+        hot:"Panas", warm:"Hangat", cold:"Dingin",
+        dueIn:"FU {t}", overdueBy:"Terlambat {t}", dueToday:"FU hari ini",
+        h:"j", m:"mnt", d:"hari",
+        emptyCol:"— kosong —",
+        copyDraft:"Salin draf", contacted:"Sudah dihubungi", snooze:"Tunda 1 hari",
+        toastCopied:"Draf tersalin — tempel ke WhatsApp secara manual.", toastSummary:"Ringkasan pipeline tersalin.",
+        toastAdded:"Lead {name} masuk — skor {score} ({label}).", toastMerged:"Nomor sudah ada — digabung ke lead {name}, skor diperbarui ke {score}.",
+        toastContacted:"{name} ditandai sudah dihubungi. Follow-up berikutnya besok.", toastSnoozed:"Follow-up {name} ditunda 1 hari.",
+        toastStage:"{name} pindah ke tahap {stage}.", toastLost:"{name} ditandai hilang.", toastDeleted:"Lead {name} dihapus.",
+        toastReset:"Demo direset ke 9 lead contoh awal.", toastImportOk:"Import berhasil: {n} lead dimuat.", toastImportBad:"File tidak valid — import dibatalkan.",
+        toastSettings:"Pengaturan disimpan — nilai & skor dihitung ulang.", toastNotes:"Catatan disimpan.",
+        dContact:"Kontak", dRaw:"Nomor mentah", dNorm:"Nomor ternormalisasi", dPkg:"Paket", dValue:"Nilai", dVehicle:"Kendaraan", dUrg:"Urgensi", dSrc:"Sumber", dBudget:"Budget", dDate:"Tanggal diinginkan", dCreated:"Masuk", dLast:"Kontak terakhir", dNext:"Follow-up berikutnya",
+        dScore:"Rincian skor", dScoreTotal:"Total", scPkg:"Nilai paket", scUrg:"Urgensi", scBud:"Kecocokan budget", scSrc:"Kualitas sumber", scComp:"Kelengkapan data",
+        dNba:"Langkah terbaik berikutnya", dDraft:"Draf follow-up WhatsApp", dDraftNote:"Draf saja — tidak pernah terkirim otomatis. Salin lalu kirim manual.",
+        dTimeline:"Linimasa aktivitas", dNotes:"Catatan (bisa diubah)", saveNotes:"Simpan catatan", markLost:"Tandai hilang", del:"Hapus lead",
+        actCreated:"Lead masuk lewat formulir", actImported:"Diimpor oleh automasi", actMerged:"Data digabung dari kiriman duplikat", actStage:"Pindah ke tahap {stage}", actContacted:"Dihubungi — follow-up dijadwal ulang", actSnoozed:"Follow-up ditunda 1 hari", actNote:"Catatan diperbarui", actScored:"Skor dihitung: {score}",
+        nbaOverdueT:"Hubungi sekarang — sudah terlambat", nbaOverdueD:"Follow-up lewat {t}. Lead panas membusuk per jam; telepon dulu, chat kemudian.",
+        nbaNewHotT:"Balas dalam {sla} menit (SLA)", nbaNewHotD:"Lead panas baru masuk. Kecepatan respons pertama adalah pembeda terbesar untuk paket bernilai tinggi.",
+        nbaNewT:"Kirim sapaan + pertanyaan kualifikasi", nbaNewD:"Konfirmasi paket, ukuran kendaraan, dan tanggal yang diinginkan sebelum menawarkan jadwal.",
+        nbaContactedT:"Kirim 2 opsi jadwal booking", nbaContactedD:"Sudah terhubung — kunci tanggalnya sekarang selagi niat masih hangat.",
+        nbaBookingT:"Konfirmasi jadwal & minta DP", nbaBookingD:"Booking tanpa DP mudah batal. Kirim ringkasan paket + nominal DP hari ini.",
+        nbaDealT:"Minta ulasan & referral", nbaDealD:"Deal selesai. Momen terbaik meminta ulasan Google dan satu nama teman.",
+        nbaColdT:"Masukkan ke urutan nurture mingguan", nbaColdD:"Skor rendah — jangan kejar harian. Kirim konten hasil pengerjaan seminggu sekali.",
+        draft:"Halo {name}, saya dari ArusDetail. Terima kasih sudah tanya-tanya soal {pkg} untuk {veh} Anda (estimasi {value}). {dateLine}Masih ada slot minggu ini — mau saya amankan jadwalnya? Balas pesan ini saja, tidak perlu telepon.",
+        draftDate:"Anda sempat menyebut tanggal {date}. ",
+        summaryHead:"Ringkasan pipeline ArusDetail", sumActive:"Lead aktif", sumHot:"Panas", sumDue:"Jatuh tempo", sumValue:"Nilai pipeline", sumForecast:"Prakiraan", sumDeals:"Deal",
+        autoLogStart:"Memuat spreadsheet mentah 'leads-mess.xlsx'… 10 baris ditemukan.",
+        autoLogNorm:"Normalisasi: {n} nomor dibersihkan ke format +62…",
+        autoLogMerge:"Duplikat: {n} baris digabung ke lead yang sudah ada.",
+        autoLogMap:"Pemetaan paket: teks bebas → {n} paket katalog.",
+        autoLogDone:"Selesai: {added} lead baru masuk papan, {merged} digabung. Total lead sekarang {total}.",
+        autoSummaryTxt:"Terakhir: +{added} baru · {merged} gabung",
+        csvName:"Nama", csvPhone:"WhatsApp", csvPkg:"Paket", csvStage:"Tahap", csvScore:"Skor", csvValue:"Nilai (Rp)", csvSource:"Sumber", csvDue:"Follow-up",
+        confirmReset:"Yakin reset? Klik lagi untuk konfirmasi",
+        relNow:"baru saja", relMin:"{n} mnt lalu", relHour:"{n} jam lalu", relDay:"{n} hari lalu",
+        inMin:"{n} mnt lagi", inHour:"{n} jam lagi", inDay:"{n} hari lagi",
+        funnelNote:"leads · nilai"
+      },
+      en:{
+        brandSub:"LEAD COCKPIT · DETAILING STUDIO",
+        demoFlag:"DEMO — SAMPLE DATA, RUNS LOCALLY, NO MESSAGE IS EVER SENT AUTOMATICALLY",
+        heroA:"Leads come in.", heroB:"The system chases them.",
+        heroLede:"Every enquiry gets timed, scored, and routed to its next action before it goes cold. Try the form, run the automation, move the cards — everything happens in this browser.",
+        openNow:"Open · closes 8:00 PM WIB", closedNow:"Closed · opens 9:00 AM WIB",
+        kActive:"Active leads", kHot:"Hot leads ≥70", kDue:"Follow-ups due", kValue:"Pipeline value", kForecast:"Weighted forecast", kDeals:"Deals closed",
+        intakeTitle:"Incoming lead simulator", intakeHint:"Like the form behind the studio's ads / Instagram bio",
+        fName:"Name", fPhone:"WhatsApp", fPkg:"Package", fVehicle:"Vehicle size", fUrgency:"Urgency", fSource:"Source", fBudget:"Budget range", fDate:"Preferred date", fNotes:"Notes",
+        eName:"Name is required (min. 2 letters).", ePhone:"Invalid number — use the 08… or +62… format",
+        vehSmall:"Small (hatchback / city car) · ×1.0", vehSuv:"SUV / crossover · ×1.15", vehMpv:"MPV / large · ×1.25",
+        urgToday:"Today", urgWeek:"This week", urgMonth:"This month", urgBrowse:"Just asking",
+        srcReferral:"Referral / word of mouth", budFlex:"Flexible, show me results first",
+        submitLead:"Add lead → auto score & route",
+        autoTitle:"Automation: clean up messy data",
+        autoDesc:"One click loads 10 raw spreadsheet rows (duplicate numbers in mixed formats, missing sources, free-text packages), then cleans, merges, scores, and routes them onto the board.",
+        step0:"Load 10 raw rows", step1:"Normalise WhatsApp numbers", step2:"Merge duplicates", step3:"Map packages from free text", step4:"Score & route to the board",
+        runAuto:"Run automation", running:"Running…",
+        boardTitle:"Pipeline board", boardHint:"Click a card for detail · change stage from the card dropdown",
+        searchPh:"Search name / number / package…",
+        prioAll:"All priorities", prioHot:"Hot (≥70)", prioWarm:"Warm (45–69)", prioCold:"Cold (<45)",
+        sortScore:"Highest score", sortValue:"Highest value", sortDue:"Soonest follow-up", sortNew:"Newest",
+        fStageAll:"All stages", fSourceAll:"All sources",
+        btnSummary:"Copy summary", btnImport:"Import JSON", btnReset:"Reset demo",
+        queueTitle:"Follow-up queue", queueHint:"Due within 24h or overdue · overdue first, then highest score",
+        queueEmpty:"Queue is clear — no follow-up is due. Good work.",
+        repTitle:"Report: pipeline funnel", srcTitle:"Source performance",
+        thSource:"Source", thLeads:"Leads", thHot:"Hot", thDeal:"Deal value",
+        setTitle:"Settings — package prices, SLA & demo rate", setDesc:"Changing a price or the rate recomputes every lead's value & score instantly.",
+        setSla:"First-response SLA (minutes)", setKurs:"USD demo rate (Rp per $1)", setPrice:"Price — ",
+        foot:"ArusDetail is a fictional studio. Every name, number, and figure on this page is sample data created for this demo; no message is ever really sent and no data leaves this browser.",
+        sbAdd:"+ Lead", sbAuto:"Automation", sbQueue:"Follow-up", sbBoard:"Board",
+        stage:{new:"New", contacted:"Contacted", booking:"Booking", deal:"Deal", lost:"Lost"},
+        pkg:{wash:"Wash & Wax", interior:"Interior Deep Clean", polish:"Polish & Paint Correction", full:"Full Detailing", coating:"Ceramic Coating"},
+        src:{instagram:"Instagram", google:"Google", referral:"Referral", walkin:"Walk-in", tiktok:"TikTok", unknown:"Unknown"},
+        urg:{today:"Today", week:"This week", month:"This month", browsing:"Just asking"},
+        veh:{small:"Small", suv:"SUV", mpv:"MPV"},
+        hot:"Hot", warm:"Warm", cold:"Cold",
+        dueIn:"FU in {t}", overdueBy:"Overdue {t}", dueToday:"FU today",
+        h:"h", m:"m", d:"d",
+        emptyCol:"— empty —",
+        copyDraft:"Copy draft", contacted:"Mark contacted", snooze:"Snooze 1 day",
+        toastCopied:"Draft copied — paste it into WhatsApp manually.", toastSummary:"Pipeline summary copied.",
+        toastAdded:"Lead {name} added — score {score} ({label}).", toastMerged:"Number already exists — merged into {name}, score updated to {score}.",
+        toastContacted:"{name} marked as contacted. Next follow-up tomorrow.", toastSnoozed:"{name}'s follow-up snoozed by 1 day.",
+        toastStage:"{name} moved to {stage}.", toastLost:"{name} marked as lost.", toastDeleted:"Lead {name} deleted.",
+        toastReset:"Demo reset to the original 9 sample leads.", toastImportOk:"Import succeeded: {n} leads loaded.", toastImportBad:"Invalid file — import cancelled.",
+        toastSettings:"Settings saved — values & scores recomputed.", toastNotes:"Notes saved.",
+        dContact:"Contact", dRaw:"Raw number", dNorm:"Normalised number", dPkg:"Package", dValue:"Value", dVehicle:"Vehicle", dUrg:"Urgency", dSrc:"Source", dBudget:"Budget", dDate:"Preferred date", dCreated:"Came in", dLast:"Last contact", dNext:"Next follow-up",
+        dScore:"Score breakdown", dScoreTotal:"Total", scPkg:"Package value", scUrg:"Urgency", scBud:"Budget fit", scSrc:"Source quality", scComp:"Data completeness",
+        dNba:"Next best action", dDraft:"WhatsApp follow-up draft", dDraftNote:"Draft only — never sent automatically. Copy it and send manually.",
+        dTimeline:"Activity timeline", dNotes:"Notes (editable)", saveNotes:"Save notes", markLost:"Mark lost", del:"Delete lead",
+        actCreated:"Lead came in via the form", actImported:"Imported by automation", actMerged:"Data merged from a duplicate submission", actStage:"Moved to stage {stage}", actContacted:"Contacted — follow-up rescheduled", actSnoozed:"Follow-up snoozed by 1 day", actNote:"Notes updated", actScored:"Score computed: {score}",
+        nbaOverdueT:"Contact now — already overdue", nbaOverdueD:"Follow-up is {t} late. Hot leads rot by the hour; call first, chat later.",
+        nbaNewHotT:"Reply within {sla} minutes (SLA)", nbaNewHotD:"A hot lead just landed. First-response speed is the biggest differentiator on high-value packages.",
+        nbaNewT:"Send a greeting + qualifying questions", nbaNewD:"Confirm package, vehicle size, and preferred date before offering a slot.",
+        nbaContactedT:"Send 2 booking slot options", nbaContactedD:"Already connected — lock the date now while intent is warm.",
+        nbaBookingT:"Confirm the slot & request a deposit", nbaBookingD:"Bookings without a deposit cancel easily. Send the package summary + deposit amount today.",
+        nbaDealT:"Ask for a review & a referral", nbaDealD:"Deal closed. This is the best moment to ask for a Google review and one friend's name.",
+        nbaColdT:"Move to a weekly nurture sequence", nbaColdD:"Low score — don't chase daily. Send finished-work content once a week.",
+        draft:"Hi {name}, this is ArusDetail. Thanks for asking about {pkg} for your {veh} (estimate {value}). {dateLine}We still have slots this week — shall I hold one for you? Just reply to this message, no call needed.",
+        draftDate:"You mentioned {date}. ",
+        summaryHead:"ArusDetail pipeline summary", sumActive:"Active leads", sumHot:"Hot", sumDue:"Due", sumValue:"Pipeline value", sumForecast:"Forecast", sumDeals:"Deals",
+        autoLogStart:"Loading raw spreadsheet 'leads-mess.xlsx'… 10 rows found.",
+        autoLogNorm:"Normalise: {n} numbers cleaned to the +62… format.",
+        autoLogMerge:"Duplicates: {n} rows merged into existing leads.",
+        autoLogMap:"Package mapping: free text → {n} catalogue packages.",
+        autoLogDone:"Done: {added} new leads on the board, {merged} merged. Total leads now {total}.",
+        autoSummaryTxt:"Last run: +{added} new · {merged} merged",
+        csvName:"Name", csvPhone:"WhatsApp", csvPkg:"Package", csvStage:"Stage", csvScore:"Score", csvValue:"Value (Rp)", csvSource:"Source", csvDue:"Follow-up",
+        confirmReset:"Sure? Click again to confirm reset",
+        relNow:"just now", relMin:"{n}m ago", relHour:"{n}h ago", relDay:"{n}d ago",
+        inMin:"in {n}m", inHour:"in {n}h", inDay:"in {n}d",
+        funnelNote:"leads · value"
+      }
+    };
+
+    /* ================= state ================= */
+    var state = {lang:"id", settings:JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), leads:[]};
+    var filters = {q:"", stage:"all", source:"all", prio:"all", sort:"score"};
+    var drawerLeadId = null;
+
+    function t(k){ return I18N[state.lang][k] || k; }
+    function tt(k, vars){ var s = t(k); if(vars){ for(var key in vars){ s = s.replace("{"+key+"}", vars[key]); } } return s; }
+    function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+    function seedLeads(){
+      var now = Date.now(), H = 3600000, D = 24*H;
+      function mk(o){ o.id = "L" + Math.random().toString(36).slice(2,9); o.activity = [{t:o.createdAt, k:"actCreated"}]; return o; }
+      return [
+        mk({name:"Rizky Pratama", phoneRaw:"0812-3456-7890", phone:"+6281234567890", pkg:"coating", vehicle:"suv", urgency:"today", source:"instagram", budget:"b4", date:isoDate(now+2*D), notes:"Mobil baru turun dari dealer, mau langsung dicoating.", stage:"new", createdAt:now-2*H, lastContact:null, nextFollow:now-3*H}),
+        mk({name:"Sinta Maharani", phoneRaw:"+62 813 9988 2211", phone:"+6281399882211", pkg:"full", vehicle:"mpv", urgency:"week", source:"referral", budget:"b3", date:isoDate(now+4*D), notes:"Referral dari pelanggan bulan lalu. Interior bau apek.", stage:"contacted", createdAt:now-26*H, lastContact:now-20*H, nextFollow:now+5*H}),
+        mk({name:"Bima Aditya", phoneRaw:"0857 1122 3344", phone:"+6285711223344", pkg:"polish", vehicle:"small", urgency:"week", source:"google", budget:"b2", date:isoDate(now+3*D), notes:"Baret halus di kap mesin.", stage:"booking", createdAt:now-2*D, lastContact:now-1*D, nextFollow:now+8*H}),
+        mk({name:"Dewi Lestari", phoneRaw:"0813-4455-6677", phone:"+6281344556677", pkg:"interior", vehicle:"suv", urgency:"month", source:"instagram", budget:"b2", date:"", notes:"Jok kulit mulai retak, tanya harga dulu.", stage:"contacted", createdAt:now-3*D, lastContact:now-2*D, nextFollow:now+20*H}),
+        mk({name:"Andi Kurniawan", phoneRaw:"+62821 6677 8899", phone:"+6282166778899", pkg:"coating", vehicle:"mpv", urgency:"today", source:"referral", budget:"b5", date:isoDate(now+1*D), notes:"Mau coating sebelum road trip keluarga.", stage:"booking", createdAt:now-30*H, lastContact:now-6*H, nextFollow:now-1*H}),
+        mk({name:"Putri Ayu Ningrum", phoneRaw:"0896 7788 9900", phone:"+6289677889900", pkg:"wash", vehicle:"small", urgency:"browsing", source:"tiktok", budget:"b1", date:"", notes:"Lihat video before-after di TikTok.", stage:"new", createdAt:now-5*H, lastContact:null, nextFollow:now+30*H}),
+        mk({name:"Fajar Ramadhan", phoneRaw:"0812 9900 1122", phone:"+6281299001122", pkg:"full", vehicle:"suv", urgency:"week", source:"walkin", budget:"b3", date:isoDate(now+6*D), notes:"Datang langsung ke studio, sudah lihat contoh hasil.", stage:"deal", createdAt:now-6*D, lastContact:now-1*D, nextFollow:now+7*D}),
+        mk({name:"Maya Kusuma", phoneRaw:"+62 878 3344 5566", phone:"+6287833445566", pkg:"polish", vehicle:"mpv", urgency:"month", source:"google", budget:"b2", date:"", notes:"Bandingkan harga dengan dua studio lain.", stage:"lost", createdAt:now-8*D, lastContact:now-5*D, nextFollow:now+9*D}),
+        mk({name:"Hendra Wijaya", phoneRaw:"0852-2211-9988", phone:"+6285222119988", pkg:"interior", vehicle:"small", urgency:"today", source:"instagram", budget:"b1", date:isoDate(now+1*D), notes:"AC bau, minta deep clean interior secepatnya.", stage:"new", createdAt:now-50*60*1000, lastContact:null, nextFollow:now+2*H})
+      ];
+    }
+    function isoDate(ts){ var d = new Date(ts); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+
+    function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({lang:state.lang, settings:state.settings, leads:state.leads})); }catch(e){} }
+    function load(){
+      try{
+        var raw = localStorage.getItem(LS_KEY);
+        if(raw){ var p = JSON.parse(raw); if(p && p.leads && p.leads.length){ state = p; return; } }
+      }catch(e){}
+      state = {lang:"id", settings:JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), leads:seedLeads()};
+      state.leads.forEach(recompute);
+      save();
+    }
+
+    /* ================= domain logic ================= */
+    function normalizePhone(raw){
+      if(!raw) return null;
+      var d = String(raw).replace(/\D/g,"");
+      if(d.indexOf("62")===0) d = d.slice(2);
+      else if(d.indexOf("0")===0) d = d.slice(1);
+      if(d.charAt(0)!=="8" || d.length<9 || d.length>12) return null;
+      return "+62"+d;
+    }
+    function leadValue(l){ var exact = Math.round(state.settings.prices[l.pkg] * (VEH_MULT[l.vehicle]||1) * 100) / 100; return Math.round(exact / 1000) * 1000; }
+    function scoreLead(l){
+      var b = {};
+      b.pkg = PKG_POINTS[l.pkg] || 0;
+      b.urg = URG_POINTS[l.urgency] || 0;
+      var price = leadValue(l), bud = BUDGETS[l.budget];
+      if(l.budget==="flex") b.bud = 16;
+      else if(!bud) b.bud = 6;
+      else if(bud.max >= price) b.bud = 20;
+      else if(bud.max >= price*0.75) b.bud = 14;
+      else if(bud.max >= price*0.5) b.bud = 8;
+      else b.bud = 3;
+      b.src = SRC_POINTS[l.source] != null ? SRC_POINTS[l.source] : 5;
+      b.comp = (l.name && l.name.trim().length>=2 ? 2:0) + (l.phone ? 3:0) + (l.date ? 2:0) + (l.budget ? 2:0) + (l.notes && l.notes.trim() ? 1:0);
+      var total = b.pkg + b.urg + b.bud + b.src + b.comp;
+      return {parts:b, total:Math.min(100,total)};
+    }
+    function recompute(l){ l.value = leadValue(l); var s = scoreLead(l); l.score = s.total; l.parts = s.parts; }
+    function prioOf(score){ return score>=70 ? "hot" : (score>=45 ? "warm" : "cold"); }
+    function prioLabel(score){ return t(prioOf(score)); }
+    function isActive(l){ return l.stage!=="deal" && l.stage!=="lost"; }
+    function isDue(l){ return isActive(l) && l.nextFollow && (l.nextFollow - Date.now() <= 24*3600000); }
+    function money(v){
+      if(state.lang==="en"){ return "$" + Math.round(v / state.settings.kurs).toLocaleString("en-US"); }
+      return "Rp " + Math.round(v).toLocaleString("id-ID");
+    }
+    function relTime(ts){
+      var diff = ts - Date.now(), abs = Math.abs(diff);
+      if(abs < 5*60000) return t("relNow");
+      if(abs < 3600000){ var n = Math.round(abs/60000); return diff<0 ? tt("relMin",{n:n}) : tt("inMin",{n:n}); }
+      if(abs < 86400000){ var n2 = Math.round(abs/3600000); return diff<0 ? tt("relHour",{n:n2}) : tt("inHour",{n:n2}); }
+      var n3 = Math.round(abs/86400000); return diff<0 ? tt("relDay",{n:n3}) : tt("inDay",{n:n3});
+    }
+    function dueChip(l){
+      if(!isActive(l) || !l.nextFollow) return "";
+      var diff = l.nextFollow - Date.now();
+      if(diff < 0){ var hrs = Math.max(1, Math.round(-diff/3600000)); return '<span class="chip overdue">'+esc(tt("overdueBy",{t:hrs+t("h")}))+'</span>'; }
+      if(diff < 3600000) return '<span class="chip due">'+esc(tt("dueIn",{t:Math.round(diff/60000)+t("m")}))+'</span>';
+      if(diff < 86400000) return '<span class="chip due">'+esc(tt("dueIn",{t:Math.round(diff/3600000)+t("h")}))+'</span>';
+      return '<span class="chip">'+esc(tt("dueIn",{t:Math.round(diff/86400000)+t("d")}))+'</span>';
+    }
+    function fmtDateTime(ts){ if(!ts) return "—"; return new Date(ts).toLocaleString(state.lang==="en" ? "en-GB" : "id-ID", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}); }
+    function fmtDate(iso){ if(!iso) return "—"; var p = iso.split("-"); if(p.length<3) return iso; return new Date(+p[0], +p[1]-1, +p[2]).toLocaleDateString(state.lang==="en" ? "en-GB" : "id-ID", {day:"numeric", month:"short", year:"numeric"}); }
+    function draftFor(l){
+      return tt("draft", {name:(l.name||"").split(" ")[0] || l.name, pkg:t("pkg")[l.pkg], veh:t("veh")[l.vehicle], value:money(l.value), dateLine: l.date ? tt("draftDate",{date:fmtDate(l.date)}) : ""});
+    }
+    function logAct(l, k, extra){ l.activity.push({t:Date.now(), k:k, extra:extra||null}); }
+
+    /* ================= rendering ================= */
+    var $ = function(id){ return document.getElementById(id); };
+
+    function applyStaticI18n(){
+      document.documentElement.lang = state.lang;
+      var dict = I18N[state.lang];
+      document.querySelectorAll("[data-i18n]").forEach(function(el){ var k = el.getAttribute("data-i18n"); if(typeof dict[k]==="string") el.textContent = dict[k]; });
+      document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ var k = el.getAttribute("data-i18n-ph"); if(typeof dict[k]==="string") el.setAttribute("placeholder", dict[k]); });
+      $("langId").setAttribute("aria-pressed", state.lang==="id" ? "true":"false");
+      $("langEn").setAttribute("aria-pressed", state.lang==="en" ? "true":"false");
+    }
+    function fillSelects(){
+      $("inPkg").innerHTML = Object.keys(DEFAULT_SETTINGS.prices).map(function(p){ return '<option value="'+p+'">'+esc(t("pkg")[p])+" · "+money(state.settings.prices[p])+"</option>"; }).join("");
+      var stageOpts = '<option value="all">'+esc(t("fStageAll"))+"</option>" + STAGES.map(function(s){ return '<option value="'+s+'">'+esc(t("stage")[s])+"</option>"; }).join("");
+      $("qStage").innerHTML = stageOpts; $("qStage").value = filters.stage;
+      var srcKeys = ["instagram","google","referral","walkin","tiktok","unknown"];
+      $("qSource").innerHTML = '<option value="all">'+esc(t("fSourceAll"))+"</option>" + srcKeys.map(function(s){ return '<option value="'+s+'">'+esc(t("src")[s])+"</option>"; }).join("");
+      $("qSource").value = filters.source;
+    }
+    function computeKpis(){
+      var leads = state.leads, now = Date.now();
+      var active = leads.filter(isActive);
+      var hot = leads.filter(function(l){ return l.score>=70; }).length;
+      var due = leads.filter(isDue).length;
+      var overdue = leads.filter(function(l){ return isActive(l) && l.nextFollow && l.nextFollow < now; }).length;
+      var value = active.reduce(function(a,l){ return a+l.value; },0);
+      var forecast = leads.filter(function(l){ return l.stage!=="lost"; }).reduce(function(a,l){ return a + l.value * STAGE_PROB[l.stage]; },0);
+      var deals = leads.filter(function(l){ return l.stage==="deal"; }).length;
+      return {active:active.length, hot:hot, due:due, overdue:overdue, value:value, forecast:forecast, deals:deals};
+    }
+    function renderKpis(){
+      var k = computeKpis();
+      var items = [
+        {label:t("kActive"), val:String(k.active), cls:""},
+        {label:t("kHot"), val:String(k.hot), cls:"hot"},
+        {label:t("kDue"), val:String(k.due) + (k.overdue ? ' <small>('+k.overdue+" ⚠)</small>" : ""), cls: k.due>0 ? "alert":""},
+        {label:t("kValue"), val:money(k.value), cls:""},
+        {label:t("kForecast"), val:money(Math.round(k.forecast)), cls:""},
+        {label:t("kDeals"), val:String(k.deals), cls:""}
+      ];
+      $("kpis").innerHTML = items.map(function(i){ return '<div class="kpi '+i.cls+'"><div class="klabel">'+esc(i.label)+'</div><div class="kval">'+i.val+"</div></div>"; }).join("");
+      var badge = $("sbBadge"); badge.hidden = k.due===0; badge.textContent = k.due;
+    }
+    function matchesFilters(l){
+      if(filters.stage!=="all" && l.stage!==filters.stage) return false;
+      if(filters.source!=="all" && l.source!==filters.source) return false;
+      if(filters.prio!=="all" && prioOf(l.score)!==filters.prio) return false;
+      if(filters.q){
+        var q = filters.q.toLowerCase();
+        var hay = (l.name+" "+(l.phone||"")+" "+(l.phoneRaw||"")+" "+t("pkg")[l.pkg]).toLowerCase();
+        if(hay.indexOf(q)===-1) return false;
+      }
+      return true;
+    }
+    function sortLeads(arr){
+      var s = filters.sort;
+      return arr.slice().sort(function(a,b){
+        if(s==="score") return b.score-a.score;
+        if(s==="value") return b.value-a.value;
+        if(s==="due") return (a.nextFollow||Infinity)-(b.nextFollow||Infinity);
+        return b.createdAt-a.createdAt;
+      });
+    }
+    function renderBoard(){
+      var html = STAGES.map(function(st){
+        var inStage = sortLeads(state.leads.filter(function(l){ return l.stage===st && matchesFilters(l); }));
+        var allInStage = state.leads.filter(function(l){ return l.stage===st; });
+        var sum = allInStage.reduce(function(a,l){ return a+l.value; },0);
+        var cards = inStage.map(function(l){
+          var stageOpts = STAGES.map(function(s2){ return '<option value="'+s2+'"'+(s2===l.stage?" selected":"")+">"+esc(t("stage")[s2])+"</option>"; }).join("");
+          return '<div class="lead" role="button" tabindex="0" data-open="'+l.id+'" aria-label="'+esc(l.name)+'">'
+            + '<div class="lname">'+esc(l.name)+'</div>'
+            + '<div class="lpkg">'+esc(t("pkg")[l.pkg])+" · "+esc(t("src")[l.source]||l.source)+"</div>"
+            + '<div class="lrow"><span class="score '+prioOf(l.score)+'">'+l.score+" · "+esc(prioLabel(l.score))+'</span><span class="lval">'+money(l.value)+"</span>"+dueChip(l)+"</div>"
+            + '<select data-stage-for="'+l.id+'" aria-label="Stage">'+stageOpts+"</select></div>";
+        }).join("");
+        return '<div class="col"><h3>'+esc(t("stage")[st])+' <span class="n">'+inStage.length+'</span></h3><div class="colsum">'+money(sum)+"</div>"+(cards || '<div class="empty">'+esc(t("emptyCol"))+"</div>")+"</div>";
+      }).join("");
+      $("board").innerHTML = html;
+      $("board").querySelectorAll("[data-open]").forEach(function(el){
+        el.addEventListener("click", function(e){ if(e.target.tagName==="SELECT") return; openDrawer(el.getAttribute("data-open")); });
+        el.addEventListener("keydown", function(e){ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); openDrawer(el.getAttribute("data-open")); } });
+      });
+      $("board").querySelectorAll("[data-stage-for]").forEach(function(sel){
+        sel.addEventListener("change", function(){ moveStage(sel.getAttribute("data-stage-for"), sel.value); });
+        sel.addEventListener("click", function(e){ e.stopPropagation(); });
+      });
+    }
+    function queueLeads(){
+      return state.leads.filter(isDue).sort(function(a,b){
+        var ao = a.nextFollow < Date.now() ? 0:1, bo = b.nextFollow < Date.now() ? 0:1;
+        if(ao!==bo) return ao-bo;
+        if(a.nextFollow!==b.nextFollow) return a.nextFollow-b.nextFollow;
+        return b.score-a.score;
+      });
+    }
+    function renderQueue(){
+      var q = queueLeads();
+      $("queueCount").textContent = q.length;
+      if(!q.length){ $("queueList").innerHTML = '<div class="panel"><p style="margin:0;color:var(--muted)">'+esc(t("queueEmpty"))+"</p></div>"; return; }
+      $("queueList").innerHTML = q.map(function(l){
+        return '<div class="qitem"><div class="qmain"><span class="qname">'+esc(l.name)+'</span> <span class="score '+prioOf(l.score)+'">'+l.score+"</span> "+dueChip(l)
+          + '<div style="color:var(--muted);font-size:12.8px;font-family:var(--mono)">'+esc(t("pkg")[l.pkg])+" · "+money(l.value)+" · "+esc(relTime(l.nextFollow))+"</div>"
+          + '<div class="qdraft">'+esc(draftFor(l))+"</div></div>"
+          + '<div class="qbtns"><button class="btn small" type="button" data-qcopy="'+l.id+'">'+esc(t("copyDraft"))+'</button>'
+          + '<button class="btn small primary" type="button" data-qcontact="'+l.id+'">'+esc(t("contacted"))+"</button>"
+          + '<button class="btn small" type="button" data-qsnooze="'+l.id+'">'+esc(t("snooze"))+"</button></div></div>";
+      }).join("");
+      $("queueList").querySelectorAll("[data-qcopy]").forEach(function(b){ b.addEventListener("click", function(){ var l = byId(b.getAttribute("data-qcopy")); if(l) copyText(draftFor(l), t("toastCopied")); }); });
+      $("queueList").querySelectorAll("[data-qcontact]").forEach(function(b){ b.addEventListener("click", function(){ markContacted(b.getAttribute("data-qcontact")); }); });
+      $("queueList").querySelectorAll("[data-qsnooze]").forEach(function(b){ b.addEventListener("click", function(){ snooze(b.getAttribute("data-qsnooze")); }); });
+    }
+    function renderReports(){
+      var maxCount = Math.max(1, Math.max.apply(null, STAGES.map(function(s){ return state.leads.filter(function(l){ return l.stage===s; }).length; })));
+      $("funnel").innerHTML = STAGES.map(function(s){
+        var ls = state.leads.filter(function(l){ return l.stage===s; });
+        var val = ls.reduce(function(a,l){ return a+l.value; },0);
+        var pct = Math.round(ls.length / maxCount * 100);
+        var cls = s==="deal" ? "green" : (s==="lost" ? "red" : "");
+        return '<div class="frow2"><span class="flabel">'+esc(t("stage")[s])+'</span><span class="fbar"><i class="'+cls+'" style="width:'+pct+'%"></i></span><span class="fval">'+ls.length+" "+esc(t("funnelNote").split("·")[0].trim()||"")+" · "+money(val)+"</span></div>";
+      }).join("");
+      var srcKeys = ["instagram","google","referral","walkin","tiktok","unknown"];
+      $("srcBody").innerHTML = srcKeys.map(function(sk){
+        var ls = state.leads.filter(function(l){ return l.source===sk; });
+        if(!ls.length) return "";
+        var hot = ls.filter(function(l){ return l.score>=70; }).length;
+        var dealVal = ls.filter(function(l){ return l.stage==="deal"; }).reduce(function(a,l){ return a+l.value; },0);
+        return "<tr><td>"+esc(t("src")[sk])+'</td><td class="num">'+ls.length+'</td><td class="num">'+hot+'</td><td class="num">'+money(dealVal)+"</td></tr>";
+      }).join("");
+    }
+    function renderSettings(){
+      $("setGrid").innerHTML = Object.keys(DEFAULT_SETTINGS.prices).map(function(p){
+        return '<div class="field"><label for="setPrice-'+p+'">'+esc(t("setPrice"))+esc(t("pkg")[p])+' (Rp)</label><input id="setPrice-'+p+'" type="number" min="0" step="5000" value="'+state.settings.prices[p]+'" data-price-for="'+p+'" /></div>';
+      }).join("");
+      $("setSla").value = state.settings.sla;
+      $("setKurs").value = state.settings.kurs;
+      $("setGrid").querySelectorAll("[data-price-for]").forEach(function(inp){
+        inp.addEventListener("change", function(){
+          var v = parseInt(inp.value,10); if(isNaN(v) || v<0) return;
+          state.settings.prices[inp.getAttribute("data-price-for")] = v;
+          state.leads.forEach(recompute); save(); renderAll(); toast(t("toastSettings"));
+        });
+      });
+    }
+    function renderAll(){
+      applyStaticI18n(); fillSelects(); renderKpis(); renderBoard(); renderQueue(); renderReports();
+      if(drawerLeadId){ var l = byId(drawerLeadId); if(l) fillDrawer(l); }
+    }
+
+    /* ================= helpers / actions ================= */
+    function byId(id){ return state.leads.filter(function(l){ return l.id===id; })[0] || null; }
+    function toast(msg){
+      var el = document.createElement("div"); el.className = "toast"; el.textContent = msg;
+      $("toasts").appendChild(el);
+      setTimeout(function(){ el.style.opacity = "0"; setTimeout(function(){ el.remove(); }, 300); }, 3400);
+    }
+    function copyText(text, okMsg){
+      function done(){ toast(okMsg); }
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, function(){ fallback(); }); }
+      else fallback();
+      function fallback(){ var ta = document.createElement("textarea"); ta.value = text; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); done(); }catch(e){} ta.remove(); }
+    }
+    function download(name, content, type){
+      var blob = new Blob([content], {type:type}); var url = URL.createObjectURL(blob);
+      var a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+    }
+    function moveStage(id, stage){
+      var l = byId(id); if(!l || l.stage===stage) return;
+      l.stage = stage; logAct(l, "actStage", {stage:stage});
+      if(stage==="deal") l.nextFollow = Date.now() + 7*86400000;
+      save(); renderAll(); toast(tt("toastStage", {name:l.name, stage:t("stage")[stage]}));
+    }
+    function markContacted(id){
+      var l = byId(id); if(!l) return;
+      l.lastContact = Date.now(); l.nextFollow = Date.now() + 86400000;
+      if(l.stage==="new"){ l.stage = "contacted"; logAct(l, "actStage", {stage:"contacted"}); }
+      logAct(l, "actContacted"); save(); renderAll(); toast(tt("toastContacted", {name:l.name}));
+    }
+    function snooze(id){
+      var l = byId(id); if(!l) return;
+      l.nextFollow = (l.nextFollow || Date.now()) + 86400000;
+      logAct(l, "actSnoozed"); save(); renderAll(); toast(tt("toastSnoozed", {name:l.name}));
+    }
+    function nbaFor(l){
+      var now = Date.now();
+      if(isActive(l) && l.nextFollow && l.nextFollow < now) return {title:t("nbaOverdueT"), desc:tt("nbaOverdueD", {t:relTime(l.nextFollow)})};
+      if(l.stage==="new" && l.score>=70) return {title:tt("nbaNewHotT", {sla:state.settings.sla}), desc:t("nbaNewHotD")};
+      if(l.stage==="new") return {title:t("nbaNewT"), desc:t("nbaNewD")};
+      if(l.stage==="contacted") return {title:t("nbaContactedT"), desc:t("nbaContactedD")};
+      if(l.stage==="booking") return {title:t("nbaBookingT"), desc:t("nbaBookingD")};
+      if(l.stage==="deal") return {title:t("nbaDealT"), desc:t("nbaDealD")};
+      return {title:t("nbaColdT"), desc:t("nbaColdD")};
+    }
+
+    /* ================= drawer ================= */
+    function actText(a){
+      if(a.k==="actStage" && a.extra) return tt("actStage", {stage:t("stage")[a.extra.stage] || a.extra.stage});
+      if(a.k==="actScored" && a.extra) return tt("actScored", {score:a.extra.score});
+      return t(a.k);
+    }
+    function openDrawer(id){
+      drawerLeadId = id;
+      var l = byId(id); if(!l) return;
+      $("drawer").hidden = false;
+      requestAnimationFrame(function(){ $("drawer").classList.add("open"); $("overlay").classList.add("open"); });
+      fillDrawer(l);
+    }
+    function closeDrawer(){
+      drawerLeadId = null;
+      $("drawer").classList.remove("open"); $("overlay").classList.remove("open");
+      setTimeout(function(){ $("drawer").hidden = true; }, 320);
+    }
+    function fillDrawer(l){
+      var nba = nbaFor(l);
+      var rows = [
+        ["dPkg", t("pkg")[l.pkg]], ["dValue", money(l.value)], ["dVehicle", t("veh")[l.vehicle]],
+        ["dUrg", t("urg")[l.urgency]], ["dSrc", t("src")[l.source] || l.source], ["dBudget", budgetLabel(l.budget)],
+        ["dDate", fmtDate(l.date)], ["dCreated", fmtDateTime(l.createdAt)], ["dLast", l.lastContact ? fmtDateTime(l.lastContact) : "—"], ["dNext", l.nextFollow ? fmtDateTime(l.nextFollow) + " (" + relTime(l.nextFollow) + ")" : "—"]
+      ];
+      var partRows = [["scPkg","pkg",30],["scUrg","urg",25],["scBud","bud",20],["scSrc","src",15],["scComp","comp",10]].map(function(pr){
+        var v = l.parts ? l.parts[pr[1]] : 0;
+        return '<div class="bar-row"><span>'+esc(t(pr[0]))+'</span><span class="bar"><i data-bar="'+Math.round(v/pr[2]*100)+'"></i></span><span class="pts">'+v+"/"+pr[2]+"</span></div>";
+      }).join("");
+      var timeline = (l.activity||[]).slice().reverse().map(function(a){
+        return "<li><span class='tt'>"+esc(fmtDateTime(a.t))+"</span>"+esc(actText(a))+"</li>";
+      }).join("");
+      $("drawerBody").innerHTML =
+        "<h2 id='dName'>"+esc(l.name)+'</h2><div class="dsub">'+esc(t("stage")[l.stage])+" · "+l.score+" · "+esc(prioLabel(l.score))+"</div>"
+        + "<h3>"+esc(t("dContact"))+'</h3><div class="kv"><span>'+esc(t("dRaw"))+"</span><span>"+esc(l.phoneRaw || "—")+'</span></div><div class="kv"><span>'+esc(t("dNorm"))+"</span><span>"+esc(l.phone || "—")+"</span></div>"
+        + rows.map(function(r){ return '<div class="kv"><span>'+esc(t(r[0]))+"</span><span>"+esc(r[1])+"</span></div>"; }).join("")
+        + "<h3>"+esc(t("dScore"))+" — "+esc(t("dScoreTotal"))+" "+l.score+"/100</h3>"+partRows
+        + "<h3>"+esc(t("dNba"))+'</h3><div class="nba"><div class="nba-t">'+esc(nba.title)+'</div><div class="nba-d">'+esc(nba.desc)+"</div></div>"
+        + "<h3>"+esc(t("dDraft"))+'</h3><div class="draft">'+esc(draftFor(l))+'</div><p style="color:var(--muted);font-size:12.8px;font-family:var(--mono)">'+esc(t("dDraftNote"))+'</p><button class="btn small primary" type="button" id="dCopy">'+esc(t("copyDraft"))+"</button>"
+        + "<h3>"+esc(t("dTimeline"))+'</h3><ul class="timeline">'+timeline+"</ul>"
+        + "<h3>"+esc(t("dNotes"))+'</h3><textarea id="dNotes">'+esc(l.notes || "")+'</textarea><div class="btnrow" style="margin-top:8px"><button class="btn small" type="button" id="dSaveNotes">'+esc(t("saveNotes"))+"</button></div>"
+        + '<div class="btnrow" style="margin-top:24px"><button class="btn small" type="button" id="dContactBtn">'+esc(t("contacted"))+'</button><button class="btn small danger" type="button" id="dLost">'+esc(t("markLost"))+'</button><button class="btn small danger" type="button" id="dDelete">'+esc(t("del"))+"</button></div>";
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        $("drawerBody").querySelectorAll("[data-bar]").forEach(function(b){ b.style.width = b.getAttribute("data-bar") + "%"; });
+      }); });
+      $("dCopy").addEventListener("click", function(){ copyText(draftFor(l), t("toastCopied")); });
+      $("dSaveNotes").addEventListener("click", function(){ l.notes = $("dNotes").value; recompute(l); logAct(l, "actNote"); save(); renderAll(); toast(t("toastNotes")); });
+      $("dContactBtn").addEventListener("click", function(){ markContacted(l.id); });
+      $("dLost").addEventListener("click", function(){ l.stage = "lost"; logAct(l, "actStage", {stage:"lost"}); save(); renderAll(); toast(tt("toastLost", {name:l.name})); });
+      $("dDelete").addEventListener("click", function(){ state.leads = state.leads.filter(function(x){ return x.id!==l.id; }); save(); closeDrawer(); renderAll(); toast(tt("toastDeleted", {name:l.name})); });
+    }
+    function budgetLabel(b){
+      var map = {b1:"< Rp 1 jt", b2:"Rp 1–2 jt", b3:"Rp 2–3,5 jt", b4:"Rp 3,5–5 jt", b5:"> Rp 5 jt", flex:t("budFlex")};
+      return map[b] || "—";
+    }
+
+    /* ================= intake ================= */
+    function upsertLead(data, viaAuto){
+      var existing = state.leads.filter(function(l){ return l.phone && l.phone===data.phone; })[0];
+      if(existing){
+        ["name","pkg","vehicle","urgency","budget","date"].forEach(function(k){ if(data[k]) existing[k] = data[k]; });
+        if(data.source && data.source!=="unknown") existing.source = data.source;
+        if(data.notes) existing.notes = (existing.notes ? existing.notes + " · " : "") + data.notes;
+        existing.phoneRaw = data.phoneRaw;
+        recompute(existing); logAct(existing, "actMerged"); logAct(existing, "actScored", {score:existing.score});
+        return {lead:existing, merged:true};
+      }
+      var l = {id:"L"+Math.random().toString(36).slice(2,9), name:data.name, phoneRaw:data.phoneRaw, phone:data.phone, pkg:data.pkg, vehicle:data.vehicle, urgency:data.urgency, source:data.source, budget:data.budget, date:data.date||"", notes:data.notes||"", stage:"new", createdAt:Date.now(), lastContact:null, nextFollow:Date.now()+2*3600000, activity:[]};
+      logAct(l, viaAuto ? "actImported" : "actCreated");
+      recompute(l); logAct(l, "actScored", {score:l.score});
+      state.leads.unshift(l);
+      return {lead:l, merged:false};
+    }
+    $("intakeForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var name = $("inName").value.trim(), phoneRaw = $("inPhone").value.trim();
+      var phone = normalizePhone(phoneRaw);
+      var okName = name.length>=2, okPhone = !!phone;
+      $("f-name").classList.toggle("invalid", !okName);
+      $("f-phone").classList.toggle("invalid", !okPhone);
+      if(!okName || !okPhone){ if(!okName) $("inName").focus(); else $("inPhone").focus(); return; }
+      var res = upsertLead({name:name, phoneRaw:phoneRaw, phone:phone, pkg:$("inPkg").value, vehicle:$("inVehicle").value, urgency:$("inUrgency").value, source:$("inSource").value, budget:$("inBudget").value, date:$("inDate").value, notes:$("inNotes").value.trim()}, false);
+      save(); renderAll();
+      if(res.merged) toast(tt("toastMerged", {name:res.lead.name, score:res.lead.score}));
+      else toast(tt("toastAdded", {name:res.lead.name, score:res.lead.score, label:prioLabel(res.lead.score)}));
+      e.target.reset(); $("inUrgency").value = "week"; $("inBudget").value = "b3";
+      document.querySelector("#boardSec").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    /* ================= automation ================= */
+    var MESSY = [
+      {name:"Rangga Saputra", phone:"0812 7777 1234", pkgText:"mau ceramic coating buat SUV", urgency:"today", source:"Instagram", budget:"b4", vehicle:"suv", notes:"Dari spreadsheet iklan IG."},
+      {name:"Rangga S.", phone:"+62-812-7777-1234", pkgText:"coating", urgency:"week", source:"", budget:"b4", vehicle:"suv", notes:"Baris duplikat dari form kedua."},
+      {name:"Tania Wijaya", phone:"0859 4455 2211", pkgText:"cuci wax aja", urgency:"browsing", source:"TikTok", budget:"b1", vehicle:"small", notes:""},
+      {name:"Bimo Prasetyo", phone:"81398776655", pkgText:"poles paint correction", urgency:"week", source:"Google", budget:"b2", vehicle:"small", notes:"Baret di pintu."},
+      {name:"Sinta Maharani", phone:"0813-9988-2211", pkgText:"full detailing", urgency:"week", source:"Referral", budget:"b3", vehicle:"mpv", notes:"Duplikat dari lead yang sudah ada."},
+      {name:"Kevin Halim", phone:"+62 877 6655 4433", pkgText:"interior deep clean dong", urgency:"today", source:"", budget:"b2", vehicle:"suv", notes:"Jok kena tumpahan kopi."},
+      {name:"Laras Putri", phone:"0821 3344 7788", pkgText:"paket full detailing lengkap", urgency:"month", source:"Walk-in", budget:"b3", vehicle:"mpv", notes:""},
+      {name:"Dimas Aryo", phone:"0895-3322-1100", pkgText:"coating nano ceramic", urgency:"week", source:"Instagram", budget:"b5", vehicle:"suv", notes:""},
+      {name:"Nadia Rahma", phone:"0857 6655 0099", pkgText:"cuci dan wax", urgency:"today", source:"Google", budget:"b1", vehicle:"small", notes:"Mau sebelum weekend."},
+      {name:"Yoga Firmansyah", phone:"+62813 2211 4455", pkgText:"poles body", urgency:"month", source:"", budget:"b2", vehicle:"mpv", notes:""}
+    ];
+    function mapPkg(text){
+      var s = (text||"").toLowerCase();
+      if(s.indexOf("coating")>-1 || s.indexOf("ceramic")>-1) return "coating";
+      if(s.indexOf("full")>-1) return "full";
+      if(s.indexOf("interior")>-1) return "interior";
+      if(s.indexOf("poles")>-1 || s.indexOf("polish")>-1 || s.indexOf("correction")>-1) return "polish";
+      return "wash";
+    }
+    function mapSource(s){
+      var v = (s||"").toLowerCase();
+      if(v.indexOf("insta")>-1) return "instagram";
+      if(v.indexOf("google")>-1) return "google";
+      if(v.indexOf("refer")>-1) return "referral";
+      if(v.indexOf("walk")>-1) return "walkin";
+      if(v.indexOf("tiktok")>-1) return "tiktok";
+      return "unknown";
+    }
+    var autoRunning = false;
+    function autoLogLine(html){
+      var log = $("autoLog");
+      if(log.textContent.trim()==="—") log.innerHTML = "";
+      var div = document.createElement("div"); div.innerHTML = html; log.appendChild(div); log.scrollTop = log.scrollHeight;
+    }
+    function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+    $("runAuto").addEventListener("click", async function(){
+      if(autoRunning) return; autoRunning = true;
+      var btn = $("runAuto"); btn.disabled = true; btn.textContent = t("running");
+      var pits = $("pitLights").children, steps = $("autoSteps").children;
+      for(var i=0;i<5;i++){ pits[i].className = "pit"; steps[i].className = ""; }
+      $("autoProg").style.width = "0%"; $("autoProgWrap").setAttribute("aria-valuenow","0"); $("autoLog").innerHTML = "";
+      var before = state.leads.length;
+      autoLogLine(esc(t("autoLogStart")));
+      async function step(i){
+        pits[i].className = "pit on"; steps[i].className = "active";
+        $("autoProg").style.width = ((i+1)*20)+"%"; $("autoProgWrap").setAttribute("aria-valuenow", String((i+1)*20));
+        await sleep(650);
+        pits[i].className = "pit done"; steps[i].className = "done";
+      }
+      await step(0);
+      var cleaned = MESSY.map(function(r){ return {raw:r, phone:normalizePhone(r.phone)}; });
+      var validPhones = cleaned.filter(function(c){ return !!c.phone; }).length;
+      await step(1); autoLogLine('<span class="ok">✓</span> ' + esc(tt("autoLogNorm", {n:validPhones})));
+      var added = 0, merged = 0, mapped = 0;
+      cleaned.forEach(function(c){
+        if(!c.phone) return;
+        var exists = state.leads.some(function(l){ return l.phone===c.phone; });
+        if(exists) merged++;
+      });
+      await step(2); autoLogLine('<span class="warn">⚠</span> ' + esc(tt("autoLogMerge", {n:merged})));
+      cleaned.forEach(function(c){ if(c.phone){ mapPkg(c.raw.pkgText); mapped++; } });
+      await step(3); autoLogLine('<span class="ok">✓</span> ' + esc(tt("autoLogMap", {n:mapped})));
+      cleaned.forEach(function(c){
+        if(!c.phone) return;
+        var res = upsertLead({name:c.raw.name, phoneRaw:c.raw.phone, phone:c.phone, pkg:mapPkg(c.raw.pkgText), vehicle:c.raw.vehicle||"small", urgency:c.raw.urgency||"week", source:mapSource(c.raw.source), budget:c.raw.budget||"b2", date:"", notes:c.raw.notes||""}, true);
+        if(res.merged) {} else added++;
+      });
+      await step(4);
+      save(); renderAll();
+      autoLogLine('<span class="ok">✓</span> ' + esc(tt("autoLogDone", {added:added, merged:merged, total:state.leads.length})));
+      $("autoSummary").textContent = tt("autoSummaryTxt", {added:added, merged:merged});
+      btn.disabled = false; btn.textContent = t("runAuto"); autoRunning = false;
+      document.querySelector("#boardSec").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    /* ================= toolbar actions ================= */
+    $("qSearch").addEventListener("input", function(){ filters.q = this.value; renderBoard(); });
+    $("qStage").addEventListener("change", function(){ filters.stage = this.value; renderBoard(); });
+    $("qSource").addEventListener("change", function(){ filters.source = this.value; renderBoard(); });
+    $("qPrio").addEventListener("change", function(){ filters.prio = this.value; renderBoard(); });
+    $("qSort").addEventListener("change", function(){ filters.sort = this.value; renderBoard(); });
+    $("btnSummary").addEventListener("click", function(){
+      var k = computeKpis();
+      var lines = [t("summaryHead")+" — "+new Date().toLocaleString(state.lang==="en"?"en-GB":"id-ID"),
+        t("sumActive")+": "+k.active, t("sumHot")+": "+k.hot, t("sumDue")+": "+k.due,
+        t("sumValue")+": "+money(k.value), t("sumForecast")+": "+money(Math.round(k.forecast)), t("sumDeals")+": "+k.deals];
+      copyText(lines.join("\n"), t("toastSummary"));
+    });
+    $("btnCsv").addEventListener("click", function(){
+      var head = [t("csvName"), t("csvPhone"), t("csvPkg"), t("csvStage"), t("csvScore"), t("csvValue"), t("csvSource"), t("csvDue")];
+      function cell(v){ return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'; }
+      var rows = state.leads.map(function(l){ return [l.name, l.phone||l.phoneRaw, t("pkg")[l.pkg], t("stage")[l.stage], l.score, l.value, t("src")[l.source]||l.source, l.nextFollow ? new Date(l.nextFollow).toISOString() : ""].map(cell).join(","); });
+      download("arusdetail-leads.csv", head.map(cell).join(",")+"\n"+rows.join("\n"), "text/csv");
+    });
+    $("btnBackup").addEventListener("click", function(){
+      download("arusdetail-backup.json", JSON.stringify({settings:state.settings, leads:state.leads}, null, 2), "application/json");
+    });
+    $("btnImport").addEventListener("click", function(){ $("fileImport").click(); });
+    $("fileImport").addEventListener("change", function(){
+      var f = this.files[0]; if(!f) return;
+      var reader = new FileReader();
+      reader.onload = function(){
+        try{
+          var p = JSON.parse(reader.result);
+          var leads = Array.isArray(p) ? p : p.leads;
+          if(!leads || !Array.isArray(leads) || !leads.length) throw new Error("bad");
+          state.leads = leads; if(p.settings) state.settings = p.settings;
+          state.leads.forEach(function(l){ if(!l.activity) l.activity = []; recompute(l); });
+          save(); renderSettings(); renderAll(); toast(tt("toastImportOk", {n:state.leads.length}));
+        }catch(e){ toast(t("toastImportBad")); }
+      };
+      reader.readAsText(f); this.value = "";
+    });
+    var resetArmed = false, resetTimer = null;
+    $("btnReset").addEventListener("click", function(){
+      if(!resetArmed){
+        resetArmed = true; this.textContent = t("confirmReset");
+        var btn = this;
+        resetTimer = setTimeout(function(){ resetArmed = false; btn.textContent = t("btnReset"); }, 4000);
+        return;
+      }
+      clearTimeout(resetTimer); resetArmed = false; this.textContent = t("btnReset");
+      try{ localStorage.removeItem(LS_KEY); }catch(e){}
+      state = {lang:state.lang, settings:JSON.parse(JSON.stringify(DEFAULT_SETTINGS)), leads:seedLeads()};
+      state.leads.forEach(recompute); save(); renderSettings(); renderAll(); toast(t("toastReset"));
+    });
+
+    /* ================= drawer / settings / misc events ================= */
+    $("drawerClose").addEventListener("click", closeDrawer);
+    $("overlay").addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDrawer(); });
+    $("setSla").addEventListener("change", function(){ var v = parseInt(this.value,10); if(v>0){ state.settings.sla = v; save(); renderAll(); toast(t("toastSettings")); } });
+    $("setKurs").addEventListener("change", function(){ var v = parseInt(this.value,10); if(v>=1000){ state.settings.kurs = v; save(); renderAll(); toast(t("toastSettings")); } });
+    $("langId").addEventListener("click", function(){ if(state.lang!=="id"){ state.lang = "id"; save(); renderSettings(); renderAll(); } });
+    $("langEn").addEventListener("click", function(){ if(state.lang!=="en"){ state.lang = "en"; save(); renderSettings(); renderAll(); } });
+    function scrollToId(id){ var el = $(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+    $("sbAdd").addEventListener("click", function(){ scrollToId("intakeSec"); setTimeout(function(){ $("inName").focus({preventScroll:true}); }, 450); });
+    $("sbAuto").addEventListener("click", function(){ scrollToId("autoSec"); });
+    $("sbQueue").addEventListener("click", function(){ scrollToId("queueSec"); });
+    $("sbBoard").addEventListener("click", function(){ scrollToId("boardSec"); });
+
+    /* ================= clock ================= */
+    function tickClock(){
+      var now = new Date();
+      $("clock").textContent = now.toLocaleTimeString("en-GB", {timeZone:"Asia/Jakarta", hour:"2-digit", minute:"2-digit", second:"2-digit"}) + " WIB";
+      var h = parseInt(now.toLocaleString("en-US", {timeZone:"Asia/Jakarta", hour:"numeric", hour12:false}), 10);
+      var open = h>=9 && h<20;
+      $("openDot").className = "dot" + (open ? "" : " closed");
+      $("openText").textContent = open ? t("openNow") : t("closedNow");
+    }
+
+    /* ================= init ================= */
+    load();
+    renderSettings();
+    renderAll();
+    tickClock();
+    setInterval(tickClock, 1000);
+    setInterval(function(){ renderKpis(); renderBoard(); renderQueue(); }, 60000);
+    </script>
+  </body>
+</html>
