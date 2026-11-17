@@ -300,11 +300,11 @@
               <div class="field">
                 <label for="inBudget" data-i18n="fBudget">Kisaran budget</label>
                 <select id="inBudget">
-                  <option value="b1">&lt; Rp 1 jt</option>
-                  <option value="b2">Rp 1–2 jt</option>
-                  <option value="b3" selected>Rp 2–3,5 jt</option>
-                  <option value="b4">Rp 3,5–5 jt</option>
-                  <option value="b5">&gt; Rp 5 jt</option>
+                  <option value="b1" data-i18n="budB1">&lt; Rp 1 jt</option>
+                  <option value="b2" data-i18n="budB2">Rp 1–2 jt</option>
+                  <option value="b3" selected data-i18n="budB3">Rp 2–3,5 jt</option>
+                  <option value="b4" data-i18n="budB4">Rp 3,5–5 jt</option>
+                  <option value="b5" data-i18n="budB5">&gt; Rp 5 jt</option>
                   <option value="flex" data-i18n="budFlex">Fleksibel, lihat hasil dulu</option>
                 </select>
               </div>
@@ -450,7 +450,7 @@
         eName:"Nama wajib diisi (min. 2 huruf).", ePhone:"Nomor tidak valid — gunakan format 08… atau +62…",
         vehSmall:"Kecil (hatchback / city car) · ×1.0", vehSuv:"SUV / crossover · ×1.15", vehMpv:"MPV / besar · ×1.25",
         urgToday:"Hari ini", urgWeek:"Minggu ini", urgMonth:"Bulan ini", urgBrowse:"Cuma tanya dulu",
-        srcReferral:"Referral / rekomendasi", budFlex:"Fleksibel, lihat hasil dulu",
+        srcReferral:"Referral / rekomendasi", budFlex:"Fleksibel, lihat hasil dulu", budB1:"< Rp 1 jt", budB2:"Rp 1–2 jt", budB3:"Rp 2–3,5 jt", budB4:"Rp 3,5–5 jt", budB5:"> Rp 5 jt",
         submitLead:"Masukkan lead → skor & rute otomatis",
         autoTitle:"Automasi: bereskan data berantakan",
         autoDesc:"Satu klik memuat 10 baris mentah dari spreadsheet (nomor duplikat beda format, sumber kosong, paket ditulis bebas), lalu membersihkan, menggabungkan, memberi skor, dan memasukkannya ke papan.",
@@ -525,7 +525,7 @@
         eName:"Name is required (min. 2 letters).", ePhone:"Invalid number — use the 08… or +62… format",
         vehSmall:"Small (hatchback / city car) · ×1.0", vehSuv:"SUV / crossover · ×1.15", vehMpv:"MPV / large · ×1.25",
         urgToday:"Today", urgWeek:"This week", urgMonth:"This month", urgBrowse:"Just asking",
-        srcReferral:"Referral / word of mouth", budFlex:"Flexible, show me results first",
+        srcReferral:"Referral / word of mouth", budFlex:"Flexible, show me results first", budB1:"< $56", budB2:"$56–111", budB3:"$111–194", budB4:"$194–278", budB5:"> $278",
         submitLead:"Add lead → auto score & route",
         autoTitle:"Automation: clean up messy data",
         autoDesc:"One click loads 10 raw spreadsheet rows (duplicate numbers in mixed formats, missing sources, free-text packages), then cleans, merges, scores, and routes them onto the board.",
@@ -931,7 +931,9 @@
       $("dDelete").addEventListener("click", function(){ state.leads = state.leads.filter(function(x){ return x.id!==l.id; }); save(); closeDrawer(); renderAll(); toast(tt("toastDeleted", {name:l.name})); });
     }
     function budgetLabel(b){
-      var map = {b1:"< Rp 1 jt", b2:"Rp 1–2 jt", b3:"Rp 2–3,5 jt", b4:"Rp 3,5–5 jt", b5:"> Rp 5 jt", flex:t("budFlex")};
+      var map = state.lang==="en"
+        ? {b1:"< $56", b2:"$56–111", b3:"$111–194", b4:"$194–278", b5:"> $278", flex:t("budFlex")}
+        : {b1:"< Rp 1 jt", b2:"Rp 1–2 jt", b3:"Rp 2–3,5 jt", b4:"Rp 3,5–5 jt", b5:"> Rp 5 jt", flex:t("budFlex")};
       return map[b] || "—";
     }
 
@@ -1024,18 +1026,19 @@
       var validPhones = cleaned.filter(function(c){ return !!c.phone; }).length;
       await step(1); autoLogLine('<span class="ok">✓</span> ' + esc(tt("autoLogNorm", {n:validPhones})));
       var added = 0, merged = 0, mapped = 0;
+      var seenPhones = {};
+      state.leads.forEach(function(l){ seenPhones[l.phone] = true; });
       cleaned.forEach(function(c){
         if(!c.phone) return;
-        var exists = state.leads.some(function(l){ return l.phone===c.phone; });
-        if(exists) merged++;
+        if(seenPhones[c.phone]) merged++;
+        else { seenPhones[c.phone] = true; added++; }
       });
       await step(2); autoLogLine('<span class="warn">⚠</span> ' + esc(tt("autoLogMerge", {n:merged})));
       cleaned.forEach(function(c){ if(c.phone){ mapPkg(c.raw.pkgText); mapped++; } });
       await step(3); autoLogLine('<span class="ok">✓</span> ' + esc(tt("autoLogMap", {n:mapped})));
       cleaned.forEach(function(c){
         if(!c.phone) return;
-        var res = upsertLead({name:c.raw.name, phoneRaw:c.raw.phone, phone:c.phone, pkg:mapPkg(c.raw.pkgText), vehicle:c.raw.vehicle||"small", urgency:c.raw.urgency||"week", source:mapSource(c.raw.source), budget:c.raw.budget||"b2", date:"", notes:c.raw.notes||""}, true);
-        if(res.merged) {} else added++;
+        upsertLead({name:c.raw.name, phoneRaw:c.raw.phone, phone:c.phone, pkg:mapPkg(c.raw.pkgText), vehicle:c.raw.vehicle||"small", urgency:c.raw.urgency||"week", source:mapSource(c.raw.source), budget:c.raw.budget||"b2", date:"", notes:c.raw.notes||""}, true);
       });
       await step(4);
       save(); renderAll();
