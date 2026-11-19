@@ -1048,7 +1048,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
         <button class="btn" type="submit" data-t="fSend">Send order</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="form-note" data-t="fNote">Sent straight to Carl's inbox from this page — no email app needed.</p>
+        <p class="form-note" data-t="fNote">Sent straight to Carl from this page — no email app needed.</p>
         <noscript><p class="form-note">JavaScript is off in this browser — the form still sends, and you will land on the form provider&rsquo;s confirmation page. / JavaScript mati di browser ini — formulir tetap terkirim, dan kamu akan tiba di halaman konfirmasi penyedia formulir.</p></noscript>
       </form>
     </div>
@@ -1157,7 +1157,7 @@ ordEyebrow:"Mulai proyek",ordTitle:"Ceritakan yang sedang kamu bangun",
 ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — Carl membalas dengan pertanyaan, penawaran tertulis, dan jadwal. Tanpa kewajiban, tanpa tekanan.",
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",ordLi4:"Satu proyek dalam satu waktu — kalau studio sedang penuh, penawaranmu menyebut kapan pekerjaan bisa dimulai",
 fNameL:"Nama kamu",fEmailL:"Email",fWaL:"WhatsApp <span class=\"fhint\">(opsional)</span>",fGoalL:"Apa yang ingin dicapai proyek ini?",fAudL:"Untuk siapa?",fAssetsL:"Apa yang sudah kamu punya?",oAs1:"Logo, foto, dan teks sudah siap",oAs2:"Sebagian",oAs3:"Belum ada apa-apa",oAs4:"Belum yakin",fGoalPh:"mis. Lebih banyak pesanan lewat WhatsApp",fAudPh:"mis. Pembuat kue rumahan yang memesan untuk acara",fDetPh:"Versi singkatnya saja cukup — sisanya Carl tanyakan.",fDlPh:"mis. Sebelum kampanye Desember",fSvcL:"Kamu butuh apa?",oWeb:"Website",oGame:"Game browser",oBrand:"Brand & logo",oLead:"Sistem lead",oOther:"Hal lain",
-fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim pesanan",fNote:"Terkirim langsung ke inbox Carl dari halaman ini — tidak perlu aplikasi email.",
+fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim pesanan",fNote:"Terkirim langsung ke Carl dari halaman ini — tidak perlu aplikasi email.",
 oPick:"Pilih salah satu…",copyMail:"Salin email",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",dl4:"Daftar serah terima tertulis: berkas, akses, dan cara memperbarui tiap bagian",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",footWork:"Studi kasus",footStatus:"Status proyek",footPdf:"Ringkasan satu halaman (PDF)",proofLink2:"Baca studi kasusnya",
 };
 var EN={};
@@ -1225,7 +1225,7 @@ document.querySelectorAll("[data-svc]").forEach(function(a){
     var sel=document.getElementById("fService"); if(sel) sel.value=a.getAttribute("data-svc");
   });
 });
-/* ---------- order form -> Web3Forms (straight to Carl's inbox) ---------- */
+/* ---------- order form -> Lead Tracker API (fallback: Web3Forms to Carl's inbox) ---------- */
 document.getElementById("orderForm").addEventListener("submit",function(e){
   e.preventDefault();
   var form=e.target, btn=form.querySelector('button[type="submit"]'), st=document.getElementById("formStatus");
@@ -1239,21 +1239,33 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   function done(){ if(btn){ btn.disabled=false; btn.textContent=idMode?"Kirim pesanan":"Send order"; } }
   if(btn){ btn.disabled=true; btn.textContent=idMode?"Mengirim\u2026":"Sending\u2026"; }
   show("busy", idMode?"Mengirim\u2026":"Sending\u2026");
-  fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
-    body:JSON.stringify({access_key:"bcecbb03-c454-406e-b8f1-693ffadc9517",subject:subject,from_name:"CarlLab website",name:v("fName"),email:v("fEmail"),whatsapp:v("fWa")||"-",service:v("fService"),goal:v("fGoal")||"-",audience:v("fAudience")||"-",assets:v("fAssets"),deadline:v("fDeadline")||"-",message:v("fDetail")})})
-  .then(function(r){ return r.json(); })
-  .then(function(j){
-    if(!j.success) throw new Error("rejected");
-    show("ok", idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.");
-    form.reset();
-    try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){}
-    done();
-  })
-  .catch(function(){
+  var waDigits=v("fWa").replace(/[\s+\-]/g,"");
+  var svcMap={"Website":"Website","Browser game":"Browser Game","Brand & logo":"Brand & Logo","Lead system":"Lead System"};
+  var apiSvc=svcMap[v("fService")]||null;
+  function sentOk(msg){ show("ok", msg); form.reset(); try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){} done(); }
+  function mailtoFallback(){
     var fb="mailto:hello@carllab.web.id?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
     show("err", (idMode?"Tidak bisa terkirim dari sini. ":"Could not send from here. ")+'<a href="'+fb+'">'+(idMode?"Buka di aplikasi email kamu":"Open it in your email app")+"</a>.");
     done();
-  });
+  }
+  function sendEmail(){
+    return fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({access_key:"bcecbb03-c454-406e-b8f1-693ffadc9517",subject:subject,from_name:"CarlLab website",name:v("fName"),email:v("fEmail"),whatsapp:v("fWa")||"-",service:v("fService"),goal:v("fGoal")||"-",audience:v("fAudience")||"-",assets:v("fAssets"),deadline:v("fDeadline")||"-",message:v("fDetail")})})
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(!j.success) throw new Error("rejected");
+      sentOk(idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.");
+    });
+  }
+  if(apiSvc && /^\d{9,15}$/.test(waDigits)){
+    fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({name:v("fName"),whatsapp:waDigits,service:apiSvc,budget:0,notes:lines.join("\n")})})
+    .then(function(r){ if(!r.ok) throw new Error("api"); return r.json(); })
+    .then(function(){ sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."); })
+    .catch(function(){ sendEmail().catch(mailtoFallback); });
+  } else {
+    sendEmail().catch(mailtoFallback);
+  }
 });
 /* ---------- order form draft: autosaved in this browser only ---------- */
 var DKEY="carllab-v18-draft", dids=["fName","fEmail","fWa","fService","fGoal","fAudience","fAssets","fDetail","fDeadline"], dT=null;
