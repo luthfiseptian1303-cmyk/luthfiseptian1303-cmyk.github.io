@@ -528,7 +528,6 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "zegmof193g");
 </script>
-<style id="gigit-demo">.bl-lede{font-size:clamp(16px,1.5vw,20px);line-height:1.65;color:#C9CED4;max-width:62em}.bl-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;list-style:none;margin:32px 0 0;padding:0}.bl-specs li{border-top:2px solid #2E3237;padding-top:16px}.bl-specs .n{font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD}.bl-specs h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em;color:#E3E6E9;text-transform:uppercase;margin:8px 0}.bl-specs p{margin:0;color:#9AA3AD;font-size:16px;line-height:1.6}.car-frame{margin-top:40px;border:1px solid #2E3237;border-radius:16px;overflow:hidden;background:#101211}.car-bar{display:flex;align-items:center;gap:16px;background:#141619;padding:8px 16px;border-bottom:1px solid #2E3237}.car-strip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:24px;-webkit-overflow-scrolling:touch}.car-strip figure{flex:0 0 auto;width:300px;scroll-snap-align:start;margin:0}.car-strip img{width:100%;display:block;border-radius:12px;border:1px solid #2E3237}.car-strip figcaption{font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD;margin-top:8px}.car-hint{margin-top:16px;font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD}@media (max-width:860px){.bl-specs{grid-template-columns:1fr}.car-strip figure{width:232px;padding:0}.car-strip{padding:16px}}</style>
 <style>.case-link{display:inline-block;margin-top:14px;font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E3E6E9;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
 </style>
 
@@ -587,8 +586,9 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .hub-head b{font-family:'Archivo',sans-serif;font-size:14px;letter-spacing:.14em;color:#E9DFC8}
 .hub-head span{font-size:10px;letter-spacing:.2em;color:#8F96A0}
 #hubMain{flex:1;display:flex;flex-direction:column;min-height:0}
-.hub-tabs{display:flex;gap:6px;padding:12px 12px 2px;flex:none}
-.hub-tab{flex:1;padding:8px 2px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.03em;border-radius:999px;border:1px solid #33373D;background:transparent;color:#B9BEC6;cursor:pointer;transition:background .18s,color .18s}
+.hub-tabs{display:flex;gap:6px;padding:12px 12px 2px;flex:none;align-items:stretch}
+#demo *{text-size-adjust:100%;-webkit-text-size-adjust:100%}
+.hub-tab{flex:1;padding:8px 2px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.03em;border-radius:999px;border:1px solid #33373D;background:transparent;color:#B9BEC6;cursor:pointer;transition:background .18s,color .18s;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.25}
 .hub-tab.on{background:#EDEEF0;border-color:#EDEEF0;color:#111}
 .hub-body{flex:1;overflow-y:auto;padding:10px 12px 16px;display:flex;flex-direction:column}
 .hub-foot{margin-top:auto;padding-top:14px;font-size:11px;line-height:1.55;color:#8F96A0;text-align:center}
@@ -710,7 +710,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
               <div class="hub-body" id="hubBody"></div>
             </div>
             <div id="hubPlay">
-              <div class="hub-bar"><button class="hub-back" id="hubPlayBack" type="button"></button><b id="hubPlayName"></b><a id="hubPlayFull" target="_blank" rel="noopener" aria-label="Open full-screen">&#8599;</a></div>
+              <div class="hub-bar"><button class="hub-back" id="hubPlayBack" type="button"></button><b id="hubPlayName"></b><a id="hubPlayFull" href="demo-logo.html" target="_blank" rel="noopener" aria-label="Open full-screen">&#8599;</a></div>
               <iframe id="hubFrame" title="Logo demo" loading="lazy"></iframe>
             </div>
           </div>
@@ -1008,7 +1008,7 @@ var GROUPS={
 "beauty": {"label": {"en": "Beauty", "id": "Beauty"}, "note": {"en": "BEAUTY LOGOS — PICK ONE", "id": "LOGO BEAUTY — PILIH SATU"}, "items": ["sekar", "vanara"]},
 "jasa": {"label": {"en": "Services & Tech", "id": "Jasa & Tech"}, "note": {"en": "SERVICES & TECH LOGOS — PICK ONE", "id": "LOGO JASA & TECH — PILIH SATU"}, "items": ["arus", "artha"]}
 };
-var UI={"play": {"en": "Play in this phone", "id": "Putar di HP ini"}, "full": {"en": "Open the logo demo full-screen ↗", "id": "Buka demo logo layar penuh ↗"}, "fullBtn": {"en": "Open the full logo demo ↗", "id": "Buka demo logo lengkap ↗"}, "backGroups": {"en": "‹ Groups", "id": "‹ Grup"}, "backSamples": {"en": "‹ All logos", "id": "‹ Semua logo"}, "headNote": {"en": "LOGOS", "id": "LOGO"}, "tryT": {"en": "In the frame, try", "id": "Di dalam bingkai, coba"}, "panels": {"en": "19 panels · feed, story & special edition", "id": "19 panel · feed, story & edisi khusus"}, "empty": {"en": "This group is being prepared — finished logos land here first.", "id": "Grup ini sedang disiapkan — logo yang selesai masuk sini lebih dulu."}};
+var UI={"play": {"en": "Play in this phone", "id": "Putar di HP ini"}, "full": {"en": "Open the logo demo full-screen ↗", "id": "Buka demo logo layar penuh ↗"}, "fullBtn": {"en": "Open the full logo demo ↗", "id": "Buka demo logo lengkap ↗"}, "backGroups": {"en": "‹ Groups", "id": "‹ Grup"}, "backSamples": {"en": "‹ All logos", "id": "‹ Semua logo"}, "backOne": {"en": "‹ Back", "id": "‹ Kembali"}, "headNote": {"en": "LOGOS", "id": "LOGO"}, "tryT": {"en": "In the frame, try", "id": "Di dalam bingkai, coba"}, "panels": {"en": "19 panels · feed, story & special edition", "id": "19 panel · feed, story & edisi khusus"}, "empty": {"en": "This group is being prepared — finished logos land here first.", "id": "Grup ini sedang disiapkan — logo yang selesai masuk sini lebih dulu."}};
 var state={group:'kuliner',sel:'gigit',view:'list',played:false};
 function L(){return document.documentElement.lang==='id'?'id':'en'}
 function t(x){return x[L()]}
@@ -1034,7 +1034,7 @@ function renderTabs(){
   Object.keys(GROUPS).forEach(function(k){
     var b=document.createElement('button'); b.type='button'; b.className='hub-tab'+(state.group===k?' on':'');
     b.textContent=t(GROUPS[k].label); b.setAttribute('role','tab');
-    b.addEventListener('click',function(){ state.group=k; state.view='list'; render(); });
+    b.addEventListener('click',function(){ state.group=k; state.view='list'; state.sel=GROUPS[k].items[0]; render(); });
     tabsEl.appendChild(b);
   });
 }
@@ -1049,11 +1049,13 @@ function renderBody(){
       var it=ITEMS[id];
       var r=document.createElement('button'); r.type='button'; r.className='hub-row'+(state.sel===id?' sel':'');
       if(it.img){ r.innerHTML='<img alt="" loading="lazy"><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; r.querySelector('img').src=it.img; }
-      else { r.innerHTML='<span class="hub-blk"></span><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; var blk=r.querySelector('.hub-blk'); blk.style.background=it.color; blk.textContent=it.name; var fs=8.5; blk.style.fontSize=fs+'px'; while(blk.scrollWidth>blk.clientWidth&&fs>5){fs-=0.5; blk.style.fontSize=fs+'px';} }
+      else { r.innerHTML='<span class="hub-blk"></span><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; var blk=r.querySelector('.hub-blk'); blk.style.background=it.color; blk.textContent=it.name; }
       r.querySelector('h4').textContent=it.name;
       r.querySelector('p').textContent=it.sub[l];
       r.addEventListener('click',function(){ state.sel=id; state.view='detail'; render(); });
       bodyEl.appendChild(r);
+      var fb=r.querySelector('.hub-blk');
+      if(fb){ var fs=8.5; fb.style.fontSize=fs+'px'; while(fb.scrollWidth>fb.clientWidth&&fs>5){ fs-=0.5; fb.style.fontSize=fs+'px'; } }
     });
     var foot=document.createElement('p'); foot.className='hub-foot';
     var _n=0,_g=0; Object.keys(GROUPS).forEach(function(k){ _n+=GROUPS[k].items.length; if(GROUPS[k].items.length)_g++; });
@@ -1062,7 +1064,7 @@ function renderBody(){
   } else {
     var it=ITEMS[state.sel];
     bodyEl.innerHTML='';
-    var back=document.createElement('button'); back.type='button'; back.className='hub-back'; back.textContent=t(UI.backGroups);
+    var back=document.createElement('button'); back.type='button'; back.className='hub-back'; back.textContent=t(UI.backSamples);
     back.addEventListener('click',function(){ state.view='list'; render(); });
     bodyEl.appendChild(back);
     var hero=document.createElement('div'); hero.className='hub-hero';
@@ -1092,7 +1094,7 @@ function openPlay(){
   document.getElementById('hubMain').style.display='none';
   var p=document.getElementById('hubPlay'); p.classList.add('on');
   document.getElementById('hubPlayName').textContent=it.name;
-  document.getElementById('hubPlayBack').textContent=t(UI.backSamples);
+  document.getElementById('hubPlayBack').textContent=t(UI.backOne);
   var pf=document.getElementById('hubPlayFull'); pf.href=DEMO_URL;
   var fr=document.getElementById('hubFrame');
   fr.title=it.name+' — logo demo by CarlLab'; fr.style.background=it.bg;
@@ -1103,7 +1105,7 @@ function closePlay(){
   document.getElementById('hubMain').style.display='';
 }
 document.getElementById('hubPlayBack').addEventListener('click',closePlay);
-function render(){ renderPanel(); renderTabs(); renderBody(); }
+function render(){ renderPanel(); renderTabs(); renderBody(); var pb=document.getElementById('hubPlayBack'); if(pb) pb.textContent=t(UI.backOne); }
 new MutationObserver(function(){ render(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 render();
 })();
