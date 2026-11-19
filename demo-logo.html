@@ -179,7 +179,9 @@
         *{transition:none !important;animation:none !important}
       }
     </style>
-  </head>
+  <script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embed');</script>
+<style id="embed-mode">html.embed .panel{display:none}html.embed .layout{max-width:none;padding:0;gap:0;display:block}html.embed .demo-phone{width:100%;margin:0;border:0;border-radius:0;padding:0;box-shadow:none;background:#0A0A0C}html.embed .screen{border-radius:0;height:100vh;height:100dvh}html.embed body{background:#0A0A0C}</style>
+</head>
   <body>
 
     <!-- ============ DEFINISI IKON LOGO (SVG original, geometris flat) ============ -->
