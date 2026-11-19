@@ -54,6 +54,9 @@ img{max-width:100%}
 .envto{font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut)}
 .envguest{font-family:var(--serif);font-style:italic;font-size:27px;margin-top:8px;color:var(--ivory)}
 .envbox{position:relative;width:100%;aspect-ratio:1.2568;margin-top:22px;perspective:1000px}
+.envbox::after{content:"";position:absolute;left:-16%;right:-16%;bottom:-44px;height:64px;background:radial-gradient(50% 50% at 50% 50%,rgba(217,180,92,.16),rgba(217,180,92,.05) 55%,rgba(217,180,92,0) 75%);pointer-events:none}
+.envscene{position:relative}
+.envscene::before{content:"";position:absolute;left:50%;top:54%;width:130%;aspect-ratio:1.4;transform:translate(-50%,-50%);background:radial-gradient(50% 50% at 50% 50%,rgba(179,137,46,.13),rgba(179,137,46,0) 70%);pointer-events:none}
 .env-back{position:absolute;inset:0;z-index:2;background-size:100% 100%;background-repeat:no-repeat;border-radius:6px;box-shadow:0 26px 46px rgba(0,0,0,.55)}
 .env-card{position:absolute;left:4.5%;right:4.5%;top:5%;bottom:9%;background:var(--ivory);color:#241B12;border-radius:5px;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:14px;transition:transform 1.15s var(--ease) .5s;box-shadow:0 6px 24px rgba(0,0,0,.45)}
 .env-card .mono{width:44px;height:44px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;color:#8a6a1f;letter-spacing:.04em}
