@@ -553,8 +553,333 @@ footer{border-top:1px solid var(--line);padding-top:44px;padding-bottom:40px}
 "use strict";
 var $=function(id){return document.getElementById(id)};
 var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var state={act:0,estimate:null,enquiry:null};
+var state={act:0,estimate:null,enquiry:null,breakdown:null,disp:null,lang:'en'};
 window.HALDEN={state:state};
+
+/* ================= i18n ================= */
+var KEY='carllab-v18-lang';
+var T18={
+en:{
+  meta_title:'HALDEN Homes — Custom Home Builder, Melbourne',
+  meta_desc:'HALDEN Homes is a fictional Melbourne custom home builder. Watch a house rise in five acts, estimate your build, and send an enquiry.',
+  og_desc:'Watch a Melbourne custom home rise in five acts, estimate your build live, and send an enquiry. A fictional demonstration website by CarlLab.',
+  nav_build:'The Build', nav_projects:'Projects', nav_estimator:'Estimator', nav_faq:'FAQ',
+  cta_start:'Start your build',
+  hero_eyebrow:'Custom home builder — Melbourne',
+  hero_h1:'A house, built in <em>five acts</em> — watch yours rise.',
+  hero_sub:'Halden designs and builds one-off homes across Melbourne\u2019s inner north. No display villages, no catalogue plans — your block, your brief, one builder from first peg to front-door key.',
+  cta_watch:'Watch a home rise',
+  fact_homes:'Homes built', fact_suburbs:'Suburbs', fact_months:'months', fact_avg:'Average build',
+  stage_eyebrow:'The build — one Halden home, start to keys',
+  stage_h2:'From a block of land, <em>a home.</em>',
+  stage_lede:'Every Halden build follows the same five acts. Keep scrolling — this is The Dusk House in Fitzroy North, from the day we pegged the block to the evening the keys changed hands.',
+  stage_top:'The Build — Fitzroy North',
+  stage_static_label:'The five acts of a Halden build',
+  scap_1:'Act 01 — The land', scap_2:'Act 02 — The frame', scap_3:'Act 03 — The shell', scap_4:'Act 04 — The interior', scap_5:'Act 05 — The keys',
+  proj_eyebrow:'Completed homes',
+  proj_h2:'Three of the <em>twenty-seven.</em>',
+  proj_lede:'Every Halden home is a one-off. These three sit within four streets of each other — drive past and you can read three different briefs in brick, timber and stone.',
+  dusk_story:'A knockdown-rebuild on a 412 m\u00B2 block. The clients asked for a house that disappears into the gum trees by day and glows like a lantern by night — blackened timber, a stone hearth wall, and every living room facing north.',
+  dusk_s1:'Suburb <b>Fitzroy North</b>', dusk_s2:'Size <b>286 m\u00B2</b>', dusk_s3:'Completed <b>2025</b>', dusk_s4:'Build <b>11 months</b>',
+  dusk_aria:'The Dusk House by day — blackened timber and brick gable above a Melbourne street. Activate to enlarge.',
+  gable_story:'A new build behind a retained 1920s fa\u00E7ade — heritage streetscape in front, a double-height brick gable behind it.',
+  gable_s1:'Suburb <b>Brunswick East</b>', gable_s2:'Size <b>214 m\u00B2</b>', gable_s3:'Completed <b>2024</b>',
+  gable_aria:'Gable and Brick house, red brick with a steep gabled roof. Activate to enlarge.',
+  light_story:'A deep, narrow block with a southern rear — solved with a two-storey lightwell that pulls midday sun into the kitchen in the middle of winter.',
+  light_s1:'Suburb <b>Northcote</b>', light_s2:'Size <b>168 m\u00B2</b>', light_s3:'Completed <b>2026</b>', light_s4:'Build <b>10 months</b>',
+  light_aria:'The Lightwell living room, timber beams and a stone fireplace wall. Activate to enlarge.',
+  est_eyebrow:'Build cost estimator',
+  est_h2:'What does a Halden home <em>cost?</em>',
+  est_lede:'Honest numbers before anyone books a meeting. Move the controls — the range updates live, and it follows you into the enquiry form so we start from the same figure.',
+  est_yours:'Your estimate',
+  est_note:'Range \u00B18% \u00B7 per-m\u00B2 rates include structure, fit-out &amp; finishes<br>Excludes land, permits &amp; landscaping \u00B7 Indicative only',
+  bd_aria:'Breakdown of the estimate into land prep, structure and finishes',
+  lg_prep:'Land prep &amp; slab', lg_struct:'Structure &amp; shell', lg_fin:'Fit-out &amp; finishes',
+  est_use:'Use this in my enquiry', est_copy:'Copy summary', est_copied:'Copied',
+  ctl_size:'Build size', ctl_spec:'Specification', ctl_fin:'Finishes', ctl_storeys:'Storeys',
+  spec_essential:'Essential', spec_arch:'Architectural', spec_bespoke:'Bespoke',
+  fin_standard:'Standard', fin_premium:'Premium', fin_luxury:'Luxury',
+  st_single:'Single storey', st_two:'Two storeys',
+  fin_included:'Included', st_base:'Base rate',
+  proc_eyebrow:'How it works', proc_h2:'Five steps, <em>one builder.</em>',
+  step1_t:'Consult', step1_p:'We walk your block together and talk budget before drawings. Free, and no obligation to continue.',
+  step2_t:'Design', step2_p:'Concept plans with our architects, costed at every stage — never designed first and priced later.',
+  step3_t:'Permit', step3_p:'Planning and building permits handled in-house. Most Halden permits land inside four months.',
+  step4_t:'Build', step4_p:'A fixed-price contract and a weekly photo report — the five acts above, sent to your phone.',
+  step5_t:'Keys', step5_p:'Walkthrough, manuals, and a 12-month defect call-back. Then the house is yours, properly.',
+  faq_eyebrow:'Questions', faq_h2:'Before you <em>ask.</em>',
+  q1:'How long does a Halden build take?',
+  a1:'Eleven months on average, from slab to keys, for a two-storey home around 240 m\u00B2. Single-storey homes usually land in eight to nine months. The contract carries a fixed completion date with liquidated damages — if we run late, it costs us, not you.',
+  q2:'What does the estimator\u2019s figure include — and exclude?',
+  a2:'It includes the full build: structure, services, fit-out and the finish level you selected. It excludes the land itself, council and permit fees (usually $11,700–19,500 in Melbourne), and landscaping. Every Halden quote is itemised line by line, so the estimate and the contract can be compared directly.',
+  q3:'Can I bring my own architect or plans?',
+  a3:'Yes. Around a third of Halden homes start from an outside architect\u2019s plans. We cost them honestly at the Permit stage and flag anything that will be expensive to build before you are committed — no redesign fees, no pressure to switch to our team.',
+  q4:'Do you build outside the inner north?',
+  a4:'Our fourteen suburbs run from Fitzroy North to Coburg and out to Ivanhoe. Further afield we consider one build at a time — tell us the suburb in your enquiry and we will give you a straight answer within two business days.',
+  enq_eyebrow:'Start your build', enq_h2:'Tell us about <em>your block.</em>',
+  enq_lede1:'Send an enquiry and we reply within two business days with a straight read on your block, your budget, and whether we are the right builder. Your estimate from above is attached automatically.',
+  enq_lede2:'Prefer email? Write to <b style="color:var(--brass-l)">build@halden.example</b> and mention your suburb.',
+  f_name:'Your name *', f_email:'Email *', f_phone:'Phone (optional)', f_suburb:'Suburb of your block', f_msg:'About the build',
+  ph_name:'e.g. Sarah Whitfield', ph_suburb:'e.g. Fitzroy North',
+  ph_msg:'Knockdown-rebuild, a sloping block, a growing family — whatever you\u2019re starting from.',
+  e_name:'Please tell us your name.',
+  e_email:'That email doesn\u2019t look complete — check it and try again.',
+  btn_send:'Send enquiry',
+  conf_h3:'Enquiry received.',
+  conf_p:'Thank you — we reply within two business days. Keep your reference code; it follows your build from here.',
+  dl_ref:'Reference', dl_name:'Name', dl_suburb:'Suburb', dl_est:'Estimate',
+  btn_edit:'Edit my enquiry',
+  ft_tag:'Custom homes across Melbourne\u2019s inner north. One builder, first peg to front-door key.',
+  clock_label:'Melbourne, now', clock_hours:'Studio hours 8:00 – 17:00, Mon – Fri',
+  honest1:'HALDEN is a fictional demonstration website by CarlLab — the builder, homes and prices are invented; every button works.',
+  honest2:'\u00A9 2026 HALDEN Homes (demonstration). Photography generated for this demo.',
+  lb_aria:'Enlarged project photo', lb_close:'Close photo viewer',
+  wire_dim:'12.4 m',
+  no_est:'No estimate attached'
+},
+id:{
+  meta_title:'HALDEN Homes — Pembangun Rumah Kustom, Melbourne',
+  meta_desc:'HALDEN Homes adalah pembangun rumah kustom fiktif di Melbourne. Saksikan sebuah rumah berdiri dalam lima babak, perkirakan biaya pembangunan Anda, dan kirim pertanyaan.',
+  og_desc:'Saksikan rumah kustom Melbourne berdiri dalam lima babak, perkirakan biaya pembangunan Anda secara langsung, dan kirim pertanyaan. Situs web demonstrasi fiktif oleh CarlLab.',
+  nav_build:'Pembangunan', nav_projects:'Proyek', nav_estimator:'Estimator', nav_faq:'FAQ',
+  cta_start:'Mulai bangun',
+  hero_eyebrow:'Pembangun rumah kustom — Melbourne',
+  hero_h1:'Sebuah rumah, dibangun dalam <em>lima babak</em> — saksikan rumah Anda berdiri.',
+  hero_sub:'Halden merancang dan membangun rumah unik di kawasan utara dalam Melbourne. Tanpa desa percontohan, tanpa denah katalog — lahan Anda, kebutuhan Anda, satu pembangun dari patok pertama sampai kunci pintu depan.',
+  cta_watch:'Lihat rumah berdiri',
+  fact_homes:'Rumah terbangun', fact_suburbs:'Kawasan', fact_months:'bulan', fact_avg:'Rata-rata pembangunan',
+  stage_eyebrow:'Pembangunan — satu rumah Halden, dari awal sampai kunci',
+  stage_h2:'Dari sebidang lahan, <em>sebuah rumah.</em>',
+  stage_lede:'Setiap pembangunan Halden mengikuti lima babak yang sama. Terus gulir ke bawah — ini The Dusk House di Fitzroy North, dari hari kami memasang patok lahan sampai sore hari kunci berpindah tangan.',
+  stage_top:'Pembangunan — Fitzroy North',
+  stage_static_label:'Lima babak pembangunan Halden',
+  scap_1:'Babak 01 — Lahan', scap_2:'Babak 02 — Rangka', scap_3:'Babak 03 — Cangkang', scap_4:'Babak 04 — Interior', scap_5:'Babak 05 — Kunci',
+  proj_eyebrow:'Rumah selesai dibangun',
+  proj_h2:'Tiga dari <em>dua puluh tujuh.</em>',
+  proj_lede:'Setiap rumah Halden adalah satu-satunya. Ketiga rumah ini berada dalam jarak empat jalan satu sama lain — lewati dengan mobil, dan Anda bisa membaca tiga kebutuhan berbeda dari bata, kayu, dan batu.',
+  dusk_story:'Pembongkaran dan pembangunan ulang di lahan 412 m\u00B2. Klien meminta rumah yang menyatu dengan pohon gum di siang hari dan bercahaya seperti lentera di malam hari — kayu hangus, dinding perapian batu, dan semua ruang keluarga menghadap utara.',
+  dusk_s1:'Kawasan <b>Fitzroy North</b>', dusk_s2:'Luas <b>286 m\u00B2</b>', dusk_s3:'Selesai <b>2025</b>', dusk_s4:'Pembangunan <b>11 bulan</b>',
+  dusk_aria:'The Dusk House di siang hari — atap pelana kayu hangus dan bata di atas jalanan Melbourne. Aktifkan untuk memperbesar.',
+  gable_story:'Pembangunan baru di balik fasad tahun 1920-an yang dipertahankan — tampak warisan budaya di depan, atap pelana bata dua lantai di belakangnya.',
+  gable_s1:'Kawasan <b>Brunswick East</b>', gable_s2:'Luas <b>214 m\u00B2</b>', gable_s3:'Selesai <b>2024</b>',
+  gable_aria:'Rumah Gable & Brick, bata merah dengan atap pelana curam. Aktifkan untuk memperbesar.',
+  light_story:'Lahan dalam dan sempit dengan bagian belakang menghadap selatan — diatasi dengan sumur cahaya dua lantai yang menarik sinar matahari tengah hari ke dapur di tengah musim dingin.',
+  light_s1:'Kawasan <b>Northcote</b>', light_s2:'Luas <b>168 m\u00B2</b>', light_s3:'Selesai <b>2026</b>', light_s4:'Pembangunan <b>10 bulan</b>',
+  light_aria:'Ruang keluarga The Lightwell, balok kayu dan dinding perapian batu. Aktifkan untuk memperbesar.',
+  est_eyebrow:'Estimator biaya pembangunan',
+  est_h2:'Berapa biaya rumah <em>Halden?</em>',
+  est_lede:'Angka yang jujur sebelum siapa pun memesan pertemuan. Gerakkan kontrolnya — kisarannya berubah langsung, dan ikut masuk ke formulir pertanyaan agar kita mulai dari angka yang sama.',
+  est_yours:'Estimasi Anda',
+  est_note:'Kisaran \u00B18% \u00B7 tarif per-m\u00B2 mencakup struktur, fit-out &amp; penyelesaian<br>Belum termasuk lahan, izin &amp; lanskap \u00B7 Hanya sebagai indikatif',
+  bd_aria:'Rincian estimasi menjadi persiapan lahan, struktur, dan penyelesaian',
+  lg_prep:'Persiapan lahan &amp; pelat beton', lg_struct:'Struktur &amp; cangkang', lg_fin:'Fit-out &amp; penyelesaian',
+  est_use:'Pakai dalam pertanyaan saya', est_copy:'Salin ringkasan', est_copied:'Tersalin',
+  ctl_size:'Luas bangunan', ctl_spec:'Spesifikasi', ctl_fin:'Penyelesaian', ctl_storeys:'Jumlah lantai',
+  spec_essential:'Esensial', spec_arch:'Arsitektural', spec_bespoke:'Bespoke',
+  fin_standard:'Standar', fin_premium:'Premium', fin_luxury:'Mewah',
+  st_single:'Satu lantai', st_two:'Dua lantai',
+  fin_included:'Termasuk', st_base:'Tarif dasar',
+  proc_eyebrow:'Cara kerjanya', proc_h2:'Lima langkah, <em>satu pembangun.</em>',
+  step1_t:'Konsultasi', step1_p:'Kami berjalan di lahan Anda bersama dan membicarakan anggaran sebelum gambar dibuat. Gratis, dan tanpa kewajiban untuk lanjut.',
+  step2_t:'Desain', step2_p:'Denah konsep bersama arsitek kami, dihitung biayanya di setiap tahap — tidak pernah didesain dulu lalu dihargai belakangan.',
+  step3_t:'Perizinan', step3_p:'Izin perencanaan dan pembangunan kami urus sendiri. Sebagian besar izin Halden selesai dalam empat bulan.',
+  step4_t:'Pembangunan', step4_p:'Kontrak harga tetap dan laporan foto mingguan — lima babak di atas, dikirim ke ponsel Anda.',
+  step5_t:'Serah terima kunci', step5_p:'Peninjauan akhir, buku manual, dan panggilan perbaikan cacat selama 12 bulan. Setelah itu rumah benar-benar milik Anda.',
+  faq_eyebrow:'Pertanyaan', faq_h2:'Sebelum Anda <em>bertanya.</em>',
+  q1:'Berapa lama pembangunan Halden?',
+  a1:'Rata-rata sebelas bulan, dari pelat beton sampai kunci, untuk rumah dua lantai sekitar 240 m\u00B2. Rumah satu lantai biasanya selesai dalam delapan sampai sembilan bulan. Kontrak mencantumkan tanggal selesai yang tetap dengan denda keterlambatan — kalau kami terlambat, kami yang menanggung biayanya, bukan Anda.',
+  q2:'Apa saja yang termasuk — dan tidak termasuk — dalam angka estimator?',
+  a2:'Angka itu mencakup seluruh pembangunan: struktur, utilitas, fit-out, dan tingkat penyelesaian yang Anda pilih. Tidak termasuk lahan itu sendiri, biaya pemerintah kota dan izin (biasanya Rp211.000.000–351.000.000 di Melbourne), dan lanskap. Setiap penawaran Halden dirinci baris demi baris, sehingga estimasi dan kontrak dapat dibandingkan langsung.',
+  q3:'Bisakah saya membawa arsitek atau denah sendiri?',
+  a3:'Bisa. Sekitar sepertiga rumah Halden berawal dari denah arsitek luar. Kami menghitung biayanya secara jujur di tahap Perizinan dan menandai apa pun yang mahal untuk dibangun sebelum Anda terikat — tanpa biaya desain ulang, tanpa tekanan untuk pindah ke tim kami.',
+  q4:'Apakah Anda membangun di luar kawasan utara dalam kota?',
+  a4:'Empat belas kawasan kami membentang dari Fitzroy North sampai Coburg dan ke Ivanhoe. Lebih jauh dari itu, kami mempertimbangkan satu pembangunan dalam satu waktu — sebutkan kawasan Anda dalam pertanyaan dan kami beri jawaban tegas dalam dua hari kerja.',
+  enq_eyebrow:'Mulai pembangunan Anda', enq_h2:'Ceritakan tentang <em>lahan Anda.</em>',
+  enq_lede1:'Kirim pertanyaan dan kami akan membalas dalam dua hari kerja dengan penilaian jujur tentang lahan Anda, anggaran Anda, dan apakah kami pembangun yang tepat. Estimasi Anda dari bagian atas terlampir secara otomatis.',
+  enq_lede2:'Lebih suka email? Tulis ke <b style="color:var(--brass-l)">build@halden.example</b> dan sebutkan kawasan Anda.',
+  f_name:'Nama Anda *', f_email:'Email *', f_phone:'Telepon (opsional)', f_suburb:'Kawasan lahan Anda', f_msg:'Tentang pembangunan',
+  ph_name:'cth. Sarah Whitfield', ph_suburb:'cth. Fitzroy North',
+  ph_msg:'Bongkar dan bangun ulang, lahan miring, keluarga yang sedang bertumbuh — apa pun titik awal Anda.',
+  e_name:'Mohon tuliskan nama Anda.',
+  e_email:'Email itu tampaknya belum lengkap — periksa kembali dan coba lagi.',
+  btn_send:'Kirim pertanyaan',
+  conf_h3:'Pertanyaan diterima.',
+  conf_p:'Terima kasih — kami membalas dalam dua hari kerja. Simpan kode referensi Anda; kode itu mengikuti pembangunan Anda sejak dari sini.',
+  dl_ref:'Referensi', dl_name:'Nama', dl_suburb:'Kawasan', dl_est:'Estimasi',
+  btn_edit:'Ubah pertanyaan saya',
+  ft_tag:'Rumah kustom di kawasan utara dalam Melbourne. Satu pembangun, dari patok pertama sampai kunci pintu depan.',
+  clock_label:'Melbourne, sekarang', clock_hours:'Jam studio 8:00 – 17:00, Senin – Jumat',
+  honest1:'HALDEN adalah situs web demonstrasi fiktif oleh CarlLab — pembangun, rumah, dan harganya adalah karangan; setiap tombol berfungsi.',
+  honest2:'\u00A9 2026 HALDEN Homes (demonstrasi). Fotografi dibuat khusus untuk demo ini.',
+  lb_aria:'Foto proyek yang diperbesar', lb_close:'Tutup penampil foto',
+  wire_dim:'12,4 m',
+  no_est:'Tidak ada estimasi terlampir'
+}};
+var META={
+  en:{dusk:'Fitzroy North \u00B7 286 m\u00B2 \u00B7 Completed 2025 \u00B7 Build 11 months', gable:'Brunswick East \u00B7 214 m\u00B2 \u00B7 Completed 2024', light:'Northcote \u00B7 168 m\u00B2 \u00B7 Completed 2026 \u00B7 Build 10 months'},
+  id:{dusk:'Fitzroy North \u00B7 286 m\u00B2 \u00B7 Selesai 2025 \u00B7 Pembangunan 11 bulan', gable:'Brunswick East \u00B7 214 m\u00B2 \u00B7 Selesai 2024', light:'Northcote \u00B7 168 m\u00B2 \u00B7 Selesai 2026 \u00B7 Pembangunan 10 bulan'}
+};
+var NAMES={
+  spec:{'Essential':'spec_essential','Architectural':'spec_arch','Bespoke':'spec_bespoke'},
+  finish:{'Standard':'fin_standard','Premium':'fin_premium','Luxury':'fin_luxury'},
+  storeys:{'Single storey':'st_single','Two storeys':'st_two'}
+};
+function T(k){ var d=T18[state.lang]||T18.en; return (k in d)?d[k]:(T18.en[k]||k); }
+function nameDisp(kind, canonical){ var m=NAMES[kind]; return (m && m[canonical])?T(m[canonical]):canonical; }
+
+/* ---------- DOM annotation (no-op when template already carries data-t) ---------- */
+(function annotate(){
+  if(document.documentElement.hasAttribute('data-i18n-ok')) return;
+  document.documentElement.setAttribute('data-i18n-ok','1');
+  var A=[
+    ['nav a[href="#build"]','nav_build','t'],['nav a[href="#projects"]','nav_projects','t'],
+    ['nav a[href="#estimator"]','nav_estimator','t'],['nav a[href="#faq"]','nav_faq','t'],
+    ['.hd .btn','cta_start','t'],
+    ['.hero .eyebrow','hero_eyebrow','t'],['.hero h1','hero_h1','t'],['.hero .sub','hero_sub','t'],
+    ['.hero-ctas .btn.solid','cta_start','t'],['.hero-ctas .btn.ghost','cta_watch','t'],
+    ['.facts .fact:nth-child(1) span','fact_homes','t'],['.facts .fact:nth-child(2) span','fact_suburbs','t'],
+    ['.facts .fact:nth-child(3) span','fact_avg','t'],['.facts .fact:nth-child(3) b i','fact_months','t'],
+    ['.stage-sec .eyebrow','stage_eyebrow','t'],['.stage-sec h2','stage_h2','t'],['.stage-sec .lede','stage_lede','t'],
+    ['.stage-top .mono','stage_top','t'],['.stage-static','stage_static_label','aria'],
+    ['.stage-static figure:nth-of-type(1) figcaption','scap_1','t'],['.stage-static figure:nth-of-type(2) figcaption','scap_2','t'],
+    ['.stage-static figure:nth-of-type(3) figcaption','scap_3','t'],['.stage-static figure:nth-of-type(4) figcaption','scap_4','t'],
+    ['.stage-static figure:nth-of-type(5) figcaption','scap_5','t'],
+    ['#projects .eyebrow','proj_eyebrow','t'],['#projects h2','proj_h2','t'],['#projects .lede','proj_lede','t'],
+    ['.p1 .story','dusk_story','t'],['.p2 .story','gable_story','t'],['.p3 .story','light_story','t'],
+    ['.p1 .spec span:nth-child(1)','dusk_s1','t'],['.p1 .spec span:nth-child(2)','dusk_s2','t'],
+    ['.p1 .spec span:nth-child(3)','dusk_s3','t'],['.p1 .spec span:nth-child(4)','dusk_s4','t'],
+    ['.p2 .spec span:nth-child(1)','gable_s1','t'],['.p2 .spec span:nth-child(2)','gable_s2','t'],['.p2 .spec span:nth-child(3)','gable_s3','t'],
+    ['.p3 .spec span:nth-child(1)','light_s1','t'],['.p3 .spec span:nth-child(2)','light_s2','t'],
+    ['.p3 .spec span:nth-child(3)','light_s3','t'],['.p3 .spec span:nth-child(4)','light_s4','t'],
+    ['#estimator .eyebrow','est_eyebrow','t'],['#estimator h2','est_h2','t'],['#estimator .lede','est_lede','t'],
+    ['.est-out .eyebrow','est_yours','t'],['.est-range small','est_note','t'],['.bd','bd_aria','aria'],
+    ['.bd-legend li:nth-child(1) span','lg_prep','t'],['.bd-legend li:nth-child(2) span','lg_struct','t'],['.bd-legend li:nth-child(3) span','lg_fin','t'],
+    ['.est-actions a.btn','est_use','t'],['#copyEst','est_copy','t'],['#copiedMsg','est_copied','t'],
+    ['label[for="sizeRange"]','ctl_size','t'],
+    ['.est-ctl fieldset:nth-of-type(1) legend','ctl_spec','t'],['.est-ctl fieldset:nth-of-type(2) legend','ctl_fin','t'],['.est-ctl fieldset:nth-of-type(3) legend','ctl_storeys','t'],
+    ['#process .eyebrow','proc_eyebrow','t'],['#process h2','proc_h2','t'],
+    ['#faq .eyebrow','faq_eyebrow','t'],['#faq h2','faq_h2','t'],
+    ['#enquiry .eyebrow','enq_eyebrow','t'],['#enquiry h2','enq_h2','t'],
+    ['label[for="fName"]','f_name','t'],['label[for="fEmail"]','f_email','t'],['label[for="fPhone"]','f_phone','t'],
+    ['label[for="fSuburb"]','f_suburb','t'],['label[for="fMsg"]','f_msg','t'],
+    ['#fName','ph_name','ph'],['#fSuburb','ph_suburb','ph'],['#fMsg','ph_msg','ph'],
+    ['#eName','e_name','t'],['#eEmail','e_email','t'],
+    ['#enqForm button[type="submit"]','btn_send','t'],
+    ['.confirm h3','conf_h3','t'],['.confirm > p','conf_p','t'],
+    ['.confirm dl div:nth-child(1) dt','dl_ref','t'],['.confirm dl div:nth-child(2) dt','dl_name','t'],
+    ['.confirm dl div:nth-child(3) dt','dl_suburb','t'],['.confirm dl div:nth-child(4) dt','dl_est','t'],
+    ['#editBtn','btn_edit','t'],
+    ['.ft > div:first-child p','ft_tag','t'],
+    ['footer p.honest:nth-of-type(1)','honest1','t'],['footer p.honest:nth-of-type(2)','honest2','t'],
+    ['#lbPh','lb_aria','aria'],['#lbClose','lb_close','aria']
+  ];
+  for(var s=1;s<=5;s++){
+    A.push(['.proc .step:nth-child('+s+') h3','step'+s+'_t','t']);
+    A.push(['.proc .step:nth-child('+s+') p:nth-of-type(2)','step'+s+'_p','t']);
+    A.push(['.faq-list details:nth-of-type('+s+') summary','q'+s,'t']);
+    A.push(['.faq-list details:nth-of-type('+s+') .a','a'+s,'t']);
+  }
+  A.push(['.enq > div:first-child p:nth-of-type(1)','enq_lede1','t']);
+  A.push(['.enq > div:first-child p:nth-of-type(2)','enq_lede2','t']);
+  A.forEach(function(row){
+    var el=document.querySelector(row[0]); if(!el) return;
+    var attr=row[2]==='ph'?'data-tph':(row[2]==='aria'?'data-taria':'data-t');
+    if(!el.hasAttribute(attr)) el.setAttribute(attr,row[1]);
+  });
+  /* clock label: tag the hours span first, then wrap the leading text node */
+  var clock=document.querySelector('.clock');
+  if(clock){
+    var hrs=clock.querySelector('span');
+    if(hrs && !hrs.hasAttribute('data-t')) hrs.setAttribute('data-t','clock_hours');
+    var tn=clock.firstChild;
+    if(tn && tn.nodeType===3 && tn.textContent.trim()){
+      var wrap=document.createElement('span');
+      wrap.setAttribute('data-t','clock_label');
+      clock.insertBefore(wrap,tn); wrap.appendChild(tn);
+    }
+  }
+  /* wireframe dimension label */
+  var wt=document.querySelector('.wire text');
+  if(wt && !wt.id) wt.id='wireDim';
+  /* project photos: lightbox meta key + aria key */
+  var keyByBg={'bg-duskday':'dusk','bg-project':'gable','bg-interior':'light'};
+  document.querySelectorAll('.pcard .ph').forEach(function(ph){
+    var k=keyByBg[ph.getAttribute('data-bg')]; if(!k) return;
+    if(!ph.hasAttribute('data-metakey')) ph.setAttribute('data-metakey',k);
+    if(!ph.hasAttribute('data-taria')) ph.setAttribute('data-taria',k+'_aria');
+  });
+  /* pills: wrap name text node, tag rate / note smalls */
+  function tagPills(groupId, nameKeys, smallFn){
+    var group=$(groupId); if(!group) return;
+    var labels=group.querySelectorAll('label');
+    labels.forEach(function(lab, idx){
+      var pill=lab.querySelector('.pill'); if(!pill) return;
+      if(!pill.querySelector('.pn')){
+        var tn2=pill.firstChild;
+        if(tn2 && tn2.nodeType===3){
+          var pn=document.createElement('span');
+          pn.className='pn'; pn.setAttribute('data-t',nameKeys[idx]);
+          pill.insertBefore(pn,tn2); pn.appendChild(tn2);
+        }
+      }
+      var small=pill.querySelector('small');
+      if(small) smallFn(lab, small, idx);
+    });
+  }
+  tagPills('specPills',['spec_essential','spec_arch','spec_bespoke'],function(lab, small){
+    var inp=lab.querySelector('input');
+    if(inp && !small.hasAttribute('data-rate')) small.setAttribute('data-rate',inp.value);
+  });
+  tagPills('finPills',['fin_standard','fin_premium','fin_luxury'],function(lab, small, idx){
+    if(idx===0 && !small.hasAttribute('data-t')) small.setAttribute('data-t','fin_included');
+  });
+  tagPills('storeyPills',['st_single','st_two'],function(lab, small, idx){
+    if(idx===0 && !small.hasAttribute('data-t')) small.setAttribute('data-t','st_base');
+  });
+  /* language toggle: inject if the template does not carry one */
+  if(!$('lgEn')){
+    var st=document.createElement('style');
+    st.textContent='.lang-tgl{display:flex;border:1px solid var(--line);flex:none}'
+      +'.lang-tgl button{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;padding:8px 11px;background:transparent;border:none;color:var(--muted);cursor:pointer;transition:background .18s,color .18s}'
+      +'.lang-tgl button.on{background:var(--brass);color:#141414}'
+      +'.lang-tgl button:focus-visible{outline:2px solid var(--brass-l);outline-offset:-2px}'
+      +'@media(max-width:560px){.lang-tgl button{padding:7px 8px;font-size:10px;letter-spacing:.08em}}';
+    document.head.appendChild(st);
+    var hd=document.querySelector('.hd');
+    if(hd){
+      var tgl=document.createElement('div');
+      tgl.className='lang-tgl'; tgl.setAttribute('role','group'); tgl.setAttribute('aria-label','Language / Bahasa');
+      tgl.innerHTML='<button type="button" id="lgEn" class="on" aria-pressed="true">EN</button><button type="button" id="lgId" aria-pressed="false">ID</button>';
+      hd.insertBefore(tgl, hd.querySelector('.btn'));
+    }
+  }
+})();
+
+/* ---------- currency ---------- */
+function roundDisp(n){
+  var a=Math.abs(n), u;
+  if(state.lang==='id'){ u=a<200?500:(a<10000?5000:1000000); }
+  else{ u=a<200?0.5:(a<10000?5:500); }
+  return Math.round(n/u)*u;
+}
+function conv(aud){ return state.lang==='id' ? roundDisp(aud*0.65*18000) : roundDisp(aud*0.65); }
+var RATE={};
+function buildRates(){ RATE={}; [3200,4600,6400].forEach(function(v){ RATE[v]=conv(v); }); RATE.prep=conv(260); }
+var nfInt={en:new Intl.NumberFormat('en-US'), id:new Intl.NumberFormat('id-ID')};
+var nfUsd=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+var nfIdr2=new Intl.NumberFormat('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2});
+function fmtMoney(n){
+  if(state.lang==='id'){
+    if(Math.abs(n)>=1e9) return 'Rp'+nfIdr2.format(n/1e9)+' M';
+    return 'Rp'+nfInt.id.format(Math.round(n));
+  }
+  return nfUsd.format(n);
+}
+function rangeStrDisp(d){ return fmtMoney(d.low)+' \u2013 '+fmtMoney(d.high); }
+function rangeStrCanon(e){
+  if(state.disp && e===state.estimate) return rangeStrDisp(state.disp);
+  return fmtMoney(conv(e.low))+' \u2013 '+fmtMoney(conv(e.high));
+}
 
 /* ---------- reveals ---------- */
 var rv=document.querySelectorAll('[data-rv]');
@@ -564,16 +889,29 @@ if('IntersectionObserver' in window && !reduced){
 }else{ rv.forEach(function(el){el.classList.add('in')}); }
 
 /* ---------- stage ---------- */
-var ACTS=[
+var ACTS={
+en:[
  {no:'ACT 01',ghost:'01',t:'The land',x:'A flat, north-facing block in the inner north. Every Halden build starts with the block, not the brochure — soil, fall, light and the neighbours\u2019 gum trees all shape the plan.'},
  {no:'ACT 02',ghost:'02',t:'The frame',x:'Pine framing up in nine days. The wireframe is the elevation drawing the frame must match — line for line, checked on site before a single sheet of cladding is ordered.'},
  {no:'ACT 03',ghost:'03',t:'The shell',x:'Roof on, cladding fixed, windows in. From here the house is weather-tight, the Melbourne weather stops mattering, and the inside work begins.'},
  {no:'ACT 04',ghost:'04',t:'The interior',x:'Stone, timber, and the rooms you actually live in. Fit-off is where a budget either holds or doesn\u2019t — ours holds, because it was costed at Design, not guessed.'},
  {no:'ACT 05',ghost:'05',t:'The keys',x:'Eleven months after the first peg, the keys change hands. The Dusk House, Fitzroy North — photographed on its first evening as somebody\u2019s home.'}
-];
+],
+id:[
+ {no:'BABAK 01',ghost:'01',t:'Lahan',x:'Lahan datar menghadap utara di kawasan utara dalam kota. Setiap pembangunan Halden dimulai dari lahannya, bukan dari brosur — tanah, kemiringan, cahaya, dan pohon gum tetangga semuanya membentuk denahnya.'},
+ {no:'BABAK 02',ghost:'02',t:'Rangka',x:'Rangka pinus berdiri dalam sembilan hari. Gambar rangka kawat ini adalah gambar elevasi yang wajib diikuti rangka — garis demi garis, diperiksa di lokasi sebelum satu lembar pelapis pun dipesan.'},
+ {no:'BABAK 03',ghost:'03',t:'Cangkang',x:'Atap terpasang, pelapis terpasang, jendela masuk. Dari sini rumah sudah kedap cuaca, cuaca Melbourne berhenti jadi masalah, dan pekerjaan interior dimulai.'},
+ {no:'BABAK 04',ghost:'04',t:'Interior',x:'Batu, kayu, dan ruangan tempat Anda benar-benar tinggal. Tahap fit-off adalah titik di mana anggaran bertahan atau jebol — anggaran kami bertahan, karena sudah dihitung sejak tahap Desain, bukan ditebak.'},
+ {no:'BABAK 05',ghost:'05',t:'Kunci',x:'Sebelas bulan setelah patok pertama, kunci berpindah tangan. The Dusk House, Fitzroy North — difoto pada sore pertamanya sebagai rumah seseorang.'}
+]};
 var stage=$('stage'), acts=stage?stage.querySelectorAll('.act'):[], cap=$('actCap'), wire=$('wire'),
     dots=$('actDots')?$('actDots').children:[], prog=$('progFill'),
     actImgs=stage?stage.querySelectorAll('.act-img'):[];
+function fillCap(i){
+  var A=ACTS[state.lang][i];
+  $('actNo').textContent=A.no; $('actGhost').textContent=A.ghost;
+  $('actTitle').textContent=A.t; $('actText').textContent=A.x;
+}
 function setAct(i){
   if(i===state.act && acts.length && acts[i].classList.contains('on')) return;
   var prev=state.act;
@@ -590,11 +928,7 @@ function setAct(i){
   if(wire) wire.classList.toggle('show',i===1);
   if(cap){
     cap.classList.add('swap');
-    setTimeout(function(){
-      $('actNo').textContent=ACTS[i].no; $('actGhost').textContent=ACTS[i].ghost;
-      $('actTitle').textContent=ACTS[i].t; $('actText').textContent=ACTS[i].x;
-      cap.classList.remove('swap');
-    }, reduced?0:280);
+    setTimeout(function(){ fillCap(i); cap.classList.remove('swap'); }, reduced?0:280);
   }
 }
 if(stage && !reduced){
@@ -617,7 +951,6 @@ if(stage && !reduced){
 }
 
 /* ---------- estimator ---------- */
-var fmt=function(n){return n.toLocaleString('en-AU')};
 function picked(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?{v:parseFloat(el.value),n:el.getAttribute('data-name')}:{v:1,n:''}; }
 function compute(){
   var size=parseInt($('sizeRange').value,10);
@@ -629,28 +962,43 @@ function compute(){
   var prepAud=size*260, finAud=Math.round(base*(0.16+(fin.v-1)*0.55));
   var structAud=Math.max(0,Math.round(base-prepAud-finAud)), tot=prepAud+structAud+finAud;
   state.breakdown={prep:prepAud,struct:structAud,fin:finAud};
+  /* display-currency layer: arithmetic runs on converted rates/values */
+  var rate=RATE[spec.v]||conv(spec.v), baseD=size*rate*fin.v*st.v;
+  var lowD=roundDisp(baseD*0.92), highD=roundDisp(baseD*1.08);
+  var prepD=roundDisp(size*(RATE.prep||conv(260)));
+  var finD=roundDisp(baseD*(0.16+(fin.v-1)*0.55));
+  var totD=roundDisp(baseD);
+  var structD=totD-prepD-finD;
+  state.disp={low:lowD,high:highD,prep:prepD,struct:structD,fin:finD,tot:totD};
   $('bdPrep').style.width=(prepAud/tot*100).toFixed(1)+'%';
   $('bdStruct').style.width=(structAud/tot*100).toFixed(1)+'%';
   $('bdFin').style.width=(finAud/tot*100).toFixed(1)+'%';
-  $('lgPrep').textContent='AUD '+fmt(Math.round(prepAud/1000)*1000)+' · '+Math.round(prepAud/tot*100)+'%';
-  $('lgStruct').textContent='AUD '+fmt(Math.round(structAud/1000)*1000)+' · '+Math.round(structAud/tot*100)+'%';
-  $('lgFin').textContent='AUD '+fmt(Math.round(finAud/1000)*1000)+' · '+Math.round(finAud/tot*100)+'%';
-  $('estRange').textContent='AUD '+fmt(low)+' \u2013 '+fmt(high);
-  $('estLine').innerHTML='<b>Your estimate is attached:</b> '+size+' m\u00B2 \u00B7 '+spec.n+' \u00B7 '+fin.n+' finishes \u00B7 '+st.n+' \u2014 AUD '+fmt(low)+' \u2013 '+fmt(high)+'<span class="mono">Included in your enquiry automatically</span>';
+  $('lgPrep').textContent=fmtMoney(prepD)+' \u00B7 '+Math.round(prepAud/tot*100)+'%';
+  $('lgStruct').textContent=fmtMoney(structD)+' \u00B7 '+Math.round(structAud/tot*100)+'%';
+  $('lgFin').textContent=fmtMoney(finD)+' \u00B7 '+Math.round(finAud/tot*100)+'%';
+  $('estRange').textContent=fmtMoney(lowD)+' \u2013 '+fmtMoney(highD);
+  var sn=nameDisp('spec',spec.n), fn=nameDisp('finish',fin.n), tn=nameDisp('storeys',st.n), rng=rangeStrDisp(state.disp);
+  if(state.lang==='id'){
+    $('estLine').innerHTML='<b>Estimasi Anda terlampir:</b> '+size+' m\u00B2 \u00B7 '+sn+' \u00B7 penyelesaian '+fn+' \u00B7 '+tn+' \u2014 '+rng+'<span class="mono">Otomatis disertakan dalam pertanyaan Anda</span>';
+  }else{
+    $('estLine').innerHTML='<b>Your estimate is attached:</b> '+size+' m\u00B2 \u00B7 '+sn+' \u00B7 '+fn+' finishes \u00B7 '+tn+' \u2014 '+rng+'<span class="mono">Included in your enquiry automatically</span>';
+  }
   if(state.enquiry){ $('cEst').textContent=estSummary(); }
 }
 function estSummary(){
-  var e=state.estimate; if(!e) return 'No estimate attached';
-  return 'AUD '+fmt(e.low)+' \u2013 '+fmt(e.high)+' ('+e.size+' m\u00B2 \u00B7 '+e.spec+')';
+  var e=state.estimate; if(!e) return T('no_est');
+  return rangeStrCanon(e)+' ('+e.size+' m\u00B2 \u00B7 '+nameDisp('spec',e.spec)+')';
 }
 ['sizeRange'].forEach(function(id){ $(id).addEventListener('input',compute); });
 document.querySelectorAll('input[name="spec"],input[name="finish"],input[name="storeys"]').forEach(function(el){ el.addEventListener('change',compute); });
-compute();
 
 /* ---------- copy estimate summary ---------- */
 $('copyEst').addEventListener('click',function(){
   var e=state.estimate; if(!e) return;
-  var txt='HALDEN estimate \u2014 '+e.size+' m\u00B2 \u00B7 '+e.spec+' spec \u00B7 '+e.finish+' finishes \u00B7 '+e.storeys+' \u2014 AUD '+fmt(e.low)+' \u2013 '+fmt(e.high)+' (indicative, \u00B18%)';
+  var sn=nameDisp('spec',e.spec), fn=nameDisp('finish',e.finish), tn=nameDisp('storeys',e.storeys), rng=rangeStrCanon(e);
+  var txt=state.lang==='id'
+    ? 'Estimasi HALDEN \u2014 '+e.size+' m\u00B2 \u00B7 spesifikasi '+sn+' \u00B7 penyelesaian '+fn+' \u00B7 '+tn+' \u2014 '+rng+' (indikatif, \u00B18%)'
+    : 'HALDEN estimate \u2014 '+e.size+' m\u00B2 \u00B7 '+sn+' spec \u00B7 '+fn+' finishes \u00B7 '+tn+' \u2014 '+rng+' (indicative, \u00B18%)';
   function done(){ var m=$('copiedMsg'); m.classList.add('show'); setTimeout(function(){ m.classList.remove('show'); },2000); }
   function fallback(){
     var ta=document.createElement('textarea');
@@ -690,7 +1038,7 @@ function openLb(ph){
   lbPh.className='lb-ph '+ph.getAttribute('data-bg');
   lbPh.setAttribute('aria-label',ph.getAttribute('aria-label'));
   $('lbName').textContent=ph.getAttribute('data-name');
-  $('lbMeta').textContent=ph.getAttribute('data-meta');
+  $('lbMeta').textContent=META[state.lang][ph.getAttribute('data-metakey')]||'';
   lb.hidden=false;
   document.documentElement.style.overflow='hidden';
   requestAnimationFrame(function(){ lb.classList.add('open'); });
@@ -718,7 +1066,8 @@ function hashCode(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt
 function showConfirm(){
   var q=state.enquiry; if(!q) return;
   $('cCode').textContent=q.code; $('cName').textContent=q.name;
-  $('cSuburb').textContent=q.suburb||'—'; $('cEst').textContent=q.estimate?('AUD '+fmt(q.estimate.low)+' \u2013 '+fmt(q.estimate.high)+' ('+q.estimate.size+' m\u00B2 \u00B7 '+q.estimate.spec+')'):'No estimate attached';
+  $('cSuburb').textContent=q.suburb||'—';
+  $('cEst').textContent=q.estimate?(rangeStrCanon(q.estimate)+' ('+q.estimate.size+' m\u00B2 \u00B7 '+nameDisp('spec',q.estimate.spec)+')'):T('no_est');
   $('enqForm').style.display='none'; $('confirm').classList.add('show');
 }
 function fillForm(q){
@@ -751,9 +1100,48 @@ $('editBtn').addEventListener('click',function(){
   $('fName').focus();
 });
 
+/* ---------- language ---------- */
+function applyStatic(){
+  document.querySelectorAll('[data-t]').forEach(function(el){ el.innerHTML=T(el.getAttribute('data-t')); });
+  document.querySelectorAll('[data-tph]').forEach(function(el){ el.setAttribute('placeholder',T(el.getAttribute('data-tph'))); });
+  document.querySelectorAll('[data-taria]').forEach(function(el){ el.setAttribute('aria-label',T(el.getAttribute('data-taria'))); });
+  document.querySelectorAll('[data-rate]').forEach(function(el){
+    var v=parseFloat(el.getAttribute('data-rate'));
+    el.textContent=fmtMoney(RATE[v]||conv(v))+' / m\u00B2';
+  });
+  var wd=$('wireDim'); if(wd) wd.textContent=T('wire_dim');
+}
+function setLang(l, skipStore){
+  state.lang=(l==='id')?'id':'en';
+  if(!skipStore){ try{ localStorage.setItem(KEY,state.lang); }catch(e){} }
+  document.documentElement.lang=state.lang;
+  document.title=T('meta_title');
+  var md=document.querySelector('meta[name="description"]'); if(md) md.setAttribute('content',T('meta_desc'));
+  var og=document.querySelector('meta[property="og:title"]'); if(og) og.setAttribute('content',T('meta_title'));
+  var ogd=document.querySelector('meta[property="og:description"]'); if(ogd) ogd.setAttribute('content',T('og_desc'));
+  var be=$('lgEn'), bi=$('lgId');
+  if(be){ be.classList.toggle('on',state.lang==='en'); be.setAttribute('aria-pressed',state.lang==='en'?'true':'false'); }
+  if(bi){ bi.classList.toggle('on',state.lang==='id'); bi.setAttribute('aria-pressed',state.lang==='id'?'true':'false'); }
+  buildRates();
+  applyStatic();
+  fillCap(state.act);
+  compute();
+  if(state.enquiry && $('confirm').classList.contains('show')) showConfirm();
+}
+window.HALDEN.setLang=setLang;
+var lgE=$('lgEn'), lgI=$('lgId');
+if(lgE) lgE.addEventListener('click',function(){ setLang('en'); });
+if(lgI) lgI.addEventListener('click',function(){ setLang('id'); });
+window.addEventListener('storage',function(ev){
+  if(ev.key===KEY && ev.newValue && ev.newValue!==state.lang) setLang(ev.newValue,true);
+});
+var initLang='en';
+try{ initLang=localStorage.getItem(KEY)==='id'?'id':'en'; }catch(e){}
+setLang(initLang,true);
+
 /* ---------- Melbourne clock ---------- */
 function tickClock(){
-  try{ $('melClock').textContent=new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Melbourne',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date()); }catch(e){}
+  try{ $('melClock').textContent=new Intl.DateTimeFormat(state.lang==='id'?'id-ID':'en-US',{timeZone:'Australia/Melbourne',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date()); }catch(e){}
 }
 tickClock(); setInterval(tickClock,1000);
 })();
