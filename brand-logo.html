@@ -496,7 +496,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 
 <style id="svc-page">
-.svc-top{padding-top:clamp(56px,8vw,104px)}
+.svc-top{padding-top:clamp(92px,9vw,104px)}
 .back-link{display:inline-block;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:#9AA3AD;text-decoration:none;margin-bottom:30px}
 .back-link:hover{color:#E3E6E9}
 .svc-lede{margin-top:26px;max-width:46em;font-size:clamp(17px,1.6vw,20px);line-height:1.65;color:#C9CED4}
@@ -597,7 +597,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .hub-row:active{transform:scale(.98)}
 .hub-row.sel{border-color:#C9A24B}
 .hub-row img{width:46px;height:58px;object-fit:cover;border-radius:9px;flex:none;background:#1B1D21}
-.hub-row .hub-blk{width:46px;height:58px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:800;font-size:8.5px;letter-spacing:.03em;color:#FFF7EA;text-align:center;line-height:1.3;padding:2px}
+.hub-row .hub-blk{width:46px;height:58px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:800;font-size:8.5px;letter-spacing:.03em;color:#FFF7EA;text-align:center;line-height:1.3;padding:2px;overflow:hidden;white-space:nowrap;text-size-adjust:100%;-webkit-text-size-adjust:100%}
 .hub-row h4{margin:0 0 3px;font-family:'Archivo',sans-serif;font-size:14.5px;letter-spacing:.02em}
 .hub-row p{margin:0;font-size:11.5px;color:#A7ADB6;line-height:1.45}
 .hub-row .arr{margin-left:auto;color:#8A9199;font-size:17px;flex:none;padding-right:2px}
@@ -1049,7 +1049,7 @@ function renderBody(){
       var it=ITEMS[id];
       var r=document.createElement('button'); r.type='button'; r.className='hub-row'+(state.sel===id?' sel':'');
       if(it.img){ r.innerHTML='<img alt="" loading="lazy"><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; r.querySelector('img').src=it.img; }
-      else { r.innerHTML='<span class="hub-blk"></span><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; var blk=r.querySelector('.hub-blk'); blk.style.background=it.color; blk.textContent=it.name; }
+      else { r.innerHTML='<span class="hub-blk"></span><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; var blk=r.querySelector('.hub-blk'); blk.style.background=it.color; blk.textContent=it.name; var fs=8.5; blk.style.fontSize=fs+'px'; while(blk.scrollWidth>blk.clientWidth&&fs>5){fs-=0.5; blk.style.fontSize=fs+'px';} }
       r.querySelector('h4').textContent=it.name;
       r.querySelector('p').textContent=it.sub[l];
       r.addEventListener('click',function(){ state.sel=id; state.view='detail'; render(); });
