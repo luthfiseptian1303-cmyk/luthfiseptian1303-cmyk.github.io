@@ -703,6 +703,37 @@ form.order input:focus-visible,form.order select:focus-visible,form.order textar
 .hero-grid{gap:24px}
 }
 </style>
+<style id="visual-r2">
+:root{--sec:clamp(40px,4.5vw,52px);--mutd:#A8A8AE}
+html{scroll-padding-top:100px}
+[id],h1,h2,h3,legend{scroll-margin-top:100px}
+.btn{background:linear-gradient(165deg,#B9C0C8 0%,#B9C0C8 32%,#878E96 55%,#C9CED4 78%,#8A9199 100%)}
+.logo{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 55%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo i{background:linear-gradient(165deg,#E3E6E9,#9AA3AD)}
+.demo-cap,.demo-hint{color:#8A9199}
+footer.site{padding-top:clamp(40px,5vw,56px)}
+
+.svc-row{padding-top:clamp(24px,3vw,36px);padding-bottom:clamp(24px,3vw,36px)}
+.hero{padding-bottom:clamp(28px,3.5vw,44px)}
+@media(min-width:1560px){.hero .wrap{max-width:1440px}}
+.mid-band{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#A8A8AE;padding:20px 0;border-top:1px solid #2A2E33;border-bottom:1px solid #2A2E33}
+.mid-band .mb-dot{width:8px;height:8px;border-radius:50%;background:#7BC47F;flex:none}
+.mid-band .mb-dot.off{background:#8A9199}
+.mid-band b{color:#E3E6E9;font-weight:700}
+.mid-band .mb-sep{color:#565D64}
+.manifesto{padding:clamp(32px,4vw,44px) 0}
+</style>
+<style id="visual-r2d">
+:root{--sec:clamp(36px,4vw,42px)}
+.blk{padding-top:var(--sec);padding-bottom:var(--sec)}
+.sec-head{margin-bottom:40px}
+.inc-list li{padding-top:12px;padding-bottom:12px}
+.qa{padding-top:18px;padding-bottom:18px}
+.svc-top{padding-bottom:44px}
+</style>
+<style id="visual-r2f">
+#proof .pcell p{color:#A8A8AE}
+</style>
 </head>
 <body>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
@@ -848,7 +879,7 @@ form.order input:focus-visible,form.order select:focus-visible,form.order textar
       <h2 data-t="proofTitle">Measured, not promised</h2>
     </div>
     <div class="proof-grid">
-      <div class="pcell" data-rv="y40"><div class="pnum">97</div><h3 data-t="pf1t">SEO audit — grade A</h3><p data-t="pf1p">Jev SEO audit of all 16 pages, November 2026.</p></div>
+      <div class="pcell" data-rv="y40"><div class="pnum">97</div><h3 data-t="pf1t">SEO audit — grade A</h3><p data-t="pf1p">New SEO audit of all 16 pages, November 2026.</p></div>
       <div class="pcell" data-rv="y40"><div class="pnum">98</div><h3 data-t="pf2t">PageSpeed — mobile</h3><p data-t="pf2p">Google PageSpeed performance. Desktop scores 100.</p></div>
       <div class="pcell" data-rv="y40"><div class="pnum">100</div><h3 data-t="pf3t">Accessibility</h3><p data-t="pf3p">Google PageSpeed, mobile and desktop, November 2026.</p></div>
       <div class="pcell" data-rv="y40"><div class="pnum">16</div><h3 data-t="pf4t">Pages checked live</h3><p data-t="pf4p">Every page on this site verified from outside — 0 broken links.</p></div>
@@ -857,6 +888,7 @@ form.order input:focus-visible,form.order select:focus-visible,form.order textar
     <p class="proof-links"><a href="websites.html#demo" data-t="proofLink">See the live samples</a><span class="sep" aria-hidden="true">·</span><a href="work.html" data-t="proofLink2">Read the case studies</a></p>
   </div>
 </section>
+  <div class="wrap"><div class="mid-band" data-rv="y40"><span class="mb-dot" id="mbDot"></span><span id="mbStatus">Studio open — 08:00–22:00 Jakarta time</span><span class="mb-sep">·</span><span><span data-t="wcId">Indonesia</span> <b id="mbJkt">--:--</b></span><span class="mb-sep">·</span><span><span data-t="wcUk">United Kingdom</span> <b id="mbLon">--:--</b></span><span class="mb-sep">·</span><span><span data-t="wcUs">United States</span> <b id="mbNy">--:--</b></span></div></div>
 <!-- PROCESS -->
 <section class="blk" id="process">
   <div class="wrap">
@@ -1102,7 +1134,7 @@ w5p:"Situs ini sendiri — didesain, dibangun, dan dibangun ulang dengan tangan 
 aboutEyebrow:"Tentang",aboutTitle:"Satu orang, seluruh pipeline",
 ap1t:"Langsung",ap1p:"Kamu bicara dengan orang yang mengerjakannya — balasan datang dari pembangunnya, bukan perantara.",
 ap2t:"Dwibahasa",ap2p:"Proyek berjalan dalam Bahasa Indonesia atau Inggris, mana pun yang dibaca pelangganmu.",
-ap3t:"Awal sampai akhir",ap3p:"Desain, kode, peluncuran, dan perawatan — sepasang tangan, satu standar kerapian.",proofEyebrow:"Bukti",proofTitle:"Terukur, bukan sekadar janji",pf1t:"Audit SEO — nilai A",pf1p:"Audit Jev SEO atas seluruh 16 halaman, November 2026.",pf2t:"PageSpeed — seluler",pf2p:"Performa Google PageSpeed. Desktop mencapai 100.",pf3t:"Aksesibilitas",pf3p:"Google PageSpeed, seluler dan desktop, November 2026.",pf4t:"Halaman dicek langsung",pf4p:"Setiap halaman di situs ini diverifikasi dari luar — 0 tautan rusak.",proofNote:"Contohnya juga tayang — mesin booking salon dan undangan pernikahan dengan 47 fitur yang berfungsi, masing-masing terverifikasi ujung ke ujung.",proofLink:"Lihat contoh live-nya",
+ap3t:"Awal sampai akhir",ap3p:"Desain, kode, peluncuran, dan perawatan — sepasang tangan, satu standar kerapian.",proofEyebrow:"Bukti",proofTitle:"Terukur, bukan sekadar janji",pf1t:"Audit SEO — nilai A",pf1p:"Audit Audit SEO baru atas seluruh 16 halaman, November 2026.",pf2t:"PageSpeed — seluler",pf2p:"Performa Google PageSpeed. Desktop mencapai 100.",pf3t:"Aksesibilitas",pf3p:"Google PageSpeed, seluler dan desktop, November 2026.",pf4t:"Halaman dicek langsung",pf4p:"Setiap halaman di situs ini diverifikasi dari luar — 0 tautan rusak.",proofNote:"Contohnya juga tayang — mesin booking salon dan undangan pernikahan dengan 47 fitur yang berfungsi, masing-masing terverifikasi ujung ke ujung.",proofLink:"Lihat contoh live-nya",
 procEyebrow:"Proses",procTitle:"Cara proyek berjalan",
 p1t:"Dengar",p1p:"Kita bicara soal bisnismu dulu — pelanggan, rak, angka. Template belakangan, kalau memang perlu.",
 p2t:"Desain",p2p:"Satu konsep, digambar dari hal yang membuat bisnismu jadi dirimu. Kamu melihatnya sebagai halaman asli, bukan moodboard.",
@@ -1173,7 +1205,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     var id=a.getAttribute("href"); if(id.length<2) return;
     var t=document.querySelector(id); if(!t) return;
     e.preventDefault();
-    if(lenis) lenis.scrollTo(t,{duration:1.4}); else t.scrollIntoView({behavior:"smooth"});
+    if(lenis) lenis.scrollTo(t,{duration:1.4,offset:-(((document.querySelector('header')||{}).offsetHeight||84)+14)}); else t.scrollIntoView({behavior:"smooth"});
   });
 });
 /* ---------- reveals ---------- */
@@ -1544,6 +1576,36 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
     }
   }catch(e){}
 })();
+</script>
+
+<script>
+(function(){
+  function fmt(tz){try{return new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:tz}).format(new Date());}catch(e){return "--:--";}}
+  function tick(){
+    var jkt=fmt("Asia/Jakarta"), lon=fmt("Europe/London"), ny=fmt("America/New_York");
+    var e;
+    if(e=document.getElementById("mbJkt"))e.textContent=jkt;
+    if(e=document.getElementById("mbLon"))e.textContent=lon;
+    if(e=document.getElementById("mbNy"))e.textContent=ny;
+    var h=parseInt(jkt.split(":")[0],10); if(isNaN(h))h=12;
+    var open=h>=8&&h<22, idLang=(document.documentElement.lang||"en").indexOf("id")===0;
+    var st=document.getElementById("mbStatus"), dot=document.getElementById("mbDot");
+    if(st)st.textContent=open?(idLang?"Studio buka — 08.00–22.00 WIB":"Studio open — 08:00–22:00 Jakarta time"):(idLang?"Studio tutup — buka 08.00 WIB":"Studio closed — opens 08:00 Jakarta time");
+    if(dot)dot.className="mb-dot"+(open?"":" off");
+  }
+  tick(); setInterval(tick,20000);
+})();
+</script>
+
+<script>
+/* hash guard (visual-r2): keep hash targets clear of the fixed header */
+window.addEventListener("hashchange",function(){
+  if(!location.hash||location.hash.length<2) return;
+  var t=document.querySelector(location.hash); if(!t) return;
+  var hh=((document.querySelector("header")||{}).offsetHeight||84)+14;
+  if(window.__lenis) window.__lenis.scrollTo(t,{duration:.8,offset:-hh});
+  else t.scrollIntoView();
+});
 </script>
 </body>
 </html>
