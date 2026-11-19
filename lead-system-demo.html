@@ -941,10 +941,16 @@
     function upsertLead(data, viaAuto){
       var existing = state.leads.filter(function(l){ return l.phone && l.phone===data.phone; })[0];
       if(existing){
-        ["name","pkg","vehicle","urgency","budget","date"].forEach(function(k){ if(data[k]) existing[k] = data[k]; });
+        /* fix-bugs 20261119: a duplicate submission merges into the EXISTING
+           lead — it keeps that lead's name (the toast names the lead it was
+           merged into, not the submitter's typed name), and a follow-up that
+           is already overdue is refreshed, so a just-submitted lead never
+           appears instantly overdue. */
+        ["pkg","vehicle","urgency","budget","date"].forEach(function(k){ if(data[k]) existing[k] = data[k]; });
         if(data.source && data.source!=="unknown") existing.source = data.source;
         if(data.notes) existing.notes = (existing.notes ? existing.notes + " · " : "") + data.notes;
         existing.phoneRaw = data.phoneRaw;
+        if(!existing.nextFollow || existing.nextFollow < Date.now()) existing.nextFollow = Date.now()+2*3600000;
         recompute(existing); logAct(existing, "actMerged"); logAct(existing, "actScored", {score:existing.score});
         return {lead:existing, merged:true};
       }

@@ -952,15 +952,40 @@ function totals(){
   var disc=ids.length>=3?Math.round(price*15/100):0;
   return {ids:ids,price:price,dur:dur,disc:disc,total:price-disc};
 }
+/* fix-bugs 20261119: totals in the ACTIVE currency. EN line prices are the
+   whole-dollar amounts shown on the menu (Math.round(Rp/KURS)); the 15%
+   discount and the total are computed from those displayed prices and keep
+   their cents, so summary, sticky bar and confirmation always agree with
+   the menu (e.g. $16+$25+$13 = $54 -> discount -$8.10, total $45.90). */
+function totalsCur(ids){
+  var price=0,dur=0;
+  ids.forEach(function(id){dur+=T[id].dur;price+=lang==='en'?Math.round(T[id].price/KURS):T[id].price});
+  var disc=ids.length>=3?price*15/100:0;
+  disc=lang==='en'?Math.round(disc*100)/100:Math.round(disc);
+  return {ids:ids,price:price,dur:dur,disc:disc,total:Math.round((price-disc)*100)/100};
+}
+function moneyT(v){return lang==='en'?('$'+Number(v).toFixed(2)):idr(v)}
+function renderConfirm(){
+  if(!lastBk)return;
+  var tc=totalsCur(lastBk.ids);
+  var d=new Date(lastBk.y,lastBk.mo,lastBk.da);
+  var dateLabel=t().days[d.getDay()]+', '+d.getDate()+' '+t().mon[d.getMonth()];
+  var html='<div class="sumline"><span>'+STYN[lastBk.sty]+' · '+dateLabel+' · '+pad(lastBk.hour)+'.00</span><span></span></div>';
+  lastBk.ids.forEach(function(id){html+='<div class="sumline"><span>'+tName(id)+'</span><span>'+money(T[id].price)+'</span></div>'});
+  if(tc.disc)html+='<div class="sumline"><span class="disc">'+t().disc+'</span><span class="disc">−'+moneyT(tc.disc)+'</span></div>';
+  html+='<div class="sumline total"><span>'+t().total+'</span><span>'+moneyT(tc.total)+'</span></div>';
+  if(lastBk.nm)html+='<div class="sumline"><span>'+t().forName+'</span><span>'+lastBk.nm.replace(/</g,'&lt;')+'</span></div>';
+  $('#cfLines').innerHTML=html;
+}
 function renderSummary(){
-  var tt=totals(),box=$('#sumLines'),html='';
+  var tt=totals(),tc=totalsCur(tt.ids),box=$('#sumLines'),html='';
   tt.ids.forEach(function(id){
     html+='<div class="sumline"><span>'+tName(id)+'</span><span>'+money(T[id].price)+'</span></div>';
   });
   if(tt.ids.length){
     html+='<div class="sumline"><span>'+t().sumDur+'</span><span>'+t().dur(tt.dur)+'</span></div>';
-    if(tt.disc)html+='<div class="sumline"><span class="disc">'+t().disc+'</span><span class="disc">−'+money(tt.disc)+'</span></div>';
-    html+='<div class="sumline total"><span>'+t().total+'</span><span>'+money(tt.total)+'</span></div>';
+    if(tc.disc)html+='<div class="sumline"><span class="disc">'+t().disc+'</span><span class="disc">−'+moneyT(tc.disc)+'</span></div>';
+    html+='<div class="sumline total"><span>'+t().total+'</span><span>'+moneyT(tc.total)+'</span></div>';
   } else {
     html='<div class="sumline"><span>'+t().total+'</span><span>'+money(0)+'</span></div>';
   }
@@ -969,9 +994,9 @@ function renderSummary(){
   renderSticky();
 }
 function renderSticky(){
-  var tt=totals(),bar=$('#stickyBar');
-  $('#sbTotal').textContent=money(tt.total);
-  bar.classList.toggle('show',tt.ids.length>0&&window.innerWidth<=880);
+  var bar=$('#stickyBar');
+  $('#sbTotal').textContent=moneyT(totalsCur(selIds()).total);
+  bar.classList.toggle('show',selIds().length>0&&window.innerWidth<=880);
 }
 function renderHint(){
   var el=$('#bkHint'),ids=selIds();
@@ -997,15 +1022,8 @@ $('#confirmBtn').addEventListener('click',function(){
   var d=dateAt(dateOff);
   var code='KRN-'+(djb2(tt.ids.join(',')+isoOf(d)+slot+sty+$('#nameInput').value)>>>0).toString(36).toUpperCase().padStart(6,'0').slice(-6);
   $('#cfCode').textContent=code;
-  lastBk={y:d.getFullYear(),mo:d.getMonth(),da:d.getDate(),hour:slot,dur:tt.dur,code:code,total:tt.total,ids:tt.ids.slice(),sty:sty};
-  var dateLabel=t().days[d.getDay()]+', '+d.getDate()+' '+t().mon[d.getMonth()];
-  var html='<div class="sumline"><span>'+STYN[sty]+' · '+dateLabel+' · '+pad(slot)+'.00</span><span></span></div>';
-  tt.ids.forEach(function(id){html+='<div class="sumline"><span>'+tName(id)+'</span><span>'+money(T[id].price)+'</span></div>'});
-  if(tt.disc)html+='<div class="sumline"><span class="disc">'+t().disc+'</span><span class="disc">−'+money(tt.disc)+'</span></div>';
-  html+='<div class="sumline total"><span>'+t().total+'</span><span>'+money(tt.total)+'</span></div>';
-  var nm=$('#nameInput').value.trim();
-  if(nm)html+='<div class="sumline"><span>'+t().forName+'</span><span>'+nm.replace(/</g,'&lt;')+'</span></div>';
-  $('#cfLines').innerHTML=html;
+  lastBk={y:d.getFullYear(),mo:d.getMonth(),da:d.getDate(),hour:slot,dur:tt.dur,code:code,total:tt.total,ids:tt.ids.slice(),sty:sty,nm:$('#nameInput').value.trim()};
+  renderConfirm();
   var p=$('#confirmPanel'); p.classList.add('show');
   p.scrollIntoView({behavior:'smooth',block:'center'});
 });
@@ -1081,7 +1099,7 @@ function setLang(next){
   $('#nameInput').setAttribute('placeholder',t().ph);
   $('#gTo').setAttribute('placeholder',t().gToPh);
   $('#gFrom').setAttribute('placeholder',t().gFromPh);
-  renderHours(); renderQueue(); renderSel(); renderDates(); renderSlots(); renderSummary(); renderPrices(); renderGift();
+  renderHours(); renderQueue(); renderSel(); renderDates(); renderSlots(); renderSummary(); renderPrices(); renderGift(); renderConfirm();
 }
 $('#langBtn').addEventListener('click',function(){setLang(lang==='en'?'id':'en')});
 /* ---------- reveal & parallax ---------- */

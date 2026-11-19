@@ -617,7 +617,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
   </nav>
   <div class="menu-foot">
     <span>Indonesia</span>
-    <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
+    <a href="/cdn-cgi/l/email-protection#8ce4e9e0e0e3ccefedfee0e0edeea2fbe9eea2e5e8"><span class="__cf_email__" data-cfemail="c1a9a4adadae81a2a0b3adada0a3efb6a4a3efa8a5">[email&#160;protected]</span></a>
   </div>
 </div>
 <main id="main">
@@ -693,7 +693,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
         <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
-        <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
+        <a href="/cdn-cgi/l/email-protection#b2dad7dededdf2d1d3c0deded3d09cc5d7d09cdbd6"><span class="__cf_email__" data-cfemail="bfd7dad3d3d0ffdcdecdd3d3dedd91c8dadd91d6db">[email&#160;protected]</span></a>
         <button class="copy-mail" id="copyMail" type="button" data-t="copyMail">Copy email</button>
       </div>
     </div>
@@ -712,7 +712,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 </footer>
 <a class="sticky-cta" id="stickyCta" href="/?svc=Brand%20%26%20logo#order" data-t="navOrder">Start a project</a>
 
-<script src="lenis.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="lenis.min.js"></script>
 <script>
 (function(){
 "use strict";
@@ -744,6 +744,10 @@ if(mb) mb.addEventListener("click",function(){ menu(!mo.classList.contains("open
 if(mx) mx.addEventListener("click",function(){ menu(false); });
 if(mo) mo.querySelectorAll("a").forEach(function(a){ a.addEventListener("click",function(){ menu(false); }); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") menu(false); });
+/* header state (fix-bugs 20261119: toggle was missing on this page, so the solid scrolled-header background never activated) */
+var hdrEl=document.documentElement;
+function hdrState(){ hdrEl.classList.toggle("scrolled", window.scrollY>40); }
+window.addEventListener("scroll",hdrState,{passive:true}); hdrState();
 /* lenis (same tokens as homepage; skipped on low-power devices) */
 try{
   var lowPow=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4);
