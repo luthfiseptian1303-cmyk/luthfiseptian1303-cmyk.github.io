@@ -92,15 +92,17 @@ img{max-width:100%}
 @keyframes hintDrop{0%{transform:translateY(0);opacity:1}70%{transform:translateY(12px);opacity:0}100%{transform:translateY(0);opacity:0}}
 @media (prefers-reduced-motion: reduce){.scrollhint::after{animation:none}}
 
-/* ---------- sticky scroll stage ---------- */
+/* ---------- sticky scroll stage: a camera journey ---------- */
 #stageWrap{height:460vh;position:relative;margin-top:56px}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#171208 0%,var(--bg) 60%)}
-.stage .ring{position:absolute;left:50%;top:46%;width:min(78vw,340px);aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid rgba(217,180,92,.22);border-radius:50%}
-.stage .ring::after{content:"";position:absolute;inset:12%;border:1px dashed rgba(217,180,92,.14);border-radius:50%}
-.stage h2{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;font-family:var(--serif);font-weight:500;font-size:36px;line-height:1.14;padding:0 44px;z-index:5;text-shadow:0 2px 34px rgba(0,0,0,.85),0 0 10px rgba(0,0,0,.65);pointer-events:none}
+.beat{position:absolute;inset:0;overflow:hidden;opacity:0;z-index:1}
+#bt0{opacity:1}
+.beat-img{position:absolute;inset:-9%;background-size:cover;background-position:center;will-change:transform}
+.beat-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,5,3,.24),rgba(7,5,3,0) 34%,rgba(7,5,3,0) 56%,rgba(7,5,3,.60));pointer-events:none}
+.beat-fg{position:absolute;inset:-6%;pointer-events:none;background:radial-gradient(58% 42% at 76% 20%,rgba(217,180,92,.30),rgba(217,180,92,0) 62%),radial-gradient(44% 32% at 14% 82%,rgba(244,236,220,.13),rgba(244,236,220,0) 60%);mix-blend-mode:screen;will-change:transform}
+.stage h2{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;font-family:var(--serif);font-weight:500;font-size:38px;line-height:1.14;padding:0 44px;z-index:5;text-shadow:0 2px 34px rgba(0,0,0,.85),0 0 10px rgba(0,0,0,.65);pointer-events:none}
+.stage h2 .kw{display:block;font-family:var(--sans);font-weight:800;font-size:23px;letter-spacing:.24em;text-transform:uppercase;color:var(--ivory);margin-bottom:10px}
 .stage h2 em{font-style:italic;color:var(--gold2)}
-.panel{position:absolute;left:50%;top:46%;width:min(53vw,226px);aspect-ratio:4/5.1;border-radius:16px;background-size:cover;background-position:center;box-shadow:0 30px 60px rgba(0,0,0,.6);z-index:2;will-change:transform,opacity}
-.panel::after{content:"";position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(244,236,220,.14)}
 .stage .final{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;z-index:3}
 .stage .final::after{content:"";position:absolute;inset:0;background:rgba(7,5,3,.52)}
 .final-in{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:0 40px}
@@ -111,7 +113,8 @@ img{max-width:100%}
 .scap{position:absolute;left:0;right:0;bottom:9%;text-align:center;padding:0 42px;opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease);z-index:5}
 .scap.on{opacity:1;transform:none}
 .scap .n{font-family:var(--mono);font-size:10px;letter-spacing:.34em;color:var(--gold2)}
-.scap h3{font-family:var(--serif);font-weight:500;font-size:25px;margin-top:7px}
+.scap h3{font-family:var(--sans);font-weight:800;font-size:20px;letter-spacing:.07em;text-transform:uppercase;margin-top:7px}
+.scap h3 em{font-family:var(--serif);font-style:italic;font-weight:500;font-size:23px;letter-spacing:0;text-transform:none;color:var(--gold2)}
 .scap p{color:var(--mut);font-size:13.5px;line-height:1.6;margin-top:6px}
 </style>
 </head>
@@ -258,11 +261,10 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
   <div id="stageWrap">
     <div class="stage" id="stage">
       <div class="sprog" id="sprog"></div>
-      <div class="ring" id="sring"></div>
-      <h2 id="stageH">Two lives,<br><em>one horizon.</em></h2>
-      <div class="panel bg-rings" id="pnl0"></div>
-      <div class="panel bg-venue" id="pnl1"></div>
-      <div class="panel bg-table" id="pnl2"></div>
+      <h2 id="stageH"><span class="kw">Two lives,</span><em>one horizon.</em></h2>
+      <div class="beat" id="bt0"><div class="beat-img bg-venue"></div><div class="beat-shade"></div></div>
+      <div class="beat" id="bt1"><div class="beat-img bg-rings"></div><div class="beat-fg" id="bfg"></div><div class="beat-shade"></div></div>
+      <div class="beat" id="bt2"><div class="beat-img bg-table"></div><div class="beat-shade"></div></div>
       <div class="final bg-flat" id="sfinal">
         <div class="final-in">
           <div class="mono">J·A</div>
@@ -270,11 +272,21 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
           <div class="fp">The Cliff Estate — Uluwatu, Bali</div>
         </div>
       </div>
-      <div class="scap on" data-cap="0"><p class="n">01</p><h3>The promise</h3><p>Two rings, one question — asked at this cliff, at this hour, two years ago.</p></div>
-      <div class="scap" data-cap="1"><p class="n">02</p><h3>The place</h3><p>A lawn above the Indian Ocean, where the ceremony begins as the light turns.</p></div>
-      <div class="scap" data-cap="2"><p class="n">03</p><h3>The table</h3><p>Then dinner under candles — forty guests, one long table, no seating plan drama. Almost.</p></div>
+      <div class="scap on" data-cap="0"><p class="n">01</p><h3>The journey <em>to the cliff</em></h3><p>A lawn above the Indian Ocean, where the ceremony begins as the light turns.</p></div>
+      <div class="scap" data-cap="1"><p class="n">02</p><h3>The vows <em>two rings, one question</em></h3><p>Two rings, one question — asked at this cliff, at this hour, two years ago.</p></div>
+      <div class="scap" data-cap="2"><p class="n">03</p><h3>The table <em>under the candles</em></h3><p>Then dinner under candles — forty guests, one long table, no seating plan drama. Almost.</p></div>
     </div>
   </div>
+  <noscript><style>
+    #stageWrap{height:auto}
+    .stage{position:relative;height:auto;padding:24px 0 8px}
+    .beat{position:relative;height:62vh;opacity:1}
+    .beat-img{inset:0}
+    .beat-fg{display:none}
+    .stage .final{display:none}
+    .stage h2{position:relative;top:auto;transform:none;padding:18px 44px 6px}
+    .scap{position:relative;bottom:auto;opacity:1;transform:none;padding-top:16px}
+  </style></noscript>
 
   <section class="sec" id="couple">
     <p class="num" data-rv>01 — The couple</p>
@@ -596,8 +608,8 @@ if("IntersectionObserver" in window && !reduced){
   $$("[data-rv]").forEach(function(el){ io.observe(el); });
 } else { $$("[data-rv]").forEach(function(el){ el.classList.add("vis"); }); }
 
-/* ---- sticky scroll stage: orbit -> swirl -> the suite ---- */
-var stageWrap=$("#stageWrap"), panels=[$("#pnl0"),$("#pnl1"),$("#pnl2")], caps=$$(".scap"), sfinal=$("#sfinal"), sprog=$("#sprog"), sring=$("#sring"), stageH=$("#stageH");
+/* ---- sticky scroll stage: a camera journey — approach -> vows -> table -> the suite ---- */
+var stageWrap=$("#stageWrap"), beats=[$("#bt0"),$("#bt1"),$("#bt2")], bimgs=$$(".beat-img"), bfg=$("#bfg"), caps=$$(".scap"), sfinal=$("#sfinal"), sprog=$("#sprog"), stageH=$("#stageH");
 function clamp01(v){ return v<0?0:(v>1?1:v); }
 function lerp(a,b,t){ return a+(b-a)*t; }
 function ease(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
@@ -606,26 +618,32 @@ function stageUpdate(){
   var total=stageWrap.offsetHeight-window.innerHeight;
   var p=clamp01(total>0 ? -r.top/total : 0);
   sprog.style.width=(p*100)+"%";
-  var W=stageWrap.clientWidth, R=Math.min(W*0.31,148);
-  var orbit=ease(clamp01(p/0.42));
-  var swirl=ease(clamp01((p-0.42)/0.34));
-  var settle=ease(clamp01((p-0.76)/0.24));
-  sring.style.transform="translate(-50%,-50%) rotate("+(p*120)+"deg)";
-  sring.style.opacity=String(1-settle);
-  stageH.style.opacity=String(1-settle*1.4<0?0:1-settle*1.4);
-  panels.forEach(function(pn,i){
-    var a0=-90+i*120;
-    var ang=(a0 + orbit*54 + swirl*300 + i*6) * Math.PI/180;
-    var rad=R*(1-swirl*0.92);
-    var x=Math.cos(ang)*rad, y=Math.sin(ang)*rad*0.8 - 12;
-    var sc=lerp(0.82,1,orbit)*(1-settle*0.25);
-    var rot=(a0 + orbit*54 + swirl*300)*0.12 + (i-1)*4;
-    pn.style.transform="translate(-50%,-54%) translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px) rotate("+rot.toFixed(1)+"deg) scale("+sc.toFixed(3)+")";
-    pn.style.opacity=String(1-settle);
-    pn.style.zIndex=String(2+i);
-  });
+  var settle=ease(clamp01((p-0.86)/0.14));
+  /* beat visibility: straight crossfades between full-bleed frames, never rotation */
+  var o0=1-clamp01((p-0.34)/0.12);
+  var o1=clamp01((p-0.34)/0.12)*(1-clamp01((p-0.66)/0.12));
+  var o2=clamp01((p-0.66)/0.12)*(1-settle);
+  beats[0].style.opacity=String(o0);
+  beats[1].style.opacity=String(o1);
+  beats[2].style.opacity=String(o2);
+  if(reduced){
+    /* reduced motion: crossfades only, every frame static */
+    bimgs.forEach(function(im){ im.style.transform="none"; });
+    if(bfg) bfg.style.transform="none";
+  } else {
+    /* 01 the journey: slow push-in, as if arriving at the venue */
+    bimgs[0].style.transform="scale("+lerp(1.28,1.02,ease(clamp01(p/0.40))).toFixed(3)+")";
+    /* 02 the vows: gentle lateral drift; the light layer drifts the other way, slower — parallax */
+    var d1=ease(clamp01((p-0.34)/0.44));
+    bimgs[1].style.transform="translateX("+lerp(3.2,-3.2,d1).toFixed(2)+"%) scale(1.12)";
+    if(bfg) bfg.style.transform="translateX("+lerp(-5,3.4,d1).toFixed(2)+"%)";
+    /* 03 the table: a slow rise that settles into the suite */
+    var d2=ease(clamp01((p-0.66)/0.30));
+    bimgs[2].style.transform="translateY("+lerp(5.5,0,d2).toFixed(2)+"%) scale(1.10)";
+  }
   sfinal.style.opacity=String(settle);
-  var capIdx = p<0.34?0 : (p<0.62?1 : 2);
+  stageH.style.opacity=String(1-clamp01((p-0.08)/0.14));
+  var capIdx = p<0.36?0 : (p<0.68?1 : 2);
   caps.forEach(function(c,i){ c.classList.toggle("on", i===capIdx && settle<0.6); });
 }
 var ticking=false;
