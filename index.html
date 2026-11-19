@@ -375,7 +375,7 @@ header.site nav a:hover{color:#B9C0C8}
 .btn.ghost:hover{background:#B9C0C8;color:#0B0B0B}
 .lang-sw button.on{background:#B9C0C8;color:#0B0B0B}
 .hero::before{background:radial-gradient(640px 440px at 79% 26%,rgba(217,222,228,.14),rgba(217,222,228,0) 70%)}
-.hero h1{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .g{color:transparent}
 .hero-cap b{color:#0B0B0B}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,222,228,.45)}70%{box-shadow:0 0 0 9px rgba(217,222,228,0)}100%{box-shadow:0 0 0 0 rgba(217,222,228,0)}}
@@ -386,7 +386,7 @@ header.site nav a:hover{color:#B9C0C8}
 .svc-row .tag{color:#9AA3AD}
 .svc-row:hover h3,.svc-row:hover p,.svc-row:hover .num,.svc-row:hover .arr{color:#0B0B0B}
 .svc-row:hover .tag{color:#3A4046}
-#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 #about{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
 #about .eyebrow{color:#6E767F}
 #about .about-txt p{color:#23272C}
@@ -396,7 +396,7 @@ header.site nav a:hover{color:#B9C0C8}
 #about b{color:#000}
 #about .stat .n{color:#0B0B0B}
 .stat .l{color:#6E767F}
-.manifesto .lm{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.manifesto .lm{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .manifesto .lm-in.g{background:none;color:#B9C0C8;-webkit-background-clip:initial;background-clip:initial}
 details.faq summary .pm{color:#9AA3AD}
 #order{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
@@ -658,6 +658,51 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
  ]
 }
 </script>
+
+<style id="fix-round">
+:root{--sec:clamp(72px,9vw,120px)}
+section[id]{scroll-margin-top:84px}
+.hero{padding:clamp(92px,9vw,104px) 0 clamp(40px,5vw,64px)}
+.hero-grid{grid-template-columns:1.3fr .7fr;align-items:stretch}
+.hero h1{font-size:clamp(40px,5.8vw,78px);margin:16px 0 12px}
+.hero .role{color:#B9C0C8;font-size:18px}
+.hero .eyebrow{margin-top:18px!important}
+.hero-fig{display:flex}
+.hero-fig .frame{flex:1 1 auto;width:100%;height:auto;aspect-ratio:auto}
+.hero-cta{margin-top:24px}
+.hero-meta{margin-top:24px;padding-top:16px;color:#9AA3AD}
+.hero-for{color:#B9C0C8;font-size:18px}
+#about{padding-bottom:clamp(36px,4.5vw,56px)}
+#about .eyebrow{color:#3F444A}
+.pq legend{float:left;width:100%;padding:0;margin:0}
+.pq .popts{clear:both}
+.proof-note{color:#B9C0C8}
+.proof-links{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:16px}
+.proof-links a{font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E3E6E9;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
+.proof-links a:hover{border-color:#B9C0C8}
+.proof-links .sep{color:#767D85}
+.form-note{color:#9AA3AD}
+.fhint{color:#9AA3AD}
+.scroll-cue{color:#9AA3AD}
+#svcPill{transform:none}
+.pm{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:-12px -10px -12px 0}
+.lang-sw button{padding:16px 10px}
+.copy-mail{padding:15px 18px}
+form.order input:focus-visible,form.order select:focus-visible,form.order textarea:focus-visible{outline:2px solid #8FB0E8;outline-offset:2px}
+@media (max-width:860px){
+.hero{padding-top:92px}
+.hero-grid{display:flex;flex-direction:column}
+.hero-grid>div:first-child{display:flex;flex-direction:column}
+.hero-cta{order:4}
+.hero .role{order:5}
+.hero-for{order:6;font-size:16px}
+.hero-meta{order:7}
+.hero-fig .frame{flex:none;height:208px}
+.avail{font-size:11px;letter-spacing:.05em;padding:8px 12px}
+.hero h1{font-size:clamp(36px,11vw,48px)}
+.hero-grid{gap:24px}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
@@ -808,7 +853,8 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
       <div class="pcell" data-rv="y40"><div class="pnum">100</div><h3 data-t="pf3t">Accessibility</h3><p data-t="pf3p">Google PageSpeed, mobile and desktop, November 2026.</p></div>
       <div class="pcell" data-rv="y40"><div class="pnum">16</div><h3 data-t="pf4t">Pages checked live</h3><p data-t="pf4p">Every page on this site verified from outside — 0 broken links.</p></div>
     </div>
-    <p class="proof-note" data-rv="y40"><span data-t="proofNote">The samples are live too — a salon booking engine and a wedding invitation with 47 working features, each verified end to end.</span> <a href="websites.html#demo" data-t="proofLink">See the live samples</a> <a href="work.html" data-t="proofLink2">Read the case studies</a></p>
+    <p class="proof-note" data-rv="y40"><span data-t="proofNote">The samples are live too — a salon booking engine and a wedding invitation with 47 working features, each verified end to end.</span></p>
+    <p class="proof-links"><a href="websites.html#demo" data-t="proofLink">See the live samples</a><span class="sep" aria-hidden="true">·</span><a href="work.html" data-t="proofLink2">Read the case studies</a></p>
   </div>
 </section>
 <!-- PROCESS -->
@@ -931,7 +977,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
           <div><div class="bwk" data-t="bw4t">Ownership &amp; terms</div><p data-t="bw4p">Your domain, hosting, and accounts are registered in your name — Carl works in them as a guest, and everything stays yours if you ever move on. Payment stages and what support follows launch are written into the quote before work begins.</p></div>
         </div>
       </div>
-      <form class="order" id="orderForm" data-rv="y60" action="https://api.web3forms.com/submit" method="POST">
+      <form class="order" id="orderForm" data-rv="y60" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" value="bcecbb03-c454-406e-b8f1-693ffadc9517">
         <input type="hidden" name="subject" value="New project — CarlLab website form">
         <input type="hidden" name="from_name" value="CarlLab website">
@@ -942,7 +988,8 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <label for="fWa" data-t="fWaL">WhatsApp <span class="fhint">(optional)</span></label>
         <input id="fWa" name="whatsapp" type="tel" autocomplete="tel" placeholder="+62 …">
         <label for="fService" data-t="fSvcL">What do you need?</label>
-        <select id="fService" name="service">
+        <select id="fService" name="service" required>
+          <option value="" disabled selected data-t="oPick">Choose one…</option>
           <option value="Website" data-t="oWeb">Website</option>
           <option value="Browser game" data-t="oGame">Browser game</option>
           <option value="Brand &amp; logo" data-t="oBrand">Brand &amp; logo</option>
@@ -954,7 +1001,8 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <label for="fAudience" data-t="fAudL">Who is it for?</label>
         <input id="fAudience" name="audience" type="text" data-ph="fAudPh" placeholder="e.g. Home bakers ordering for events">
         <label for="fAssets" data-t="fAssetsL">What do you already have?</label>
-        <select id="fAssets" name="assets">
+        <select id="fAssets" name="assets" required>
+          <option value="" disabled selected data-t="oPick">Choose one…</option>
           <option value="Logo, photos and text ready" data-t="oAs1">Logo, photos and text are ready</option>
           <option value="Some of it" data-t="oAs2">Some of it</option>
           <option value="Nothing yet" data-t="oAs3">Nothing yet</option>
@@ -1078,7 +1126,7 @@ ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — 
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",ordLi4:"Satu proyek dalam satu waktu — kalau studio sedang penuh, penawaranmu menyebut kapan pekerjaan bisa dimulai",
 fNameL:"Nama kamu",fEmailL:"Email",fWaL:"WhatsApp <span class=\"fhint\">(opsional)</span>",fGoalL:"Apa yang ingin dicapai proyek ini?",fAudL:"Untuk siapa?",fAssetsL:"Apa yang sudah kamu punya?",oAs1:"Logo, foto, dan teks sudah siap",oAs2:"Sebagian",oAs3:"Belum ada apa-apa",oAs4:"Belum yakin",fGoalPh:"mis. Lebih banyak pesanan lewat WhatsApp",fAudPh:"mis. Pembuat kue rumahan yang memesan untuk acara",fDetPh:"Versi singkatnya saja cukup — sisanya Carl tanyakan.",fDlPh:"mis. Sebelum kampanye Desember",fSvcL:"Kamu butuh apa?",oWeb:"Website",oGame:"Game browser",oBrand:"Brand & logo",oLead:"Sistem lead",oOther:"Hal lain",
 fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim pesanan",fNote:"Terkirim langsung ke inbox Carl dari halaman ini — tidak perlu aplikasi email.",
-copyMail:"Salin email",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",dl4:"Daftar serah terima tertulis: berkas, akses, dan cara memperbarui tiap bagian",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",footWork:"Studi kasus",footStatus:"Status proyek",footPdf:"Ringkasan satu halaman (PDF)",proofLink2:"Baca studi kasusnya",
+oPick:"Pilih salah satu…",copyMail:"Salin email",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",dl4:"Daftar serah terima tertulis: berkas, akses, dan cara memperbarui tiap bagian",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",footWork:"Studi kasus",footStatus:"Status proyek",footPdf:"Ringkasan satu halaman (PDF)",proofLink2:"Baca studi kasusnya",
 };
 var EN={};
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
@@ -1151,6 +1199,8 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var form=e.target, btn=form.querySelector('button[type="submit"]'), st=document.getElementById("formStatus");
   var v=function(id){ return (document.getElementById(id).value||"").trim(); };
   var idMode=curLang()==="id";
+  if(!v("fService")||!v("fAssets")){ show("err", idMode?"Pilih dulu layanan yang kamu butuhkan dan aset yang sudah kamu punya.":"Choose what you need and what you already have first."); var bad=!v("fService")?document.getElementById("fService"):document.getElementById("fAssets"); if(bad) bad.focus(); return; }
+  if(!v("fName")||!v("fDetail")||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))){ show("err", idMode?"Isi namamu, email yang valid, dan sedikit tentang proyeknya.":"Fill in your name, a valid email, and a few words about the project."); var bad2=!v("fName")?document.getElementById("fName"):(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))?document.getElementById("fEmail"):document.getElementById("fDetail")); if(bad2) bad2.focus(); return; }
   var subject=(idMode?"Proyek baru — ":"New project — ")+v("fService")+" — "+v("fName");
   var lines=["Name / Nama: "+v("fName"),"Email: "+v("fEmail"),"WhatsApp: "+(v("fWa")||"-"),"Service / Layanan: "+v("fService"),"Goal / Tujuan: "+(v("fGoal")||"-"),"Audience / Untuk siapa: "+(v("fAudience")||"-"),"Assets / Aset siap: "+v("fAssets"),"Deadline / Tenggat: "+(v("fDeadline")||"-"),"","Project / Proyek:",v("fDetail")];
   function show(kind,html){ if(!st) return; st.hidden=false; st.className="form-status "+kind; st.innerHTML=html; }
@@ -1176,7 +1226,25 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
 /* ---------- order form draft: autosaved in this browser only ---------- */
 var DKEY="carllab-v18-draft", dids=["fName","fEmail","fWa","fService","fGoal","fAudience","fAssets","fDetail","fDeadline"], dT=null;
 function dSave(){ try{ var o={}; dids.forEach(function(i){ o[i]=document.getElementById(i).value; }); localStorage.setItem(DKEY,JSON.stringify(o)); }catch(e){} }
-try{ var dOld=JSON.parse(localStorage.getItem(DKEY)||"null"); if(dOld){ dids.forEach(function(i){ if(dOld[i]) document.getElementById(i).value=dOld[i]; }); } }catch(e){}
+function stripAuto(v){
+  if(!v) return v;
+  var marks=["From the pathfinder","Dari pemeta jalur","From the readiness check","Dari cek kesiapan"];
+  var lines=v.split("\n"), out=[], i=0;
+  while(i<lines.length){
+    var hit=false;
+    for(var m=0;m<marks.length;m++){ if(lines[i].indexOf(marks[m])>=0){ hit=true; break; } }
+    if(hit){
+      var isPath=(lines[i].indexOf("pathfinder")>=0||lines[i].indexOf("pemeta")>=0);
+      i++;
+      if(isPath){ i=Math.min(i+4,lines.length); }
+      else { while(i<lines.length && lines[i].trim()!=="") i++; }
+      continue;
+    }
+    out.push(lines[i]); i++;
+  }
+  return out.join("\n").replace(/\n{3,}/g,"\n\n").replace(/^\s+|\s+$/g,"");
+}
+try{ var dOld=JSON.parse(localStorage.getItem(DKEY)||"null"); if(dOld){ dids.forEach(function(i){ if(dOld[i]){ var val=(i==="fDetail")? stripAuto(dOld[i]) : dOld[i]; document.getElementById(i).value=val; } }); } }catch(e){}
 try{ var svcQ=new URLSearchParams(location.search).get("svc"); if(svcQ){ var sEl=document.getElementById("fService"); if(sEl){ for(var oi=0;oi<sEl.options.length;oi++){ if(sEl.options[oi].value===svcQ){ sEl.selectedIndex=oi; break; } } } } }catch(e){}
 dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener("input",function(){ clearTimeout(dT); dT=setTimeout(dSave,350); }); el.addEventListener("change",dSave); });
 /* draft cleared by the submit handler, only after a successful send */
@@ -1220,13 +1288,16 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
   if (at) { var fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Etc/GMT-7", hour: "2-digit", minute: "2-digit" }); var tickA = function () { at.textContent = " · " + fmt.format(new Date()) + " WIB"; }; tickA(); setInterval(tickA, 30000); }
   var pill = document.getElementById("svcPill");
   if (pill && window.matchMedia("(pointer:fine)").matches && !reduce) {
-    var px = 0, py = 0, cx = 0, cy = 0, shown = false;
     document.querySelectorAll(".svc-row").forEach(function (r) {
-      r.addEventListener("mouseenter", function (e) { shown = true; px = cx = e.clientX; py = cy = e.clientY; pill.classList.add("on"); });
-      r.addEventListener("mousemove", function (e) { px = e.clientX; py = e.clientY; });
-      r.addEventListener("mouseleave", function () { shown = false; pill.classList.remove("on"); });
+      r.addEventListener("mouseenter", function () {
+        var rc = r.getBoundingClientRect();
+        pill.style.left = Math.max(8, rc.right - pill.offsetWidth - 16) + "px";
+        pill.style.top = (rc.top + 14) + "px";
+        pill.classList.add("on");
+      });
+      r.addEventListener("mouseleave", function () { pill.classList.remove("on"); });
     });
-    (function loop() { cx += (px - cx) * 0.18; cy += (py - cy) * 0.18; if (shown) { pill.style.left = cx + "px"; pill.style.top = cy + "px"; } requestAnimationFrame(loop); })();
+    window.addEventListener("scroll", function () { pill.classList.remove("on"); }, { passive: true });
   }
   var img = document.getElementById("heroImg");
   var hero = document.querySelector(".hero");
@@ -1260,13 +1331,14 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
     if(!stTxt) return;
     try{
       var h=parseInt(new Date().toLocaleString("en-US",{timeZone:"Etc/GMT-7",hour:"numeric",hour12:false}),10);
-      var open=h>=8&&h<22, idLang=(typeof curLang==="function"&&curLang()==="id");
+      var open=h>=8&&h<22, idLang=(document.documentElement.lang==="id");
       stTxt.textContent=open?(idLang?"Buka — dibalas dalam sehari":"Open — replies within a day"):(idLang?"Tutup — kembali pukul 08:00 WIB":"Closed — back at 08:00 WIB");
       if(stDot) stDot.style.background=open?"#B9C0C8":"#55565C";
       document.documentElement.classList.toggle("carl-working",!!open);
     }catch(e){}
   }
   studio(); setInterval(studio,30000);
+  ["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
   var wcZones={id:"Etc/GMT-7",uk:"Europe/London",us:"America/New_York",jp:"Asia/Tokyo",au:"Australia/Sydney"};
   var wcEls=document.querySelectorAll("[data-wc]");
   function wcTick(){ var now=new Date(); for (var i=0;i<wcEls.length;i++){ var k=wcEls[i].getAttribute("data-wc"); try{ wcEls[i].textContent=new Intl.DateTimeFormat("en-GB",{timeZone:wcZones[k],hour:"2-digit",minute:"2-digit"}).format(now); }catch(e){} } }
@@ -1419,21 +1491,23 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
     return b? b.textContent.trim() : (labels[q]||"-");
   }
   function stripOldPath(v){
-    var m="\u2014 From the pathfinder / Dari pemeta jalur \u2014";
-    var i=v.indexOf(m); if(i<0) return v;
-    var j=v.indexOf("Path / Jalur:",i); if(j<0) return v;
-    var k=v.indexOf("\n",j); var end=(k<0)? v.length : k;
-    var before=v.slice(0,i).replace(/\s+$/,""), after=v.slice(end).replace(/^\n+/,"");
-    return before&&after? before+"\n\n"+after : before+after;
+    var marks=["From the pathfinder","Dari pemeta jalur"];
+    var lines=v.split("\n"), out=[], i=0;
+    while(i<lines.length){
+      var hit=false;
+      for(var m=0;m<marks.length;m++){ if(lines[i].indexOf(marks[m])>=0){ hit=true; break; } }
+      if(hit){ i=Math.min(i+5,lines.length); continue; }
+      out.push(lines[i]); i++;
+    }
+    return out.join("\n").replace(/\n{3,}/g,"\n\n").replace(/^\s+|\s+$/g,"");
   }
   document.getElementById("pathSend").addEventListener("click",function(){
     var steps=res._steps||compute(); if(!steps.length) return;
     var pathTxt=steps.map(function(st,i){ return (i+1)+") "+SVC[st.k].name; }).join("  ");
-    var summary=["\u2014 From the pathfinder / Dari pemeta jalur \u2014",
-      "Brand / Merek: "+curLabel("brand"),
-      "Goal / Tujuan: "+curLabel("goal"),
-      "Assets / Aset: "+curLabel("assets"),
-      "Path / Jalur: "+pathTxt].join("\n");
+    var L=lang();
+    var summary=(L==="id"
+      ? ["\u2014 Dari pemeta jalur \u2014","Merek: "+curLabel("brand"),"Tujuan: "+curLabel("goal"),"Aset: "+curLabel("assets"),"Jalur: "+pathTxt]
+      : ["\u2014 From the pathfinder \u2014","Brand: "+curLabel("brand"),"Goal: "+curLabel("goal"),"Assets: "+curLabel("assets"),"Path: "+pathTxt]).join("\n");
     var svc=document.getElementById("fService"), det=document.getElementById("fDetail");
     if(svc){ svc.value=SVC[steps[0].k].form; svc.dispatchEvent(new Event("change",{bubbles:true})); }
     if(det){

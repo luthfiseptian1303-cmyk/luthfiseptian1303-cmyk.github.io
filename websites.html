@@ -363,7 +363,7 @@ header.site nav a:hover{color:#B9C0C8}
 .btn.ghost:hover{background:#B9C0C8;color:#0B0B0B}
 .lang-sw button.on{background:#B9C0C8;color:#0B0B0B}
 .hero::before{background:radial-gradient(640px 440px at 79% 26%,rgba(217,222,228,.14),rgba(217,222,228,0) 70%)}
-.hero h1{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .g{color:transparent}
 .hero-cap b{color:#0B0B0B}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,222,228,.45)}70%{box-shadow:0 0 0 9px rgba(217,222,228,0)}100%{box-shadow:0 0 0 0 rgba(217,222,228,0)}}
@@ -374,7 +374,7 @@ header.site nav a:hover{color:#B9C0C8}
 .svc-row .tag{color:#9AA3AD}
 .svc-row:hover h3,.svc-row:hover p,.svc-row:hover .num,.svc-row:hover .arr{color:#0B0B0B}
 .svc-row:hover .tag{color:#3A4046}
-#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 #about{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
 #about .eyebrow{color:#6E767F}
 #about .about-txt p{color:#23272C}
@@ -384,7 +384,7 @@ header.site nav a:hover{color:#B9C0C8}
 #about b{color:#000}
 #about .stat .n{color:#0B0B0B}
 .stat .l{color:#6E767F}
-.manifesto .lm{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.manifesto .lm{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .manifesto .lm-in.g{background:none;color:#B9C0C8;-webkit-background-clip:initial;background-clip:initial}
 details.faq summary .pm{color:#9AA3AD}
 #order{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
@@ -515,7 +515,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .oth-row a{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(17px,1.8vw,21px);color:#B9C0C8;text-decoration:none}
 .sec-head h1{font-size:clamp(40px,6vw,84px)}
 .sec-head h1::after{content:"";display:block;width:64px;height:5px;background:var(--amber);margin-top:24px}
-.svc-top .sec-head h1{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.svc-top .sec-head h1{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .oth-row a:hover{color:#E3E6E9}
 .oth-label{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#9AA3AD;display:block;margin-bottom:14px}
 @media(max-width:560px){.inc-list li{grid-template-columns:36px 1fr}}
@@ -558,6 +558,16 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </script>
 <style>.case-link{display:inline-block;margin-top:14px;font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E3E6E9;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
 </style>
+
+<style id="fix-round">
+:root{--sec:clamp(72px,9vw,120px)}
+section[id]{scroll-margin-top:84px}
+.svc-top{padding-bottom:clamp(36px,4.5vw,56px)}
+.svc-top + .blk{padding-top:clamp(36px,4.5vw,56px)}
+.lang-sw button{padding:16px 10px}
+.copy-mail{padding:15px 18px}
+details.faq summary .pm{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:-12px -10px -12px 0}
+</style>
 </head>
 <body>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
@@ -591,7 +601,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
   </nav>
   <div class="menu-foot">
     <span>Indonesia</span>
-    <a href="/cdn-cgi/l/email-protection#452d2029292a05262437292924276b3220276b2c21"><span class="__cf_email__" data-cfemail="3c54595050537c5f5d4e50505d5e124b595e125558">[email&#160;protected]</span></a>
+    <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
   </div>
 </div>
 <main id="main">
@@ -809,7 +819,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
         <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
-        <a href="/cdn-cgi/l/email-protection#19717c757576597a786b7575787b376e7c7b37707d"><span class="__cf_email__" data-cfemail="87efe2ebebe8c7e4e6f5ebebe6e5a9f0e2e5a9eee3">[email&#160;protected]</span></a>
+        <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
         <button class="copy-mail" id="copyMail" type="button" data-t="copyMail">Copy email</button>
       </div>
     </div>
@@ -828,7 +838,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </footer>
 <a class="sticky-cta" id="stickyCta" href="/?svc=Website#order" data-t="navOrder">Start a project</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="lenis.min.js"></script>
+<script src="lenis.min.js"></script>
 <script>
 (function(){
 "use strict";
@@ -904,6 +914,7 @@ function markYou(){
   youLabel();
 }
 studio(); wcTick(); markYou();
+["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
 setInterval(function(){ studio(); wcTick(); youLabel(); },30000);
 /* copy email */
 var cm=document.getElementById("copyMail");
@@ -920,7 +931,5 @@ if(scta){ var upd=function(){ var openOv=mo&&mo.classList.contains("open"); scta
 if(curLang()==="id") applyLang("id"); else applyLang("en");
 })();
 </script>
-
-
 </body>
 </html>

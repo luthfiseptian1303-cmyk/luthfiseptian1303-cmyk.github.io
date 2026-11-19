@@ -362,7 +362,7 @@ header.site nav a:hover{color:#B9C0C8}
 .btn.ghost:hover{background:#B9C0C8;color:#0B0B0B}
 .lang-sw button.on{background:#B9C0C8;color:#0B0B0B}
 .hero::before{background:radial-gradient(640px 440px at 79% 26%,rgba(217,222,228,.14),rgba(217,222,228,0) 70%)}
-.hero h1{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .g{color:transparent}
 .hero-cap b{color:#0B0B0B}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,222,228,.45)}70%{box-shadow:0 0 0 9px rgba(217,222,228,0)}100%{box-shadow:0 0 0 0 rgba(217,222,228,0)}}
@@ -373,7 +373,7 @@ header.site nav a:hover{color:#B9C0C8}
 .svc-row .tag{color:#9AA3AD}
 .svc-row:hover h3,.svc-row:hover p,.svc-row:hover .num,.svc-row:hover .arr{color:#0B0B0B}
 .svc-row:hover .tag{color:#3A4046}
-#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#services .sec-head h2,#process .sec-head h2,#faq .sec-head h2,#live h2{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 #about{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
 #about .eyebrow{color:#6E767F}
 #about .about-txt p{color:#23272C}
@@ -383,7 +383,7 @@ header.site nav a:hover{color:#B9C0C8}
 #about b{color:#000}
 #about .stat .n{color:#0B0B0B}
 .stat .l{color:#6E767F}
-.manifesto .lm{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.manifesto .lm{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .manifesto .lm-in.g{background:none;color:#B9C0C8;-webkit-background-clip:initial;background-clip:initial}
 details.faq summary .pm{color:#9AA3AD}
 #order{background:linear-gradient(168deg,#C9CED4 0%,#AEB4BC 34%,#878E96 58%,#B9C0C8 82%,#7D838B 100%);color:#0B0B0B}
@@ -514,7 +514,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .oth-row a{font-family:"Archivo",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(17px,1.8vw,21px);color:#B9C0C8;text-decoration:none}
 .sec-head h1{font-size:clamp(40px,6vw,84px)}
 .sec-head h1::after{content:"";display:block;width:64px;height:5px;background:var(--amber);margin-top:24px}
-.svc-top .sec-head h1{background:linear-gradient(178deg,#E3E6E9 0%,#B9C0C8 38%,#9AA3AD 55%,#C9CED4 78%,#9AA3AD 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.svc-top .sec-head h1{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .oth-row a:hover{color:#E3E6E9}
 .oth-label{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#9AA3AD;display:block;margin-bottom:14px}
 @media(max-width:560px){.inc-list li{grid-template-columns:36px 1fr}}
@@ -561,6 +561,18 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 .rc-note{margin-top:12px;color:#8FD0A0;font-size:13.5px}
 @media (max-width:860px){.rc-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion: reduce){.path-result{transition:none}.popt{transition:none}.rc-bar i{transition:none}}
+</style>
+
+<style id="fix-round">
+:root{--sec:clamp(72px,9vw,120px)}
+section[id]{scroll-margin-top:84px}
+.svc-top{padding-bottom:clamp(36px,4.5vw,56px)}
+.svc-top + .blk{padding-top:clamp(36px,4.5vw,56px)}
+.lang-sw button{padding:16px 10px}
+.copy-mail{padding:15px 18px}
+.pq legend{float:left;width:100%;padding:0;margin:0}
+.pq .popts{clear:both}
+details.faq summary .pm{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:-12px -10px -12px 0}
 </style>
 </head>
 <body>
@@ -811,6 +823,7 @@ function markYou(){
   youLabel();
 }
 studio(); wcTick(); markYou();
+["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
 setInterval(function(){ studio(); wcTick(); youLabel(); },30000);
 /* copy email */
 var cm=document.getElementById("copyMail");
