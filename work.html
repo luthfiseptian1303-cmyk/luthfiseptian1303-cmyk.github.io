@@ -496,7 +496,7 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 
 <style id="svc-page">
-.svc-top{padding-top:clamp(56px,8vw,104px)}
+.svc-top{padding-top:clamp(92px,9vw,104px)}
 .back-link{display:inline-block;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:#9AA3AD;text-decoration:none;margin-bottom:30px}
 .back-link:hover{color:#E3E6E9}
 .svc-lede{margin-top:26px;max-width:46em;font-size:clamp(17px,1.6vw,20px);line-height:1.65;color:#C9CED4}
@@ -617,7 +617,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
   </nav>
   <div class="menu-foot">
     <span>Indonesia</span>
-    <a href="/cdn-cgi/l/email-protection#c4aca1a8a8ab84a7a5b6a8a8a5a6eab3a1a6eaada0"><span class="__cf_email__" data-cfemail="1078757c7c7f507371627c7c71723e6775723e7974">[email&#160;protected]</span></a>
+    <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
   </div>
 </div>
 <main id="main">
@@ -747,7 +747,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
         <h2 data-t="footElse">Elsewhere</h2>
         <a href="https://id.linkedin.com/in/luthfi-septian-15349921b" target="_blank" rel="noopener">LinkedIn &#8599;</a>
         <a href="https://www.threads.com/@luthfs_" target="_blank" rel="noopener">Threads &#8599;</a>
-        <a href="/cdn-cgi/l/email-protection#5d35383131321d3e3c2f31313c3f732a383f733439"><span class="__cf_email__" data-cfemail="2d45484141426d4e4c5f41414c4f035a484f034449">[email&#160;protected]</span></a>
+        <a href="mailto:hello@carllab.web.id">hello@carllab.web.id</a>
         <button class="copy-mail" id="copyMail" type="button" data-t="copyMail">Copy email</button>
       </div>
     </div>
@@ -766,7 +766,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 </footer>
 <a class="sticky-cta" id="stickyCta" href="/?svc=Brand%20%26%20logo#order" data-t="navOrder">Start a project</a>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="lenis.min.js"></script>
+<script src="lenis.min.js"></script>
 <script>
 (function(){
 "use strict";
@@ -798,10 +798,6 @@ if(mb) mb.addEventListener("click",function(){ menu(!mo.classList.contains("open
 if(mx) mx.addEventListener("click",function(){ menu(false); });
 if(mo) mo.querySelectorAll("a").forEach(function(a){ a.addEventListener("click",function(){ menu(false); }); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") menu(false); });
-/* header state (fix-bugs 20261119: toggle was missing on this page, so the solid scrolled-header background never activated) */
-var hdrEl=document.documentElement;
-function hdrState(){ hdrEl.classList.toggle("scrolled", window.scrollY>40); }
-window.addEventListener("scroll",hdrState,{passive:true}); hdrState();
 /* lenis (same tokens as homepage; skipped on low-power devices) */
 try{
   var lowPow=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4);
