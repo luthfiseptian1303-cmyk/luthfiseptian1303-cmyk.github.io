@@ -560,6 +560,67 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .qa{padding-top:18px;padding-bottom:18px}
 .svc-top{padding-bottom:44px}
 </style>
+<style id="logo-hub-css">
+.demo-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(36px,5vw,84px);align-items:center}
+.demo-lede{font-size:clamp(16.5px,1.5vw,19px);line-height:1.65;color:#C9CED4;max-width:34em}
+.demo-specs{list-style:none;margin:30px 0 0;padding:0;border-top:2px solid #2E3237}
+.demo-specs li{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 4px;border-bottom:1px solid #2E3237}
+.demo-specs .n{font-family:"Space Mono",monospace;font-size:13px;color:#9AA3AD;padding-top:3px}
+.demo-specs h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:17.5px;letter-spacing:-.01em;color:#E3E6E9;text-transform:uppercase;margin:0 0 5px}
+.demo-specs p{margin:0;color:#9AA3AD;font-size:15px;line-height:1.6}
+.demo-hint{margin-top:22px;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#767D85}
+.demo-cap{margin-top:28px;text-align:center;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.06em;color:#767D85}
+.demo-phone{width:min(350px,88vw);margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
+.demo-screen{position:relative;border-radius:32px;overflow:hidden;background:#0A0A0C;height:620px}
+.demo-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:96px;height:20px;background:#101012;border-radius:0 0 13px 13px;z-index:8}
+.demo-screen.no-notch .demo-notch{display:none}
+@media(max-width:900px){.demo-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.demo-screen{height:560px}}
+.demo-fullwrap{text-align:center;margin-top:12px}
+.demo-full{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#B9C0C8;text-decoration:none;border-bottom:1px solid #3A4149;padding-bottom:2px}
+.try-box{margin-top:26px;border:1px solid #2E3237;padding:18px 20px 12px}
+.try-t{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#E3E6E9;margin-bottom:6px}
+.try-list{list-style:none;margin:0;padding:0}
+.try-list li{font-size:14.5px;line-height:1.5;color:#A8A8AE;padding:8px 0;border-top:1px solid #23262B}
+.hub{display:flex;flex-direction:column;height:100%;background:#0A0A0C;color:#F3EAD8;font-family:'Space Grotesk',sans-serif}
+.hub-head{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px 11px;border-bottom:1px solid #23262B;flex:none}
+.hub-head b{font-family:'Archivo',sans-serif;font-size:14px;letter-spacing:.14em;color:#E9DFC8}
+.hub-head span{font-size:10px;letter-spacing:.2em;color:#8F96A0}
+#hubMain{flex:1;display:flex;flex-direction:column;min-height:0}
+.hub-tabs{display:flex;gap:6px;padding:12px 12px 2px;flex:none}
+.hub-tab{flex:1;padding:8px 2px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.03em;border-radius:999px;border:1px solid #33373D;background:transparent;color:#B9BEC6;cursor:pointer;transition:background .18s,color .18s}
+.hub-tab.on{background:#EDEEF0;border-color:#EDEEF0;color:#111}
+.hub-body{flex:1;overflow-y:auto;padding:10px 12px 16px;display:flex;flex-direction:column}
+.hub-foot{margin-top:auto;padding-top:14px;font-size:11px;line-height:1.55;color:#8F96A0;text-align:center}
+.hub-note{font-size:10.5px;letter-spacing:.14em;color:#8F96A0;margin:2px 2px 10px}
+.hub-row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px;margin:0 0 8px;border:1px solid #26292F;border-radius:16px;background:#121317;color:#F3EAD8;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:transform .12s,border-color .18s}
+.hub-row:active{transform:scale(.98)}
+.hub-row.sel{border-color:#C9A24B}
+.hub-row img{width:46px;height:58px;object-fit:cover;border-radius:9px;flex:none;background:#1B1D21}
+.hub-row .hub-blk{width:46px;height:58px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:800;font-size:8.5px;letter-spacing:.03em;color:#FFF7EA;text-align:center;line-height:1.3;padding:2px}
+.hub-row h4{margin:0 0 3px;font-family:'Archivo',sans-serif;font-size:14.5px;letter-spacing:.02em}
+.hub-row p{margin:0;font-size:11.5px;color:#A7ADB6;line-height:1.45}
+.hub-row .arr{margin-left:auto;color:#8A9199;font-size:17px;flex:none;padding-right:2px}
+.hub-back{background:none;border:none;color:#D9DDE3;font-family:'Space Grotesk',sans-serif;font-size:12.5px;cursor:pointer;padding:2px 0 10px;letter-spacing:.03em}
+.hub-hero{position:relative;height:172px;border-radius:16px;overflow:hidden;margin-bottom:12px;background:#141518}
+.hub-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.hub-hero b{position:absolute;left:14px;bottom:11px;font-family:'Archivo',sans-serif;font-size:22px;color:#FBF5E6;text-shadow:0 2px 16px rgba(0,0,0,.65)}
+.hub-dsub{font-size:11px;letter-spacing:.1em;color:#C9A24B;margin:0 2px 6px;text-transform:uppercase}
+.hub-desc{font-size:12.5px;line-height:1.6;color:#C9CDD4;margin:0 2px 14px}
+.hub-meta{font-size:11.5px;color:#A7ADB6;margin:0 2px 12px;line-height:1.55}
+.hub-strip{display:flex;gap:8px;margin:0 2px 14px}
+.hub-strip img{flex:1;min-width:0;height:96px;object-fit:cover;border-radius:10px;display:block;background:#1B1D21}
+.hub-btn{display:block;width:100%;padding:12px;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;cursor:pointer;margin-bottom:8px;text-align:center;text-decoration:none}
+.hub-play{background:#EDEEF0;color:#111;font-weight:700;border:none}
+.hub-fullb{background:transparent;border:1px solid #33373D;color:#E9DFC8}
+#hubPlay{display:none;flex-direction:column;height:100%}
+#hubPlay.on{display:flex}
+.hub-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #23262B;background:#0A0A0C;flex:none}
+.hub-bar .hub-back{padding:0}
+.hub-bar b{font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.06em;color:#E9DFC8}
+.hub-bar a{margin-left:auto;color:#D9DDE3;text-decoration:none;font-size:15px}
+#hubFrame{flex:1;width:100%;border:0;display:block;background:#0A0A0C}
+</style>
 </head>
 <body>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
@@ -630,32 +691,34 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
       <span class="eyebrow" data-t="demoEye">Live sample</span>
-      <h2 data-t="demoH">A feed built to be swiped</h2>
+      <h2 data-t="demoH">Nine logos, one phone</h2>
     </div>
-    <p class="bl-lede" data-rv="y40" data-t="demoP">A complete Instagram carousel for GIGIT!, a fictional cookie brand invented for this sample. One colour system, one type system, one small mark in the corner of every panel — ten frames that carry a scroller from the first bite to the order button. Swipe through the set below, or open it full-screen — the full set also carries story-format versions and a second, darker colourway.</p>
-    <ul class="bl-specs">
-      <li data-rv="y40"><span class="n">01</span><h3 data-t="demo1t">One system, ten panels</h3><p data-t="demo1p">Vivid orange, warm cream, chocolate brown. The same three colours, the same two typefaces, the same corner mark — recognition compounds with every swipe.</p></li>
-      <li data-rv="y40"><span class="n">02</span><h3 data-t="demo2t">Type does the talking</h3><p data-t="demo2p">Headlines at poster scale, a script accent for the human moments, photography kept honest. Nothing decorative that a real bakery feed could not keep up, week after week.</p></li>
-      <li data-rv="y40"><span class="n">03</span><h3 data-t="demo3t">Made to be posted</h3><p data-t="demo3p">Every panel is 1080 × 1350, numbered, and the set closes on a call to action — delivered as finished files, ready to upload, not a template to wrestle with.</p></li>
-    </ul>
-    <div class="car-frame" data-rv="y40">
-      <div class="car-bar"><span class="demo-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="demo-url">carllab.web.id/gigit-carousel</span><a class="demo-open" href="gigit-carousel.html" data-t="demoOpen">Open the set full-screen &#8599;</a></div>
-      <div class="car-strip">
-        <figure><img src="gigit-panel-1.jpg" alt="GIGIT! carousel panel 1 — cover: brand name over a pile of chocolate chip cookies" loading="lazy"><figcaption>1/10</figcaption></figure>
-        <figure><img src="gigit-panel-2.jpg" alt="GIGIT! carousel panel 2 — small bites, big flavour" loading="lazy"><figcaption>2/10</figcaption></figure>
-        <figure><img src="gigit-panel-3.jpg" alt="GIGIT! carousel panel 3 — crisp outside, melty inside, cookie stack" loading="lazy"><figcaption>3/10</figcaption></figure>
-        <figure><img src="gigit-panel-4.jpg" alt="GIGIT! carousel panel 4 — bitten cookie with melted chocolate" loading="lazy"><figcaption>4/10</figcaption></figure>
-        <figure><img src="gigit-panel-5.jpg" alt="GIGIT! carousel panel 5 — the menu: three variants with prices" loading="lazy"><figcaption>5/10</figcaption></figure>
-        <figure><img src="gigit-panel-6.jpg" alt="GIGIT! carousel panel 6 — testimonials from fictional buyers" loading="lazy"><figcaption>6/10</figcaption></figure>
-        <figure><img src="gigit-panel-7.jpg" alt="GIGIT! carousel panel 7 — how to order in three steps" loading="lazy"><figcaption>7/10</figcaption></figure>
-        <figure><img src="gigit-panel-8.jpg" alt="GIGIT! carousel panel 8 — bundle promo: buy 3 boxes, get a mini box free" loading="lazy"><figcaption>8/10</figcaption></figure>
-        <figure><img src="gigit-panel-9.jpg" alt="GIGIT! carousel panel 9 — giant type panel with cookie disc" loading="lazy"><figcaption>9/10</figcaption></figure>
-        <figure><img src="gigit-panel-10.jpg" alt="GIGIT! carousel panel 10 — closing panel with order call to action" loading="lazy"><figcaption>10/10</figcaption></figure>
+    <div class="demo-grid" id="hubGrid">
+      <div data-rv="y40">
+        <p class="demo-lede" id="hubLede"></p>
+        <ul class="demo-specs" id="hubSpecs"></ul>
+        <p class="demo-hint" id="hubHint"></p>
+        <div class="try-box"><p class="try-t" id="hubTryT"></p><ul class="try-list" id="hubTry"></ul></div>
+      </div>
+      <div class="demo-phone" data-rv="y40">
+        <div class="demo-screen no-notch">
+          <div class="demo-notch" aria-hidden="true"></div>
+          <div class="hub" id="hub">
+            <div class="hub-head"><b>CARLLAB</b><span id="hubHeadNote">LOGOS</span></div>
+            <div id="hubMain">
+              <div class="hub-tabs" id="hubTabs" role="tablist"></div>
+              <div class="hub-body" id="hubBody"></div>
+            </div>
+            <div id="hubPlay">
+              <div class="hub-bar"><button class="hub-back" id="hubPlayBack" type="button"></button><b id="hubPlayName"></b><a id="hubPlayFull" target="_blank" rel="noopener" aria-label="Open full-screen">&#8599;</a></div>
+              <iframe id="hubFrame" title="Logo demo" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="car-hint" data-t="demoHint">Swipe sideways &#183; or open the set full-screen</p>
-    <a class="case-link" href="work.html#gigit" data-t="caseLink">Read the case study &#8599;</a>
-    <a class="case-link" href="demo-logo.html" data-t="demoHub" style="margin-left:22px">See the full logo demo &#8212; 9 brands &#8599;</a>
+    <p class="demo-cap" id="hubCap"></p>
+    <p class="demo-fullwrap"><a class="demo-full" id="hubFull" href="demo-logo.html" target="_blank" rel="noopener"></a></p>
   </div>
 </section>
 <section class="blk">
@@ -754,7 +817,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Feed yang dibangun untuk digeser",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",demoHub:"Lihat demo logo lengkap — 9 brand ↗"};
+var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Sembilan logo, satu HP",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",demoHub:"Lihat demo logo lengkap — 9 brand ↗"};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -862,6 +925,188 @@ window.addEventListener("hashchange",function(){
   if(window.__lenis) window.__lenis.scrollTo(t,{duration:.8,offset:-hh});
   else t.scrollIntoView();
 });
+</script>
+<script id="hub-js">
+(function(){
+var DEMO_URL="demo-logo.html";
+var ITEMS={
+"gigit": {"g": "kuliner", "name": "GIGIT!", "img": "gigit-panel-1.jpg", "color": null, "strip": ["gigit-panel-1.jpg", "gigit-panel-2.jpg", "gigit-panel-3.jpg"], "handle": "@gigit.cookies", "city": "Jakarta", "bg": "#1C0D02",
+"sub": {"en": "Cookies & crumble", "id": "Cookies & crumble"},
+"d": {"en": "The original file set, not a recreation: a typographic wordmark in vivid orange — ten feed panels, five stories and a darker Chocolate Edition.", "id": "Set file aslinya, bukan reka ulang: wordmark tipografi oranye vivid — sepuluh panel feed, lima story, dan Edisi Cokelat yang lebih gelap."},
+"lede": {"en": "GIGIT! is the reference set itself — a fictional cookie brand whose complete carousel system already lives on this site. One vivid kit of orange, cream and chocolate brown, drawn once and carried through nineteen panels without drifting.", "id": "GIGIT! adalah set referensinya sendiri — brand cookies fiktif yang sistem carousel lengkapnya sudah hidup di situs ini. Satu kit cerah berisi oranye, krem, dan cokelat, digambar sekali dan dibawa melalui sembilan belas panel tanpa bergeser."},
+"specs": [[{"en": "A wordmark, no icon", "id": "Wordmark, tanpa ikon"}, {"en": "The logo is pure type: gigit! in Fredoka Bold cream with an orange exclamation — recognition carried by letterforms, not a mascot.", "id": "Logonya huruf murni: gigit! Fredoka Bold krem dengan tanda seru oranye — pengenalan dibawa oleh bentuk huruf, bukan maskot."}], [{"en": "One kit, nineteen panels", "id": "Satu kit, sembilan belas panel"}, {"en": "Feed, story and the Chocolate Edition all draw from the same colours, type and corner mark — a month of posts that could only belong to one brand.", "id": "Feed, story, dan Edisi Cokelat semuanya digambar dari warna, huruf, dan tanda sudut yang sama — sebulan pos yang hanya bisa dimiliki satu brand."}], [{"en": "The real files", "id": "File aslinya"}, {"en": "What plays in the phone is the finished set itself — the same panels this page used to carry as a carousel, now inside the demo hub.", "id": "Yang berputar di HP adalah set jadinya sendiri — panel yang sama yang dulu dibawa halaman ini sebagai carousel, kini di dalam hub demo."}]],
+"try": [{"en": "Play GIGIT! in the phone", "id": "Putar GIGIT! di HP"}, {"en": "Swipe the ten feed panels", "id": "Geser sepuluh panel feed-nya"}, {"en": "Open a story panel full-height", "id": "Buka panel story setinggi layar"}, {"en": "Compare the Chocolate Edition", "id": "Bandingkan Edisi Cokelatnya"}],
+"hint": {"en": "Tap a brand · play it in this phone", "id": "Ketuk sebuah brand · putar di HP ini"},
+"cap": {"en": "GIGIT! — a fictional cookie brand, demo version. No real shop.", "id": "GIGIT! — brand cookies fiktif, versi demo. Tidak ada toko sungguhan."}},
+"rawitara": {"g": "kuliner", "name": "RAWITARA", "img": "assets/rawitara-1.jpg", "color": null, "strip": ["assets/rawitara-1.jpg", "assets/rawitara-2.jpg", "assets/rawitara-3.jpg"], "handle": "@rawitara.id", "city": "Surabaya", "bg": "#2E130A",
+"sub": {"en": "Bottled chilli sauce", "id": "Sambal botol kemasan"},
+"d": {"en": "A curved-chilli emblem drawn thick and flat — readable as spicy from across the stall, and still sharp on a 3 cm bottle label.", "id": "Emblem cabai melengkung yang digambar tebal dan datar — terbaca sebagai pedas dari seberang warung, dan tetap tajam di label botol 3 cm."},
+"lede": {"en": "RAWITARA takes a home-recipe chilli sauce into retail packaging. Its identity is built like a shout: Anton headlines on a diagonal, rough stamp labels, and price stickers tilted on purpose — nothing about it whispers.", "id": "RAWITARA membawa sambal resep rumahan naik kelas ke kemasan retail. Identitasnya dibangun seperti teriakan: judul Anton di garis diagonal, label stempel kasar, dan stiker harga yang sengaja dimiringkan — tidak ada yang berbisik di brand ini."},
+"specs": [[{"en": "One emblem, drawn thick", "id": "Satu emblem, digambar tebal"}, {"en": "The curved chilli carries no small detail, so it survives a bottle label, a stall banner and a profile picture at any size.", "id": "Cabai melengkungnya tanpa detail kecil, jadi ia bertahan di label botol, spanduk warung, dan foto profil dalam ukuran apa pun."}], [{"en": "Chilli red, used boldly", "id": "Merah cabai, dipakai berani"}, {"en": "One saturated red (#D8432B) does the shouting; a stalk green and a burnt brown keep it grounded in the kitchen it came from.", "id": "Satu merah jenuh (#D8432B) yang berteriak; hijau tangkai dan cokelat bakar menahannya tetap membumi di dapur asalnya."}], [{"en": "A darker second edition", "id": "Edisi kedua yang lebih gelap"}, {"en": "The Bakar Edition recolours the same nineteen panels in charred browns — a new heat wearing the same RAWITARA.", "id": "Edisi Bakar mewarnai ulang sembilan belas panel yang sama dalam cokelat gosong — panas baru dengan RAWITARA yang sama."}]],
+"try": [{"en": "Open RAWITARA in the phone", "id": "Buka RAWITARA di HP"}, {"en": "Read the menu panel — three variants, priced", "id": "Baca panel menunya — tiga varian, berharga"}, {"en": "Find the tilted price stickers", "id": "Temukan stiker harganya yang miring"}, {"en": "Switch to the Bakar Edition", "id": "Pindah ke Edisi Bakar"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "RAWITARA — a fictional chilli-sauce brand, demo version. No real product.", "id": "RAWITARA — brand sambal fiktif, versi demo. Tidak ada produk sungguhan."}},
+"lunara": {"g": "kuliner", "name": "LUNARA", "img": "assets/lunara-1.jpg", "color": null, "strip": ["assets/lunara-1.jpg", "assets/lunara-2.jpg", "assets/lunara-3.jpg"], "handle": "@lunara.bake", "city": "Bandung", "bg": "#241806",
+"sub": {"en": "Bakery & dry cakes", "id": "Bakery & kue kering"},
+"d": {"en": "A gold crescent moon paired with a wheat stalk — the baker's pre-dawn hours and the ingredient, in two clean marks.", "id": "Bulan sabit emas dipasangkan setangkai gandum — jam kerja sang baker sebelum subuh dan bahannya, dalam dua tanda bersih."},
+"lede": {"en": "LUNARA is a bakehouse that starts before dawn, and its identity keeps those hours: Fraunces italics, a symmetrical patisserie layout, thin rules and an arched photograph — calm, warm, and deliberately unhurried.", "id": "LUNARA adalah bakehouse yang mulai sebelum subuh, dan identitasnya menjaga jam itu: italic Fraunces, tata letak patisserie simetris, garis tipis, dan foto melengkung — tenang, hangat, dan sengaja tidak terburu-buru."},
+"specs": [[{"en": "Moon and wheat", "id": "Bulan dan gandum"}, {"en": "Two simple marks that stamp cleanly onto boxes, bread paper and greeting cards without losing their shape.", "id": "Dua tanda sederhana yang bersih distempel ke box, kertas roti, dan kartu ucapan tanpa kehilangan bentuk."}], [{"en": "Serif, set quietly", "id": "Serif, disusun tenang"}, {"en": "Fraunces italics carry the human moments while the layout stays centred and symmetrical — patisserie manners, in type.", "id": "Italic Fraunces membawa momen manusianya sementara tata letaknya tetap di tengah dan simetris — sopan santun patisserie, dalam huruf."}], [{"en": "Amber, not orange", "id": "Amber, bukan oranye"}, {"en": "A baked-gold amber (#E39A1B) warms every panel without shouting — the colour of crust, not of signage.", "id": "Amber emas panggang (#E39A1B) menghangatkan setiap panel tanpa berteriak — warna kerak roti, bukan warna papan nama."}]],
+"try": [{"en": "Open LUNARA in the phone", "id": "Buka LUNARA di HP"}, {"en": "Read the menu — wholegrain, croissant, milk loaf", "id": "Baca menunya — gandum utuh, croissant, roti sobek susu"}, {"en": "Look for the arched photographs", "id": "Cari foto-foto melengkungnya"}, {"en": "Compare its second edition", "id": "Bandingkan edisi keduanya"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "LUNARA — a fictional bakehouse, demo version. No real bakery.", "id": "LUNARA — bakehouse fiktif, versi demo. Tidak ada bakery sungguhan."}},
+"arunika": {"g": "kuliner", "name": "ARUNIKA", "img": null, "color": "#0E9594", "strip": null, "handle": "@arunika.kopi", "city": "Semarang", "bg": "#0C2B29",
+"sub": {"en": "Milk coffee & roastery", "id": "Kopi susu & roastery"},
+"d": {"en": "A fresh Fredoka wordmark on a saturated tosca field, under a big rising-sun circle — morning energy in one gulp, prices accented in burnt orange.", "id": "Wordmark Fredoka segar di bidang tosca jenuh, di bawah lingkaran matahari terbit besar — semangat pagi dalam satu tegukan, harga beraksen oranye bakar."},
+"lede": {"en": "ARUNIKA roasts its own beans in Semarang and refuses the usual coffee-brown uniform: tosca fields, DM Serif headlines and one large sunrise circle carry the brand from cup seals to the menu board behind the bar.", "id": "ARUNIKA menyangrai bijinya sendiri di Semarang dan menolak seragam cokelat kopi yang biasa: bidang tosca, judul DM Serif, dan satu lingkaran matahari terbit besar membawa brand ini dari segel cup sampai papan menu di belakang bar."},
+"specs": [[{"en": "Tosca, on purpose", "id": "Tosca, dengan sengaja"}, {"en": "The saturated tosca (#0E9594) separates ARUNIKA from every brown-and-cream coffee shop on the street — and on the feed.", "id": "Tosca jenuh (#0E9594) memisahkan ARUNIKA dari setiap kedai kopi cokelat-krem di jalan itu — dan di feed."}], [{"en": "The sunrise circle", "id": "Lingkaran matahari terbit"}, {"en": "One big circle rises behind the wordmark on the cover — the brand's single graphic gesture, repeated nowhere else.", "id": "Satu lingkaran besar terbit di belakang wordmark pada sampul — satu-satunya gestur grafis brand ini, tidak diulang di tempat lain."}], [{"en": "The Sangrai Edition", "id": "Edisi Sangrai"}, {"en": "Its second edition darkens the same system into roast browns — the night version of the same morning coffee.", "id": "Edisi keduanya menggelapkan sistem yang sama menjadi cokelat sangrai — versi malam dari kopi pagi yang sama."}]],
+"try": [{"en": "Open ARUNIKA in the phone", "id": "Buka ARUNIKA di HP"}, {"en": "Read the menu — aren, caramel, tubruk", "id": "Baca menunya — aren, karamel, tubruk"}, {"en": "Spot the sunrise circle on the cover", "id": "Temukan lingkaran matahari terbit di sampulnya"}, {"en": "Switch to the Sangrai Edition", "id": "Pindah ke Edisi Sangrai"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "ARUNIKA — a fictional coffee shop, demo version. No real café.", "id": "ARUNIKA — kedai kopi fiktif, versi demo. Tidak ada kafe sungguhan."}},
+"kuwah": {"g": "kuliner", "name": "KUWAH!", "img": null, "color": "#D81B9A", "strip": null, "handle": "@kuwah.bakso", "city": "Malang", "bg": "#2B0A22",
+"sub": {"en": "Meatball & noodle soup", "id": "Bakso & mie kuah"},
+"d": {"en": "A shouting Baloo 2 wordmark on saturated fuchsia, steam waves over the bowl and round price badges — hot broth that hits at first sight.", "id": "Wordmark Baloo 2 yang berteriak di fuchsia jenuh, gelombang uap di atas mangkuk, dan badge harga bulat — kuah panas yang nampol sejak pandangan pertama."},
+"lede": {"en": "KUWAH! is a Malang meatball stall moving up without losing its street voice: steam-wave motifs, a circular bowl photograph and sticker-round prices — playful like GIGIT!, but built from its own kit, not GIGIT!'s.", "id": "KUWAH! adalah warung bakso Malang yang naik kelas tanpa kehilangan suara kaki limanya: motif gelombang uap, foto mangkuk melingkar, dan harga bulat seperti stiker — ceria seperti GIGIT!, tapi dibangun dari kit-nya sendiri, bukan kit GIGIT!."},
+"specs": [[{"en": "Steam, drawn", "id": "Uap, digambar"}, {"en": "Three wave lines above the bowl are the brand's signature — they appear on the banner, the bowl stickers and every panel.", "id": "Tiga garis gelombang di atas mangkuk adalah tanda tangan brand ini — muncul di spanduk, stiker mangkuk, dan setiap panel."}], [{"en": "Fuchsia that reads across the street", "id": "Fuchsia yang terbaca dari seberang jalan"}, {"en": "The saturated fuchsia (#D81B9A) is chosen for distance: the wordmark stays legible from the far side of the road.", "id": "Fuchsia jenuh (#D81B9A) dipilih untuk jarak: wordmark-nya tetap terbaca dari seberang jalan."}], [{"en": "The Kaldu Edition", "id": "Edisi Kaldu"}, {"en": "Its second edition deepens the same system into dark broth tones — the same shout, after dark.", "id": "Edisi keduanya memperdalam sistem yang sama ke warna kaldu gelap — teriakan yang sama, setelah gelap."}]],
+"try": [{"en": "Open KUWAH! in the phone", "id": "Buka KUWAH! di HP"}, {"en": "Read the menu — bakso, mie kuah, campur spesial", "id": "Baca menunya — bakso, mie kuah, campur spesial"}, {"en": "Find the round price badges", "id": "Temukan badge harga bulatnya"}, {"en": "Switch to the Kaldu Edition", "id": "Pindah ke Edisi Kaldu"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "KUWAH! — a fictional meatball stall, demo version. No real stall.", "id": "KUWAH! — warung bakso fiktif, versi demo. Tidak ada warung sungguhan."}},
+"sekar": {"g": "beauty", "name": "SEKAR", "img": "assets/sekar-1.jpg", "color": null, "strip": ["assets/sekar-1.jpg", "assets/sekar-2.jpg", "assets/sekar-3.jpg"], "handle": "@sekar.beauty", "city": "Jakarta", "bg": "#22301F",
+"sub": {"en": "Skincare & beauty", "id": "Skincare & beauty"},
+"d": {"en": "A symmetrical botanical symbol set in light Cormorant, with wide-tracked labels and room to breathe — calm you can read.", "id": "Simbol botanical simetris dalam Cormorant ringan, dengan label renggang dan ruang untuk bernapas — ketenangan yang bisa dibaca."},
+"lede": {"en": "SEKAR is natural skincare drawn at low volume: a light serif, terracotta warmed by sage, and panels that leave most of the space empty — the identity trusts the product to be the loud part.", "id": "SEKAR adalah skincare alami yang digambar dengan volume rendah: serif ringan, terakota yang dihangatkan sage, dan panel yang membiarkan sebagian besar ruangnya kosong — identitasnya percaya produknya yang menjadi bagian kerasnya."},
+"specs": [[{"en": "A botanical symbol", "id": "Simbol botanical"}, {"en": "One symmetrical leaf mark carries the labels, the jar seals and the box — drawn once, used everywhere, never redrawn.", "id": "Satu tanda daun simetris membawa label, segel jar, dan box-nya — digambar sekali, dipakai di mana-mana, tidak pernah digambar ulang."}], [{"en": "Space is the layout", "id": "Ruang adalah tata letaknya"}, {"en": "SEKAR's panels are mostly air: small type, wide tracking, one photograph — restraint as a recognisable style.", "id": "Panel SEKAR sebagian besar udara: huruf kecil, spasi renggang, satu foto — kesederhanaan sebagai gaya yang dikenali."}], [{"en": "Terracotta and sage", "id": "Terakota dan sage"}, {"en": "Terracotta (#D97757) warmed against sage green — shelf colours that sit quietly next to louder competitors.", "id": "Terakota (#D97757) dihangatkan melawan hijau sage — warna rak yang duduk tenang di sebelah pesaing yang lebih keras."}]],
+"try": [{"en": "Open SEKAR in the phone", "id": "Buka SEKAR di HP"}, {"en": "Notice how much space each panel keeps", "id": "Perhatikan berapa banyak ruang yang dijaga tiap panel"}, {"en": "Read its panel set in order", "id": "Baca set panelnya berurutan"}, {"en": "Compare its second edition", "id": "Bandingkan edisi keduanya"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "SEKAR — a fictional skincare brand, demo version. No real product.", "id": "SEKAR — brand skincare fiktif, versi demo. Tidak ada produk sungguhan."}},
+"vanara": {"g": "beauty", "name": "VANARA", "img": "assets/vanara-1.jpg", "color": null, "strip": ["assets/vanara-1.jpg", "assets/vanara-2.jpg", "assets/vanara-3.jpg"], "handle": "@vanara.salon", "city": "Bali", "bg": "#123324",
+"sub": {"en": "Salon & care", "id": "Salon & perawatan"},
+"d": {"en": "Montserrat ExtraBold split against side photography, with one thin gold line doing the luxury work — emerald, not pink.", "id": "Montserrat ExtraBold berhadapan foto di sisi, dengan satu garis emas tipis yang mengerjakan kemewahannya — zamrud, bukan pink."},
+"lede": {"en": "VANARA is a Bali salon whose identity splits every panel: photograph on one side, bold geometric type on the other, and a single gold rule between them. Emerald carries the calm; the gold carries the price of the chair.", "id": "VANARA adalah salon Bali yang identitasnya membelah setiap panel: foto di satu sisi, huruf geometris tebal di sisi lain, dan satu garis emas di antaranya. Zamrud membawa tenangnya; emas membawa harga kursinya."},
+"specs": [[{"en": "The split panel", "id": "Panel terbelah"}, {"en": "Every layout divides photo and type into two fields — a rhythm a client recognises before they read a word.", "id": "Setiap tata letak membagi foto dan huruf menjadi dua bidang — irama yang dikenali klien sebelum membaca satu kata pun."}], [{"en": "One gold line", "id": "Satu garis emas"}, {"en": "A single thin gold rule is the only ornament in the system — luxury by restraint, repeated until it becomes the signature.", "id": "Satu garis emas tipis adalah satu-satunya ornamen dalam sistem ini — kemewahan lewat kesederhanaan, diulang sampai menjadi tanda tangan."}], [{"en": "Emerald over pink", "id": "Zamrud di atas pink"}, {"en": "Deep emerald instead of the category's usual pink — the salon reads botanical and calm from the first panel.", "id": "Zamrud dalam menggantikan pink yang biasa di kategorinya — salonnya terbaca botanical dan tenang sejak panel pertama."}]],
+"try": [{"en": "Open VANARA in the phone", "id": "Buka VANARA di HP"}, {"en": "Follow the gold line through its panels", "id": "Ikuti garis emasnya melalui panel-panelnya"}, {"en": "Read the treatment list", "id": "Baca daftar perawatannya"}, {"en": "Compare its second edition", "id": "Bandingkan edisi keduanya"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "VANARA — a fictional salon, demo version. No real salon.", "id": "VANARA — salon fiktif, versi demo. Tidak ada salon sungguhan."}},
+"arus": {"g": "jasa", "name": "ARUS", "img": "assets/arus-1.jpg", "color": null, "strip": ["assets/arus-1.jpg", "assets/arus-2.jpg", "assets/arus-3.jpg"], "handle": "@arus.logistik", "city": "Jakarta", "bg": "#0B1E33",
+"sub": {"en": "Logistics & delivery", "id": "Logistik & ekspedisi"},
+"d": {"en": "A technical grotesque on a coordinate grid, with one route line travelling through every panel — a brand that looks like it tracks things.", "id": "Grotesque teknis di grid koordinat, dengan satu garis rute yang berjalan melalui setiap panel — brand yang terlihat seperti melacak sesuatu."},
+"lede": {"en": "ARUS moves parcels between cities, and its identity is drawn like its own tracking page: Space Grotesk, grid coordinates, and a route line that enters one panel and leaves the next. Blue, white, and no decoration that doesn't point somewhere.", "id": "ARUS memindahkan paket antarkota, dan identitasnya digambar seperti halaman pelacakannya sendiri: Space Grotesk, koordinat grid, dan garis rute yang masuk dari satu panel dan keluar di panel berikutnya. Biru, putih, dan tanpa dekorasi yang tidak menunjuk ke suatu tempat."},
+"specs": [[{"en": "The route line", "id": "Garis rute"}, {"en": "One line travels through the whole set — origin, transit, destination — turning nineteen panels into a single journey.", "id": "Satu garis berjalan melalui seluruh set — asal, transit, tujuan — mengubah sembilan belas panel menjadi satu perjalanan."}], [{"en": "Grid and coordinates", "id": "Grid dan koordinat"}, {"en": "Panels sit on a visible coordinate grid, so prices and promises read like data, not advertising.", "id": "Panel-panelnya duduk di grid koordinat yang terlihat, jadi harga dan janji terbaca seperti data, bukan iklan."}], [{"en": "Priced like a table", "id": "Berharga seperti tabel"}, {"en": "Regular, same-day and cargo rates are set in ruled rows — the menu panel works like a rate card a sender can trust.", "id": "Tarif reguler, same-day, dan kargo disusun dalam baris bergaris — panel menunya bekerja seperti kartu tarif yang bisa dipercaya pengirim."}]],
+"try": [{"en": "Open ARUS in the phone", "id": "Buka ARUS di HP"}, {"en": "Follow the route line across the panels", "id": "Ikuti garis rutenya melintasi panel"}, {"en": "Read the rate panel like a table", "id": "Baca panel tarifnya seperti tabel"}, {"en": "Compare its second edition", "id": "Bandingkan edisi keduanya"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "ARUS — a fictional logistics brand, demo version. No real company.", "id": "ARUS — brand logistik fiktif, versi demo. Tidak ada perusahaan sungguhan."}},
+"artha": {"g": "jasa", "name": "ARTHA", "img": "assets/artha-1.jpg", "color": null, "strip": ["assets/artha-1.jpg", "assets/artha-2.jpg", "assets/artha-3.jpg"], "handle": "@artha.finance", "city": "Jakarta", "bg": "#0E1A2E",
+"sub": {"en": "Finance & consulting", "id": "Keuangan & konsultasi"},
+"d": {"en": "Libre Caslon columns in navy and gold, prices set inside fine frames — a private-bank manner for a small consultancy.", "id": "Kolom Libre Caslon dalam navy dan emas, harga disusun dalam bingkai halus — sopan santun bank swasta untuk konsultan kecil."},
+"lede": {"en": "ARTHA advises small businesses on money, and its identity borrows the manners of a private bank: classical serif columns, hairline rules, and figures framed like certificates. Nothing in it hurries, and nothing in it shouts.", "id": "ARTHA menasihati bisnis kecil soal keuangan, dan identitasnya meminjam sopan santun bank swasta: kolom serif klasik, garis rambut, dan angka yang dibingkai seperti sertifikat. Tidak ada yang terburu-buru di dalamnya, dan tidak ada yang berteriak."},
+"specs": [[{"en": "Serif, in columns", "id": "Serif, dalam kolom"}, {"en": "Libre Caslon set in ruled columns gives advice the typographic manners of a bank statement — calm, dated, signed.", "id": "Libre Caslon yang disusun dalam kolom bergaris memberi nasihat sopan santun tipografis sebuah rekening koran — tenang, bertanggal, bertanda tangan."}], [{"en": "Navy and gold", "id": "Navy dan emas"}, {"en": "Two colours only: a deep navy for the institution, gold for the numbers that matter — the palette is the promise.", "id": "Dua warna saja: navy dalam untuk institusinya, emas untuk angka yang penting — paletnya adalah janjinya."}], [{"en": "Framed figures", "id": "Angka berbingkai"}, {"en": "Fees and figures sit inside fine double frames, like certificates on an office wall — pricing presented as a document, not a banner.", "id": "Biaya dan angka duduk dalam bingkai ganda halus, seperti sertifikat di dinding kantor — harga disajikan sebagai dokumen, bukan spanduk."}]],
+"try": [{"en": "Open ARTHA in the phone", "id": "Buka ARTHA di HP"}, {"en": "Read a framed figure panel closely", "id": "Baca panel angka berbingkainya dari dekat"}, {"en": "Notice what the identity refuses to do", "id": "Perhatikan apa yang ditolak identitas ini"}, {"en": "Compare its second edition", "id": "Bandingkan edisi keduanya"}],
+"hint": {"en": "Tap the brand · swipe its panels", "id": "Ketuk brand-nya · geser panelnya"},
+"cap": {"en": "ARTHA — a fictional finance consultancy, demo version. No real firm.", "id": "ARTHA — konsultan keuangan fiktif, versi demo. Tidak ada firma sungguhan."}}
+};
+var GROUPS={
+"kuliner": {"label": {"en": "Culinary", "id": "Kuliner"}, "note": {"en": "CULINARY LOGOS — PICK ONE", "id": "LOGO KULINER — PILIH SATU"}, "items": ["gigit", "rawitara", "lunara", "arunika", "kuwah"]},
+"beauty": {"label": {"en": "Beauty", "id": "Beauty"}, "note": {"en": "BEAUTY LOGOS — PICK ONE", "id": "LOGO BEAUTY — PILIH SATU"}, "items": ["sekar", "vanara"]},
+"jasa": {"label": {"en": "Services & Tech", "id": "Jasa & Tech"}, "note": {"en": "SERVICES & TECH LOGOS — PICK ONE", "id": "LOGO JASA & TECH — PILIH SATU"}, "items": ["arus", "artha"]}
+};
+var UI={"play": {"en": "Play in this phone", "id": "Putar di HP ini"}, "full": {"en": "Open the logo demo full-screen ↗", "id": "Buka demo logo layar penuh ↗"}, "fullBtn": {"en": "Open the full logo demo ↗", "id": "Buka demo logo lengkap ↗"}, "backGroups": {"en": "‹ Groups", "id": "‹ Grup"}, "backSamples": {"en": "‹ All logos", "id": "‹ Semua logo"}, "headNote": {"en": "LOGOS", "id": "LOGO"}, "tryT": {"en": "In the frame, try", "id": "Di dalam bingkai, coba"}, "panels": {"en": "19 panels · feed, story & special edition", "id": "19 panel · feed, story & edisi khusus"}, "empty": {"en": "This group is being prepared — finished logos land here first.", "id": "Grup ini sedang disiapkan — logo yang selesai masuk sini lebih dulu."}};
+var state={group:'kuliner',sel:'gigit',view:'list',played:false};
+function L(){return document.documentElement.lang==='id'?'id':'en'}
+function t(x){return x[L()]}
+var tabsEl=document.getElementById('hubTabs'), bodyEl=document.getElementById('hubBody');
+function renderPanel(){
+  var it=ITEMS[state.sel], l=L();
+  document.getElementById('hubLede').textContent=t(it.lede);
+  document.getElementById('hubSpecs').innerHTML=it.specs.map(function(sp,i){
+    return '<li><span class="n">0'+(i+1)+'</span><div><h3></h3><p></p></div></li>'}).join('');
+  var lis=document.querySelectorAll('#hubSpecs li');
+  it.specs.forEach(function(sp,i){ lis[i].querySelector('h3').textContent=sp[0][l]; lis[i].querySelector('p').textContent=sp[1][l]; });
+  document.getElementById('hubHint').textContent=t(it.hint);
+  document.getElementById('hubTryT').textContent=t(UI.tryT);
+  document.getElementById('hubTry').innerHTML=it.try.map(function(x){return '<li></li>'}).join('');
+  var tl=document.querySelectorAll('#hubTry li');
+  it.try.forEach(function(x,i){ tl[i].textContent=x[l]; });
+  document.getElementById('hubCap').textContent=t(it.cap);
+  var f=document.getElementById('hubFull'); f.href=DEMO_URL; f.textContent=t(UI.full);
+  document.getElementById('hubHeadNote').textContent=t(UI.headNote);
+}
+function renderTabs(){
+  tabsEl.innerHTML='';
+  Object.keys(GROUPS).forEach(function(k){
+    var b=document.createElement('button'); b.type='button'; b.className='hub-tab'+(state.group===k?' on':'');
+    b.textContent=t(GROUPS[k].label); b.setAttribute('role','tab');
+    b.addEventListener('click',function(){ state.group=k; state.view='list'; render(); });
+    tabsEl.appendChild(b);
+  });
+}
+function renderBody(){
+  var l=L();
+  if(state.view==='list'){
+    var g=GROUPS[state.group];
+    var h='<p class="hub-note">'+t(g.note)+'</p>';
+    bodyEl.innerHTML=h;
+    if(!g.items.length){ var e=document.createElement('p'); e.className='hub-desc'; e.textContent=t(UI.empty); bodyEl.appendChild(e); }
+    g.items.forEach(function(id){
+      var it=ITEMS[id];
+      var r=document.createElement('button'); r.type='button'; r.className='hub-row'+(state.sel===id?' sel':'');
+      if(it.img){ r.innerHTML='<img alt="" loading="lazy"><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; r.querySelector('img').src=it.img; }
+      else { r.innerHTML='<span class="hub-blk"></span><span><h4></h4><p></p></span><span class="arr">&#8250;</span>'; var blk=r.querySelector('.hub-blk'); blk.style.background=it.color; blk.textContent=it.name; }
+      r.querySelector('h4').textContent=it.name;
+      r.querySelector('p').textContent=it.sub[l];
+      r.addEventListener('click',function(){ state.sel=id; state.view='detail'; render(); });
+      bodyEl.appendChild(r);
+    });
+    var foot=document.createElement('p'); foot.className='hub-foot';
+    var _n=0,_g=0; Object.keys(GROUPS).forEach(function(k){ _n+=GROUPS[k].items.length; if(GROUPS[k].items.length)_g++; });
+    foot.textContent=(l==='id'?_n+' logo dalam '+_g+' grup — semuanya terbuka langsung di HP ini.':_n+' logos in '+_g+' groups — every one opens right inside this phone.');
+    bodyEl.appendChild(foot);
+  } else {
+    var it=ITEMS[state.sel];
+    bodyEl.innerHTML='';
+    var back=document.createElement('button'); back.type='button'; back.className='hub-back'; back.textContent=t(UI.backGroups);
+    back.addEventListener('click',function(){ state.view='list'; render(); });
+    bodyEl.appendChild(back);
+    var hero=document.createElement('div'); hero.className='hub-hero';
+    if(it.strip){ hero.innerHTML='<img alt=""><b></b>'; hero.querySelector('img').src=it.strip[0]; }
+    else { hero.style.background=it.color; hero.innerHTML='<b></b>'; }
+    hero.querySelector('b').textContent=it.name;
+    bodyEl.appendChild(hero);
+    var sub=document.createElement('p'); sub.className='hub-dsub'; sub.textContent=it.sub[l]; bodyEl.appendChild(sub);
+    var desc=document.createElement('p'); desc.className='hub-desc'; desc.textContent=it.d[l]; bodyEl.appendChild(desc);
+    var meta=document.createElement('p'); meta.className='hub-meta'; meta.textContent=it.handle+' — '+it.city+' · '+t(UI.panels); bodyEl.appendChild(meta);
+    if(it.strip){
+      var strip=document.createElement('div'); strip.className='hub-strip';
+      strip.innerHTML='<img alt="" loading="lazy"><img alt="" loading="lazy"><img alt="" loading="lazy">';
+      var simgs=strip.querySelectorAll('img');
+      it.strip.forEach(function(src,i){ simgs[i].src=src; });
+      bodyEl.appendChild(strip);
+    }
+    var play=document.createElement('button'); play.type='button'; play.className='hub-btn hub-play'; play.textContent=t(UI.play);
+    play.addEventListener('click',function(){ openPlay(); });
+    bodyEl.appendChild(play);
+    var full=document.createElement('a'); full.className='hub-btn hub-fullb'; full.href=DEMO_URL; full.target='_blank'; full.rel='noopener'; full.textContent=t(UI.fullBtn);
+    bodyEl.appendChild(full);
+  }
+}
+function openPlay(){
+  var it=ITEMS[state.sel];
+  document.getElementById('hubMain').style.display='none';
+  var p=document.getElementById('hubPlay'); p.classList.add('on');
+  document.getElementById('hubPlayName').textContent=it.name;
+  document.getElementById('hubPlayBack').textContent=t(UI.backSamples);
+  var pf=document.getElementById('hubPlayFull'); pf.href=DEMO_URL;
+  var fr=document.getElementById('hubFrame');
+  fr.title=it.name+' — logo demo by CarlLab'; fr.style.background=it.bg;
+  if(!state.played){ fr.src=DEMO_URL; state.played=true; }
+}
+function closePlay(){
+  document.getElementById('hubPlay').classList.remove('on');
+  document.getElementById('hubMain').style.display='';
+}
+document.getElementById('hubPlayBack').addEventListener('click',closePlay);
+function render(){ renderPanel(); renderTabs(); renderBody(); }
+new MutationObserver(function(){ render(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+render();
+})();
 </script>
 </body>
 </html>
