@@ -1098,7 +1098,7 @@ function openPlay(){
   var pf=document.getElementById('hubPlayFull'); pf.href=DEMO_URL;
   var fr=document.getElementById('hubFrame');
   fr.title=it.name+' — logo demo by CarlLab'; fr.style.background=it.bg;
-  if(!state.played){ fr.src=DEMO_URL+'?embed=1'; state.played=true; }
+  var _u=DEMO_URL+'?embed=1&brand='+state.sel; if(state.playedFor!==state.sel){ fr.src=_u; state.playedFor=state.sel; }
 }
 function closePlay(){
   document.getElementById('hubPlay').classList.remove('on');
