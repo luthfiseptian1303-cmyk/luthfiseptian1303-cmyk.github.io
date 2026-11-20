@@ -1017,7 +1017,8 @@ function renderStyToday(){
 $('#confirmBtn').addEventListener('click',function(){
   var tt=totals(); if(!tt.ids.length||slot===null)return;
   var d=dateAt(dateOff);
-  var code='KRN-'+(djb2(tt.ids.join(',')+isoOf(d)+slot+sty+$('#nameInput').value)>>>0).toString(36).toUpperCase().padStart(6,'0').slice(-6);
+  bkSalt++;
+  var code='KRN-'+(djb2(tt.ids.join(',')+isoOf(d)+slot+sty+$('#nameInput').value+'|'+bkSalt+'|'+((Math.random()*1e9)|0))>>>0).toString(36).toUpperCase().padStart(6,'0').slice(-6);
   $('#cfCode').textContent=code;
   lastBk={y:d.getFullYear(),mo:d.getMonth(),da:d.getDate(),hour:slot,dur:tt.dur,code:code,total:tt.total,ids:tt.ids.slice(),sty:sty,nm:$('#nameInput').value.trim()};
   renderConfirm();
@@ -1039,7 +1040,7 @@ $('#treatList').addEventListener('click',function(e){
   $$('#treatList .tdbtn').forEach(function(x){x.setAttribute('aria-expanded',x.closest('.trow').classList.contains('open')?'true':'false')});
 });
 /* ---------- gift card ---------- */
-var gAmt=500000, gSalt=0, giftCode='';
+var gAmt=500000, gSalt=0, giftCode='', bkSalt=0;
 function renderPrices(){ $$('.tprice').forEach(function(el){ el.textContent=money(+el.getAttribute('data-rp')); }); $$('.gchip').forEach(function(el){ el.textContent=money(+el.getAttribute('data-amt')); }); }
 function renderGift(){ $('#gcAmt').textContent=money(gAmt); }
 $$('#gChips .gchip').forEach(function(c){ c.addEventListener('click',function(){
