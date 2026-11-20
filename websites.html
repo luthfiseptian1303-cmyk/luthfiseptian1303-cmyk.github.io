@@ -666,12 +666,6 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .rc-hub-bar b{font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.06em;color:#E9DFC8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rc-hub-bar a{margin-left:auto;color:#D9DDE3;text-decoration:none;font-size:15px;flex:none}
 #rcFrame{flex:1;width:100%;border:0;display:block;background:#0E1512}
-#rcShow{display:none;flex-direction:column;height:100%}
-#rcShow.on{display:flex}
-.rc-show-body{flex:1;overflow-y:auto;padding:14px 12px 18px;display:flex;flex-direction:column;gap:14px}
-.rc-show-card{margin:0;border-radius:16px;overflow:hidden;background:#fff;flex:none}
-.rc-show-card img{width:100%;display:block}
-.rc-show-card figcaption{padding:9px 13px 11px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E4A3A;background:#FBF6EC}
 </style>
 </head>
 <body>
@@ -803,10 +797,6 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
             <div id="rcPlay">
               <div class="rc-hub-bar"><button class="rc-hub-back" id="rcPlayBack" type="button"></button><b id="rcPlayName"></b><a id="rcPlayFull" target="_blank" rel="noopener" aria-label="Open full-screen">&#8599;</a></div>
               <iframe id="rcFrame" title="Pagi Sore Yogyakarta — real client grand-opening invitation" loading="lazy"></iframe>
-            </div>
-            <div id="rcShow">
-              <div class="rc-hub-bar"><button class="rc-hub-back" id="rcShowBack" type="button"></button><b id="rcShowName"></b></div>
-              <div class="rc-show-body" id="rcShowBody"></div>
             </div>
           </div>
         </div>
@@ -1138,19 +1128,9 @@ var RC_ITEMS={"pagisore":{"g":"inv","name":"PAGI SORE","img":"hub-thumbs/pagi-so
 "lede":{"en":"This one is not a demo. Pagi Sore \u2014 a Minangkabau restaurant house \u2014 opens its Yogyakarta branch on Monday, 7 December 2026, and this is the invitation its guests actually receive: one self-contained file, opened from a chat message, with the guest's name on the cover.","id":"Yang ini bukan demo. Pagi Sore \u2014 rumah makan Minang \u2014 membuka cabang Yogyakarta pada Senin, 7 Desember 2026, dan inilah undangan yang benar-benar diterima para tamunya: satu file utuh, dibuka dari pesan chat, dengan nama tamu di sampulnya."},
 "specs":[[{"en":"The opening ritual","id":"Ritual pembuka"},{"en":"Ribbon-cut opening \u2014 a 48-frame film, then the doors","id":"Pembukaan potong pita \u2014 film 48 frame, lalu pintunya terbuka"}],[{"en":"Made personal","id":"Dibuat personal"},{"en":"Guest-name links, a wishes wall, and a .ICS calendar file","id":"Tautan nama tamu, dinding ucapan, dan file kalender .ICS"}],[{"en":"Its own music","id":"Musiknya sendiri"},{"en":"Original Minangkabau music composed for this invitation \u2014 no library track","id":"Musik Minang orisinal yang digubah khusus untuk undangan ini \u2014 bukan lagu perpustakaan"}],[{"en":"One file","id":"Satu file"},{"en":"7.4 MB, self-contained \u2014 no server, nothing to install","id":"7,4 MB, utuh \u2014 tanpa server, tanpa perlu instal apa pun"}]],
 "try":[{"en":"Tap \u201cGunting Pita\u201d \u2014 cut the ribbon and walk in","id":"Ketuk \u201cGunting Pita\u201d \u2014 potong pitanya dan masuk"},{"en":"Scroll \u2014 the rundown, the location, and the wishes wall are all inside","id":"Gulir \u2014 rundown, lokasi, dan dinding ucapan semuanya ada di dalam"},{"en":"Send a wish \u2014 it stays on the wall on this phone","id":"Kirim ucapan \u2014 ucapanmu menetap di dinding pada HP ini"}],
-"hint":{"en":"Scroll inside the frame \u00b7 tap \u201cGunting Pita\u201d","id":"Gulir di dalam bingkai \u00b7 ketuk \u201cGunting Pita\u201d"}},
-"momirel":{"g":"brand","name":"MOMIREL","type":"showcase","img":"hub-thumbs/momirel.jpg","wide":"hub-thumbs/momirel-wide.jpg","bg":"#FBF6EC","ink":"#7A1F1F",
-"showcase":["hub-thumbs/momirel-lockup.jpg","hub-thumbs/momirel-segel.jpg","hub-thumbs/momirel-tas.jpg"],
-"showcaseCap":[{"en":"The final lockup \u2014 burgundy","id":"Lockup final \u2014 burgundy"},{"en":"The seal \u2014 for stickers and stamps","id":"Segel \u2014 untuk stiker dan stempel"},{"en":"The print cut, on a spunbond bag","id":"Potongan cetak, di tas spunbond"}],
-"sub":{"en":"Logo & brand identity \u2014 homemade dessert, BSD","id":"Identitas logo & brand \u2014 dessert rumahan, BSD"},
-"d":{"en":"One hand-drawn mark \u2014 a mother and child at the mixing bowl \u2014 carried through the whole set: the lockup, the seal, and print-ready cuts for packaging, stickers, and bags.","id":"Satu lambang gambar tangan \u2014 ibu dan anak di mangkuk adonan \u2014 yang dibawa ke seluruh set: lockup, segel, dan potongan siap cetak untuk kemasan, stiker, dan tas."},
-"meta":[[{"en":"Work","id":"Karya"},{"en":"Logo & brand","id":"Logo & brand"}],[{"en":"Client","id":"Klien"},{"en":"MomiRel \u2014 real client","id":"MomiRel \u2014 klien asli"}],[{"en":"Place","id":"Tempat"},{"en":"BSD, Tangerang Selatan","id":"BSD, Tangerang Selatan"}],[{"en":"Date","id":"Tanggal"},{"en":"Nov 2026","id":"Nov 2026"}]],
-"lede":{"en":"CarlLab's first client. MomiRel is a homemade dessert kitchen in BSD \u2014 the brief was a mark a mother would trust on her own packaging.","id":"Klien pertama CarlLab. MomiRel adalah dapur dessert rumahan di BSD \u2014 brief-nya adalah sebuah lambang yang dipercaya seorang ibu untuk kemasannya sendiri."},
-"specs":[[{"en":"The mark","id":"Lambangnya"},{"en":"A mother and child making dessert together at one bowl \u2014 one warm hand-drawn line","id":"Seorang ibu dan anak membuat dessert bersama di satu mangkuk \u2014 satu garis hangat gambar tangan"}],[{"en":"The set","id":"Set-nya"},{"en":"Final lockup in burgundy and maroon, with transparent versions for packaging and stickers","id":"Lockup final dalam burgundy dan maroon, dengan versi transparan untuk kemasan dan stiker"}],[{"en":"Print-ready","id":"Siap cetak"},{"en":"A thick-stroke print cut made for spunbond bags, plus stamp and sticker versions","id":"Potongan cetak garis tebal untuk tas spunbond, plus versi stempel dan stiker"}],[{"en":"Approved","id":"Disetujui"},{"en":"Approved by the client on 14 November 2026 \u2014 the first CarlLab commission to ship","id":"Disetujui klien pada 14 November 2026 \u2014 komisi CarlLab pertama yang terkirim"}]],
-"try":[{"en":"Open the showcase \u2014 the lockup fills the phone","id":"Buka pamerannya \u2014 lockup-nya memenuhi HP"},{"en":"Scroll the set \u2014 seal, then the bag it prints on","id":"Gulir set-nya \u2014 segel, lalu tas tempat ia dicetak"}],
-"hint":{"en":"Scroll inside the frame \u00b7 tap \u201cView in this phone\u201d","id":"Gulir di dalam bingkai \u00b7 ketuk \u201cLihat di HP ini\u201d"}}};
-var RC_GROUPS={"inv":{"label":{"en":"Invitations","id":"Undangan"},"note":{"en":"REAL CLIENT \u2014 INVITATIONS","id":"KLIEN ASLI \u2014 UNDANGAN"},"items":["pagisore"]},"web":{"label":{"en":"Websites","id":"Website"},"note":{"en":"REAL CLIENT \u2014 WEBSITES","id":"KLIEN ASLI \u2014 WEBSITE"},"items":[]},"brand":{"label":{"en":"Brand & logo","id":"Logo & brand"},"note":{"en":"REAL CLIENT \u2014 BRAND & LOGO","id":"KLIEN ASLI \u2014 LOGO & BRAND"},"items":["momirel"]},"port":{"label":{"en":"Portfolio","id":"Portofolio"},"note":{"en":"REAL CLIENT \u2014 PORTFOLIO","id":"KLIEN ASLI \u2014 PORTOFOLIO"},"items":[]}};
-var RC_UI={"play":{"en":"Play in this phone","id":"Putar di HP ini"},"view":{"en":"View in this phone","id":"Lihat di HP ini"},"full":{"en":"Open it full-screen \u2197","id":"Buka layar penuh \u2197"},"backGroups":{"en":"\u2039 Groups","id":"\u2039 Grup"},"backWork":{"en":"\u2039 All work","id":"\u2039 Semua karya"},"headNote":{"en":"REAL CLIENT","id":"KLIEN ASLI"},"empty":{"en":"No client work in this group yet \u2014 this group opens with the first commission.","id":"Belum ada kerjaan klien di grup ini \u2014 grup ini terbuka dengan komisi pertama."},"tryT":{"en":"In the frame, try","id":"Di dalam bingkai, coba"},"foot":{"en":"2 real client pieces in 2 groups \u2014 shown right inside this phone.","id":"2 karya klien asli dalam 2 grup \u2014 ditampilkan langsung di dalam HP ini."},"panelEmpty":{"brand":{"en":"This group is still empty. The demo phone above shows what a brand sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh brand \u2014 komisi asli pertama membuka grup ini di sini."},"web":{"en":"This group is still empty. The demo phone above shows what a website sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh website \u2014 komisi asli pertama membuka grup ini di sini."},"port":{"en":"This group is still empty. The demo phone above shows what a portfolio sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh portofolio \u2014 komisi asli pertama membuka grup ini di sini."}}};
+"hint":{"en":"Scroll inside the frame \u00b7 tap \u201cGunting Pita\u201d","id":"Gulir di dalam bingkai \u00b7 ketuk \u201cGunting Pita\u201d"}}};
+var RC_GROUPS={"inv":{"label":{"en":"Invitations","id":"Undangan"},"note":{"en":"REAL CLIENT \u2014 INVITATIONS","id":"KLIEN ASLI \u2014 UNDANGAN"},"items":["pagisore"]},"web":{"label":{"en":"Websites","id":"Website"},"note":{"en":"REAL CLIENT \u2014 WEBSITES","id":"KLIEN ASLI \u2014 WEBSITE"},"items":[]},"port":{"label":{"en":"Portfolio","id":"Portofolio"},"note":{"en":"REAL CLIENT \u2014 PORTFOLIO","id":"KLIEN ASLI \u2014 PORTOFOLIO"},"items":[]}};
+var RC_UI={"play":{"en":"Play in this phone","id":"Putar di HP ini"},"full":{"en":"Open it full-screen \u2197","id":"Buka layar penuh \u2197"},"backGroups":{"en":"\u2039 Groups","id":"\u2039 Grup"},"backWork":{"en":"\u2039 All work","id":"\u2039 Semua karya"},"headNote":{"en":"REAL CLIENT","id":"KLIEN ASLI"},"empty":{"en":"No client work in this group yet \u2014 this group opens with the first commission.","id":"Belum ada kerjaan klien di grup ini \u2014 grup ini terbuka dengan komisi pertama."},"tryT":{"en":"In the frame, try","id":"Di dalam bingkai, coba"},"foot":{"en":"1 real client piece \u2014 it runs right inside this phone.","id":"1 karya klien asli \u2014 berjalan langsung di dalam HP ini."},"panelEmpty":{"web":{"en":"This group is still empty. The demo phone above shows what a website sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh website \u2014 komisi asli pertama membuka grup ini di sini."},"port":{"en":"This group is still empty. The demo phone above shows what a portfolio sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh portofolio \u2014 komisi asli pertama membuka grup ini di sini."}}};
 var rcState={group:'inv',sel:'pagisore',view:'list',played:null};
 function rL(){return document.documentElement.lang==='id'?'id':'en'}
 function rT(x){return x[rL()]}
@@ -1184,7 +1164,7 @@ function rcRenderTabs(){
   Object.keys(RC_GROUPS).forEach(function(k){
     var b=document.createElement('button'); b.type='button'; b.className='rc-hub-tab'+(rcState.group===k?' on':'');
     b.textContent=rT(RC_GROUPS[k].label); b.setAttribute('role','tab');
-    b.addEventListener('click',function(){ rcState.group=k; rcState.view='list'; var gi=RC_GROUPS[k].items; if(gi.length&&gi.indexOf(rcState.sel)<0){ rcState.sel=gi[0]; } rcRender(); });
+    b.addEventListener('click',function(){ rcState.group=k; rcState.view='list'; rcRender(); });
     rcTabsEl.appendChild(b);
   });
 }
@@ -1216,7 +1196,6 @@ function rcRenderBody(){
     hero.innerHTML='<img alt=""><b></b>';
     hero.querySelector('img').src=it.wide;
     hero.querySelector('b').textContent=it.name;
-    if(it.ink){ var hb=hero.querySelector('b'); hb.style.color=it.ink; hb.style.textShadow='none'; }
     rcBodyEl.appendChild(hero);
     var sub=document.createElement('p'); sub.className='rc-hub-dsub'; sub.textContent=it.sub[l]; rcBodyEl.appendChild(sub);
     var meta=document.createElement('ul'); meta.className='rc-meta';
@@ -1225,10 +1204,11 @@ function rcRenderBody(){
     it.meta.forEach(function(m,i){ ml[i].children[0].textContent=m[0][l]; ml[i].children[1].textContent=m[1][l]; });
     rcBodyEl.appendChild(meta);
     var desc=document.createElement('p'); desc.className='rc-hub-desc'; desc.textContent=it.d[l]; rcBodyEl.appendChild(desc);
-    var play=document.createElement('button'); play.type='button'; play.className='rc-hub-btn rc-hub-play'; play.textContent=it.type==='showcase'?rT(RC_UI.view):rT(RC_UI.play);
-    play.addEventListener('click',function(){ if(it.type==='showcase'){ rcOpenShow(); } else { rcOpenPlay(); } });
+    var play=document.createElement('button'); play.type='button'; play.className='rc-hub-btn rc-hub-play'; play.textContent=rT(RC_UI.play);
+    play.addEventListener('click',function(){ rcOpenPlay(); });
     rcBodyEl.appendChild(play);
-    if(it.url){ var full=document.createElement('a'); full.className='rc-hub-btn rc-hub-fullb'; full.href=it.url; full.target='_blank'; full.rel='noopener'; full.textContent=rT(RC_UI.full); rcBodyEl.appendChild(full); }
+    var full=document.createElement('a'); full.className='rc-hub-btn rc-hub-fullb'; full.href=it.url; full.target='_blank'; full.rel='noopener'; full.textContent=rT(RC_UI.full);
+    rcBodyEl.appendChild(full);
   }
 }
 function rcOpenPlay(){
@@ -1249,28 +1229,7 @@ function rcClosePlay(){
   fr.removeAttribute('src'); rcState.played=null;
 }
 document.getElementById('rcPlayBack').addEventListener('click',rcClosePlay);
-function rcOpenShow(){
-  var it=RC_ITEMS[rcState.sel];
-  document.getElementById('rcMain').style.display='none';
-  document.getElementById('rcPlay').classList.remove('on');
-  var p=document.getElementById('rcShow'); p.classList.add('on');
-  document.getElementById('rcShowName').textContent=it.name;
-  document.getElementById('rcShowBack').textContent=rT(RC_UI.backWork);
-  var body=document.getElementById('rcShowBody'); body.innerHTML='';
-  (it.showcase||[]).forEach(function(src,i){
-    var f=document.createElement('figure'); f.className='rc-show-card';
-    var im=document.createElement('img'); im.src=src; im.alt=''; im.loading='lazy'; f.appendChild(im);
-    if(it.showcaseCap&&it.showcaseCap[i]){ var c=document.createElement('figcaption'); c.textContent=it.showcaseCap[i][rL()]; f.appendChild(c); }
-    body.appendChild(f);
-  });
-  body.scrollTop=0;
-}
-function rcCloseShow(){
-  document.getElementById('rcShow').classList.remove('on');
-  document.getElementById('rcMain').style.display='';
-}
-document.getElementById('rcShowBack').addEventListener('click',rcCloseShow);
-function rcRender(){ rcRenderPanel(); rcRenderTabs(); rcRenderBody(); if(document.getElementById('rcShow').classList.contains('on')){ rcOpenShow(); } }
+function rcRender(){ rcRenderPanel(); rcRenderTabs(); rcRenderBody(); }
 new MutationObserver(function(){ rcRender(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 rcRender();
 })();

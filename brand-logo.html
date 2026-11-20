@@ -713,6 +713,74 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 @media (prefers-reduced-motion: reduce){#demo *{transition:none !important;animation:none !important}}
 </style>
 
+<style id="blrc-style">
+/* ===== REAL CLIENT (MomiRel) — same family as #demo, scoped to #real-client ===== */
+#real-client .layout{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;max-width:1120px;margin:0 auto;padding:40px 24px 56px;display:flex;gap:56px;align-items:flex-start;justify-content:center}
+#real-client .panel{flex:1 1 420px;max-width:480px;padding-top:18px}
+#real-client .panel .kick{font-size:11px;letter-spacing:.22em;color:var(--gold);margin:0 0 14px;font-weight:600}
+#real-client .panel h1{font-family:'Archivo',sans-serif;font-size:clamp(34px,4.6vw,52px);line-height:1.04;margin:0 0 10px;letter-spacing:.01em;color:#FBF5E6}
+#real-client .panel .style{font-size:13px;letter-spacing:.14em;color:var(--gold);margin:0 0 16px;text-transform:uppercase;font-weight:600}
+#real-client .panel .lede{font-size:16px;line-height:1.65;color:#C9CDD4;margin:0 0 28px}
+#real-client .specs{border-top:1px solid var(--line);margin:0 0 22px;padding:0}
+#real-client .specs .row{display:flex;justify-content:space-between;gap:20px;padding:13px 2px;border-bottom:1px solid var(--line)}
+#real-client .specs dt{font-size:12px;letter-spacing:.12em;color:var(--muted2);text-transform:uppercase;padding-top:2px;flex:none}
+#real-client .specs dd{margin:0;font-size:14.5px;color:var(--cream2);text-align:right;font-weight:500}
+#real-client .blrc-hint{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin:0 0 18px;line-height:1.7}
+#real-client .trybox{border:1px solid var(--line2);border-radius:16px;background:var(--panel);padding:20px}
+#real-client .trybox h2{font-family:'Archivo',sans-serif;font-size:17px;margin:0 0 8px;color:#FBF5E6}
+#real-client .trybox ul{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0;padding-left:18px}
+#real-client .trybox li{margin:0 0 6px}
+#real-client .demo-phone{width:min(350px,88vw);flex:none;margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
+#real-client .screen{border-radius:32px;overflow:hidden;background:#0A0A0C;height:660px;display:flex;flex-direction:column;position:relative}
+#real-client .notch{width:110px;height:22px;background:#101012;border-radius:0 0 14px 14px;margin:0 auto;flex:none;position:relative;z-index:2}
+#real-client .hub{display:flex;flex-direction:column;flex:1;min-height:0;background:#0A0A0C;color:#F3EAD8;font-family:'Space Grotesk',sans-serif}
+#real-client .hub-head{display:flex;justify-content:space-between;align-items:baseline;padding:6px 16px 11px;border-bottom:1px solid #23262B;flex:none}
+#real-client .hub-head b{font-family:'Archivo',sans-serif;font-size:14px;letter-spacing:.14em;color:#E9DFC8}
+#real-client .hub-head span{font-size:10px;letter-spacing:.2em;color:#8F96A0}
+#real-client .hub-body{flex:1;overflow-y:auto;padding:10px 12px 16px;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:#33373D transparent}
+#real-client .hub-note{font-size:10.5px;letter-spacing:.14em;color:#8F96A0;margin:2px 2px 10px;text-transform:uppercase}
+#real-client .hub-foot{margin-top:auto;padding-top:14px;font-size:11px;line-height:1.55;color:#8F96A0;text-align:center}
+#real-client .hub-row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px;margin:0 0 8px;border:1px solid #26292F;border-radius:16px;background:#121317;color:#F3EAD8;cursor:pointer;min-height:64px;font-family:inherit}
+#real-client .hub-row.sel{border-color:#C9A24B}
+#real-client .hub-thumb{width:46px;height:58px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;background:#FBF6EC;overflow:hidden}
+#real-client .hub-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+#real-client .hub-row h4{margin:0 0 3px;font-family:'Archivo',sans-serif;font-size:14.5px;letter-spacing:.02em}
+#real-client .hub-row p{margin:0;font-size:11.5px;color:#A7ADB6;line-height:1.45}
+#real-client .hub-row .arr{margin-left:auto;color:#8A9199;font-size:17px;flex:none;padding-right:2px}
+#real-client #blrcMain{flex:1;display:flex;flex-direction:column;min-height:0}
+#real-client #blrcDetail{display:none;flex:1;flex-direction:column;min-height:0}
+#real-client #blrcDetail.on{display:flex}
+#real-client #blrcShow{display:none;flex:1;flex-direction:column;min-height:0}
+#real-client #blrcShow.on{display:flex}
+#real-client .hub-back{background:none;border:none;color:#D9DDE3;font-size:12.5px;cursor:pointer;padding:4px 0 10px;letter-spacing:.03em;text-align:left;min-height:36px;font-family:inherit}
+#real-client .hub-dsub{font-size:11px;letter-spacing:.1em;color:#C9A24B;margin:0 2px 6px;text-transform:uppercase;font-weight:600}
+#real-client .hub-desc{font-size:12.5px;line-height:1.6;color:#C9CDD4;margin:0 2px 14px}
+#real-client .hub-btn{display:block;width:100%;padding:12px;border-radius:12px;font-size:13.5px;cursor:pointer;margin-bottom:8px;text-align:center;text-decoration:none;min-height:48px;font-family:inherit;box-sizing:border-box}
+#real-client .hub-play{background:#EDEEF0;color:#111;font-weight:700;border:none}
+#real-client .blrc-hero{position:relative;border-radius:16px;overflow:hidden;margin:0 0 12px;background:#FBF6EC;flex:none}
+#real-client .blrc-hero img{width:100%;display:block}
+#real-client .blrc-hero b{position:absolute;left:14px;bottom:11px;font-family:'Archivo',sans-serif;font-size:21px;letter-spacing:.04em;color:#7A1F1F}
+#real-client .blrc-meta{list-style:none;margin:0 2px 14px;padding:0}
+#real-client .blrc-meta li{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid #23262B}
+#real-client .blrc-meta span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#8F96A0;padding-top:2px;flex:none}
+#real-client .blrc-meta b{font-size:12.5px;color:#F3EAD8;font-weight:500;text-align:right}
+#real-client .blrc-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #23262B;flex:none}
+#real-client .blrc-bar .hub-back{padding:0;min-height:30px}
+#real-client .blrc-bar b{font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.1em;color:#E9DFC8}
+#real-client .blrc-show-body{flex:1;overflow-y:auto;padding:14px 12px 18px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:#33373D transparent}
+#real-client .blrc-show-card{margin:0;border-radius:16px;overflow:hidden;background:#fff;flex:none}
+#real-client .blrc-show-card img{width:100%;display:block}
+#real-client .blrc-show-card figcaption{padding:9px 13px 11px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E4A3A;background:#FBF6EC}
+#real-client .blrc-cap{text-align:center;margin:34px auto 0;max-width:680px}
+#real-client .blrc-pill{display:inline-block;border:1px solid #C9A24B;color:#C9A24B;border-radius:999px;padding:5px 14px;font-size:11px;letter-spacing:.22em}
+#real-client .blrc-honest{margin-top:14px;font-size:14px;line-height:1.65;color:var(--muted)}
+@media (max-width:1020px){
+#real-client .layout{flex-direction:column;gap:32px;padding:28px 18px 44px;align-items:center}
+#real-client .panel{max-width:560px;width:100%;padding-top:0}
+#real-client .screen{height:620px}
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
@@ -972,6 +1040,64 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
   </div>
 </section>
 
+<section class="blk" id="real-client">
+  <div class="wrap">
+    <div class="sec-head" data-rv="y40">
+      <span class="eyebrow" data-t="blrcEye">Real client</span>
+      <h2 data-t="blrcH">Drawn for a real dessert kitchen</h2>
+    </div>
+    <div class="layout">
+      <!-- ============ PANEL KIRI ============ -->
+      <aside class="panel" aria-live="polite">
+        <p class="kick" id="blrcKick"></p>
+        <h1 id="blrcName"></h1>
+        <p class="style" id="blrcStyle"></p>
+        <p class="lede" id="blrcDesc"></p>
+        <p class="lede" id="blrcLede"></p>
+        <dl class="specs" id="blrcSpecs"></dl>
+        <p class="blrc-hint" id="blrcHint"></p>
+        <div class="trybox">
+          <h2 id="blrcTryT"></h2>
+          <ul id="blrcTry"></ul>
+        </div>
+      </aside>
+
+      <!-- ============ BINGKAI HP ============ -->
+      <div class="demo-phone" role="region" aria-label="Logo klien asli di dalam bingkai HP">
+        <div class="screen">
+          <div class="notch" aria-hidden="true"></div>
+          <div class="hub">
+            <div class="hub-head"><b>CARLLAB</b><span id="blrcHeadNote"></span></div>
+
+            <div id="blrcMain">
+              <div class="hub-body">
+                <p class="hub-note" id="blrcNote"></p>
+                <div id="blrcList"></div>
+                <p class="hub-foot" id="blrcFoot"></p>
+              </div>
+            </div>
+
+            <div id="blrcDetail">
+              <div class="hub-body">
+                <button class="hub-back" id="blrcBack" type="button"></button>
+                <div id="blrcDetailContent"></div>
+              </div>
+            </div>
+
+            <div id="blrcShow">
+              <div class="blrc-bar"><button class="hub-back" id="blrcShowBack" type="button"></button><b id="blrcShowName"></b></div>
+              <div class="blrc-show-body" id="blrcShowBody"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="blrc-cap"><span class="blrc-pill" data-t="blrcTag">REAL CLIENT</span></p>
+    <p class="blrc-cap blrc-honest" data-t="blrcCap">MomiRel — a real client logo, approved on 14 November 2026. Homemade dessert, BSD, Tangerang Selatan.</p>
+  </div>
+</section>
+
 <section class="blk">
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
@@ -1070,7 +1196,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Lima belas logo, satu HP",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",demoHub:"Lihat demo logo lengkap — 15 brand ↗"};
+var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Lima belas logo, satu HP",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",demoHub:"Lihat demo logo lengkap — 15 brand ↗",blrcEye:"Klien asli",blrcH:"Digambar untuk dapur dessert asli",blrcTag:"KLIEN ASLI",blrcCap:"MomiRel — logo klien asli, disetujui pada 14 November 2026. Dessert rumahan, BSD, Tangerang Selatan."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -3049,6 +3175,107 @@ window.addEventListener("hashchange",function(){
       }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
       try { var _b = new URLSearchParams(location.search).get("brand"); if (_b) { openDetail(_b); } } catch (e) {}
     </script>
+
+<script>
+/* ===== REAL CLIENT — MomiRel showcase phone (blrc-) ===== */
+(function(){
+  var BLRC={
+    name:'MOMIREL', panelName:'MomiRel',
+    img:'hub-thumbs/momirel.jpg', wide:'hub-thumbs/momirel-wide.jpg',
+    showcase:['hub-thumbs/momirel-lockup.jpg','hub-thumbs/momirel-segel.jpg','hub-thumbs/momirel-tas.jpg'],
+    showcaseCap:[
+      {en:'The final lockup \u2014 burgundy',id:'Lockup final \u2014 burgundy'},
+      {en:'The seal \u2014 for stickers and stamps',id:'Segel \u2014 untuk stiker dan stempel'},
+      {en:'The print cut, on a spunbond bag',id:'Potongan cetak, di tas spunbond'}],
+    sub:{en:'Logo & brand identity \u2014 homemade dessert, BSD',id:'Identitas logo & brand \u2014 dessert rumahan, BSD'},
+    d:{en:'One hand-drawn mark \u2014 a mother and child at the mixing bowl \u2014 carried through the whole set: the lockup, the seal, and print-ready cuts for packaging, stickers, and bags.',id:'Satu lambang gambar tangan \u2014 ibu dan anak di mangkuk adonan \u2014 yang dibawa ke seluruh set: lockup, segel, dan potongan siap cetak untuk kemasan, stiker, dan tas.'},
+    lede:{en:"CarlLab's first client. MomiRel is a homemade dessert kitchen in BSD \u2014 the brief was a mark a mother would trust on her own packaging.",id:'Klien pertama CarlLab. MomiRel adalah dapur dessert rumahan di BSD \u2014 brief-nya adalah sebuah lambang yang dipercaya seorang ibu untuk kemasannya sendiri.'},
+    specs:[
+      [{en:'The mark',id:'Lambangnya'},{en:'A mother and child making dessert together at one bowl \u2014 one warm hand-drawn line',id:'Seorang ibu dan anak membuat dessert bersama di satu mangkuk \u2014 satu garis hangat gambar tangan'}],
+      [{en:'The set',id:'Set-nya'},{en:'Final lockup in burgundy and maroon, with transparent versions for packaging and stickers',id:'Lockup final dalam burgundy dan maroon, dengan versi transparan untuk kemasan dan stiker'}],
+      [{en:'Print-ready',id:'Siap cetak'},{en:'A thick-stroke print cut made for spunbond bags, plus stamp and sticker versions',id:'Potongan cetak garis tebal untuk tas spunbond, plus versi stempel dan stiker'}],
+      [{en:'Approved',id:'Disetujui'},{en:'Approved by the client on 14 November 2026 \u2014 the first CarlLab commission to ship',id:'Disetujui klien pada 14 November 2026 \u2014 komisi CarlLab pertama yang terkirim'}]
+    ],
+    tryLines:[
+      {en:'Open the showcase \u2014 the lockup fills the phone',id:'Buka pamerannya \u2014 lockup-nya memenuhi HP'},
+      {en:'Scroll the set \u2014 seal, then the bag it prints on',id:'Gulir set-nya \u2014 segel, lalu tas tempat ia dicetak'}],
+    hint:{en:'Scroll inside the frame \u00b7 tap \u201cView in this phone\u201d',id:'Gulir di dalam bingkai \u00b7 ketuk \u201cLihat di HP ini\u201d'},
+    meta:[
+      [{en:'Work',id:'Karya'},{en:'Logo & brand',id:'Logo & brand'}],
+      [{en:'Client',id:'Klien'},{en:'MomiRel \u2014 real client',id:'MomiRel \u2014 klien asli'}],
+      [{en:'Place',id:'Tempat'},{en:'BSD, Tangerang Selatan',id:'BSD, Tangerang Selatan'}],
+      [{en:'Date',id:'Tanggal'},{en:'Nov 2026',id:'Nov 2026'}]
+    ]
+  };
+  var UI={
+    kick:{en:'REAL CLIENT \u2014 BRAND & LOGO',id:'KLIEN ASLI \u2014 LOGO & BRAND'},
+    headNote:{en:'REAL CLIENT',id:'KLIEN ASLI'},
+    note:{en:'REAL CLIENT \u2014 BRAND & LOGO',id:'KLIEN ASLI \u2014 LOGO & BRAND'},
+    foot:{en:'1 real client piece \u2014 shown right inside this phone.',id:'1 karya klien asli \u2014 ditampilkan langsung di dalam HP ini.'},
+    backWork:{en:'\u2039 All work',id:'\u2039 Semua karya'},
+    view:{en:'View in this phone',id:'Lihat di HP ini'},
+    tryT:{en:'In the frame, try',id:'Di dalam bingkai, coba'}
+  };
+  var view='list';
+  function L(){ return (document.documentElement.lang||'en').toLowerCase().indexOf('id')===0 ? 'id' : 'en'; }
+  function T(o){ return o[L()]; }
+  function el(id){ return document.getElementById(id); }
+  function renderPanel(){
+    el('blrcKick').textContent=T(UI.kick);
+    el('blrcName').textContent=BLRC.panelName;
+    el('blrcStyle').textContent=T(BLRC.sub);
+    el('blrcDesc').textContent=T(BLRC.d);
+    el('blrcLede').textContent=T(BLRC.lede);
+    el('blrcSpecs').innerHTML=BLRC.specs.map(function(sp){ return '<div class="row"><dt>'+T(sp[0])+'</dt><dd>'+T(sp[1])+'</dd></div>'; }).join('');
+    el('blrcHint').textContent=T(BLRC.hint);
+    el('blrcTryT').textContent=T(UI.tryT);
+    el('blrcTry').innerHTML=BLRC.tryLines.map(function(t){ return '<li>'+T(t)+'</li>'; }).join('');
+  }
+  function renderList(){
+    el('blrcHeadNote').textContent=T(UI.headNote);
+    el('blrcNote').textContent=T(UI.note);
+    el('blrcFoot').textContent=T(UI.foot);
+    el('blrcList').innerHTML='<button class="hub-row sel" id="blrcRow" type="button"><span class="hub-thumb"><img src="'+BLRC.img+'" alt="" /></span><span><h4>'+BLRC.name+'</h4><p>'+T(BLRC.sub)+'</p></span><span class="arr">\u203a</span></button>';
+    el('blrcRow').addEventListener('click',function(){ setView('detail'); });
+  }
+  function renderDetail(){
+    el('blrcBack').textContent=T(UI.backWork);
+    var meta=BLRC.meta.map(function(m){ return '<li><span>'+T(m[0])+'</span><b>'+T(m[1])+'</b></li>'; }).join('');
+    el('blrcDetailContent').innerHTML=
+      '<div class="blrc-hero"><img src="'+BLRC.wide+'" alt="" /><b>'+BLRC.name+'</b></div>'+
+      '<p class="hub-dsub">'+T(BLRC.sub)+'</p>'+
+      '<p class="hub-desc">'+T(BLRC.d)+'</p>'+
+      '<ul class="blrc-meta">'+meta+'</ul>'+
+      '<button class="hub-btn hub-play" id="blrcView" type="button">'+T(UI.view)+'</button>';
+    el('blrcView').addEventListener('click',function(){ setView('show'); });
+  }
+  function renderShow(){
+    el('blrcShowBack').textContent=T(UI.backWork);
+    el('blrcShowName').textContent=BLRC.name;
+    el('blrcShowBody').innerHTML=BLRC.showcase.map(function(src,i){
+      return '<figure class="blrc-show-card"><img src="'+src+'" alt="" loading="lazy" /><figcaption>'+T(BLRC.showcaseCap[i])+'</figcaption></figure>';
+    }).join('');
+    el('blrcShowBody').scrollTop=0;
+  }
+  function setView(v){
+    view=v;
+    el('blrcMain').style.display=(v==='list')?'':'none';
+    el('blrcDetail').classList.toggle('on',v==='detail');
+    el('blrcShow').classList.toggle('on',v==='show');
+    if(v==='detail'){ renderDetail(); var b=el('blrcDetail').querySelector('.hub-body'); if(b) b.scrollTop=0; }
+    if(v==='show'){ renderShow(); }
+  }
+  function renderAll(){ renderPanel(); renderList(); if(view==='detail') renderDetail(); if(view==='show') renderShow(); }
+  el('blrcBack').addEventListener('click',function(){ setView('list'); });
+  el('blrcShowBack').addEventListener('click',function(){ setView('detail'); });
+  renderAll();
+  var lastLang=L();
+  new MutationObserver(function(){
+    var nl=L();
+    if(nl!==lastLang){ lastLang=nl; renderAll(); }
+  }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+})();
+</script>
 
 </body>
 </html>
