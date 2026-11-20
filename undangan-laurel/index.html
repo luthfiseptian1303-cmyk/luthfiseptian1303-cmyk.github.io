@@ -610,6 +610,8 @@ $('shareBtn').addEventListener('click',function(){ var data={title:'LAUREL — a
 function load(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
 function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 function hash(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))>>>0; } return h; }
+function makeSalt(){ try{ var a=new Uint32Array(2); crypto.getRandomValues(a); return a[0].toString(36)+a[1].toString(36); }catch(e){ return Math.floor(Math.random()*1e9).toString(36)+Date.now().toString(36); } }
+function codeFor(name,salt){ return 'LAU-'+(100+hash(String(name).toLowerCase()+'|'+salt)%900); }
 
 /* ---------- yearbook ---------- */
 var SEED_SIGNS=[
@@ -657,11 +659,12 @@ $('rsvpForm').addEventListener('submit',function(ev){ ev.preventDefault();
   if(problems.length){ err.textContent='Almost — we still need '+problems.join(' and ')+'.'; err.classList.add('show'); return; }
   err.classList.remove('show');
   var wish=$('rWish').value.trim();
-  var code=rec&&rec.code?rec.code:'LAU-'+(100+hash(name.toLowerCase())%900);
+  var salt=rec&&rec.salt?rec.salt:makeSalt();
+  var code=rec&&rec.code&&(!rec.salt||rec.name===name)?rec.code:codeFor(name,salt);
   var table=rec&&rec.table?rec.table:((hash(name.toLowerCase())%10)+1);
   var hadWish=rec&&rec.wishAdded;
   rec={name:name,attend:attend,party:party,plusName:plusName,plusMeal:$('rPlusMeal').value,meal:$('rMeal').value,
-       diet:$('rDiet').value.trim(),song:$('rSong').value.trim(),wish:wish,code:code,table:table,wishAdded:hadWish||!!wish};
+       diet:$('rDiet').value.trim(),song:$('rSong').value.trim(),wish:wish,code:code,salt:salt,table:table,wishAdded:hadWish||!!wish};
   if(wish&&!hadWish){ var arr=load('laurel-yearbook-v1',[]); arr.push({name:name,word:'',text:wish}); save('laurel-yearbook-v1',arr); renderSigns(); }
   save('laurel-rsvp-v1',rec);
   if(attend==='yes') showPass(); else showDecline(); });
@@ -676,7 +679,7 @@ tickClock(); setInterval(tickClock,20000);
 var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.12});
 document.querySelectorAll('section').forEach(function(sec){ sec.classList.add('rv'); io.observe(sec); });
 
-window.LAUREL={move:move,state:function(){ return {moved:moved,attend:attend,rec:rec}; }};
+window.LAUREL={move:move,codeFor:codeFor,state:function(){ return {moved:moved,attend:attend,rec:rec}; }};
 })();
 </script>
 </body>

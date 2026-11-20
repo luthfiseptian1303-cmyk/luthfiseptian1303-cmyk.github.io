@@ -36,7 +36,7 @@ h2.title em{font-family:var(--serif);font-style:italic;font-weight:400;color:var
 #cover .brand{font-size:11px;letter-spacing:.4em;color:var(--clay-d);font-weight:700}
 #cover h1{font-family:var(--sans);font-weight:800;font-size:clamp(38px,11vw,52px);line-height:.98;letter-spacing:-.02em;margin:10px 0 2px;color:var(--ink)}
 #cover h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--sage-d)}
-#cover .for{font-family:var(--serif);font-style:italic;font-size:17px;color:#5C5546;margin-top:8px}
+#cover .for{font-family:var(--serif);font-style:italic;font-size:17px;color:#5C5546;margin-top:8px;background:rgba(250,245,235,.88);padding:3px 14px 5px;border-radius:999px;box-shadow:0 2px 14px rgba(250,245,235,.55)}
 #cover .guest{margin-top:16px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
 #cover .gname{font-family:var(--serif);font-size:23px;color:var(--ink);margin-top:3px}
 #balloonBtn{margin-top:20px;background:none;border:none;cursor:pointer;padding:0;transition:transform .18s}
@@ -639,6 +639,8 @@ $('shareBtn').addEventListener('click',function(){ var data={title:'PETAL — a 
 function load(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
 function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 function hash(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))>>>0; } return h; }
+function makeSalt(){ try{ var a=new Uint32Array(2); crypto.getRandomValues(a); return a[0].toString(36)+a[1].toString(36); }catch(e){ return Math.floor(Math.random()*1e9).toString(36)+Date.now().toString(36); } }
+function codeFor(name,salt){ return 'PET-'+(100+hash(String(name).toLowerCase()+'|'+salt)%900); }
 
 /* ---------- guess the date ---------- */
 var guess=load('petal-guess-v1',null);
@@ -696,11 +698,12 @@ $('rsvpForm').addEventListener('submit',function(ev){ ev.preventDefault();
   if(problems.length){ err.textContent='Almost — we still need '+problems.join(' and ')+'.'; err.classList.add('show'); return; }
   err.classList.remove('show');
   var wish=$('rWish').value.trim();
-  var code=rec&&rec.code?rec.code:'PET-'+(100+hash(name.toLowerCase())%900);
+  var salt=rec&&rec.salt?rec.salt:makeSalt();
+  var code=rec&&rec.code&&(!rec.salt||rec.name===name)?rec.code:codeFor(name,salt);
   var raffle=rec&&rec.raffle?rec.raffle:'R-'+((hash(name.toLowerCase())%40)+1);
   var hadWish=rec&&rec.wishAdded;
   rec={name:name,attend:attend,party:party,plusName:plusName,plusMeal:$('rPlusMeal').value,meal:$('rMeal').value,
-       diet:$('rDiet').value.trim(),advice:$('rAdvice').value.trim(),wish:wish,code:code,raffle:raffle,wishAdded:hadWish||!!wish};
+       diet:$('rDiet').value.trim(),advice:$('rAdvice').value.trim(),wish:wish,code:code,salt:salt,raffle:raffle,wishAdded:hadWish||!!wish};
   if(wish&&!hadWish){ var arr=load('petal-wishes-v1',[]); arr.push({name:name,text:wish}); save('petal-wishes-v1',arr); renderWishes(); }
   save('petal-rsvp-v1',rec);
   if(attend==='yes') showPass(); else showDecline(); });
@@ -715,7 +718,7 @@ tickClock(); setInterval(tickClock,20000);
 var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.12});
 document.querySelectorAll('section').forEach(function(sec){ sec.classList.add('rv'); io.observe(sec); });
 
-window.PETAL={pop:pop,state:function(){ return {popped:popped,attend:attend,rec:rec,guess:guess}; }};
+window.PETAL={pop:pop,codeFor:codeFor,state:function(){ return {popped:popped,attend:attend,rec:rec,guess:guess}; }};
 })();
 </script>
 </body>

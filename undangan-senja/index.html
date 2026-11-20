@@ -356,11 +356,13 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
       <a href="#" onclick="return false"><b>Amazon</b><span>Registry</span></a>
       <a href="#" onclick="return false"><b>Crate&amp;Barrel</b><span>Registry</span></a>
     </div>
+    <p class="sec-sub" data-rv>Registry links are demonstration slots in this sample — they do not open a live registry.</p>
     <div class="fund" data-rv>
       <h3>The honeymoon fund</h3>
       <p>Forty days, one motorbike, the whole archipelago. Contributions of any size go to the same pot:</p>
       <p class="link" id="fundLink">withlove.example/julian-amara</p>
       <div class="btnrow"><button class="btn sm" type="button" id="copyFund">Copy fund link</button></div>
+      <p>The fund link above is a demonstration slot in this sample — it is not a live payment link.</p>
     </div>
   </section>
 
@@ -691,6 +693,8 @@ var RKEY="senja-rsvp-v1", WKEY="senja-wishes-v1";
 function loadJSON(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
 function saveJSON(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 function hashCode(str){ var h=0; for(var i=0;i<str.length;i++){ h=(h*31 + str.charCodeAt(i))|0; } return Math.abs(h); }
+function makeSalt(){ try{ var a=new Uint32Array(2); crypto.getRandomValues(a); return a[0].toString(36)+a[1].toString(36); }catch(e){ return Math.floor(Math.random()*1e9).toString(36)+Date.now().toString(36); } }
+function codeFor(name,salt){ return "SJA-"+(100 + hashCode(String(name).toLowerCase()+"|"+salt)%800); }
 var myRsvp=loadJSON(RKEY,null);
 function mealShort(m){ return (m||"").split(" — ")[0]; }
 function renderOutcome(){
@@ -751,7 +755,9 @@ $("#rsvpForm").addEventListener("submit",function(e){
     $("#plusErr").classList.toggle("show", party===2 && !plusName); if(party===2 && !plusName) ok=false;
   }
   if(!ok) return;
-  var keepCode = myRsvp && myRsvp.name===name ? myRsvp.code : null;
+  var salt = (myRsvp && myRsvp.salt) ? myRsvp.salt : makeSalt();
+  var keepCode = null;
+  if(myRsvp && myRsvp.code && (!myRsvp.salt || myRsvp.name===name)) keepCode = myRsvp.code;
   var keepTable = myRsvp && myRsvp.name===name ? myRsvp.table : null;
   myRsvp={
     name:name, attend:attend, events:events,
@@ -761,7 +767,8 @@ $("#rsvpForm").addEventListener("submit",function(e){
     plusMeal: attend==="accepts" && parseInt($("#fParty").value,10)===2 ? $("#fPlusMeal").value : "",
     diet: $("#fDiet").value.trim(), song: $("#fSong").value.trim(),
     wish: $("#fWish").value.trim(),
-    code: keepCode || ("SJA-"+(100 + hashCode(name)%800)),
+    code: keepCode || codeFor(name,salt),
+    salt: salt,
     table: keepTable || (1 + hashCode(name+"table")%14),
     ts: Date.now()
   };
@@ -809,7 +816,7 @@ $("#wishForm").addEventListener("submit",function(e){
 
 /* ---- init outcome ---- */
 if(myRsvp){ $("#rsvpForm").style.display="none"; renderOutcome(); }
-window.SENJA={open:openEnv,state:function(){return {opened:opened,rsvp:myRsvp?myRsvp.code:null,wishes:wishes.length}}};
+window.SENJA={open:openEnv,codeFor:codeFor,state:function(){return {opened:opened,rsvp:myRsvp?myRsvp.code:null,wishes:wishes.length}}};
 </script>
 </body>
 </html>

@@ -299,7 +299,7 @@ footer .honest{color:var(--dim);font-size:11.5px;line-height:1.7;margin-top:12px
         <div class="cap" data-cap="3">
           <div class="no">04 — THE CANDLES</div>
           <h3>Make it <em>official</em></h3>
-          <p>Five tall candles — one for every six years of excellent decisions. At 9:30 PM, Elena blows. Be there.</p>
+          <p>Four tall candles — one for every seven and a half years of excellent decisions. At 9:30 PM, Elena blows. Be there.</p>
         </div>
       </div>
       <div class="stage-prog"><i id="stageBar"></i></div>
@@ -375,6 +375,7 @@ footer .honest{color:var(--dim);font-size:11.5px;line-height:1.7;margin-top:12px
           <button class="linkbtn" id="copyFund" type="button">Copy the fund link</button>
           <a class="linkbtn" href="#" onclick="return false">The small wishlist</a>
         </div>
+        <p>Fund and wishlist links are demonstration slots in this sample — the fund link is not a live payment link.</p>
       </div>
       <div class="cardbox">
         <div class="eyebrow">Staying over <i>— nearby</i></div>
@@ -712,6 +713,8 @@ $('#shareBtn').addEventListener('click', function(){
 /* ---------- RSVP ---------- */
 var RSVP_KEY = 'vela-rsvp-v1', WISH_KEY = 'vela-wishes-v1';
 function hashStr(s){ var h = 0; for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0; } return h; }
+function makeSalt(){ try { var a = new Uint32Array(2); crypto.getRandomValues(a); return a[0].toString(36) + a[1].toString(36); } catch(e){ return Math.floor(Math.random() * 1e9).toString(36) + Date.now().toString(36); } }
+function codeFor(name, salt){ return 'VEL-' + (100 + (hashStr(String(name).toLowerCase() + '|' + salt) % 900)); }
 function load(k, fb){ try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? fb : v; } catch(e){ return fb; } }
 function save(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 
@@ -776,12 +779,15 @@ $('#rsvpForm').addEventListener('submit', function(ev){
     return;
   }
   var prev = load(RSVP_KEY, null);
-  var h = hashStr(name.toLowerCase());
+  var salt = (prev && prev.salt) ? prev.salt : makeSalt();
+  var keepCode = (prev && prev.code && (!prev.salt || prev.name === name)) ? prev.code : null;
+  var h = hashStr(name.toLowerCase() + '|' + salt);
   var rec = {
     name: name, attend: attend, party: party,
     meal: $('#fMeal').value, plusName: plusName, plusMeal: $('#fPlusMeal').value,
     diet: $('#fDiet').value.trim(), song: $('#fSong').value.trim(), wish: $('#fWish').value.trim(),
-    code: (prev && prev.code) ? prev.code : 'VEL-' + (100 + (h % 900)),
+    code: keepCode || codeFor(name, salt),
+    salt: salt,
     table: (prev && prev.table) ? prev.table : (h % 8) + 1
   };
   save(RSVP_KEY, rec);
@@ -839,7 +845,7 @@ function footTick(){
 }
 footTick(); setInterval(footTick, 20000);
 
-window.VELA = { blow: blow, state: function(){ return { blown: blown, rsvp: load(RSVP_KEY, null), wishes: allWishes().length }; } };
+window.VELA = { blow: blow, codeFor: codeFor, state: function(){ return { blown: blown, rsvp: load(RSVP_KEY, null), wishes: allWishes().length }; } };
 })();
 </script>
 </body>

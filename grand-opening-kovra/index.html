@@ -176,6 +176,13 @@ textarea{resize:vertical;min-height:74px}
 #gcard .code{font-family:var(--serif);font-size:30px;letter-spacing:.14em;color:#8E2318;margin:8px 0 4px}
 #gcard p{font-size:13px;color:#5A4517;line-height:1.6}
 #gcard .nm{font-family:var(--serif);font-style:italic;font-size:19px;color:#2B1D13}
+#gcard .editbtn{margin-top:14px;background:transparent;color:#3A2A0E;border:1px solid rgba(58,42,14,.55);border-radius:999px;padding:11px 22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;min-height:44px;cursor:pointer;font-family:var(--sans)}
+#dcard{display:none;margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:26px 22px;text-align:center}
+#dcard.show{display:block}
+#dcard .nm{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--cream)}
+#dcard h3{font-family:var(--serif);font-weight:500;font-size:23px;color:var(--cream);margin-top:8px}
+#dcard p{font-size:13.5px;color:var(--cream2);line-height:1.65;margin-top:8px}
+#dcard .editbtn{margin-top:16px;background:transparent;color:var(--cream);border:1px solid var(--brass);border-radius:999px;padding:11px 22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;min-height:44px;cursor:pointer;font-family:var(--sans)}
 .wall{margin-top:26px;display:flex;flex-direction:column;gap:10px}
 .wish{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:15px 16px;text-align:left}
 .wish .who{font-weight:700;font-size:14px;color:var(--cream)}
@@ -309,12 +316,12 @@ footer p{font-size:12.5px;line-height:1.7;margin-top:14px}
     <p class="eyebrow" data-rv>04 · From The Bar</p>
     <h2 class="title" data-rv>Poured from <em>day one</em></h2>
     <div class="menu" data-rv>
-      <div class="row"><div><h3>Espresso</h3><p>No.1 blend, double shot only</p></div><span class="pr">5.0</span></div>
-      <div class="row"><div><h3>Flat White</h3><p>The house standard, 6 oz</p></div><span class="pr">6.0</span></div>
-      <div class="row"><div><h3>Kovra No.1 Latte</h3><p>Black sesame &amp; panela, our signature</p></div><span class="pr">8.0</span></div>
-      <div class="row"><div><h3>Midnight Mocha</h3><p>70% single-origin cacao, no syrup</p></div><span class="pr">7.5</span></div>
-      <div class="row"><div><h3>Cold Brew Tonic</h3><p>18-hour steep, orange coin</p></div><span class="pr">8.0</span></div>
-      <div class="row"><div><h3>Filter of the Day</h3><p>Rotating single origin, ask at the bar</p></div><span class="pr">6.5</span></div>
+      <div class="row"><div><h3>Espresso</h3><p>No.1 blend, double shot only</p></div><span class="pr">A$5.0</span></div>
+      <div class="row"><div><h3>Flat White</h3><p>The house standard, 6 oz</p></div><span class="pr">A$6.0</span></div>
+      <div class="row"><div><h3>Kovra No.1 Latte</h3><p>Black sesame &amp; panela, our signature</p></div><span class="pr">A$8.0</span></div>
+      <div class="row"><div><h3>Midnight Mocha</h3><p>70% single-origin cacao, no syrup</p></div><span class="pr">A$7.5</span></div>
+      <div class="row"><div><h3>Cold Brew Tonic</h3><p>18-hour steep, orange coin</p></div><span class="pr">A$8.0</span></div>
+      <div class="row"><div><h3>Filter of the Day</h3><p>Rotating single origin, ask at the bar</p></div><span class="pr">A$6.5</span></div>
     </div>
   </section>
 
@@ -374,7 +381,14 @@ footer p{font-size:12.5px;line-height:1.7;margin-top:14px}
       <p class="nm" id="gcName">Guest</p>
       <p id="gcText">Your opening gift bag is reserved.</p>
       <div class="code" id="gcCode">KVR-059</div>
-      <p>Show this code at the counter on opening morning.<br>Saturday 3 April 2027 · from 9:00 AM</p>
+      <p id="gcShow">Show this code at the counter on opening morning.<br>Saturday 3 April 2027 · from 9:00 AM</p>
+      <button class="editbtn" id="editReply" type="button">Edit my reply</button>
+    </div>
+    <div id="dcard" aria-live="polite">
+      <p class="nm" id="dcName">Guest</p>
+      <h3>You will be missed.</h3>
+      <p id="dcText">Sorry you can&rsquo;t make it &mdash; thank you for telling us early, it genuinely helps the plan. We will raise a first pour to you on opening morning, and the photos will find you. Change your mind any time &mdash; just edit your reply.</p>
+      <button class="editbtn" id="editReply2" type="button">Edit my reply</button>
     </div>
     <div class="btnrow" data-rv>
       <a class="btn ghost" id="waShare" href="#" target="_blank" rel="noopener">Share on WhatsApp</a>
@@ -416,6 +430,8 @@ if(guest!=="Friend of the house") $("#fName").value=guest;
 
 /* ---- cover / ribbon: Pagi Sore film system, ported 1:1 (sheet player + startCut) ---- */
 var opened=false;
+var OKEY="kovra-opened-v1";
+try{ if(localStorage.getItem(OKEY)==="1"){ opened=true; var cov0=document.getElementById("cover"); if(cov0) cov0.style.display="none"; document.documentElement.classList.remove("locked"); } }catch(e){}
 var ribbonFilm=(function(){
   var el=document.getElementById('ribbonFilm');
   var rib=document.getElementById('ribbon');
@@ -617,6 +633,7 @@ function cutFx(pct){
 var cutStarted=false;
 function liftCover(){
   if(opened) return; opened=true;
+  try{ localStorage.setItem(OKEY,"1"); }catch(e){}
   $("#cover").classList.add("gone");
   document.documentElement.classList.remove("locked");
   stageUpdate();
@@ -791,31 +808,103 @@ function wallRender(){
 }
 wallRender();
 var att="Attending";
-$$("#attSeg button").forEach(function(b){ b.addEventListener("click",function(){
-  $$("#attSeg button").forEach(function(x){x.classList.remove("sel")}); b.classList.add("sel"); att=b.getAttribute("data-v");
-});});
+function setAtt(v){
+  att=v;
+  $$("#attSeg button").forEach(function(x){ x.classList.toggle("sel", x.getAttribute("data-v")===v); });
+}
+$$("#attSeg button").forEach(function(b){ b.addEventListener("click",function(){ setAtt(b.getAttribute("data-v")); }); });
+
+/* ---- my RSVP: one stored record per guest (SENJA/VELA pattern) ---- */
+var MKEY="kovra-my-rsvp-v1";
+function hashCode(str){ var h=0; for(var i=0;i<str.length;i++){ h=(h*31 + str.charCodeAt(i))|0; } return Math.abs(h); }
+function makeSalt(){
+  var s="";
+  try{ var a=new Uint32Array(2); (window.crypto||window.msCrypto).getRandomValues(a); s=a[0].toString(36)+a[1].toString(36); }catch(e){}
+  if(!s) s=Math.floor(Math.random()*1e15).toString(36)+Date.now().toString(36);
+  return s;
+}
+function codeFor(name,salt){ return "KVR-"+String(100 + hashCode(String(name).toLowerCase()+"|"+salt)%900); }
+var myRsvp=load(MKEY,null);
+if(!myRsvp){
+  /* migrate a pre-fix record: the newest entry of the stored wall was this guest's reply */
+  var legacyRaw=null; try{ legacyRaw=localStorage.getItem(RKEY); }catch(e){}
+  if(legacyRaw){
+    var legacy=load(RKEY,null);
+    if(legacy && legacy.length && legacy[0] && legacy[0].name){
+      var lsalt=makeSalt();
+      myRsvp={name:legacy[0].name, att:legacy[0].att||"Attending", party:"Just me", wish:legacy[0].wish||"", salt:lsalt, code:codeFor(legacy[0].name,lsalt), bag:null, ts:Date.now()};
+      save(MKEY,myRsvp);
+    }
+  }
+}
+function renderOutcome(){
+  var card=$("#gcard"), dcard=$("#dcard");
+  card.classList.remove("show"); dcard.classList.remove("show");
+  if(!myRsvp) return;
+  if(myRsvp.att==="Can't make it"){
+    $("#dcName").textContent=myRsvp.name;
+    dcard.classList.add("show");
+    return;
+  }
+  $("#gcName").textContent=myRsvp.name;
+  var codeEl=$("#gcCode"), showEl=$("#gcShow");
+  if(myRsvp.att==="Attending" && myRsvp.bag){
+    codeEl.style.display=""; showEl.style.display="";
+    codeEl.textContent=myRsvp.code;
+    $("#gcText").textContent="Your opening gift bag is reserved — No. "+myRsvp.bag+" of 100.";
+  } else if(myRsvp.att==="Attending"){
+    codeEl.style.display=""; showEl.style.display="";
+    codeEl.textContent=myRsvp.code;
+    $("#gcText").textContent="You are on the door list — the gift bags are all claimed, but the first pour is still on us. Show your code at the counter.";
+  } else {
+    codeEl.style.display="none"; showEl.style.display="none";
+    $("#gcText").textContent="You are on the door list as a maybe. Change your mind any time — just edit your reply.";
+  }
+  card.classList.add("show");
+}
+function openEdit(){
+  if(!myRsvp) return;
+  $("#gcard").classList.remove("show"); $("#dcard").classList.remove("show");
+  var f=$("#rsvpForm"); f.style.display="";
+  $("#fName").value=myRsvp.name||"";
+  setAtt(myRsvp.att||"Attending");
+  var pv=$("#fParty"); pv.value=myRsvp.party||"Just me"; if(pv.value!==(myRsvp.party||"Just me")) pv.value="Just me";
+  $("#fWish").value=myRsvp.wish||"";
+  $("#rsvpBtn").textContent="Update my RSVP";
+  f.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
+}
+$("#editReply").addEventListener("click",openEdit);
+$("#editReply2").addEventListener("click",openEdit);
 $("#rsvpForm").addEventListener("submit",function(ev){
   ev.preventDefault();
   var name=$("#fName").value.trim();
   if(name.length<2){ $("#nameErr").classList.add("show"); $("#fName").focus(); return; }
   $("#nameErr").classList.remove("show");
   var wish=$("#fWish").value.trim().slice(0,240);
+  var prev=myRsvp;
+  var salt=(prev&&prev.salt)?prev.salt:makeSalt();
+  var code=(prev&&prev.code)?prev.code:codeFor(name,salt);
+  var bag=(prev&&prev.bag)?prev.bag:null;
+  if(att==="Attending"){
+    if(!bag && gift.claimed<100){ gift.claimed++; bag=gift.claimed; save(GKEY,gift); giftRender(); }
+  } else if(bag){
+    gift.claimed=Math.max(0,gift.claimed-1); bag=null; save(GKEY,gift); giftRender();
+  }
+  if(prev){
+    for(var wi=0; wi<rsvps.length; wi++){
+      if(rsvps[wi].name===prev.name && rsvps[wi].att===prev.att && (rsvps[wi].wish||"")===(prev.wish||"")){ rsvps.splice(wi,1); break; }
+    }
+  }
   rsvps.unshift({name:name,att:att,wish:wish}); if(rsvps.length>12) rsvps.length=12;
   save(RKEY,rsvps); wallRender();
-  var card=$("#gcard"); $("#gcName").textContent=name;
-  if(att==="Attending" && gift.claimed<100){
-    gift.claimed++; save(GKEY,gift); giftRender();
-    $("#gcCode").textContent="KVR-"+String(gift.claimed).padStart(3,"0");
-    $("#gcText").textContent="Your opening gift bag is reserved — No. "+gift.claimed+" of 100.";
-  } else if(att==="Attending"){
-    $("#gcCode").textContent="DOOR LIST"; $("#gcText").textContent="You are on the door list — the gift bags are all claimed, but the first pour is still on us.";
-  } else {
-    $("#gcCode").textContent="DOOR LIST"; $("#gcText").textContent="You are on the door list. Change your mind any time — just RSVP again.";
-  }
-  card.classList.add("show");
-  $("#rsvpBtn").textContent="RSVP saved — see you there";
-  card.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
+  myRsvp={name:name, att:att, party:$("#fParty").value, wish:wish, salt:salt, code:code, bag:bag, ts:Date.now()};
+  save(MKEY,myRsvp);
+  $("#rsvpForm").style.display="none";
+  renderOutcome();
+  var shown=$("#dcard").classList.contains("show")?$("#dcard"):$("#gcard");
+  shown.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
 });
+if(myRsvp){ $("#rsvpForm").style.display="none"; renderOutcome(); }
 
 /* ---- copy / ics / share ---- */
 $("#copyAddr").addEventListener("click",function(){
@@ -844,7 +933,7 @@ var toTop=$("#toTop");
 window.addEventListener("scroll",function(){ toTop.classList.toggle("show",window.scrollY>900); },{passive:true});
 toTop.addEventListener("click",function(){ window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); });
 
-window.KOVRA={open:startCut,film:ribbonFilm,state:function(){return {opened:opened,gift:gift,rsvps:rsvps.length}}};
+window.KOVRA={open:startCut,film:ribbonFilm,state:function(){return {opened:opened,gift:gift,rsvps:rsvps.length,myCode:myRsvp?myRsvp.code:null,myAtt:myRsvp?myRsvp.att:null}}};
 })();
 </script>
 </body>
