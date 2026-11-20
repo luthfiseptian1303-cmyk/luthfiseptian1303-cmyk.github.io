@@ -69,7 +69,7 @@ nav.main a:hover{color:var(--ink)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .hero-top{position:absolute;z-index:8;top:calc(var(--head-h) + 24px);left:0;right:0;text-align:center;padding-left:24px;padding-right:24px;pointer-events:none}
-.hero-batch{font-size:13px;color:#c8b198;letter-spacing:.14em;text-shadow:0 1px 10px rgba(10,6,3,.9)}
+.hero-batch{display:inline-block;font-size:13px;color:#e8d9c4;letter-spacing:.14em;background:rgba(18,13,11,.62);border:1px solid rgba(239,230,220,.22);border-radius:999px;padding:7px 16px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);text-shadow:0 1px 6px rgba(10,6,3,.9)}
 .hero-top h1{font-family:var(--serif);font-weight:500;font-size:clamp(39px,6.2vw,76px);line-height:.98;letter-spacing:-.01em;margin-top:12px;text-wrap:balance;text-shadow:0 2px 28px rgba(10,6,3,.6)}
 .hero-top p{max-width:560px;margin:16px auto 0;color:#dcc9b6;font-size:clamp(15px,1.6vw,17px);text-shadow:0 1px 12px rgba(10,6,3,.95),0 0 3px rgba(10,6,3,.85)}
 .chip{position:absolute;z-index:9;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(239,230,220,.28);background:rgba(18,13,11,.55);backdrop-filter:blur(8px);font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:opacity .3s var(--ease-leave),border-color .16s var(--ease-move),background .16s var(--ease-move)}
@@ -404,9 +404,9 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease-enter)
         <h3 data-i18n="bcTitle">Your blend</h3>
         <p class="bc-sum" id="bcSum"></p>
         <div class="size-pills" role="group" aria-label="Bottle size" id="sizePills">
-          <button type="button" data-size="30">30 ml</button>
+          <button type="button" data-size="25">25 ml</button>
           <button type="button" data-size="50" aria-pressed="true">50 ml</button>
-          <button type="button" data-size="100">100 ml</button>
+          <button type="button" data-size="75">75 ml</button>
         </div>
         <div class="bc-price"><span class="price num" id="bcPrice" data-usd="120">$120</span><small data-i18n="bcNote">Personal blend · mixed to order in 3 days</small></div>
         <button class="btn" type="button" id="bcOrder" data-i18n="bcCta">Order this blend</button>
@@ -508,10 +508,10 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease-enter)
       <div class="rv">
         <dl class="facts">
           <div><dt data-i18n="fMacerLab">Maceration</dt><dd data-i18n="fMacer">21 days in oak</dd></div>
-          <div><dt data-i18n="fLongLab">Longevity</dt><dd data-i18n="fLong">8–10 hours on skin</dd></div>
-          <div><dt data-i18n="fConcLab">Concentration</dt><dd>22% parfum</dd></div>
+          <div><dt data-i18n="fLongLab">Longevity</dt><dd data-i18n="fLong">6–8 hours on skin</dd></div>
+          <div><dt data-i18n="fConcLab">Concentration</dt><dd>18% parfum</dd></div>
           <div><dt data-i18n="fAlcLab">Alcohol</dt><dd data-i18n="fAlc">78% sugarcane alcohol</dd></div>
-          <div><dt data-i18n="fBatchLab">Batch size</dt><dd data-i18n="fBatch">300 bottles, numbered</dd></div>
+          <div><dt data-i18n="fBatchLab">Batch size</dt><dd data-i18n="fBatch">150 bottles, numbered</dd></div>
           <div><dt data-i18n="fCruelLab">Testing</dt><dd data-i18n="fCruel">Never on animals</dd></div>
         </dl>
         <blockquote class="quote">
@@ -553,9 +553,9 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .8s var(--ease-enter)
         <div class="field">
           <label for="inSize" data-i18n="lbSize">Size</label>
           <select id="inSize" name="size">
-            <option value="30">30 ml</option>
+            <option value="25">25 ml</option>
             <option value="50" selected>50 ml</option>
-            <option value="100">100 ml</option>
+            <option value="75">75 ml</option>
           </select>
         </div>
         <div class="field">
@@ -619,7 +619,7 @@ document.documentElement.classList.add('js');
 (function(){
 "use strict";
 var RATE=16500, lang='en';
-var PRICES={roseamber:{30:84,50:120,100:186,name:'Rose Amber'},peonyveil:{30:77,50:110,100:171,name:'Peony Veil'},cinnamonnoir:{30:92,50:132,100:205,name:'Cinnamon Noir'}};
+var PRICES={roseamber:{25:72,50:120,75:162,name:'Rose Amber'},peonyveil:{25:66,50:110,75:149,name:'Peony Veil'},cinnamonnoir:{25:79,50:132,75:179,name:'Cinnamon Noir'}};
 var NOTE_NAMES={rose:'Damask rose',peony:'White peony',cinnamon:'Ceylon cinnamon',amber:'Golden amber'};
 
 var I18N={
@@ -653,8 +653,8 @@ var I18N={
   craftTitle:'Dibangun sebagai benda, bukan label.',
   craftSub:'Botolnya kaca berbobot dengan tutup magnet, dibuat untuk tetap di meja rias lama setelah semprotan terakhir.',
   anatCap:'Tutup emas magnetik',anatNeck:'Cincin leher lapis emas',anatGlass:'Alas kaca berbobot 6 mm',
-  fMacerLab:'Maserasi',fMacer:'21 hari dalam kayu ek',fLongLab:'Ketahanan',fLong:'8–10 jam di kulit',
-  fConcLab:'Konsentrasi',fAlcLab:'Alkohol',fAlc:'Alkohol tebu 78%',fBatchLab:'Ukuran batch',fBatch:'300 botol, bernomor',
+  fMacerLab:'Maserasi',fMacer:'21 hari dalam kayu ek',fLongLab:'Ketahanan',fLong:'6–8 jam di kulit',
+  fConcLab:'Konsentrasi',fAlcLab:'Alkohol',fAlc:'Alkohol tebu 78%',fBatchLab:'Ukuran batch',fBatch:'150 botol, bernomor',
   fCruelLab:'Pengujian',fCruel:'Tidak pernah pada hewan',
   quoteTxt:'“Satu semprotan jam 7 pagi, dan suami saya masih bisa mencium amber-nya di syal saya saat makan malam.”',
   quoteCite:'Ratna W. — Bandung, pemilik batch 05',
@@ -678,7 +678,7 @@ function setLang(l){ lang=l; if(window.__quizReady) renderQuiz();
   document.documentElement.lang=(l==='id'?'id':'en');
   if(l==='id'){ var d=I18N.id; document.querySelectorAll('[data-i18n]').forEach(function(el){ var k=el.dataset.i18n; if(d[k]) el.textContent=d[k]; }); }
   else { location.reload(); }
-  applyPrices();
+  applyPrices(); renderSucBody();
 }
 document.getElementById('langBtn').addEventListener('click',function(){ if(lang==='en') setLang('id'); });
 
@@ -824,6 +824,14 @@ document.getElementById('qMinus').addEventListener('click',function(){ qty=Math.
 document.getElementById('qPlus').addEventListener('click',function(){ qty=Math.min(12,qty+1); document.getElementById('qVal').textContent=qty; refreshSummary(); });
 refreshSummary();
 
+var lastOrder=null;
+function renderSucBody(){
+  if(!lastOrder) return;
+  var o=lastOrder, total=fmt(o.usd), body;
+  if(lang==='id'){ body='Terima kasih, '+o.name+'. Pesananmu: '+PRICES[o.v].name+', '+o.s+' ml, jumlah '+o.qty+', total '+total+'. Kami akan menghubungimu di '+o.wa+' untuk konfirmasi sebelum botolmu dicampur.'; }
+  else { body='Thank you, '+o.name+'. Your order: '+PRICES[o.v].name+', '+o.s+' ml, quantity '+o.qty+', total '+total+'. We will message you on '+o.wa+' to confirm before your bottle is mixed.'; }
+  document.getElementById('sucBody').textContent=body;
+}
 document.getElementById('orderForm').addEventListener('submit',function(ev){
   ev.preventDefault();
   var name=document.getElementById('inName'), wa=document.getElementById('inWa'), ok=true;
@@ -832,11 +840,9 @@ document.getElementById('orderForm').addEventListener('submit',function(ev){
   var waOk=wa.value.replace(/\D/g,'').length>=9;
   document.getElementById('fWa').classList.toggle('invalid',!waOk); if(!waOk) ok=false;
   if(!ok) return;
-  var v=vSel.value, s=sSel.value, total=fmt(PRICES[v][s]*qty);
-  var body;
-  if(lang==='id'){ body='Terima kasih, '+name.value.trim()+'. Pesananmu: '+PRICES[v].name+', '+s+' ml, jumlah '+qty+', total '+total+'. Kami akan menghubungimu di '+wa.value.trim()+' untuk konfirmasi sebelum botolmu dicampur.'; }
-  else { body='Thank you, '+name.value.trim()+'. Your order: '+PRICES[v].name+', '+s+' ml, quantity '+qty+', total '+total+'. We will message you on '+wa.value.trim()+' to confirm before your bottle is mixed.'; }
-  document.getElementById('sucBody').textContent=body;
+  var v=vSel.value, s=sSel.value;
+  lastOrder={name:name.value.trim(), wa:wa.value.trim(), v:v, s:s, qty:qty, usd:PRICES[v][s]*qty};
+  renderSucBody();
   var box=document.getElementById('successBox'); box.classList.add('show');
   box.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});
 });
