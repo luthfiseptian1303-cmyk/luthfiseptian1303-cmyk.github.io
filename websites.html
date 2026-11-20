@@ -627,6 +627,46 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .hub-bar a{margin-left:auto;color:#D9DDE3;text-decoration:none;font-size:15px}
 #hubFrame{flex:1;width:100%;border:0;display:block;background:#0A0A0C}
 </style>
+<style id="rc-css">
+.rc-hub{display:flex;flex-direction:column;height:100%;background:#0A0A0C;color:#F3EAD8;font-family:'Space Grotesk',sans-serif}
+.rc-hub-head{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px 11px;border-bottom:1px solid #23262B;flex:none}
+.rc-hub-head b{font-family:'Archivo',sans-serif;font-size:14px;letter-spacing:.14em;color:#E9DFC8}
+.rc-hub-head span{font-size:10px;letter-spacing:.2em;color:#8F96A0}
+#rcMain{flex:1;display:flex;flex-direction:column;min-height:0}
+.rc-hub-tabs{display:flex;gap:6px;padding:12px 12px 2px;flex:none}
+.rc-hub-tab{flex:1;padding:8px 2px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.03em;border-radius:999px;border:1px solid #33373D;background:transparent;color:#B9BEC6;cursor:pointer;transition:background .18s,color .18s}
+.rc-hub-tab.on{background:#EDEEF0;border-color:#EDEEF0;color:#111}
+.rc-hub-body{flex:1;overflow-y:auto;padding:10px 12px 16px;display:flex;flex-direction:column}
+.rc-hub-foot{margin-top:auto;padding-top:14px;font-size:11px;line-height:1.55;color:#8F96A0;text-align:center}
+.rc-hub-note{font-size:10.5px;letter-spacing:.14em;color:#8F96A0;margin:2px 2px 10px}
+.rc-hub-row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px;margin:0 0 8px;border:1px solid #26292F;border-radius:16px;background:#121317;color:#F3EAD8;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:transform .12s,border-color .18s}
+.rc-hub-row:active{transform:scale(.98)}
+.rc-hub-row.sel{border-color:#C9A24B}
+.rc-hub-row img{width:46px;height:58px;object-fit:cover;border-radius:9px;flex:none;background:#1B1D21}
+.rc-hub-row h4{margin:0 0 3px;font-family:'Archivo',sans-serif;font-size:14.5px;letter-spacing:.02em}
+.rc-hub-row p{margin:0;font-size:11.5px;color:#A7ADB6;line-height:1.45}
+.rc-hub-row .arr{margin-left:auto;color:#8A9199;font-size:17px;flex:none;padding-right:2px}
+.rc-hub-back{background:none;border:none;color:#D9DDE3;font-family:'Space Grotesk',sans-serif;font-size:12.5px;cursor:pointer;padding:2px 0 10px;letter-spacing:.03em;text-align:left}
+.rc-hub-hero{position:relative;height:172px;border-radius:16px;overflow:hidden;margin-bottom:12px;background:#141518;flex:none}
+.rc-hub-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.rc-hub-hero b{position:absolute;left:14px;bottom:11px;font-family:'Archivo',sans-serif;font-size:22px;color:#FBF5E6;text-shadow:0 2px 16px rgba(0,0,0,.65)}
+.rc-hub-dsub{font-size:11px;letter-spacing:.1em;color:#C9A24B;margin:0 2px 6px;text-transform:uppercase}
+.rc-hub-desc{font-size:12.5px;line-height:1.6;color:#C9CDD4;margin:0 2px 14px}
+.rc-meta{list-style:none;margin:0 2px 14px;padding:0;border-top:1px solid #23262B}
+.rc-meta li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;border-bottom:1px solid #23262B;font-size:11.5px}
+.rc-meta li span:first-child{color:#8F96A0;letter-spacing:.08em;text-transform:uppercase;font-size:10.5px;flex:none}
+.rc-meta li span:last-child{color:#E9DFC8;text-align:right}
+.rc-hub-btn{display:block;width:100%;padding:12px;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;cursor:pointer;margin-bottom:8px;text-align:center;text-decoration:none;box-sizing:border-box}
+.rc-hub-play{background:#EDEEF0;color:#111;font-weight:700;border:none}
+.rc-hub-fullb{background:transparent;border:1px solid #33373D;color:#E9DFC8}
+#rcPlay{display:none;flex-direction:column;height:100%}
+#rcPlay.on{display:flex}
+.rc-hub-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #23262B;background:#0A0A0C;flex:none}
+.rc-hub-bar .rc-hub-back{padding:0}
+.rc-hub-bar b{font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.06em;color:#E9DFC8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-hub-bar a{margin-left:auto;color:#D9DDE3;text-decoration:none;font-size:15px;flex:none}
+#rcFrame{flex:1;width:100%;border:0;display:block;background:#0E1512}
+</style>
 </head>
 <body>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
@@ -740,23 +780,25 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
     </div>
     <div class="demo-grid">
       <div data-rv="y40">
-        <p class="demo-lede" data-t="rcLede">This one is not a demo. Pagi Sore — a Minangkabau restaurant house — opens its Yogyakarta branch on Monday, 7 December 2026, and this is the invitation its guests actually receive: one self-contained file, opened from a chat message, with the guest's name on the cover.</p>
-        <ul class="demo-specs">
-          <li><span class="n">01</span><div><h3 data-t="rcS1t">The opening ritual</h3><p data-t="rcS1">Ribbon-cut opening — a 48-frame film, then the doors</p></div></li>
-          <li><span class="n">02</span><div><h3 data-t="rcS2t">Made personal</h3><p data-t="rcS2">Guest-name links, a wishes wall, and a .ICS calendar file</p></div></li>
-          <li><span class="n">03</span><div><h3 data-t="rcS3t">Its own music</h3><p data-t="rcS3">Original Minangkabau music composed for this invitation — no library track</p></div></li>
-          <li><span class="n">04</span><div><h3 data-t="rcS4t">One file</h3><p data-t="rcS4">7.4 MB, self-contained — no server, nothing to install</p></div></li>
-        </ul>
-        <div class="try-box"><p class="try-t" data-t="rcTryT">In the frame, try</p><ul class="try-list">
-          <li data-t="rcT1">Tap “Gunting Pita” — cut the ribbon and walk in</li>
-          <li data-t="rcT2">Scroll — the rundown, the location, and the wishes wall are all inside</li>
-          <li data-t="rcT3">Send a wish — it stays on the wall on this phone</li>
-        </ul></div>
+        <p class="demo-lede" id="rcLede"></p>
+        <ul class="demo-specs" id="rcSpecs"></ul>
+        <p class="demo-hint" id="rcHint"></p>
+        <div class="try-box" id="rcTryBox"><p class="try-t" id="rcTryT"></p><ul class="try-list" id="rcTry"></ul></div>
       </div>
       <div class="demo-phone" data-rv="y40">
         <div class="demo-screen no-notch">
           <div class="demo-notch" aria-hidden="true"></div>
-          <iframe id="rcFrame" title="Pagi Sore Yogyakarta — real client grand-opening invitation" loading="lazy" src="pagi-sore.html" style="width:100%;height:100%;border:0;display:block;background:#0E1512"></iframe>
+          <div class="rc-hub" id="rcHub">
+            <div class="rc-hub-head"><b>CARLLAB</b><span id="rcHeadNote">REAL CLIENT</span></div>
+            <div id="rcMain">
+              <div class="rc-hub-tabs" id="rcTabs" role="tablist"></div>
+              <div class="rc-hub-body" id="rcBody"></div>
+            </div>
+            <div id="rcPlay">
+              <div class="rc-hub-bar"><button class="rc-hub-back" id="rcPlayBack" type="button"></button><b id="rcPlayName"></b><a id="rcPlayFull" target="_blank" rel="noopener" aria-label="Open full-screen">&#8599;</a></div>
+              <iframe id="rcFrame" title="Pagi Sore Yogyakarta — real client grand-opening invitation" loading="lazy"></iframe>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1074,6 +1116,122 @@ document.getElementById('hubPlayBack').addEventListener('click',closePlay);
 function render(){ renderPanel(); renderTabs(); renderBody(); }
 new MutationObserver(function(){ render(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 render();
+})();
+</script>
+<script>
+(function(){
+"use strict";
+var RC_ITEMS={"pagisore":{"g":"inv","name":"PAGI SORE","img":"hub-thumbs/pagi-sore.jpg","wide":"hub-thumbs/pagi-sore-wide.jpg","url":"pagi-sore.html","bg":"#0E1512",
+"sub":{"en":"Grand-opening invitation \u2014 Yogyakarta","id":"Undangan grand opening \u2014 Yogyakarta"},
+"d":{"en":"This is the actual invitation Pagi Sore's guests receive \u2014 one self-contained file, opened from a chat message, with the guest's name on the cover and a red ribbon to cut.","id":"Inilah undangan sungguhan yang diterima tamu Pagi Sore \u2014 satu file utuh, dibuka dari pesan chat, dengan nama tamu di sampulnya dan pita merah untuk dipotong."},
+"meta":[[{"en":"Occasion","id":"Acara"},{"en":"Grand opening","id":"Grand opening"}],[{"en":"Client","id":"Klien"},{"en":"Pagi Sore \u2014 real client","id":"Pagi Sore \u2014 klien asli"}],[{"en":"Place","id":"Tempat"},{"en":"Sleman, Yogyakarta","id":"Sleman, Yogyakarta"}],[{"en":"Date","id":"Tanggal"},{"en":"Mon 7 Dec 2026","id":"Sen 7 Des 2026"}]],
+"lede":{"en":"This one is not a demo. Pagi Sore \u2014 a Minangkabau restaurant house \u2014 opens its Yogyakarta branch on Monday, 7 December 2026, and this is the invitation its guests actually receive: one self-contained file, opened from a chat message, with the guest's name on the cover.","id":"Yang ini bukan demo. Pagi Sore \u2014 rumah makan Minang \u2014 membuka cabang Yogyakarta pada Senin, 7 Desember 2026, dan inilah undangan yang benar-benar diterima para tamunya: satu file utuh, dibuka dari pesan chat, dengan nama tamu di sampulnya."},
+"specs":[[{"en":"The opening ritual","id":"Ritual pembuka"},{"en":"Ribbon-cut opening \u2014 a 48-frame film, then the doors","id":"Pembukaan potong pita \u2014 film 48 frame, lalu pintunya terbuka"}],[{"en":"Made personal","id":"Dibuat personal"},{"en":"Guest-name links, a wishes wall, and a .ICS calendar file","id":"Tautan nama tamu, dinding ucapan, dan file kalender .ICS"}],[{"en":"Its own music","id":"Musiknya sendiri"},{"en":"Original Minangkabau music composed for this invitation \u2014 no library track","id":"Musik Minang orisinal yang digubah khusus untuk undangan ini \u2014 bukan lagu perpustakaan"}],[{"en":"One file","id":"Satu file"},{"en":"7.4 MB, self-contained \u2014 no server, nothing to install","id":"7,4 MB, utuh \u2014 tanpa server, tanpa perlu instal apa pun"}]],
+"try":[{"en":"Tap \u201cGunting Pita\u201d \u2014 cut the ribbon and walk in","id":"Ketuk \u201cGunting Pita\u201d \u2014 potong pitanya dan masuk"},{"en":"Scroll \u2014 the rundown, the location, and the wishes wall are all inside","id":"Gulir \u2014 rundown, lokasi, dan dinding ucapan semuanya ada di dalam"},{"en":"Send a wish \u2014 it stays on the wall on this phone","id":"Kirim ucapan \u2014 ucapanmu menetap di dinding pada HP ini"}],
+"hint":{"en":"Scroll inside the frame \u00b7 tap \u201cGunting Pita\u201d","id":"Gulir di dalam bingkai \u00b7 ketuk \u201cGunting Pita\u201d"}}};
+var RC_GROUPS={"inv":{"label":{"en":"Invitations","id":"Undangan"},"note":{"en":"REAL CLIENT \u2014 INVITATIONS","id":"KLIEN ASLI \u2014 UNDANGAN"},"items":["pagisore"]},"web":{"label":{"en":"Websites","id":"Website"},"note":{"en":"REAL CLIENT \u2014 WEBSITES","id":"KLIEN ASLI \u2014 WEBSITE"},"items":[]},"port":{"label":{"en":"Portfolio","id":"Portofolio"},"note":{"en":"REAL CLIENT \u2014 PORTFOLIO","id":"KLIEN ASLI \u2014 PORTOFOLIO"},"items":[]}};
+var RC_UI={"play":{"en":"Play in this phone","id":"Putar di HP ini"},"full":{"en":"Open it full-screen \u2197","id":"Buka layar penuh \u2197"},"backGroups":{"en":"\u2039 Groups","id":"\u2039 Grup"},"backWork":{"en":"\u2039 All work","id":"\u2039 Semua karya"},"headNote":{"en":"REAL CLIENT","id":"KLIEN ASLI"},"empty":{"en":"No client work in this group yet \u2014 this group opens with the first commission.","id":"Belum ada kerjaan klien di grup ini \u2014 grup ini terbuka dengan komisi pertama."},"tryT":{"en":"In the frame, try","id":"Di dalam bingkai, coba"},"foot":{"en":"1 real client piece \u2014 it runs right inside this phone.","id":"1 karya klien asli \u2014 berjalan langsung di dalam HP ini."},"panelEmpty":{"web":{"en":"This group is still empty. The demo phone above shows what a website sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh website \u2014 komisi asli pertama membuka grup ini di sini."},"port":{"en":"This group is still empty. The demo phone above shows what a portfolio sample looks like \u2014 the first real commission opens this group here.","id":"Grup ini masih kosong. HP demo di atas menunjukkan seperti apa contoh portofolio \u2014 komisi asli pertama membuka grup ini di sini."}}};
+var rcState={group:'inv',sel:'pagisore',view:'list',played:null};
+function rL(){return document.documentElement.lang==='id'?'id':'en'}
+function rT(x){return x[rL()]}
+var rcTabsEl=document.getElementById('rcTabs'), rcBodyEl=document.getElementById('rcBody');
+function rcRenderPanel(){
+  var l=rL(), empty=!RC_GROUPS[rcState.group].items.length;
+  var lede=document.getElementById('rcLede'), specs=document.getElementById('rcSpecs'), hint=document.getElementById('rcHint'), tryBox=document.getElementById('rcTryBox');
+  document.getElementById('rcHeadNote').textContent=rT(RC_UI.headNote);
+  if(empty){
+    lede.textContent=RC_UI.panelEmpty[rcState.group][l];
+    specs.innerHTML=''; specs.style.display='none';
+    hint.textContent=''; hint.style.display='none';
+    tryBox.style.display='none';
+    return;
+  }
+  var it=RC_ITEMS[rcState.sel];
+  specs.style.display=''; hint.style.display=''; tryBox.style.display='';
+  lede.textContent=rT(it.lede);
+  specs.innerHTML=it.specs.map(function(sp,i){ return '<li><span class="n">0'+(i+1)+'</span><div><h3></h3><p></p></div></li>'; }).join('');
+  var lis=specs.querySelectorAll('li');
+  it.specs.forEach(function(sp,i){ lis[i].querySelector('h3').textContent=sp[0][l]; lis[i].querySelector('p').textContent=sp[1][l]; });
+  hint.textContent=rT(it.hint);
+  document.getElementById('rcTryT').textContent=rT(RC_UI.tryT);
+  var tryEl=document.getElementById('rcTry');
+  tryEl.innerHTML=it.try.map(function(){ return '<li></li>'; }).join('');
+  var tl=tryEl.querySelectorAll('li');
+  it.try.forEach(function(x,i){ tl[i].textContent=x[l]; });
+}
+function rcRenderTabs(){
+  rcTabsEl.innerHTML='';
+  Object.keys(RC_GROUPS).forEach(function(k){
+    var b=document.createElement('button'); b.type='button'; b.className='rc-hub-tab'+(rcState.group===k?' on':'');
+    b.textContent=rT(RC_GROUPS[k].label); b.setAttribute('role','tab');
+    b.addEventListener('click',function(){ rcState.group=k; rcState.view='list'; rcRender(); });
+    rcTabsEl.appendChild(b);
+  });
+}
+function rcRenderBody(){
+  var l=rL();
+  if(rcState.view==='list'){
+    var g=RC_GROUPS[rcState.group];
+    rcBodyEl.innerHTML='<p class="rc-hub-note">'+rT(g.note)+'</p>';
+    if(!g.items.length){ var e=document.createElement('p'); e.className='rc-hub-desc'; e.textContent=rT(RC_UI.empty); rcBodyEl.appendChild(e); }
+    g.items.forEach(function(id){
+      var it=RC_ITEMS[id];
+      var r=document.createElement('button'); r.type='button'; r.className='rc-hub-row'+(rcState.sel===id?' sel':'');
+      r.innerHTML='<img alt="" loading="lazy"><span><h4></h4><p></p></span><span class="arr">&#8250;</span>';
+      r.querySelector('img').src=it.img;
+      r.querySelector('h4').textContent=it.name;
+      r.querySelector('p').textContent=it.sub[l];
+      r.addEventListener('click',function(){ rcState.sel=id; rcState.view='detail'; rcRender(); });
+      rcBodyEl.appendChild(r);
+    });
+    var foot=document.createElement('p'); foot.className='rc-hub-foot'; foot.textContent=rT(RC_UI.foot);
+    rcBodyEl.appendChild(foot);
+  } else {
+    var it=RC_ITEMS[rcState.sel];
+    rcBodyEl.innerHTML='';
+    var back=document.createElement('button'); back.type='button'; back.className='rc-hub-back'; back.textContent=rT(RC_UI.backGroups);
+    back.addEventListener('click',function(){ rcState.view='list'; rcRender(); });
+    rcBodyEl.appendChild(back);
+    var hero=document.createElement('div'); hero.className='rc-hub-hero';
+    hero.innerHTML='<img alt=""><b></b>';
+    hero.querySelector('img').src=it.wide;
+    hero.querySelector('b').textContent=it.name;
+    rcBodyEl.appendChild(hero);
+    var sub=document.createElement('p'); sub.className='rc-hub-dsub'; sub.textContent=it.sub[l]; rcBodyEl.appendChild(sub);
+    var meta=document.createElement('ul'); meta.className='rc-meta';
+    meta.innerHTML=it.meta.map(function(){ return '<li><span></span><span></span></li>'; }).join('');
+    var ml=meta.querySelectorAll('li');
+    it.meta.forEach(function(m,i){ ml[i].children[0].textContent=m[0][l]; ml[i].children[1].textContent=m[1][l]; });
+    rcBodyEl.appendChild(meta);
+    var desc=document.createElement('p'); desc.className='rc-hub-desc'; desc.textContent=it.d[l]; rcBodyEl.appendChild(desc);
+    var play=document.createElement('button'); play.type='button'; play.className='rc-hub-btn rc-hub-play'; play.textContent=rT(RC_UI.play);
+    play.addEventListener('click',function(){ rcOpenPlay(); });
+    rcBodyEl.appendChild(play);
+    var full=document.createElement('a'); full.className='rc-hub-btn rc-hub-fullb'; full.href=it.url; full.target='_blank'; full.rel='noopener'; full.textContent=rT(RC_UI.full);
+    rcBodyEl.appendChild(full);
+  }
+}
+function rcOpenPlay(){
+  var it=RC_ITEMS[rcState.sel];
+  document.getElementById('rcMain').style.display='none';
+  var p=document.getElementById('rcPlay'); p.classList.add('on');
+  document.getElementById('rcPlayName').textContent=it.name;
+  document.getElementById('rcPlayBack').textContent=rT(RC_UI.backWork);
+  var pf=document.getElementById('rcPlayFull'); pf.href=it.url;
+  var fr=document.getElementById('rcFrame');
+  fr.title=it.name+' \u2014 real client work by CarlLab'; fr.style.background=it.bg;
+  if(rcState.played!==rcState.sel){ fr.src=it.url; rcState.played=rcState.sel; }
+}
+function rcClosePlay(){
+  document.getElementById('rcPlay').classList.remove('on');
+  document.getElementById('rcMain').style.display='';
+  var fr=document.getElementById('rcFrame');
+  fr.removeAttribute('src'); rcState.played=null;
+}
+document.getElementById('rcPlayBack').addEventListener('click',rcClosePlay);
+function rcRender(){ rcRenderPanel(); rcRenderTabs(); rcRenderBody(); }
+new MutationObserver(function(){ rcRender(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+rcRender();
 })();
 </script>
 </body>
