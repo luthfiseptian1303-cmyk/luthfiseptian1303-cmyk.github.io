@@ -429,7 +429,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <p data-t="svcSub">Most musicians hide this page behind a phone call. Here it is: pick the occasion, count the sets, choose the band — the range below is the range you will be quoted.</p>
       </div>
       <div class="fee-grid">
-        <div id="feeTypes" data-rv></div>
+        <div id="feeTypes" data-rv><!-- static no-JS fallback (EN): buildFeeTypes() replaces this on load --><label class="fee-type sel" data-svc="club"><input type="radio" name="stype" value="club" checked=""><span class="ft-name">Club evenings</span><span class="ft-from" style="display:block">from $400 / set</span><span class="ft-desc" style="display:block">A listening room, a residency night, a late set — the music up close, the way the records were made.</span></label><label class="fee-type" data-svc="wedding"><input type="radio" name="stype" value="wedding"><span class="ft-name">Weddings &amp; private parties</span><span class="ft-from" style="display:block">from $650 / set</span><span class="ft-desc" style="display:block">From the ceremony to the second line out the door — including your song, arranged by him, if you give him a month.</span></label><label class="fee-type" data-svc="concert"><input type="radio" name="stype" value="concert"><span class="ft-name">Concerts &amp; festivals</span><span class="ft-from" style="display:block">from $950 / set</span><span class="ft-desc" style="display:block">Main stages and concert halls — full production rider, his own charts, a band that has played them for years.</span></label></div>
         <div class="calc" data-rv>
           <span class="c-label" data-t="calcLabel">Your range, before you call</span>
           <div class="c-range" id="estRange">—</div>

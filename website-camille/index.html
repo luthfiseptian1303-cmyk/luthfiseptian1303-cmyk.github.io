@@ -70,6 +70,7 @@ nav.main a:hover{color:var(--ox-d)}
 .hdr-avail{display:inline-flex}
 @media(max-width:1060px){.hdr-avail{display:none}}
 @media(max-width:760px){nav.main{display:none}}
+@media(max-width:560px){header.site .bar{gap:10px;padding-left:12px;padding-right:12px}.logo{font-size:18px}.hdr-right{gap:8px}.lang-sw button{padding:5px 7px;font-size:10.5px}.hdr-right .btn{white-space:nowrap;font-size:10.5px;letter-spacing:.03em;padding:10px 11px}}
 
 /* ---------- hero ---------- */
 .hero{padding:clamp(118px,16vh,164px) 0 clamp(48px,6vw,72px)}
@@ -488,7 +489,7 @@ html.js [data-rv].in{opacity:1;transform:none}
         <p data-t="svcSub">Private chefs usually quote in whispers. Here is the rate card instead: pick a menu, count your guests, choose the courses — the range below is the range in your written proposal.</p>
       </div>
       <div class="fee-grid">
-        <div id="feeTypes" data-rv></div>
+        <div id="feeTypes" data-rv><!-- static no-JS fallback (EN): buildFeeTypes() replaces this on load --><label class="fee-type" data-svc="market"><input type="radio" name="ttype" value="market"><span class="ft-name">Le Menu du Marché</span><span class="ft-from" style="display:block">from $97 / guest</span><span class="ft-desc" style="display:block">Three honest courses from that morning’s market — the way Lyon cooks at home.</span></label><label class="fee-type sel" data-svc="signature"><input type="radio" name="ttype" value="signature" checked=""><span class="ft-name">Le Menu Signature</span><span class="ft-from" style="display:block">from $151 / guest</span><span class="ft-desc" style="display:block">The menus she is known for: four courses, the good china, no shortcuts.</span></label><label class="fee-type" data-svc="grande"><input type="radio" name="ttype" value="grande"><span class="ft-name">La Grande Table</span><span class="ft-from" style="display:block">from $215 / guest</span><span class="ft-desc" style="display:block">Weddings and big tables — a second pair of hands in the kitchen, and service to the last glass.</span></label></div>
         <div class="calc" data-rv>
           <span class="c-label" data-t="calcLabel">Your range, before you talk</span>
           <div class="c-range" id="estRange">—</div>
@@ -501,7 +502,7 @@ html.js [data-rv].in{opacity:1;transform:none}
           </ul>
           <div class="ctl-row">
             <div class="ctl">
-              <span class="c-label" id="qtyLabel">Guests</span>
+              <span class="c-label" id="qtyLabel" data-t="qtyGuests">Guests</span>
               <div class="stepper">
                 <button type="button" id="qtyMinus" aria-label="Fewer guests">−</button>
                 <span class="sv"><b id="qtyVal">8</b><small id="qtyUnit">guests</small></span>

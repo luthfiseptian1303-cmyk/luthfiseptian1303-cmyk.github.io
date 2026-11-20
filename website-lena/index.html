@@ -65,6 +65,7 @@ nav.main a:hover{color:var(--pet-d)}
 .hdr-avail{display:inline-flex}
 @media(max-width:1120px){.hdr-avail{display:none}}
 @media(max-width:820px){nav.main{display:none}}
+@media(max-width:560px){header.site .bar{gap:10px;padding-left:12px;padding-right:12px}.logo{font-size:17px}.hdr-right{gap:8px}.lang-sw button{padding:5px 7px;font-size:10.5px}.hdr-right .btn{white-space:nowrap;font-size:10.5px;letter-spacing:.03em;padding:10px 11px}}
 
 /* ---------- reveal (text: 14px fade-rise, one grammar) ---------- */
 html.js [data-rv]{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -478,7 +479,7 @@ footer.site{border-top:2px solid var(--graph);padding:44px 0 54px;background:var
         <h2 data-t="pricesH">What a block costs.</h2>
         <p data-t="pricesIntro">Three formats, one way of counting: you pay for sessions coached, in a twelve-week block. The calculator below is the real arithmetic — try it.</p>
       </div>
-      <div id="fmtBox"></div>
+      <div id="fmtBox"><!-- static no-JS fallback (EN): buildFmtTypes() replaces this on load --><label class="fmt-type sel" data-fmt="one"><input type="radio" name="ftype" value="one" checked=""><span class="ft-name">1:1 coaching</span><span class="ft-from">From $92 per session</span><span class="ft-desc">Just you, Lena and the bar. Technique work, loads set on the day, full attention.</span></label><label class="fmt-type" data-fmt="group"><input type="radio" name="ftype" value="group"><span class="ft-name">Small group</span><span class="ft-from">From $48.5 per session</span><span class="ft-desc">Max four people, one coach, shared chalk. Your own programme, other people’s energy.</span></label><label class="fmt-type" data-fmt="online"><input type="radio" name="ftype" value="online"><span class="ft-name">Online coaching</span><span class="ft-from">From $38 per session</span><span class="ft-desc">Programming, video check-ins every week, loads adjusted from your footage.</span></label></div>
       <div class="calc" data-rv>
         <div class="calc-l">
           <h3 data-t="calcH">Block calculator</h3>
