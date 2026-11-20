@@ -1240,6 +1240,8 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var form=e.target, btn=form.querySelector('button[type="submit"]'), st=document.getElementById("formStatus");
   var v=function(id){ return (document.getElementById(id).value||"").trim(); };
   var idMode=curLang()==="id";
+  var waRaw=v("fWa"), waFmt=waRaw.replace(/[\s+\-]/g,"");
+  if(waRaw && !/^\d{9,15}$/.test(waFmt)){ show("err", idMode?"Nomor WhatsApp-nya belum pas — pakai 9–15 digit (mis. 081234567890), atau kosongkan saja karena WhatsApp memang opsional.":"That WhatsApp number looks off — use 9-15 digits (e.g. 081234567890), or just clear it, since WhatsApp is optional."); document.getElementById("fWa").focus(); return; }
   if(!v("fService")||!v("fAssets")){ show("err", idMode?"Pilih dulu layanan yang kamu butuhkan dan aset yang sudah kamu punya.":"Choose what you need and what you already have first."); var bad=!v("fService")?document.getElementById("fService"):document.getElementById("fAssets"); if(bad) bad.focus(); return; }
   if(!v("fName")||!v("fDetail")||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))){ show("err", idMode?"Isi namamu, email yang valid, dan sedikit tentang proyeknya.":"Fill in your name, a valid email, and a few words about the project."); var bad2=!v("fName")?document.getElementById("fName"):(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))?document.getElementById("fEmail"):document.getElementById("fDetail")); if(bad2) bad2.focus(); return; }
   var subject=(idMode?"Proyek baru — ":"New project — ")+v("fService")+" — "+v("fName");
@@ -1258,20 +1260,25 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     done();
   }
   function sendEmail(){
-    return fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
+    var emCtl=("AbortController" in window)?new AbortController():null;
+    var emTimer=emCtl?setTimeout(function(){ emCtl.abort(); },10000):null;
+    return fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},signal:emCtl?emCtl.signal:undefined,
       body:JSON.stringify({access_key:"bcecbb03-c454-406e-b8f1-693ffadc9517",subject:subject,from_name:"CarlLab website",name:v("fName"),email:v("fEmail"),whatsapp:v("fWa")||"-",service:v("fService"),goal:v("fGoal")||"-",audience:v("fAudience")||"-",assets:v("fAssets"),deadline:v("fDeadline")||"-",message:v("fDetail")})})
     .then(function(r){ return r.json(); })
     .then(function(j){
+      if(emTimer) clearTimeout(emTimer);
       if(!j.success) throw new Error("rejected");
       sentOk(idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.");
     });
   }
   if(apiSvc && /^\d{9,15}$/.test(waDigits)){
-    fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},
+    var apiCtl=("AbortController" in window)?new AbortController():null;
+    var apiTimer=apiCtl?setTimeout(function(){ apiCtl.abort(); },8000):null;
+    fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},signal:apiCtl?apiCtl.signal:undefined,
       body:JSON.stringify({name:v("fName"),whatsapp:waDigits,service:apiSvc,budget:0,notes:lines.join("\n")})})
     .then(function(r){ if(!r.ok) throw new Error("api"); return r.json(); })
-    .then(function(){ sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."); })
-    .catch(function(){ sendEmail().catch(mailtoFallback); });
+    .then(function(){ if(apiTimer) clearTimeout(apiTimer); sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."); })
+    .catch(function(){ if(apiTimer) clearTimeout(apiTimer); sendEmail().catch(mailtoFallback); });
   } else {
     sendEmail().catch(mailtoFallback);
   }
