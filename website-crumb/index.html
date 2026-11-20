@@ -59,6 +59,17 @@ nav a:hover{color:var(--ink)}
 .langpill{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px;margin-left:2px}
 .langpill button{border:none;background:transparent;border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted);transition:background .16s,color .16s}
 .langpill button.on{background:var(--accent);color:#fff}
+/* narrow phones: the header row's intrinsic width is 356px — compact it so the
+   Bag button + count badge stay fully on screen down to 300px */
+@media (max-width:360px){
+  header .wrap{padding-left:14px;padding-right:14px}
+  .hbar{gap:8px}
+  .wordmark{font-size:19px;letter-spacing:.08em}
+  .langpill{padding:2px}
+  .langpill button{padding:5px 8px;font-size:9.5px}
+  #cartBtn{margin-left:0;padding:9px 12px;gap:6px;font-size:10.5px}
+  #cartCount{min-width:18px;height:18px;font-size:10px}
+}
 
 /* ---------- hero ---------- */
 .hero{padding:52px 0 8px}
@@ -1034,6 +1045,10 @@ $('#orderForm').addEventListener('submit',function(ev){
   try{ localStorage.setItem(ORDER_KEY,JSON.stringify(order)); }catch(e){}
   stamps=stampsAfter; saveStamps();
   renderStamps(redeemed?0:stampsAfter);
+  /* the order is placed: empty the bag (memory + localStorage) so the same
+     items do not reappear at full price after a reload. The saved order
+     ticket and the stamp card are untouched. */
+  cart={}; saveCart(); renderCart();
   showConfirm();
   $('.dr-body').scrollTop=0;
 });

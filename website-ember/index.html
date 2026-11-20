@@ -787,20 +787,24 @@ function journey(){
   var r=jWrap.getBoundingClientRect(), vh=window.innerHeight;
   var total=r.height-vh; if(total<=0) return;
   var p=clamp(-r.top/total,0,1);
+  /* Crossfades are SEQUENTIAL, never simultaneous: an act's caption is fully
+     out before the next act starts fading in, so two captions can never stack.
+     Dark gaps: 0.33–0.35 and 0.65–0.67. The counter switches at the midpoint
+     of each gap (0.34 / 0.66), so label, chip and counter always agree. */
   /* Act 1: push-in */
-  var s1=1+0.25*clamp(p/0.38,0,1);
-  medias[0].style.transform='scale('+s1.toFixed(4)+') translateY('+(-2*clamp(p/0.38,0,1)).toFixed(3)+'%)';
-  var o1=1-ss(0.30,0.38,p);
+  var s1=1+0.25*clamp(p/0.33,0,1);
+  medias[0].style.transform='scale('+s1.toFixed(4)+') translateY('+(-2*clamp(p/0.33,0,1)).toFixed(3)+'%)';
+  var o1=1-ss(0.27,0.33,p);
   layers[0].style.opacity=o1.toFixed(3);
   /* Act 2: lateral drift — the full width of the 2:1 duck frame */
-  var pan=clamp((p-0.31)/0.38,0,1);
+  var pan=clamp((p-0.35)/0.30,0,1);
   medias[1].style.transform='translateX('+((7-14*pan)).toFixed(3)+'% ) scale(1.03)';
-  var o2=ss(0.31,0.40,p)*(1-ss(0.60,0.69,p));
+  var o2=ss(0.35,0.43,p)*(1-ss(0.59,0.65,p));
   layers[1].style.opacity=o2.toFixed(3);
-  /* Act 3: rise + crossfade */
-  var r3=ss(0.62,0.92,p);
+  /* Act 3: rise + fade in only after Act 2 is fully out */
+  var r3=ss(0.67,0.95,p);
   medias[2].style.transform='translateY('+((1-r3)*6).toFixed(3)+'%) scale('+(1.06-0.06*r3).toFixed(4)+')';
-  var o3=ss(0.62,0.74,p);
+  var o3=ss(0.67,0.77,p);
   layers[2].style.opacity=o3.toFixed(3);
   /* soft-blur midpoints: a layer blurs briefly while it crossfades */
   var ops=[o1,o2,o3];
@@ -810,9 +814,9 @@ function journey(){
   }
   /* progress + counter */
   segs[0].style.transform='scaleX('+clamp(p/0.34,0,1).toFixed(3)+')';
-  segs[1].style.transform='scaleX('+clamp((p-0.33)/0.34,0,1).toFixed(3)+')';
+  segs[1].style.transform='scaleX('+clamp((p-0.34)/0.32,0,1).toFixed(3)+')';
   segs[2].style.transform='scaleX('+clamp((p-0.66)/0.34,0,1).toFixed(3)+')';
-  var act=p<0.335?1:(p<0.665?2:3);
+  var act=p<0.34?1:(p<0.66?2:3);
   curAct=act;
   jCount.textContent=tr('actOf').replace('{a}',act);
 }
