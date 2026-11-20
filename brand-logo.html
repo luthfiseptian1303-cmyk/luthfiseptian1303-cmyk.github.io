@@ -715,8 +715,8 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 
 <style id="blrc-style">
 /* ===== REAL CLIENT (MomiRel) — same family as #demo, scoped to #real-client ===== */
-#real-client .layout{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;max-width:1120px;margin:0 auto;padding:40px 24px 56px;display:flex;gap:56px;align-items:flex-start;justify-content:center}
-#real-client .panel{flex:1 1 420px;max-width:480px;padding-top:18px}
+#real-client .layout{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;max-width:1120px;margin:0 auto;padding:40px 24px 56px;display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,4vw,72px);align-items:center}
+#real-client .panel{max-width:480px;min-width:0}
 #real-client .panel .kick{font-size:11px;letter-spacing:.22em;color:var(--gold);margin:0 0 14px;font-weight:600}
 #real-client .panel h1{font-family:'Archivo',sans-serif;font-size:clamp(34px,4.6vw,52px);line-height:1.04;margin:0 0 10px;letter-spacing:.01em;color:#FBF5E6}
 #real-client .panel .style{font-size:13px;letter-spacing:.14em;color:var(--gold);margin:0 0 16px;text-transform:uppercase;font-weight:600}
@@ -730,7 +730,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 #real-client .trybox h2{font-family:'Archivo',sans-serif;font-size:17px;margin:0 0 8px;color:#FBF5E6}
 #real-client .trybox ul{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0;padding-left:18px}
 #real-client .trybox li{margin:0 0 6px}
-#real-client .demo-phone{width:min(350px,88vw);flex:none;margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
+#real-client .demo-phone{width:min(350px,100%);min-width:0;margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
 #real-client .screen{border-radius:32px;overflow:hidden;background:#0A0A0C;height:660px;display:flex;flex-direction:column;position:relative}
 #real-client .notch{width:110px;height:22px;background:#101012;border-radius:0 0 14px 14px;margin:0 auto;flex:none;position:relative;z-index:2}
 #real-client .hub{display:flex;flex-direction:column;flex:1;min-height:0;background:#0A0A0C;color:#F3EAD8;font-family:'Space Grotesk',sans-serif}
@@ -775,9 +775,30 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 #real-client .blrc-pill{display:inline-block;border:1px solid #C9A24B;color:#C9A24B;border-radius:999px;padding:5px 14px;font-size:11px;letter-spacing:.22em}
 #real-client .blrc-honest{margin-top:14px;font-size:14px;line-height:1.65;color:var(--muted)}
 @media (max-width:1020px){
-#real-client .layout{flex-direction:column;gap:32px;padding:28px 18px 44px;align-items:center}
-#real-client .panel{max-width:560px;width:100%;padding-top:0}
+#real-client .layout{gap:26px;padding:32px 18px 48px}
+}
+@media (max-width:560px){
+#real-client .layout{gap:12px;padding:24px 10px 40px}
+#real-client .panel h1{font-size:clamp(24px,7.6vw,32px)}
+#real-client .panel .lede{font-size:14.5px;margin-bottom:20px}
+#real-client .specs .row{gap:10px;padding-top:11px;padding-bottom:11px}
+#real-client .specs dt{font-size:11px}
+#real-client .specs dd{font-size:13px}
+#real-client .trybox{padding:14px}
 #real-client .screen{height:620px}
+#real-client .notch{width:84px}
+#real-client .hub-head{padding-left:10px;padding-right:10px}
+#real-client .hub-head b{font-size:12.5px;letter-spacing:.08em}
+#real-client .hub-head span{font-size:9px;letter-spacing:.1em}
+#real-client .hub-body{padding-left:8px;padding-right:8px}
+#real-client .hub-row{gap:8px;padding:8px}
+#real-client .hub-thumb{width:30px;height:38px}
+#real-client .hub-row>div{min-width:0;flex:1}
+#real-client .hub-row h4{font-size:12.5px}
+#real-client .hub-row .arr{display:none}
+#real-client .hub-head{align-items:center}
+#real-client .hub-head span{line-height:1.5;text-align:right}
+#real-client .blrc-hero b{font-size:17px}
 }
 </style>
 
