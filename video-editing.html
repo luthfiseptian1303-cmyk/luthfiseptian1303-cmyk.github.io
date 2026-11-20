@@ -634,7 +634,8 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .vp-bar{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #23262B;background:#0A0A0C;flex:none}
 .vp-bar .vp-back{padding:0;flex:none}
 .vp-bar b{font-family:'Archivo',sans-serif;font-size:13px;letter-spacing:.04em;color:#E9DFC8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#vpFrame{flex:1;width:100%;border:0;display:block;background:#000}
+#vpVideo{flex:1;min-height:0;width:100%;border:0;display:block;background:#000;object-fit:contain}
+.vp-fallback{display:block;padding:10px 12px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:#C9A24B;text-decoration:none;background:#0A0A0C;border-top:1px solid #23262B;flex:none}
 </style>
 </head>
 <body>
@@ -726,7 +727,8 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
             </div>
             <div id="vpPlay">
               <div class="vp-bar"><button class="vp-back" id="vpPlayBack" type="button"></button><b id="vpPlayName"></b></div>
-              <iframe id="vpFrame" title="Portfolio video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+              <video id="vpVideo" controls playsinline preload="none"></video>
+              <a class="vp-fallback" id="vpFallback" target="_blank" rel="noopener"></a>
             </div>
           </div>
         </div>
@@ -976,6 +978,7 @@ var VP_UI={
  backDetail:{en:"‹ Back",id:"‹ Kembali"},
  watch:{en:"▶ Watch in this phone",id:"▶ Tonton di HP ini"},
  drive:{en:"Open in Google Drive ↗",id:"Buka di Google Drive ↗"},
+ fallback:{en:"Won't play here? Open in Google Drive ↗",id:"Tidak berputar di sini? Buka di Google Drive ↗"},
  desc:{en:"A short-form edit from the portfolio — streamed from Google Drive.",id:"Edit pendek dari portofolio — diputar dari Google Drive."},
  foot:{en:"5 edits in 3 categories — all play right here in this phone.",id:"5 edit dalam 3 kategori — semuanya diputar langsung di HP ini."}
 };
@@ -983,6 +986,7 @@ function vpL(){return document.documentElement.lang==="id"?"id":"en"}
 function vt(x){return x[vpL()]}
 function vpThumb(id){return "https://drive.google.com/thumbnail?id="+id+"&sz=w720"}
 function vpPrev(id){return "https://drive.google.com/file/d/"+id+"/preview"}
+function vpUc(id){return "https://drive.google.com/uc?export=download&id="+id}
 function vpView(id){return "https://drive.google.com/file/d/"+id+"/view"}
 var vpState={cat:0,sel:VP_CATS[0].items[0],view:"list"};
 var vpTabs=document.getElementById("vpTabs"), vpBody=document.getElementById("vpBody");
@@ -997,6 +1001,8 @@ function renderVPPanel(){
   lis[2].querySelector(".k").textContent=vt(VP_UI.fmt); lis[2].querySelector(".v").textContent=vt(it.o==="v"?VP_UI.vert:VP_UI.land);
   document.getElementById("vpLine").textContent=vt(VP_UI.line);
   document.getElementById("vpHint").textContent=vt(VP_UI.hint);
+  var fb=document.getElementById("vpFallback");
+  fb.href=vpView(it.id); fb.textContent=vt(VP_UI.fallback);
   document.getElementById("vpHeadNote").textContent=vt(VP_UI.headNote);
 }
 function renderVPTabs(){
@@ -1059,13 +1065,20 @@ function openVPPlay(){
   var p=document.getElementById("vpPlay"); p.classList.add("on");
   document.getElementById("vpPlayName").textContent=it.t;
   document.getElementById("vpPlayBack").textContent=vt(VP_UI.backDetail);
-  var fr=document.getElementById("vpFrame");
-  fr.title=it.t+" — portfolio video";
-  fr.src=vpPrev(it.id);
+  var fb=document.getElementById("vpFallback");
+  fb.href=vpView(it.id); fb.textContent=vt(VP_UI.fallback);
+  var vid=document.getElementById("vpVideo");
+  vid.poster=vpThumb(it.id);
+  vid.src=vpUc(it.id);
+  var pr=vid.play();
+  if(pr&&pr.catch){ pr.catch(function(){}); }
 }
 function closeVPPlay(){
-  var fr=document.getElementById("vpFrame");
-  fr.removeAttribute("src");
+  var vid=document.getElementById("vpVideo");
+  vid.pause();
+  vid.removeAttribute("src");
+  vid.removeAttribute("poster");
+  vid.load();
   document.getElementById("vpPlay").classList.remove("on");
   document.getElementById("vpMain").style.display="";
 }
