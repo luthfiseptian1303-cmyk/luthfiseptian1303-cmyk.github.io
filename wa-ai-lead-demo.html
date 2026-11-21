@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Demo Asisten WA AI — Lead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f2f4f1; --panel:#ffffff; --panel2:#e9ede8; --ink:#12211a; --ink2:#43554b; --line:#d5ddd4;
+    --green:#1faa55; --green-d:#0b6e3c; --wa:#25d366; --wa-head:#075e54; --wa-head-ink:#e7f5ee;
+    --chat-bg:#e7dfd3; --bubble-in:#ffffff; --bubble-out:#d9fdd3; --bubble-ink:#111b16;
+    --hot:#e5484d; --warm:#e8930c; --cold:#3e8eDE; --cold:#3b82c4;
+    --chip:#ffffff; --shadow:0 10px 30px rgba(18,33,26,.10);
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0c120e; --panel:#131b16; --panel2:#1a241e; --ink:#eaf3ec; --ink2:#9db3a5; --line:#26332a;
+      --green:#2fce6e; --green-d:#25d366; --chat-bg:#0b141a; --bubble-in:#1f2c34; --bubble-out:#005c4b; --bubble-ink:#e9edef;
+      --chip:#1a241e; --shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer;min-height:40px}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
+
+  /* ---------- top strip ---------- */
+  .topstrip{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:10px 14px;box-shadow:var(--shadow)}
+  .live-dot{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;letter-spacing:.02em}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 0 rgba(37,211,102,.5);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.45)}70%{box-shadow:0 0 0 9px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+  @media (prefers-reduced-motion: reduce){.dot{animation:none}}
+  .clock{font-family:var(--mono);font-size:13px;color:var(--ink2)}
+  .clock b{color:var(--ink)}
+  .demo-tag{font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px dashed var(--warm,#e8930c);color:var(--ink);border-radius:999px;padding:5px 10px}
+
+  /* ---------- hero ---------- */
+  .hero{margin:26px 0 6px;max-width:760px}
+  .hero h1{font-size:clamp(28px,5.2vw,44px);line-height:1.08;margin:0 0 10px;font-weight:800;letter-spacing:-.01em}
+  .hero h1 .g{color:var(--green-d)}
+  @media (prefers-color-scheme: dark){.hero h1 .g{color:var(--wa)}}
+  .hero p{margin:0;font-size:16px;line-height:1.55;color:var(--ink2);max-width:62ch}
+  .hero p b{color:var(--ink)}
+
+  /* ---------- scenario picker ---------- */
+  .scen-head{display:flex;align-items:baseline;gap:10px;margin:24px 0 10px;flex-wrap:wrap}
+  .scen-head h2{font-size:17px;margin:0;font-weight:800}
+  .scen-head span{font-size:13px;color:var(--ink2)}
+  .scen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:900px){.scen-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:460px){.scen-grid{grid-template-columns:1fr 1fr}}
+  .scen{text-align:left;border:1.5px solid var(--line);background:var(--panel);border-radius:14px;padding:12px 12px 10px;color:var(--ink);transition:border-color .15s, transform .15s}
+  .scen:hover{border-color:var(--green)}
+  .scen.active{border-color:var(--green);background:var(--panel2);box-shadow:inset 0 0 0 1px var(--green)}
+  .scen .tag{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .scen .t{font-weight:800;font-size:14.5px;margin:4px 0 3px;line-height:1.25}
+  .scen .d{font-size:12.5px;color:var(--ink2);line-height:1.4}
+  .tag.hot{color:var(--hot)} .tag.warm{color:var(--warm)} .tag.night{color:#7c5cd6} .tag.cold{color:var(--cold)}
+  @media (prefers-color-scheme: dark){.tag.night{color:#b79cff}}
+
+  /* ---------- main grid ---------- */
+  .grid{display:grid;grid-template-columns:400px 1fr;gap:18px;margin-top:18px;align-items:start}
+  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+  .phone-col{position:sticky;top:14px}
+  @media (max-width:980px){.phone-col{position:static}}
+
+  /* ---------- phone ---------- */
+  .phone{margin:0 auto;max-width:400px;background:#111;border-radius:38px;padding:10px;box-shadow:0 24px 50px rgba(0,0,0,.35)}
+  .screen{background:var(--chat-bg);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:640px}
+  @media (max-width:460px){.screen{height:600px}}
+  .wa-head{background:var(--wa-head);color:var(--wa-head-ink);padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .wa-ava{width:40px;height:40px;border-radius:50%;background:#128c7e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:none}
+  .wa-head .nm{font-weight:700;font-size:15px;line-height:1.2}
+  .wa-head .st{font-size:12px;opacity:.85}
+  .wa-head .ai-badge{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:4px 8px;border-radius:999px;flex:none}
+  .chat{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+  .day{align-self:center;background:rgba(0,0,0,.14);color:var(--bubble-ink);font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;opacity:.85}
+  @media (prefers-color-scheme: dark){.day{background:#182229}}
+  .msg{max-width:82%;padding:8px 10px 6px;border-radius:10px;font-size:14px;line-height:1.45;color:var(--bubble-ink);box-shadow:0 1px 1px rgba(0,0,0,.13);position:relative;animation:in .25s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.msg{animation:none}}
+  .msg.in{align-self:flex-start;background:var(--bubble-in);border-top-left-radius:2px}
+  .msg.out{align-self:flex-end;background:var(--bubble-out);border-top-right-radius:2px}
+  .msg .tm{display:block;text-align:right;font-size:10.5px;opacity:.6;margin-top:3px;font-family:var(--mono)}
+  .msg .tm .tick{color:#53bdeb;font-weight:700}
+  .msg .who{display:block;font-size:11px;font-weight:800;color:var(--green-d);margin-bottom:2px}
+  @media (prefers-color-scheme: dark){.msg .who{color:var(--wa)}}
+  .typing{align-self:flex-start;background:var(--bubble-in);border-radius:10px;border-top-left-radius:2px;padding:12px 14px;display:none;gap:5px;box-shadow:0 1px 1px rgba(0,0,0,.13)}
+  .typing.on{display:flex}
+  .typing i{width:8px;height:8px;border-radius:50%;background:#9db3a5;animation:tb 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes tb{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-4px);opacity:1}}
+  @media (prefers-reduced-motion: reduce){.typing i{animation:none}}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px 4px;background:var(--chat-bg)}
+  .chip{border:1.5px solid var(--green);background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 13px;font-size:13px;font-weight:600;min-height:38px}
+  .chip:active{transform:scale(.97)}
+  .wa-input{display:flex;gap:8px;padding:10px 12px 14px;background:var(--chat-bg);align-items:center}
+  .wa-input input{flex:1;border:none;border-radius:999px;padding:12px 16px;font-size:14px;font-family:inherit;background:var(--bubble-in);color:var(--bubble-ink);min-height:44px;min-width:0}
+  .wa-input input:focus{outline:2px solid var(--green)}
+  .send{width:46px;height:46px;min-height:46px;border-radius:50%;border:none;background:#00a884;color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+  .send svg{width:21px;height:21px;fill:#fff}
+  .phone-note{text-align:center;font-size:12.5px;color:var(--ink2);margin:10px auto 0;max-width:400px;line-height:1.5}
+
+  /* ---------- dashboard ---------- */
+  .dash{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+  .panel h3{margin:0 0 4px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .panel .sub{font-size:12.5px;color:var(--ink2);margin:0 0 12px}
+  .new-pill{font-family:var(--mono);font-size:10.5px;font-weight:700;background:var(--hot);color:#fff;border-radius:999px;padding:3px 8px;display:none}
+  .new-pill.on{display:inline-block;animation:in .3s ease}
+
+  .lead-top{display:flex;gap:12px;align-items:center}
+  .lead-ava{width:52px;height:52px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex:none;color:var(--ink2)}
+  .lead-top .nm{font-size:18px;font-weight:800;line-height:1.2}
+  .lead-top .meta{font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin-top:2px}
+  .score-wrap{margin-left:auto;text-align:right;flex:none}
+  .score-num{font-family:var(--mono);font-size:30px;font-weight:700;line-height:1}
+  .score-lbl{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+  .score-bar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;margin:14px 0 4px;border:1px solid var(--line)}
+  .score-fill{height:100%;width:0%;border-radius:99px;background:var(--cold);transition:width .8s cubic-bezier(.2,.8,.2,1), background .4s}
+  .score-scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ink2)}
+
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+  @media (max-width:520px){.fields{grid-template-columns:1fr}}
+  .field{border:1px solid var(--line);border-radius:11px;padding:9px 11px;background:var(--panel)}
+  .field .k{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+  .field .v{font-size:14.5px;font-weight:700;margin-top:2px;min-height:21px}
+  .field .v.empty{color:var(--ink2);font-weight:500;font-size:13px}
+  .field.filled{border-color:var(--green)}
+  .field.flash{animation:flash 1s ease}
+  @keyframes flash{0%{background:rgba(37,211,102,.25)}100%{background:var(--panel)}}
+  @media (prefers-reduced-motion: reduce){.field.flash{animation:none}}
+
+  .pipe{display:flex;gap:6px;margin-top:16px}
+  .step{flex:1;text-align:center}
+  .step .bar{height:6px;border-radius:99px;background:var(--panel2);border:1px solid var(--line);margin-bottom:6px;transition:background .4s}
+  .step .lb{font-size:11px;font-weight:700;color:var(--ink2);line-height:1.25}
+  .step.done .bar{background:var(--green);border-color:var(--green)}
+  .step.done .lb{color:var(--ink)}
+  .step.now .bar{background:var(--wa);border-color:var(--wa);box-shadow:0 0 0 3px rgba(37,211,102,.25)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}
+  .stat .n{font-family:var(--mono);font-size:24px;font-weight:700;line-height:1.1}
+  .stat .l{font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.35}
+
+  .log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;max-height:230px;overflow-y:auto}
+  .log li{display:flex;gap:10px;padding:8px 2px;border-bottom:1px dashed var(--line);font-size:13.5px;line-height:1.45;animation:in .3s ease}
+  .log li:last-child{border-bottom:none}
+  .log .lt{font-family:var(--mono);font-size:11px;color:var(--ink2);flex:none;padding-top:2px}
+  .log .empty-log{color:var(--ink2);font-size:13.5px;padding:6px 2px}
+  .log b{font-weight:700}
+
+  .verdict{display:none;border-radius:14px;padding:14px 16px;font-size:14.5px;line-height:1.55;border:1.5px solid var(--green);background:var(--panel2)}
+  .verdict.on{display:block;animation:in .35s ease}
+  .verdict b{font-weight:800}
+  .verdict .vt{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--green-d);display:block;margin-bottom:5px}
+  @media (prefers-color-scheme: dark){.verdict .vt{color:var(--wa)}}
+
+  /* ---------- how / cta ---------- */
+  .how{margin-top:26px}
+  .how h2{font-size:19px;font-weight:800;margin:0 0 12px}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media (max-width:820px){.how-grid{grid-template-columns:1fr}}
+  .how-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:var(--shadow)}
+  .how-card .no{font-family:var(--mono);font-weight:700;font-size:12px;color:var(--green-d);border:1.5px solid var(--green);border-radius:8px;display:inline-block;padding:3px 8px;margin-bottom:9px}
+  @media (prefers-color-scheme: dark){.how-card .no{color:var(--wa)}}
+  .how-card h4{margin:0 0 5px;font-size:15px;font-weight:800}
+  .how-card p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.55}
+  .cta{margin-top:16px;background:#0e2a1c;color:#eaf7ee;border-radius:16px;padding:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .cta .ct{font-size:18px;font-weight:800;line-height:1.3;max-width:34ch}
+  .cta .cs{font-size:13.5px;opacity:.85;margin-top:4px}
+  .cta a{background:var(--wa);color:#062b16;text-decoration:none;font-weight:800;font-size:15px;border-radius:999px;padding:13px 20px;display:inline-flex;align-items:center;gap:8px;min-height:48px}
+  .cta a svg{width:19px;height:19px;fill:#062b16}
+  footer{margin-top:18px;font-size:12.5px;color:var(--ink2);line-height:1.6;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topstrip">
+    <span class="live-dot"><span class="dot"></span> ASISTEN AKTIF — 24/7</span>
+    <span class="demo-tag">SIMULASI DEMO · DATA CONTOH</span>
+    <span class="clock">Jakarta <b id="clock">--:--:--</b> WIB</span>
+  </div>
+
+  <div class="hero">
+    <h1>Chat masuk tengah malam pun<br>tetap jadi <span class="g">lead yang tercatat.</span></h1>
+    <p>Ini bukan mockup diam. Tekan salah satu skenario di bawah — asisten AI akan <b>menjawab chat pelanggan, menggali kebutuhan, memberi skor, dan memindahkan lead di pipeline</b> secara langsung, seperti yang terjadi di bisnis beneran. Contoh bisnis: rental mobil.</p>
+  </div>
+
+  <div class="scen-head">
+    <h2>Pilih skenario lead</h2>
+    <span>Klik untuk menjalankan simulasi chat-nya →</span>
+  </div>
+  <div class="scen-grid" id="scenGrid">
+    <button class="scen" data-scen="panas">
+      <span class="tag hot">● Lead Panas</span>
+      <div class="t">Booking besok pagi</div>
+      <div class="d">Sudah tahu mobil &amp; tanggal. Harus ditangkap cepat sebelum pindah ke kompetitor.</div>
+    </button>
+    <button class="scen" data-scen="hangat">
+      <span class="tag warm">● Lead Hangat</span>
+      <div class="t">Baru tanya-tanya harga</div>
+      <div class="d">Belum pasti. AI menggali tanggal &amp; kebutuhan supaya tidak berhenti di “cek dulu ya”.</div>
+    </button>
+    <button class="scen" data-scen="malam">
+      <span class="tag night">● Di Luar Jam Kerja</span>
+      <div class="t">Chat masuk 23.47</div>
+      <div class="d">Pemilik sudah tidur. Asisten tetap menjawab &amp; mengamankan lead untuk follow-up pagi.</div>
+    </button>
+    <button class="scen" data-scen="dingin">
+      <span class="tag cold">● Lead Dingin</span>
+      <div class="t">Cuma tanya sekilas</div>
+      <div class="d">Minat rendah. Tetap dicatat rapi + diberi katalog, siapa tahu kembali minggu depan.</div>
+    </button>
+  </div>
+
+  <div class="grid">
+    <!-- PHONE -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="screen">
+          <div class="wa-head">
+            <div class="wa-ava">SR</div>
+            <div>
+              <div class="nm">Sinar Rent — Rental Mobil</div>
+              <div class="st" id="waStatus">online</div>
+            </div>
+            <span class="ai-badge">ASISTEN AI</span>
+          </div>
+          <div class="chat" id="chat">
+            <div class="day">HARI INI</div>
+            <div class="msg out"><span class="who">Asisten AI</span>Halo kak, selamat datang di Sinar Rent 🚗<br>Saya asisten otomatis — balas dalam hitungan detik, 24 jam. Mau sewa mobil untuk kapan &amp; berapa orang?<span class="tm">09.00 <span class="tick">✓✓</span></span></div>
+          </div>
+          <div class="typing" id="typing"><i></i><i></i><i></i></div>
+          <div class="chips" id="chips">
+            <button class="chip" data-say="Berapa harga sewa Avanza per hari?">Harga Avanza?</button>
+            <button class="chip" data-say="Bisa antar ke bandara Soetta?">Antar ke bandara?</button>
+            <button class="chip" data-say="Saya mau booking untuk besok, 3 hari">Booking besok, 3 hari</button>
+          </div>
+          <div class="wa-input">
+            <input id="chatInput" type="text" placeholder="Ketik sebagai pelanggan…" autocomplete="off" />
+            <button class="send" id="sendBtn" aria-label="Kirim pesan">
+              <svg viewBox="0 0 24 24"><path d="M3.4 20.4l17.8-7.5c.8-.35.8-1.45 0-1.8L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .72.73 1.2 1.39.91z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="phone-note">Kamu juga bisa mengetik sendiri di kolom chat — asisten akan menjawab dari katalog contoh &amp; mencatatmu sebagai lead.</p>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dash">
+      <div class="stats">
+        <div class="stat"><div class="n" id="stChat">1</div><div class="l">Percakapan ditangani asisten (sesi demo ini)</div></div>
+        <div class="stat"><div class="n" id="stLead">0</div><div class="l">Lead tercatat ke dashboard</div></div>
+        <div class="stat"><div class="n" id="stHot">0</div><div class="l">Lead panas (skor ≥ 80)</div></div>
+        <div class="stat"><div class="n">±3 dtk</div><div class="l">Waktu balas asisten — bandingkan balas manual yang bisa berjam-jam</div></div>
+      </div>
+
+      <div class="panel" id="leadPanel">
+        <h3>Lead Masuk — Live <span class="new-pill" id="newPill">BARU</span></h3>
+        <p class="sub">Kartu ini terisi otomatis dari isi chat di sebelah kiri. Tidak ada yang diketik ulang manual oleh pemilik bisnis.</p>
+        <div class="lead-top">
+          <div class="lead-ava" id="leadAva">?</div>
+          <div>
+            <div class="nm" id="leadName">Menunggu lead pertama…</div>
+            <div class="meta" id="leadMeta">sumber: WhatsApp · —</div>
+          </div>
+          <div class="score-wrap">
+            <div class="score-num" id="scoreNum" style="color:var(--cold)">0</div>
+            <div class="score-lbl" id="scoreLbl" style="color:var(--cold)">SKOR LEAD</div>
+          </div>
+        </div>
+        <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+        <div class="score-scale"><span>0 · Dingin</span><span>50 · Hangat</span><span>80+ · Panas</span></div>
+
+        <div class="fields">
+          <div class="field" id="f-need"><div class="k">Kebutuhan</div><div class="v empty">belum tergali</div></div>
+          <div class="field" id="f-date"><div class="k">Tanggal Pakai</div><div class="v empty">belum tergali</div></div>
+          <div class="field" id="f-budget"><div class="k">Sinyal Budget</div><div class="v empty">belum tergali</div></div>
+          <div class="field" id="f-next"><div class="k">Tindak Lanjut</div><div class="v empty">—</div></div>
+        </div>
+
+        <div class="pipe" id="pipe">
+          <div class="step" data-step="0"><div class="bar"></div><div class="lb">Baru<br>Masuk</div></div>
+          <div class="step" data-step="1"><div class="bar"></div><div class="lb">Sedang<br>Digali AI</div></div>
+          <div class="step" data-step="2"><div class="bar"></div><div class="lb">Qualified /<br>Terkualifikasi</div></div>
+          <div class="step" data-step="3"><div class="bar"></div><div class="lb">Booking /<br>Follow-up</div></div>
+        </div>
+      </div>
+
+      <div class="verdict" id="verdict"><span class="vt">Hasil Skenario</span><span id="verdictText"></span></div>
+
+      <div class="panel">
+        <h3>Log Aktivitas Asisten</h3>
+        <p class="sub">Semua yang dilakukan asisten tercatat — pemilik bisnis tinggal membaca &amp; menindaklanjuti yang panas.</p>
+        <ul class="log" id="log">
+          <li class="empty-log" style="border:none">Belum ada aktivitas. Jalankan skenario atau kirim chat sebagai pelanggan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="how">
+    <h2>Kenapa ini beda dari sekadar “chatbot”</h2>
+    <div class="how-grid">
+      <div class="how-card"><span class="no">01</span><h4>Menjawab + menggali, bukan menjawab saja</h4><p>Asisten dilatih dari katalog, harga, dan aturan bisnis kamu. Ia bertanya balik: tanggal, jumlah orang, kebutuhan — sampai lead-nya utuh.</p></div>
+      <div class="how-card"><span class="no">02</span><h4>Setiap chat jadi data lead</h4><p>Nama, kebutuhan, tanggal, dan sinyal budget tersusun otomatis di dashboard. Tidak ada lagi lead hilang karena chat tenggelam.</p></div>
+      <div class="how-card"><span class="no">03</span><h4>Skor menentukan prioritas</h4><p>Lead panas ditandai merah dan didahulukan untuk dihubungi manusia. Lead dingin tetap disimpan untuk follow-up berikutnya.</p></div>
+    </div>
+    <div class="cta">
+      <div>
+        <div class="ct">Mau asisten seperti ini menjaga WhatsApp bisnismu?</div>
+        <div class="cs">CarlLab — demo ini contoh versi rental mobil; niche, katalog, dan pertanyaan kualifikasinya disesuaikan dengan bisnismu.</div>
+      </div>
+      <a href="https://wa.me/6281584543140?text=Halo%20CarlLab%2C%20saya%20baru%20coba%20demo%20Asisten%20WA%20AI%20Lead.%20Saya%20mau%20tanya-tanya%20dulu%20untuk%20bisnis%20saya." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91A9.86 9.86 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.22-.08-.39-.12-.55.13-.16.24-.62.8-.76.97-.14.16-.28.18-.53.06-.25-.13-1.05-.38-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.55-1.35-.77-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.13.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.6.19 1.13.16 1.56.1.48-.07 1.47-.58 1.8-1.18.33-.6.33-1.12.23-1.23-.1-.1-.23-.16-.48-.28z"/></svg>
+        Chat CarlLab di WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <footer>Simulasi demo CarlLab — percakapan, nama, harga, dan stok di halaman ini adalah contoh untuk memperlihatkan alur kerja asisten. Pada pemasangan nyata, asisten terhubung ke nomor WhatsApp bisnis kamu dan katalog aslimu.</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var chat = $("chat"), typing = $("typing"), input = $("chatInput"), logEl = $("log");
+  var timers = [], running = false, leadCounted = false, currentScen = null;
+
+  /* clock WIB */
+  function tickClock(){
+    try{
+      var t = new Date().toLocaleTimeString("id-ID",{timeZone:"Asia/Jakarta",hour:"2-digit",minute:"2-digit",second:"2-digit"}).replace(/\./g,":");
+      $("clock").textContent = t;
+    }catch(e){ $("clock").textContent = new Date().toLocaleTimeString("id-ID"); }
+  }
+  tickClock(); setInterval(tickClock, 1000);
+
+  function nowTime(){
+    try{ return new Date().toLocaleTimeString("id-ID",{timeZone:"Asia/Jakarta",hour:"2-digit",minute:"2-digit"}).replace(/\./g,"."); }
+    catch(e){ return "—"; }
+  }
+  function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+  function stopAll(){ timers.forEach(clearTimeout); timers = []; typing.classList.remove("on"); running = false; $("waStatus").textContent = "online"; }
+
+  function scrollChat(){ chat.scrollTop = chat.scrollHeight; }
+  function addMsg(who, text, time){
+    var d = document.createElement("div");
+    d.className = "msg " + (who === "ai" ? "out" : "in");
+    var inner = "";
+    if(who === "ai") inner += '<span class="who">Asisten AI</span>';
+    inner += text.replace(/\n/g,"<br>");
+    inner += '<span class="tm">' + (time || nowTime()) + (who === "ai" ? ' <span class="tick">✓✓</span>' : '') + '</span>';
+    d.innerHTML = inner;
+    chat.appendChild(d); scrollChat();
+  }
+  function addLog(html){
+    var empty = logEl.querySelector(".empty-log");
+    if(empty) empty.remove();
+    var li = document.createElement("li");
+    li.innerHTML = '<span class="lt">' + nowTime() + '</span><span>' + html + '</span>';
+    logEl.prepend(li);
+  }
+
+  /* dashboard */
+  var stats = { chat: 1, lead: 0, hot: 0 };
+  function renderStats(){ $("stChat").textContent = stats.chat; $("stLead").textContent = stats.lead; $("stHot").textContent = stats.hot; }
+  var score = 0, hotCounted = false;
+  function setScore(v){
+    score = v;
+    var fill = $("scoreFill"), num = $("scoreNum"), lbl = $("scoreLbl");
+    var color = v >= 80 ? "var(--hot)" : (v >= 45 ? "var(--warm)" : "var(--cold)");
+    var word = v >= 80 ? "PANAS — HUBUNGI SEKARANG" : (v >= 45 ? "HANGAT — LAYAK FOLLOW-UP" : (v > 0 ? "DINGIN — SIMPAN & EDUKASI" : "SKOR LEAD"));
+    fill.style.width = v + "%"; fill.style.background = color;
+    num.style.color = color; lbl.style.color = color;
+    num.textContent = v; lbl.textContent = word;
+    if(v >= 80 && !hotCounted){ hotCounted = true; stats.hot++; renderStats(); }
+  }
+  function setStage(idx){
+    document.querySelectorAll("#pipe .step").forEach(function(s){
+      var i = parseInt(s.getAttribute("data-step"), 10);
+      s.classList.toggle("done", i < idx);
+      s.classList.toggle("now", i === idx);
+    });
+  }
+  function setField(key, value){
+    var f = $("f-" + key); if(!f) return;
+    var v = f.querySelector(".v");
+    v.textContent = value; v.classList.remove("empty");
+    f.classList.add("filled","flash");
+    setTimeout(function(){ f.classList.remove("flash"); }, 1000);
+  }
+  function setLead(name, meta){
+    $("leadName").textContent = name;
+    $("leadMeta").textContent = meta;
+    $("leadAva").textContent = name.split(" ").map(function(w){ return w[0]; }).join("").slice(0,2).toUpperCase();
+    $("newPill").classList.add("on");
+    if(!leadCounted){ leadCounted = true; stats.lead++; renderStats(); }
+  }
+  function resetDash(){
+    leadCounted = false; hotCounted = false;
+    $("leadName").textContent = "Menunggu lead pertama…";
+    $("leadMeta").textContent = "sumber: WhatsApp · —";
+    $("leadAva").textContent = "?";
+    $("newPill").classList.remove("on");
+    ["need","date","budget","next"].forEach(function(k){
+      var f = $("f-" + k); f.classList.remove("filled");
+      var v = f.querySelector(".v"); v.classList.add("empty");
+      v.textContent = k === "next" ? "—" : "belum tergali";
+    });
+    setScore(0); setStage(-1);
+    $("verdict").classList.remove("on");
+  }
+  function clearChat(){
+    chat.innerHTML = '<div class="day">HARI INI</div>';
+  }
+
+  /* ---------- scenarios ---------- */
+  var SCEN = {
+    panas: {
+      dayTime: "14.02",
+      steps: [
+        { who:"cust", text:"Halo, Avanza ready untuk besok pagi? Saya butuh 3 hari, buat antar keluarga ke Bandung.", t:"14.02" },
+        { who:"ai", text:"Ready kak! Avanza besok pagi tersedia ✅\nHarga Rp350rb/hari × 3 hari = Rp1.050.000, sudah termasuk antar ke lokasi kakak di Jakarta.\nBoleh tahu nama kakak untuk saya kunci unitnya?", t:"14.02",
+          fx:function(){ setLead("Budi Santoso","sumber: WhatsApp · 14.02 WIB"); setField("need","Avanza — 3 hari, ke Bandung"); setField("date","Besok pagi, 3 hari"); setScore(55); setStage(1); addLog("<b>Lead baru tercatat</b> — kebutuhan & tanggal langsung tergali dari chat pertama."); } },
+        { who:"cust", text:"Saya Budi. Bisa lepas kunci? Antar ke Tebet ya.", t:"14.03" },
+        { who:"ai", text:"Siap Kak Budi, bisa lepas kunci dengan KTP + SIM A.\nUnit saya kunci atas nama Kak Budi — pembayaran bisa transfer atau saat mobil diantar. Saya kirim ringkasan booking-nya sekarang ya kak 🙏", t:"14.03",
+          fx:function(){ setField("budget","Setuju harga total Rp1.050.000"); setField("next","Pemilik dihubungi — kunci unit & kirim invoice"); setScore(92); setStage(3); addLog("<b>Skor naik ke 92 (PANAS)</b> — tanggal pasti + setuju harga. Notifikasi dikirim ke pemilik: hubungi sekarang."); } }
+      ],
+      verdict:"<b>Lead panas tertangkap dalam ±1 menit.</b> Tanpa asisten, chat jam kerja yang telat dibalas 30 menit saja sering berakhir di rental sebelah. Di sini unit sudah terkunci sebelum kompetitor menjawab."
+    },
+    hangat: {
+      dayTime: "10.15",
+      steps: [
+        { who:"cust", text:"Kak, Innova Zenix berapa per hari?", t:"10.15" },
+        { who:"ai", text:"Innova Zenix Rp650rb/hari kak (lepas kunci), atau Rp850rb/hari dengan driver.\nRencananya untuk kapan kak? Weekend ini unit tinggal 1 — kalau tanggalnya cocok saya cekkan dulu ketersediaannya.", t:"10.15",
+          fx:function(){ setLead("Sari Wulandari","sumber: WhatsApp · 10.15 WIB"); setField("need","Tanya harga Innova Zenix"); setScore(34); setStage(1); addLog("<b>Lead baru tercatat</b> — baru tanya harga. Asisten menggali tanggal agar tidak berhenti di tanya-tanya."); } },
+        { who:"cust", text:"Sabtu depan sih, tapi masih mikir-mikir dulu kak", t:"10.17" },
+        { who:"ai", text:"Siap kak, santai saja 🙂 Untuk Sabtu depan unitnya masih tersedia.\nSaya catat dulu atas nama kakak — boleh tahu namanya? Nanti H-2 saya ingatkan lagi, tanpa wajib booking sekarang.", t:"10.17",
+          fx:function(){ setField("date","Sabtu depan (belum pasti)"); setField("budget","Belum dibahas — sensitif harga"); setScore(58); setStage(2); addLog("<b>Skor 58 (HANGAT)</b> — ada tanggal tapi belum komitmen. Masuk daftar follow-up H-2 otomatis."); } },
+        { who:"cust", text:"Saya Sari. Oke kak, ingetin aja ya", t:"10.18" },
+        { who:"ai", text:"Dicatat Kak Sari ✅ Pengingat H-2 sudah saya jadwalkan.\nKalau berubah pikiran tinggal balas chat ini — data kakak sudah tersimpan, tidak perlu isi ulang.", t:"10.18",
+          fx:function(){ setField("next","Follow-up otomatis H-2 sebelum Sabtu"); setStage(2); addLog("<b>Pengingat H-2 terjadwal</b> untuk Kak Sari — lead hangat tidak dibiarkan dingin begitu saja."); } }
+      ],
+      verdict:"<b>Lead hangat tidak dibiarkan hilang.</b> Mayoritas pembeli memang mulai dari “tanya harga dulu”. Asisten mengubahnya jadi lead bernama + bertanggal + berjadwal follow-up — modal penjualan minggu depan."
+    },
+    malam: {
+      dayTime: "23.47",
+      steps: [
+        { who:"cust", text:"Malam kak, masih bisa sewa buat besok subuh? Ada urusan mendadak ke Cirebon", t:"23.47" },
+        { who:"ai", text:"Malam kak, bisa dibantu — saya asisten otomatis Sinar Rent, tetap aktif 24 jam 🤖\nUntuk besok subuh tersedia Brio (Rp275rb/hari) & Avanza (Rp350rb/hari), bisa diantar mulai 04.30. Kakak butuh yang mana?", t:"23.47",
+          fx:function(){ setLead("Raka Pratama","sumber: WhatsApp · 23.47 WIB (di luar jam kerja)"); setField("need","Sewa mendadak besok subuh — ke Cirebon"); setField("date","Besok subuh, mulai 04.30"); setScore(64); setStage(1); addLog("<b>Chat 23.47 tetap terjawab dalam 3 detik</b> — pemilik sedang tidur, lead tidak menunggu sampai pagi."); } },
+        { who:"cust", text:"Avanza aja kak. Saya Raka, antar ke Cengkareng", t:"23.49" },
+        { who:"ai", text:"Siap Kak Raka, Avanza besok subuh antar ke Cengkareng saya catat ✅\nDetail final + pembayaran akan dikonfirmasi admin kami jam 07.00 pagi — tapi unitnya sudah saya amankan atas nama Kak Raka dari sekarang.", t:"23.49",
+          fx:function(){ setField("budget","Memilih Avanza Rp350rb/hari"); setField("next","Admin konfirmasi jam 07.00 — unit sudah diamankan"); setScore(78); setStage(2); addLog("<b>Skor 78</b> — kebutuhan mendesak + unit dipilih. Lead diamankan malam itu juga, konfirmasi manusia menyusul pagi."); } }
+      ],
+      verdict:"<b>Inilah lead yang paling sering hilang.</b> Chat malam hari biasanya baru dibalas pagi — dan pelanggan sudah dapat mobil di tempat lain. Asisten mengamankan unitnya malam itu juga."
+    },
+    dingin: {
+      dayTime: "09.30",
+      steps: [
+        { who:"cust", text:"Kak ada mobil apa aja di sini?", t:"09.30" },
+        { who:"ai", text:"Ada 12 unit kak: Brio & Agya (kota), Avanza & Xenia (keluarga), Innova Zenix (premium), sampai Hiace (rombongan).\nSaya kirim katalog + harga lengkapnya ya kak — simpan saja dulu, siapa tahu butuh nanti 🙏", t:"09.30",
+          fx:function(){ setLead("Pengunjung (belum bernama)","sumber: WhatsApp · 09.30 WIB"); setField("need","Tanya katalog umum"); setScore(22); setStage(0); addLog("<b>Lead anonim tercatat</b> — minat masih umum. Tetap disimpan, bukan dibuang."); } },
+        { who:"cust", text:"Oke makasih kak, liat-liat dulu", t:"09.31" },
+        { who:"ai", text:"Sama-sama kak! Kalau nanti ada rencana jalan — liburan, acara keluarga, atau urusan kantor — tinggal balas chat ini saja.\nBulan ini ada promo sewa 3 hari gratis antar se-Jakarta, berlaku sampai akhir bulan 🎁", t:"09.31",
+          fx:function(){ setField("next","Masuk daftar broadcast promo bulanan"); setScore(30); setStage(1); addLog("<b>Skor 30 (DINGIN)</b> — diberi katalog + promo, masuk daftar broadcast. Biaya menangkapnya: nol rupiah, nol menit waktu pemilik."); } }
+      ],
+      verdict:"<b>Lead dingin pun tidak rugi ditangkap.</b> Hari ini cuma lihat-lihat — tapi nomornya sudah tersimpan rapi untuk broadcast promo. Menangkapnya tidak menghabiskan waktu pemilik sama sekali."
+    }
+  };
+
+  function playScenario(key){
+    stopAll(); clearChat(); resetDash();
+    currentScen = key; leadCounted = false; hotCounted = false;
+    document.querySelectorAll(".scen").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-scen") === key); });
+    var sc = SCEN[key]; running = true; stats.chat++; renderStats();
+    addLog("Skenario dimulai — <b>" + document.querySelector('[data-scen="' + key + '"] .t').textContent + "</b>.");
+    var delay = 700;
+    sc.steps.forEach(function(step){
+      if(step.who === "cust"){
+        later(function(){ addMsg("cust", step.text, step.t); }, delay);
+        delay += 1100;
+      } else {
+        later(function(){ typing.classList.add("on"); $("waStatus").textContent = "mengetik…"; scrollChat(); }, delay);
+        delay += 1200;
+        later(function(){
+          typing.classList.remove("on"); $("waStatus").textContent = "online";
+          addMsg("ai", step.text, step.t);
+          if(step.fx) step.fx();
+        }, delay);
+        delay += 1400;
+      }
+    });
+    later(function(){
+      running = false;
+      var v = $("verdict"); $("verdictText").innerHTML = sc.verdict; v.classList.add("on");
+    }, delay + 300);
+  }
+
+  document.querySelectorAll(".scen").forEach(function(b){
+    b.addEventListener("click", function(){ playScenario(b.getAttribute("data-scen")); });
+  });
+
+  /* ---------- free chat (user as customer) ---------- */
+  var greeted = false;
+  function aiReply(text){
+    var s = text.toLowerCase();
+    typing.classList.add("on"); $("waStatus").textContent = "mengetik…"; scrollChat();
+    setTimeout(function(){
+      typing.classList.remove("on"); $("waStatus").textContent = "online";
+      var reply, fx = null;
+      var nameMatch = text.match(/nama saya\s+([a-zA-Z]+)/i) || text.match(/saya\s+([A-Z][a-z]+)\b/);
+      if(/avanza/.test(s) && /(harga|berapa|sewa)/.test(s)){
+        reply = "Avanza Rp350rb/hari kak (lepas kunci), sudah termasuk antar se-Jakarta.\nMau untuk tanggal berapa? Saya cekkan unitnya sekarang.";
+        fx = function(){ if(!leadCounted) setLead("Kamu (pengunjung demo)","sumber: WhatsApp · " + nowTime() + " WIB"); setField("need","Tanya harga Avanza"); setScore(Math.max(score,38)); setStage(1); addLog("<b>Chat bebas tercatat</b> — pertanyaan harga Avanza masuk sebagai lead."); };
+      } else if(/bandara|soetta|antar/.test(s)){
+        reply = "Bisa kak, kami antar ke Bandara Soetta — gratis untuk sewa minimal 2 hari.\nBerangkatnya tanggal berapa & jam berapa?";
+        fx = function(){ if(!leadCounted) setLead("Kamu (pengunjung demo)","sumber: WhatsApp · " + nowTime() + " WIB"); setField("need","Minta antar ke bandara"); setScore(Math.max(score,45)); setStage(1); addLog("<b>Kebutuhan antar bandara tergali</b> dari chat bebas pengunjung."); };
+      } else if(/booking|pesan|besok/.test(s)){
+        reply = "Siap kak, saya bantu booking-nya ✅\nUntuk pencatatan: mobil apa, tanggal berapa, dan atas nama siapa?";
+        fx = function(){ if(!leadCounted) setLead("Kamu (pengunjung demo)","sumber: WhatsApp · " + nowTime() + " WIB"); setField("date","Minta booking (detail menyusul)"); setScore(Math.max(score,66)); setStage(2); addLog("<b>Niat booking terdeteksi</b> — skor naik, asisten meminta data pencatatan."); };
+      } else if(nameMatch){
+        var nm = nameMatch[1].charAt(0).toUpperCase() + nameMatch[1].slice(1);
+        reply = "Halo Kak " + nm + ", sudah saya catat ✅\nTinggal info mobil & tanggalnya saja — setelah itu unit langsung saya amankan untuk kakak.";
+        fx = function(){ setLead(nm,"sumber: WhatsApp · " + nowTime() + " WIB"); setScore(Math.max(score,60)); setStage(2); addLog("<b>Nama lead tergali: " + nm + "</b> — kartu lead diperbarui otomatis dari chat."); };
+      } else if(/halo|hai|hello|pagi|siang|malam/.test(s) && !greeted){
+        greeted = true;
+        reply = "Halo kak, selamat datang di Sinar Rent 🚗\nMau sewa untuk kapan & berapa orang? Saya bantu carikan unit yang pas.";
+      } else if(/makasih|terima kasih|oke|ok|siap/.test(s)){
+        reply = "Sama-sama kak 🙏 Data kakak sudah tersimpan — kalau butuh apa-apa tinggal balas chat ini saja.";
+        fx = function(){ setField("next","Menunggu info lanjutan dari pelanggan"); };
+      } else {
+        reply = "Siap kak, saya catat ya. Untuk saya bantu lebih tepat: mobilnya untuk tanggal berapa & berapa orang?\nHarga mulai Rp250rb/hari (Agya) sampai Rp1,5jt/hari (Alphard).";
+        fx = function(){ if(!leadCounted){ setLead("Kamu (pengunjung demo)","sumber: WhatsApp · " + nowTime() + " WIB"); setScore(Math.max(score,25)); setStage(1); addLog("<b>Lead baru dari chat bebas</b> tercatat ke dashboard."); } };
+      }
+      addMsg("ai", reply);
+      if(fx) fx();
+    }, 1100);
+  }
+  function sendUser(){
+    var v = input.value.trim();
+    if(!v) return;
+    if(running) stopAll();
+    input.value = "";
+    addMsg("cust", v);
+    stats.chat++; renderStats();
+    aiReply(v);
+  }
+  $("sendBtn").addEventListener("click", sendUser);
+  input.addEventListener("keydown", function(e){ if(e.key === "Enter") sendUser(); });
+  document.querySelectorAll(".chip").forEach(function(c){
+    c.addEventListener("click", function(){
+      if(running) stopAll();
+      var v = c.getAttribute("data-say");
+      addMsg("cust", v); stats.chat++; renderStats(); aiReply(v);
+    });
+  });
+
+  renderStats(); setStage(-1);
+  /* auto-start with the hot scenario so the page is alive on open */
+  setTimeout(function(){ playScenario("panas"); }, 600);
+})();
+</script>
+</body>
+</html>
