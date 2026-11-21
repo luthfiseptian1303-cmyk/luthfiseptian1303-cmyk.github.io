@@ -12,14 +12,14 @@
 <link rel="alternate" hreflang="en" href="https://carllab.web.id/">
 <link rel="alternate" hreflang="id" href="https://carllab.web.id/">
 <link rel="alternate" hreflang="x-default" href="https://carllab.web.id/">
-<meta property="og:title" content="CarlLab">
-<meta property="og:description" content="Websites, browser games, brands and lead systems — designed and built by one person, for clients anywhere.">
+<meta property="og:title" content="CarlLab — Websites, Games, Brand &amp; Logo, Video Editing, Lead Systems">
+<meta property="og:description" content="Websites, browser games, brand &amp; logo, video editing and lead systems — designed and built by one person, for clients anywhere.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carllab.web.id/">
 <meta property="og:image" content="https://carllab.web.id/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CarlLab">
-<meta name="twitter:description" content="CarlLab is a one-person studio: websites, browser games, brand identities and lead systems, designed and built end to end by one pair of hands.">
+<meta name="twitter:title" content="CarlLab — Websites, Games, Brand &amp; Logo, Video Editing, Lead Systems">
+<meta name="twitter:description" content="Websites, browser games, brand &amp; logo, video editing and lead systems — designed and built by one person, for clients anywhere.">
 <meta name="twitter:image" content="https://carllab.web.id/og-image.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23142'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23B9C0C8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1364,22 +1364,26 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var waDigits=v("fWa").replace(/[\s+\-]/g,"");
   var svcMap={"Website":"Website","Browser game":"Browser Game","Brand & logo":"Brand & Logo","video-editing":"Video Editing","Lead system":"Lead System"};
   var apiSvc=svcMap[v("fService")]||null;
+  var fbRef="CARL-"+Math.floor(100+Math.random()*900);
+  function pad3(n){ n=String(n); return n.length<3?("00"+n).slice(-3):n; }
+  function refHtml(code){ return idMode?("Kode referensimu: <strong>"+code+"</strong> — simpan kode ini dan sebutkan saat kamu membalas, supaya Carl bisa langsung mencocokkannya dengan pesananmu."):("Your reference code: <strong>"+code+"</strong> — keep this code and mention it when you reply, so Carl can match it straight to your order."); }
   function sentOk(msg){ show("ok", msg); form.reset(); try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){} done(); }
   function mailtoFallback(){
-    var fb="mailto:hello@carllab.web.id?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(lines.join("\n"));
-    show("err", (idMode?"Tidak bisa terkirim dari sini. ":"Could not send from here. ")+'<a href="'+fb+'">'+(idMode?"Buka di aplikasi email kamu":"Open it in your email app")+"</a>.");
+    var linesRef=["Reference / Kode referensi: "+fbRef,""].concat(lines);
+    var fb="mailto:hello@carllab.web.id?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(linesRef.join("\n"));
+    show("err", (idMode?("Tidak bisa terkirim dari sini. Kode referensimu: <strong>"+fbRef+"</strong> — "):("Could not send from here. Your reference code: <strong>"+fbRef+"</strong> — "))+'<a href="'+fb+'">'+(idMode?"Buka di aplikasi email kamu":"Open it in your email app")+"</a>"+(idMode?". Kode itu sudah tertulis di isi pesannya.":". The code is already written in the message."));
     done();
   }
   function sendEmail(){
     var emCtl=("AbortController" in window)?new AbortController():null;
     var emTimer=emCtl?setTimeout(function(){ emCtl.abort(); },10000):null;
     return fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},signal:emCtl?emCtl.signal:undefined,
-      body:JSON.stringify({access_key:"bcecbb03-c454-406e-b8f1-693ffadc9517",subject:subject,from_name:"CarlLab website",name:v("fName"),email:v("fEmail"),whatsapp:v("fWa")||"-",service:v("fService"),goal:v("fGoal")||"-",audience:v("fAudience")||"-",assets:v("fAssets"),deadline:v("fDeadline")||"-",message:v("fDetail")})})
+      body:JSON.stringify({access_key:"bcecbb03-c454-406e-b8f1-693ffadc9517",reference_code:fbRef,subject:subject,from_name:"CarlLab website",name:v("fName"),email:v("fEmail"),whatsapp:v("fWa")||"-",service:v("fService"),goal:v("fGoal")||"-",audience:v("fAudience")||"-",assets:v("fAssets"),deadline:v("fDeadline")||"-",message:v("fDetail")})})
     .then(function(r){ return r.json(); })
     .then(function(j){
       if(emTimer) clearTimeout(emTimer);
       if(!j.success) throw new Error("rejected");
-      sentOk(idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.");
+      sentOk(idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."+"<br>"+refHtml(fbRef));
     });
   }
   if(apiSvc && /^\d{9,15}$/.test(waDigits)){
@@ -1388,7 +1392,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},signal:apiCtl?apiCtl.signal:undefined,
       body:JSON.stringify({name:v("fName"),whatsapp:waDigits,service:apiSvc,budget:0,notes:lines.join("\n")})})
     .then(function(r){ if(!r.ok) throw new Error("api"); return r.json(); })
-    .then(function(){ if(apiTimer) clearTimeout(apiTimer); sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."); })
+    .then(function(j){ if(apiTimer) clearTimeout(apiTimer); var code=fbRef; if(j&&j.data&&/^\d+$/.test(String(j.data.id))){ code="CARL-"+pad3(j.data.id); } sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."+"<br>"+refHtml(code)); })
     .catch(function(){ if(apiTimer) clearTimeout(apiTimer); sendEmail().catch(mailtoFallback); });
   } else {
     sendEmail().catch(mailtoFallback);
