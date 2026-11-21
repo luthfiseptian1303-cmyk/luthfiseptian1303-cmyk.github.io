@@ -580,7 +580,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .sl-ava{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:none}
 .sl-row-main{flex:1;min-width:0}
 .sl-row-main b{display:block;color:#E3E6E9;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sl-row-main span{display:block;color:#9AA3AD;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.sl-row-main span{display:block;color:#9AA3AD;font-size:12px;line-height:1.45;margin-top:2px}
 .sl-wa{background:#22C55E;color:#fff;font-size:12px;font-weight:700;padding:8px 10px;border-radius:999px;white-space:nowrap}
 .sl-note{margin:0 14px 16px;background:#101211;border:1px solid #2E3237;border-radius:12px;padding:12px;color:#9AA3AD;font-size:13px;line-height:1.6}
 .sl-note b{color:#E3E6E9}
@@ -589,8 +589,64 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .sl-points li b{color:#E3E6E9;display:block;margin-bottom:4px}
 @media(max-width:860px){.sl-wrap{grid-template-columns:1fr}.sl-phone{max-width:100%}}
 </style>
+<style id="look-round">
+#clLoader{position:fixed;inset:0;z-index:2000;background:#050505;display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+#clLoader.lift{transform:translateY(-101%)}
+#clLoader .cl-word{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(44px,9vw,96px);letter-spacing:-.03em;line-height:1;display:flex}
+#clLoader .cl-l{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:brightness(.22) saturate(.4);transition:filter .45s cubic-bezier(.05,.7,.1,1)}
+#clLoader.fill .cl-l{filter:brightness(1.12) saturate(1)}
+html.cl-lock{overflow:hidden}
+@media (prefers-reduced-motion: reduce){#clLoader{display:none}}
+.foot-word{background-image:linear-gradient(100deg,#6E757D 0%,#AEB4BC 24%,#C9CED4 38%,#F6F8FA 50%,#C9CED4 62%,#AEB4BC 76%,#6E757D 100%);background-size:230% 100%;background-position:50% 0}
+</style>
+
+<style id="demo-phone-css">
+.demo-phone{width:min(350px,88vw);margin:0 auto;background:#101012;border:2px solid #3A3F45;border-radius:42px;padding:11px;box-shadow:0 34px 70px rgba(0,0,0,.55)}
+.demo-screen.no-notch .demo-notch{display:none}
+.demo-screen{position:relative;border-radius:32px;overflow:hidden;background:#101211;height:620px}
+.demo-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:96px;height:20px;background:#101012;border-radius:0 0 13px 13px;z-index:8}
+.demo-screen iframe{width:100%;height:100%;border:0;display:block;background:#101211}
+.demo-fullwrap{text-align:center;margin-top:14px}
+.demo-full{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#B9C0C8;text-decoration:none;border-bottom:1px solid #3A4149;padding-bottom:2px}
+@media(max-width:560px){.demo-screen{height:560px}}
+/* simple phone unified with the same frame */
+.sl-phone{border:2px solid #3A3F45!important;border-radius:42px!important;padding:11px!important;background:#101012!important;box-shadow:0 34px 70px rgba(0,0,0,.55);max-width:400px!important}
+.sl-inner{border-radius:32px;overflow:hidden;background:#141619}
+</style>
 </head>
 <body>
+<script>
+(function(){
+  try{
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if(localStorage.getItem("carllab-loader-v1")) return;
+    localStorage.setItem("carllab-loader-v1","1");
+  }catch(e){ return; }
+  var d=document.createElement("div");
+  d.id="clLoader"; d.setAttribute("aria-hidden","true");
+  var w=document.createElement("div"); w.className="cl-word";
+  "CarlLab".split("").forEach(function(ch,i){
+    var s=document.createElement("span");
+    s.className="cl-l"; s.style.transitionDelay=(i*0.13)+"s"; s.textContent=ch;
+    w.appendChild(s);
+  });
+  d.appendChild(w);
+  document.body.appendChild(d);
+  document.documentElement.classList.add("cl-lock");
+  var done=false;
+  function lift(){
+    if(done) return; done=true;
+    d.classList.add("lift");
+    document.documentElement.classList.remove("cl-lock");
+    setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); },700);
+  }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ d.classList.add("fill"); }); });
+  d.addEventListener("click",lift);
+  window.addEventListener("keydown",lift);
+  setTimeout(lift,1350);
+  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); document.documentElement.classList.remove("cl-lock"); },2000);
+})();
+</script>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
 <div id="scrollProg"></div>
 <header class="site" id="top">
@@ -673,6 +729,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
         </ul>
       </div>
       <div class="sl-phone" data-rv="y40" role="img" aria-label="Example phone view: 27 new leads today, split 14 websites, 8 brand logos and 5 lead systems, with a WhatsApp reply button on each lead">
+        <div class="sl-inner">
         <div class="sl-head">
           <div>
             <div class="sl-kicker" data-t="simpleKicker">CarlLab · Leads in</div>
@@ -687,12 +744,13 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
           <div><b>5</b><span data-t="simpleLead">Lead systems</span></div>
         </div>
         <div class="sl-list">
-          <div class="sl-row"><div class="sl-ava" style="background:#FFE3EC;color:#7A1230">RS</div><div class="sl-row-main"><b>Rina — Skincare shop</b><span data-t="simpleR1">Website + WhatsApp orders · 2 min ago</span></div><span class="sl-wa" data-t="simpleWa">Chat WA</span></div>
+          <div class="sl-row"><div class="sl-ava" style="background:#FFE3EC;color:#7A1230">RS</div><div class="sl-row-main"><b>Rina — Skincare shop</b><span data-t="simpleR1">Website + WA orders · 2 min ago</span></div><span class="sl-wa" data-t="simpleWa">Chat WA</span></div>
           <div class="sl-row"><div class="sl-ava" style="background:#FFF1C7;color:#6B4E00">BP</div><div class="sl-row-main"><b>Bagas — Kopi Pagi</b><span data-t="simpleR2">Logo + cafe website · 9 min ago</span></div><span class="sl-wa" data-t="simpleWa">Chat WA</span></div>
-          <div class="sl-row"><div class="sl-ava" style="background:#DDEBFF;color:#123A7A">SA</div><div class="sl-row-main"><b>Sari — Wedding enquiry</b><span data-t="simpleR3">Invitation + RSVP leads · 14 min ago</span></div><span class="sl-wa" data-t="simpleWa">Chat WA</span></div>
+          <div class="sl-row"><div class="sl-ava" style="background:#DDEBFF;color:#123A7A">SA</div><div class="sl-row-main"><b>Sari — Wedding</b><span data-t="simpleR3">Invitation + RSVP · 14 min ago</span></div><span class="sl-wa" data-t="simpleWa">Chat WA</span></div>
           <div class="sl-row"><div class="sl-ava" style="background:#2E3237;color:#E3E6E9">+24</div><div class="sl-row-main"><b data-t="simpleR4t">24 more leads today</b><span data-t="simpleR4">Every one with a WhatsApp number, ready to follow up</span></div></div>
         </div>
         <p class="sl-note"><b data-t="simpleNoteT">Busy, but simple:</b> <span data-t="simpleNote">you only see Name · What they need · Chat WA. No pipeline, no scoring table, no CRM to learn.</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -709,11 +767,14 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <li data-rv="y40"><span class="n">02</span><h3 data-t="demo2t">Duplicates merge themselves</h3><p data-t="demo2p">The same person enquiring twice — even with the number written differently — becomes one lead with a fresher score, never two rows to chase.</p></li>
       <li data-rv="y40"><span class="n">03</span><h3 data-t="demo3t">Follow-ups drafted, never sent</h3><p data-t="demo3p">The queue prepares a personal WhatsApp draft for every due lead. A human still presses send — the system just makes sure nobody is forgotten.</p></li>
     </ul>
-    <div class="demo-wide" data-rv="y40">
-      <div class="demo-bar"><span class="demo-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="demo-url">carllab.web.id/lead-system-demo</span><a class="demo-open" href="lead-system-demo.html" data-t="demoOpen">Open the demo full-screen ↗</a></div>
-      <div class="demo-frame"><iframe src="lead-system-demo.html" title="ArusDetail — lead system demo by CarlLab" loading="lazy"></iframe></div>
+    <div class="demo-phone" data-rv="y40">
+      <div class="demo-screen no-notch">
+        <div class="demo-notch" aria-hidden="true"></div>
+        <iframe src="lead-system-demo.html" title="ArusDetail — lead system demo by CarlLab" loading="lazy"></iframe>
+      </div>
     </div>
-    <p class="demo-hint" data-t="demoHint">Works inside the frame · or open it full-screen</p>
+    <p class="demo-fullwrap"><a class="demo-full" href="lead-system-demo.html" data-t="demoOpen">Open the demo full-screen ↗</a></p>
+    <p class="demo-hint" data-t="demoHint">Works inside the phone · or open it full-screen</p>
     <a class="case-link" href="work.html#arusdetail" data-t="caseLink">Read the case study &#8599;</a>
   </div>
 </section>
@@ -816,7 +877,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Lead datang berserakan — utas chat, formulir, spreadsheet, ingatan. Sistem lead CarlLab mengumpulkannya ke satu pipeline, memberi skor siapa yang harus dijawab duluan, dan menyusun draf tindak lanjutnya. Kamu meninjau dan menekan kirim. Selalu.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Lead sudah datang — lewat chat, formulir, atau media sosial — tetapi tindak lanjutnya bergantung pada ingatan, dan lead yang hangat keburu dingin sebelum ada yang menjawab.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu belum punya aliran lead sama sekali, atau butuh migrasi CRM penuh dengan tim sales. Sistem ini merapikan dan memprioritaskan aliran yang sudah ada; ia tidak menciptakannya dari nol.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Sumber lead-mu saat ini, walau hari ini isinya hanya utas chat dan buku catatan, dan alat yang sudah kamu bayar atau pakai setiap hari.",inc1:"Satu pipeline untuk lead dari semua kanal yang sudah kamu pakai.",inc2:"Skor prioritas, supaya lead terpanas tidak pernah dijawab paling akhir.",inc3:"Draf tindak lanjut disiapkan untukmu — tidak pernah terkirim otomatis.",inc4:"Satu tampilan harian tentang apa yang butuh perhatianmu.",inc5:"Sistem yang sama yang dipakai CarlLab sendiri — Carl bekerja di dalamnya sebelum kamu.",simpleEye:"Untuk pemilik bisnis",simpleH:"Ramai, tapi simpel",simpleP:"Beginilah hari yang ramai terlihat di HP kamu — bukan papan CRM. Satu nama, kebutuhannya apa, dan satu tombol untuk membalas di WhatsApp. Skor, penggabungan duplikat, dan antrean follow-up tetap berjalan, tapi di belakang tampilan ini, bukan di depanmu.",simple1t:"Sekali lihat, bukan dashboard",simple1p:"Angka besarnya memberi tahu berapa lead baru yang masuk hari ini, terpecah menurut permintaannya.",simple2t:"Balas dengan satu ketuk",simple2p:"Setiap baris sudah membawa nomor WhatsApp yang dibersihkan dan dicek. Ketuk Chat WA dan jawab — tidak ada yang perlu disalin.",simple3t:"Tidak ada yang terkubur",simple3p:"Terbaru di atas, lengkap dengan waktu masuknya. Lead yang hangat tetap di atas, di tempat kamu bisa melihatnya.",simpleKicker:"CarlLab · Lead masuk",simpleTitle:"Hari yang ramai",simpleSub:"Website produk + logo + pertanyaan masuk",simpleNew:"BARU",simpleWeb:"Website",simpleLogo:"Brand & logo",simpleLead:"Sistem lead",simpleR1:"Website + order WhatsApp · 2 mnt lalu",simpleR2:"Logo + website kedai · 9 mnt lalu",simpleR3:"Undangan + RSVP · 14 mnt lalu",simpleR4t:"24 lead lain hari ini",simpleR4:"Semuanya sudah ada nomor WhatsApp-nya, siap di-follow-up",simpleWa:"Chat WA",simpleNoteT:"Ramai, tapi simpel:",simpleNote:"yang kamu lihat cuma Nama · Butuh apa · Chat WA. Tidak ada pipeline, tidak ada tabel skor, tidak ada CRM yang harus dipelajari.",demoEye:"Demo live",demoH:"Sistem lengkapnya, di belakang itu",demoP:"Untuk yang ingin papan lengkapnya: di bawah ini sistem lead yang benar-benar bekerja, bukan gambar — ArusDetail, studio detailing mobil fiktif. Semua penawaran masuk ke satu papan, setiap nomor dibersihkan, setiap lead diskor secara terbuka, dan antrean follow-up mengejar yang paling panas duluan. Tambah lead, jalankan automation, geser kartunya — semuanya berfungsi, dan tersimpan hanya di perangkat ini.",demo1t:"Diskor secara terbuka",demo1p:"Setiap lead membawa skor 0–100 dari lima komponen yang terlihat — layanan, urgensi, budget, sumber, kelengkapan. Tidak ada angka sulap; buka kartunya dan lihat hitungannya.",demo2t:"Duplikat menggabung sendiri",demo2p:"Orang yang sama bertanya dua kali — bahkan dengan nomor yang ditulis berbeda — menjadi satu lead dengan skor yang lebih segar, bukan dua baris untuk dikejar.",demo3t:"Follow-up disiapkan, tak pernah terkirim sendiri",demo3p:"Antrean menyiapkan draf WhatsApp personal untuk setiap lead yang jatuh tempo. Manusia tetap yang menekan kirim — sistem hanya memastikan tidak ada yang terlupa.",demoOpen:"Buka demo layar penuh ↗",demoHint:"Berfungsi di dalam bingkai · atau buka layar penuh",waBtn:"Pesan via WhatsApp",caseLink:"Baca studi kasusnya ↗",pgQ1:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",pgA1:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",pgQ2:"Apa yang kubutuhkan untuk mulai?",pgA2:"Sumber lead-mu saat ini — walau hari ini isinya hanya utas chat dan buku catatan. Carl memetakannya ke dalam pipeline bersamamu, satu kanal setiap kalinya.",pgQ3:"Bisakah digabung dengan website?",pgA3:"Bisa — website yang mengalirkan lead langsung ke pipeline adalah pasangan yang paling umum. Sebutkan keduanya dalam satu pesan dan keduanya digabung dalam satu penawaran.",pgQ4:"Apa yang terjadi dengan data lead-ku?",pgA4:"Tetap di akun dan alatmu — pipeline dibangun di dalam yang sudah kamu pakai. Carl tidak menyimpan salinan data pelangganmu setelah serah terima, dan tindak lanjut tetap berupa draf sampai kamu sendiri yang mengirimnya."};
+var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Lead datang berserakan — utas chat, formulir, spreadsheet, ingatan. Sistem lead CarlLab mengumpulkannya ke satu pipeline, memberi skor siapa yang harus dijawab duluan, dan menyusun draf tindak lanjutnya. Kamu meninjau dan menekan kirim. Selalu.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Lead sudah datang — lewat chat, formulir, atau media sosial — tetapi tindak lanjutnya bergantung pada ingatan, dan lead yang hangat keburu dingin sebelum ada yang menjawab.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu belum punya aliran lead sama sekali, atau butuh migrasi CRM penuh dengan tim sales. Sistem ini merapikan dan memprioritaskan aliran yang sudah ada; ia tidak menciptakannya dari nol.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Sumber lead-mu saat ini, walau hari ini isinya hanya utas chat dan buku catatan, dan alat yang sudah kamu bayar atau pakai setiap hari.",inc1:"Satu pipeline untuk lead dari semua kanal yang sudah kamu pakai.",inc2:"Skor prioritas, supaya lead terpanas tidak pernah dijawab paling akhir.",inc3:"Draf tindak lanjut disiapkan untukmu — tidak pernah terkirim otomatis.",inc4:"Satu tampilan harian tentang apa yang butuh perhatianmu.",inc5:"Sistem yang sama yang dipakai CarlLab sendiri — Carl bekerja di dalamnya sebelum kamu.",simpleEye:"Untuk pemilik bisnis",simpleH:"Ramai, tapi simpel",simpleP:"Beginilah hari yang ramai terlihat di HP kamu — bukan papan CRM. Satu nama, kebutuhannya apa, dan satu tombol untuk membalas di WhatsApp. Skor, penggabungan duplikat, dan antrean follow-up tetap berjalan, tapi di belakang tampilan ini, bukan di depanmu.",simple1t:"Sekali lihat, bukan dashboard",simple1p:"Angka besarnya memberi tahu berapa lead baru yang masuk hari ini, terpecah menurut permintaannya.",simple2t:"Balas dengan satu ketuk",simple2p:"Setiap baris sudah membawa nomor WhatsApp yang dibersihkan dan dicek. Ketuk Chat WA dan jawab — tidak ada yang perlu disalin.",simple3t:"Tidak ada yang terkubur",simple3p:"Terbaru di atas, lengkap dengan waktu masuknya. Lead yang hangat tetap di atas, di tempat kamu bisa melihatnya.",simpleKicker:"CarlLab · Lead masuk",simpleTitle:"Hari yang ramai",simpleSub:"Website produk + logo + pertanyaan masuk",simpleNew:"BARU",simpleWeb:"Website",simpleLogo:"Brand & logo",simpleLead:"Sistem lead",simpleR1:"Website + order WhatsApp · 2 mnt lalu",simpleR2:"Logo + website kedai · 9 mnt lalu",simpleR3:"Undangan + RSVP · 14 mnt lalu",simpleR4t:"24 lead lain hari ini",simpleR4:"Semuanya sudah ada nomor WhatsApp-nya, siap di-follow-up",simpleWa:"Chat WA",simpleNoteT:"Ramai, tapi simpel:",simpleNote:"yang kamu lihat cuma Nama · Butuh apa · Chat WA. Tidak ada pipeline, tidak ada tabel skor, tidak ada CRM yang harus dipelajari.",demoEye:"Demo live",demoH:"Sistem lengkapnya, di belakang itu",demoP:"Untuk yang ingin papan lengkapnya: di bawah ini sistem lead yang benar-benar bekerja, bukan gambar — ArusDetail, studio detailing mobil fiktif. Semua penawaran masuk ke satu papan, setiap nomor dibersihkan, setiap lead diskor secara terbuka, dan antrean follow-up mengejar yang paling panas duluan. Tambah lead, jalankan automation, geser kartunya — semuanya berfungsi, dan tersimpan hanya di perangkat ini.",demo1t:"Diskor secara terbuka",demo1p:"Setiap lead membawa skor 0–100 dari lima komponen yang terlihat — layanan, urgensi, budget, sumber, kelengkapan. Tidak ada angka sulap; buka kartunya dan lihat hitungannya.",demo2t:"Duplikat menggabung sendiri",demo2p:"Orang yang sama bertanya dua kali — bahkan dengan nomor yang ditulis berbeda — menjadi satu lead dengan skor yang lebih segar, bukan dua baris untuk dikejar.",demo3t:"Follow-up disiapkan, tak pernah terkirim sendiri",demo3p:"Antrean menyiapkan draf WhatsApp personal untuk setiap lead yang jatuh tempo. Manusia tetap yang menekan kirim — sistem hanya memastikan tidak ada yang terlupa.",demoOpen:"Buka demo layar penuh ↗",demoHint:"Berfungsi di dalam HP · atau buka layar penuh",waBtn:"Pesan via WhatsApp",caseLink:"Baca studi kasusnya ↗",pgQ1:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",pgA1:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",pgQ2:"Apa yang kubutuhkan untuk mulai?",pgA2:"Sumber lead-mu saat ini — walau hari ini isinya hanya utas chat dan buku catatan. Carl memetakannya ke dalam pipeline bersamamu, satu kanal setiap kalinya.",pgQ3:"Bisakah digabung dengan website?",pgA3:"Bisa — website yang mengalirkan lead langsung ke pipeline adalah pasangan yang paling umum. Sebutkan keduanya dalam satu pesan dan keduanya digabung dalam satu penawaran.",pgQ4:"Apa yang terjadi dengan data lead-ku?",pgA4:"Tetap di akun dan alatmu — pipeline dibangun di dalam yang sudah kamu pakai. Carl tidak menyimpan salinan data pelangganmu setelah serah terima, dan tindak lanjut tetap berupa draf sampai kamu sendiri yang mengirimnya."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -924,6 +985,31 @@ window.addEventListener("hashchange",function(){
   if(window.__lenis) window.__lenis.scrollTo(t,{duration:.8,offset:-hh});
   else t.scrollIntoView();
 });
+</script>
+<script>
+(function(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var words=document.querySelectorAll(".foot-word");
+  if(!words.length) return;
+  words.forEach(function(w){
+    var tick=false, lastX=null;
+    function upd(){
+      tick=false;
+      if(lastX===null) return;
+      var r=w.getBoundingClientRect(); if(!r.width) return;
+      var p=Math.max(0,Math.min(100,((lastX-r.left)/r.width)*100));
+      w.style.backgroundPosition=p.toFixed(1)+"% 0";
+    }
+    function h(e){
+      lastX=(e.touches&&e.touches[0])?e.touches[0].clientX:e.clientX;
+      if(!tick){ tick=true; requestAnimationFrame(upd); }
+    }
+    var host=w.closest("footer")||w;
+    host.addEventListener("pointermove",h,{passive:true});
+    host.addEventListener("pointerdown",h,{passive:true});
+    host.addEventListener("touchmove",h,{passive:true});
+  });
+})();
 </script>
 </body>
 </html>
