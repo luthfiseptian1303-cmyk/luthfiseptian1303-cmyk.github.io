@@ -637,6 +637,24 @@ html.cl-lock{overflow:hidden}
 .sl-draft p{color:#C9CED4;font-size:13.5px;line-height:1.6;margin:0 0 8px}
 .sl-draft small{color:#9AA3AD;display:block;font-size:12px;line-height:1.5}
 .sl-draft a{color:#22C55E;font-weight:700;font-size:13px}
+.sl-grid{grid-template-columns:repeat(4,1fr)}
+.sl-grid .sl-chip{background:#101211;border:1px solid #2E3237;border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;font-family:inherit}
+.sl-grid .sl-chip.on{border-color:#E0A526;background:#1B1810;box-shadow:inset 0 0 0 1px #E0A526}
+.sl-grid .sl-chip:focus-visible{outline:2px solid #E0A526;outline-offset:2px}
+.sl-row.done .sl-ava,.sl-row.done .sl-row-main b,.sl-row.done .sl-row-main>span{opacity:.55}
+.sl-state{margin-top:6px;display:inline-block;background:#17301F;color:#7BD88F;border:1px solid #245232;border-radius:999px;font-family:inherit;font-size:11px;font-weight:700;line-height:1;padding:4px 9px;cursor:pointer}
+.sl-state:hover{background:#1D3D27}
+.sl-state:focus-visible{outline:2px solid #E0A526;outline-offset:2px}
+.sl-wa.again{background:#2E3237;color:#C9CED4}
+.sl-reply{margin-left:60px;background:#141619;border:1px solid #2E3237;border-left:3px solid #E0A526;border-radius:10px;padding:8px 10px}
+.sl-reply small{display:block;font-family:"Space Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#E0A526;margin-bottom:3px}
+.sl-reply p{margin:0;color:#C9CED4;font-size:12.5px;line-height:1.5}
+.sl-reply.in{animation:slIn .45s cubic-bezier(.05,.7,.1,1)}
+@keyframes slIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.sl-reply.in{animation:none}}
+.sl-more{cursor:pointer}
+.sl-more:focus-visible{outline:2px solid #E0A526;outline-offset:2px}
+.sl-chev{color:#E0A526;font-weight:800;flex:none;font-size:13px}
 </style>
 </head>
 <body>
@@ -780,10 +798,11 @@ html.cl-lock{overflow:hidden}
           </div>
           <div class="sl-badge"><b id="slCount">27</b><span data-t="simpleNew">NEW</span></div>
         </div>
-        <div class="sl-grid">
-          <div><b id="slNWeb">14</b><span data-t="simpleWeb">Websites</span></div>
-          <div><b id="slNLogo">8</b><span data-t="simpleLogo">Brand &amp; logo</span></div>
-          <div><b id="slNLead">5</b><span data-t="simpleLead">Lead systems</span></div>
+        <div class="sl-grid" role="group" aria-label="Filter leads by service">
+          <button type="button" class="sl-chip on" data-filter="all" aria-pressed="true"><b id="slNAll">27</b><span data-t="simpleAll">All</span></button>
+          <button type="button" class="sl-chip" data-filter="web" aria-pressed="false"><b id="slNWeb">14</b><span data-t="simpleWeb">Websites</span></button>
+          <button type="button" class="sl-chip" data-filter="logo" aria-pressed="false"><b id="slNLogo">8</b><span data-t="simpleLogo">Brand &amp; logo</span></button>
+          <button type="button" class="sl-chip" data-filter="lead" aria-pressed="false"><b id="slNLead">5</b><span data-t="simpleLead">Lead systems</span></button>
         </div>
         <div class="sl-list" id="slList">
           <div class="sl-row"><div class="sl-ava" style="background:#FFE3EC;color:#7A1230">RS</div><div class="sl-row-main"><b>Rina — Skincare shop</b><span data-t="simpleR1">Website + WA orders · 2 min ago</span></div><button type="button" class="sl-wa" data-t="simpleWa" data-lead="0">Chat WA</button></div>
@@ -930,7 +949,7 @@ html.cl-lock{overflow:hidden}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Lead datang berserakan — utas chat, formulir, spreadsheet, ingatan. Sistem lead CarlLab mengumpulkannya ke satu pipeline, memberi skor siapa yang harus dijawab duluan, dan menyusun draf tindak lanjutnya. Kamu meninjau dan menekan kirim. Selalu.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Lead sudah datang — lewat chat, formulir, atau media sosial — tetapi tindak lanjutnya bergantung pada ingatan, dan lead yang hangat keburu dingin sebelum ada yang menjawab.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu belum punya aliran lead sama sekali, atau butuh migrasi CRM penuh dengan tim sales. Sistem ini merapikan dan memprioritaskan aliran yang sudah ada; ia tidak menciptakannya dari nol.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Sumber lead-mu saat ini, walau hari ini isinya hanya utas chat dan buku catatan, dan alat yang sudah kamu bayar atau pakai setiap hari.",inc1:"Satu pipeline untuk lead dari semua kanal yang sudah kamu pakai.",inc2:"Skor prioritas, supaya lead terpanas tidak pernah dijawab paling akhir.",inc3:"Draf tindak lanjut disiapkan untukmu — tidak pernah terkirim otomatis.",inc4:"Satu tampilan harian tentang apa yang butuh perhatianmu.",inc5:"Sistem yang sama yang dipakai CarlLab sendiri — Carl bekerja di dalamnya sebelum kamu.",simpleTryT:"Coba — tambah lead",simpleTryP:"Isi formulir ini seolah kamu pelanggan. Lead-mu mendarat paling atas di HP, angkanya naik, dan tersimpan hanya di perangkat ini.",simpleTryBtn:"Tambahkan lead ini",simpleReset:"Atur ulang demonya",simpleOther:"Hal lain",simpleDraftNote:"Draf yang disiapkan untukmu — tidak ada yang terkirim sampai kamu sendiri menekan kirim.",simpleEye:"Untuk pemilik bisnis",simpleH:"Ramai, tapi simpel",simpleP:"Beginilah hari yang ramai terlihat di HP kamu — bukan papan CRM. Satu nama, kebutuhannya apa, dan satu tombol untuk membalas di WhatsApp. Skor, penggabungan duplikat, dan antrean follow-up tetap berjalan, tapi di belakang tampilan ini, bukan di depanmu.",simple1t:"Sekali lihat, bukan dashboard",simple1p:"Angka besarnya memberi tahu berapa lead baru yang masuk hari ini, terpecah menurut permintaannya.",simple2t:"Balas dengan satu ketuk",simple2p:"Setiap baris sudah membawa nomor WhatsApp yang dibersihkan dan dicek. Ketuk Chat WA dan jawab — tidak ada yang perlu disalin.",simple3t:"Tidak ada yang terkubur",simple3p:"Terbaru di atas, lengkap dengan waktu masuknya. Lead yang hangat tetap di atas, di tempat kamu bisa melihatnya.",simpleKicker:"CarlLab · Lead masuk",simpleTitle:"Hari yang ramai",simpleSub:"Website produk + logo + pertanyaan masuk",simpleNew:"BARU",simpleWeb:"Website",simpleLogo:"Brand & logo",simpleLead:"Sistem lead",simpleR1:"Website + order WhatsApp · 2 mnt lalu",simpleR2:"Logo + website kedai · 9 mnt lalu",simpleR3:"Undangan + RSVP · 14 mnt lalu",simpleR4t:"24 lead lain hari ini",simpleR4:"Semuanya sudah ada nomor WhatsApp-nya, siap di-follow-up",simpleWa:"Chat WA",simpleNoteT:"Ramai, tapi simpel:",simpleNote:"yang kamu lihat cuma Nama · Butuh apa · Chat WA. Tidak ada pipeline, tidak ada tabel skor, tidak ada CRM yang harus dipelajari.",demoEye:"Demo live",demoH:"Sistem lengkapnya, di belakang itu",demoP:"Untuk yang ingin papan lengkapnya: di bawah ini sistem lead yang benar-benar bekerja, bukan gambar — ArusDetail, studio detailing mobil fiktif. Semua penawaran masuk ke satu papan, setiap nomor dibersihkan, setiap lead diskor secara terbuka, dan antrean follow-up mengejar yang paling panas duluan. Tambah lead, jalankan automation, geser kartunya — semuanya berfungsi, dan tersimpan hanya di perangkat ini.",demo1t:"Diskor secara terbuka",demo1p:"Setiap lead membawa skor 0–100 dari lima komponen yang terlihat — layanan, urgensi, budget, sumber, kelengkapan. Tidak ada angka sulap; buka kartunya dan lihat hitungannya.",demo2t:"Duplikat menggabung sendiri",demo2p:"Orang yang sama bertanya dua kali — bahkan dengan nomor yang ditulis berbeda — menjadi satu lead dengan skor yang lebih segar, bukan dua baris untuk dikejar.",demo3t:"Follow-up disiapkan, tak pernah terkirim sendiri",demo3p:"Antrean menyiapkan draf WhatsApp personal untuk setiap lead yang jatuh tempo. Manusia tetap yang menekan kirim — sistem hanya memastikan tidak ada yang terlupa.",demoOpen:"Buka demo layar penuh ↗",demoHint:"Berfungsi di dalam HP · atau buka layar penuh",waBtn:"Pesan via WhatsApp",caseLink:"Baca studi kasusnya ↗",pgQ1:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",pgA1:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",pgQ2:"Apa yang kubutuhkan untuk mulai?",pgA2:"Sumber lead-mu saat ini — walau hari ini isinya hanya utas chat dan buku catatan. Carl memetakannya ke dalam pipeline bersamamu, satu kanal setiap kalinya.",pgQ3:"Bisakah digabung dengan website?",pgA3:"Bisa — website yang mengalirkan lead langsung ke pipeline adalah pasangan yang paling umum. Sebutkan keduanya dalam satu pesan dan keduanya digabung dalam satu penawaran.",pgQ4:"Apa yang terjadi dengan data lead-ku?",pgA4:"Tetap di akun dan alatmu — pipeline dibangun di dalam yang sudah kamu pakai. Carl tidak menyimpan salinan data pelangganmu setelah serah terima, dan tindak lanjut tetap berupa draf sampai kamu sendiri yang mengirimnya."};
+var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Lead datang berserakan — utas chat, formulir, spreadsheet, ingatan. Sistem lead CarlLab mengumpulkannya ke satu pipeline, memberi skor siapa yang harus dijawab duluan, dan menyusun draf tindak lanjutnya. Kamu meninjau dan menekan kirim. Selalu.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Lead sudah datang — lewat chat, formulir, atau media sosial — tetapi tindak lanjutnya bergantung pada ingatan, dan lead yang hangat keburu dingin sebelum ada yang menjawab.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu belum punya aliran lead sama sekali, atau butuh migrasi CRM penuh dengan tim sales. Sistem ini merapikan dan memprioritaskan aliran yang sudah ada; ia tidak menciptakannya dari nol.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Sumber lead-mu saat ini, walau hari ini isinya hanya utas chat dan buku catatan, dan alat yang sudah kamu bayar atau pakai setiap hari.",inc1:"Satu pipeline untuk lead dari semua kanal yang sudah kamu pakai.",inc2:"Skor prioritas, supaya lead terpanas tidak pernah dijawab paling akhir.",inc3:"Draf tindak lanjut disiapkan untukmu — tidak pernah terkirim otomatis.",inc4:"Satu tampilan harian tentang apa yang butuh perhatianmu.",inc5:"Sistem yang sama yang dipakai CarlLab sendiri — Carl bekerja di dalamnya sebelum kamu.",simpleTryT:"Coba — tambah lead",simpleTryP:"Isi formulir ini seolah kamu pelanggan. Lead-mu mendarat paling atas di HP, angkanya naik, dan tersimpan hanya di perangkat ini.",simpleTryBtn:"Tambahkan lead ini",simpleReset:"Atur ulang demonya",simpleOther:"Hal lain",simpleDraftNote:"Draf yang disiapkan untukmu — tidak ada yang terkirim sampai kamu sendiri menekan kirim.",simpleEye:"Untuk pemilik bisnis",simpleH:"Ramai, tapi simpel",simpleP:"Beginilah hari yang ramai terlihat di HP kamu — bukan papan CRM. Satu nama, kebutuhannya apa, dan satu tombol untuk membalas di WhatsApp. Skor, penggabungan duplikat, dan antrean follow-up tetap berjalan, tapi di belakang tampilan ini, bukan di depanmu.",simple1t:"Sekali lihat, bukan dashboard",simple1p:"Angka besarnya memberi tahu berapa lead baru yang masuk hari ini, terpecah menurut permintaannya.",simple2t:"Balas dengan satu ketuk",simple2p:"Setiap baris sudah membawa nomor WhatsApp yang dibersihkan dan dicek. Ketuk Chat WA dan jawab — tidak ada yang perlu disalin.",simple3t:"Tidak ada yang terkubur",simple3p:"Terbaru di atas, lengkap dengan waktu masuknya. Lead yang hangat tetap di atas, di tempat kamu bisa melihatnya.",simpleKicker:"CarlLab · Lead masuk",simpleTitle:"Hari yang ramai",simpleSub:"Website produk + logo + pertanyaan masuk",simpleNew:"BARU",simpleAll:"Semua",simpleWeb:"Website",simpleLogo:"Brand & logo",simpleLead:"Sistem lead",simpleR1:"Website + order WhatsApp · 2 mnt lalu",simpleR2:"Logo + website kedai · 9 mnt lalu",simpleR3:"Undangan + RSVP · 14 mnt lalu",simpleR4t:"24 lead lain hari ini",simpleR4:"Semuanya sudah ada nomor WhatsApp-nya, siap di-follow-up",simpleWa:"Chat WA",simpleNoteT:"Ramai, tapi simpel:",simpleNote:"yang kamu lihat cuma Nama · Butuh apa · Chat WA. Tidak ada pipeline, tidak ada tabel skor, tidak ada CRM yang harus dipelajari.",demoEye:"Demo live",demoH:"Sistem lengkapnya, di belakang itu",demoP:"Untuk yang ingin papan lengkapnya: di bawah ini sistem lead yang benar-benar bekerja, bukan gambar — ArusDetail, studio detailing mobil fiktif. Semua penawaran masuk ke satu papan, setiap nomor dibersihkan, setiap lead diskor secara terbuka, dan antrean follow-up mengejar yang paling panas duluan. Tambah lead, jalankan automation, geser kartunya — semuanya berfungsi, dan tersimpan hanya di perangkat ini.",demo1t:"Diskor secara terbuka",demo1p:"Setiap lead membawa skor 0–100 dari lima komponen yang terlihat — layanan, urgensi, budget, sumber, kelengkapan. Tidak ada angka sulap; buka kartunya dan lihat hitungannya.",demo2t:"Duplikat menggabung sendiri",demo2p:"Orang yang sama bertanya dua kali — bahkan dengan nomor yang ditulis berbeda — menjadi satu lead dengan skor yang lebih segar, bukan dua baris untuk dikejar.",demo3t:"Follow-up disiapkan, tak pernah terkirim sendiri",demo3p:"Antrean menyiapkan draf WhatsApp personal untuk setiap lead yang jatuh tempo. Manusia tetap yang menekan kirim — sistem hanya memastikan tidak ada yang terlupa.",demoOpen:"Buka demo layar penuh ↗",demoHint:"Berfungsi di dalam HP · atau buka layar penuh",waBtn:"Pesan via WhatsApp",caseLink:"Baca studi kasusnya ↗",pgQ1:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",pgA1:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",pgQ2:"Apa yang kubutuhkan untuk mulai?",pgA2:"Sumber lead-mu saat ini — walau hari ini isinya hanya utas chat dan buku catatan. Carl memetakannya ke dalam pipeline bersamamu, satu kanal setiap kalinya.",pgQ3:"Bisakah digabung dengan website?",pgA3:"Bisa — website yang mengalirkan lead langsung ke pipeline adalah pasangan yang paling umum. Sebutkan keduanya dalam satu pesan dan keduanya digabung dalam satu penawaran.",pgQ4:"Apa yang terjadi dengan data lead-ku?",pgA4:"Tetap di akun dan alatmu — pipeline dibangun di dalam yang sudah kamu pakai. Carl tidak menyimpan salinan data pelangganmu setelah serah terima, dan tindak lanjut tetap berupa draf sampai kamu sendiri yang mengirimnya."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -1071,40 +1090,98 @@ window.addEventListener("hashchange",function(){
 var KEY="carllab-simple-leads-v1";
 var BASE={total:27,web:14,logo:8,lead:5};
 var NEEDS={
- web:{en:"Website",id:"Website",sub:{en:"Website enquiry",id:"Pertanyaan website"},draft:{en:"a website",id:"website"}},
- logo:{en:"Brand & logo",id:"Brand & logo",sub:{en:"Logo enquiry",id:"Pertanyaan logo"},draft:{en:"a logo and brand",id:"logo dan brand"}},
- lead:{en:"Lead system",id:"Sistem lead",sub:{en:"Lead system enquiry",id:"Pertanyaan sistem lead"},draft:{en:"a lead system",id:"sistem lead"}},
- other:{en:"Something else",id:"Hal lain",sub:{en:"New enquiry",id:"Pertanyaan baru"},draft:{en:"your services",id:"layananmu"}}
+ web:{en:"Website",id:"Website",sub:{en:"Website enquiry",id:"Pertanyaan website"},draft:{en:"a website",id:"website"},draftGen:{en:"a website for your business",id:"website untuk bisnismu"},noun:{en:"website",id:"website"}},
+ logo:{en:"Brand & logo",id:"Brand & logo",sub:{en:"Logo enquiry",id:"Pertanyaan logo"},draft:{en:"a logo and brand",id:"logo dan brand"},draftGen:{en:"a logo for your brand",id:"logo untuk brand-mu"},noun:{en:"logo and brand",id:"logo dan brand"}},
+ lead:{en:"Lead system",id:"Sistem lead",sub:{en:"Lead system enquiry",id:"Pertanyaan sistem lead"},draft:{en:"a lead system",id:"sistem lead"},draftGen:{en:"a lead system for your business",id:"sistem lead untuk bisnismu"},noun:{en:"lead system",id:"sistem lead"}},
+ other:{en:"Something else",id:"Hal lain",sub:{en:"New enquiry",id:"Pertanyaan baru"},draft:{en:"your services",id:"layananmu"},draftGen:{en:"your services",id:"layananmu"},noun:{en:"enquiry",id:"pertanyaan"}}
 };
-var EXAMPLES=[
- {name:"Rina — Skincare shop",first:"Rina",draft:{en:"a product website with WhatsApp orders",id:"website produk dengan order WhatsApp"}},
- {name:"Bagas — Kopi Pagi",first:"Bagas",draft:{en:"a logo and cafe website",id:"logo dan website kedai"}},
- {name:"Sari — Wedding",first:"Sari",draft:{en:"a digital invitation with RSVP",id:"undangan digital dengan RSVP"}}
+var SAMPLES=[
+ {name:"Rina — Skincare shop",first:"Rina",ini:"RS",need:"web",mins:2,sub:{en:"Website + WA orders",id:"Website + order WhatsApp"},draft:{en:"a product website with WhatsApp orders",id:"website produk dengan order WhatsApp"}},
+ {name:"Bagas — Kopi Pagi",first:"Bagas",ini:"BP",need:"logo",mins:9,sub:{en:"Logo + cafe website",id:"Logo + website kedai"},draft:{en:"a logo and cafe website",id:"logo dan website kedai"}},
+ {name:"Sari — Wedding",first:"Sari",ini:"SA",need:"web",mins:14,sub:{en:"Invitation + RSVP",id:"Undangan + RSVP"},draft:{en:"a digital invitation with RSVP",id:"undangan digital dengan RSVP"}},
+ {name:"Dewi — Batik Laras",first:"Dewi",ini:"DB",need:"web",mins:21,sub:{en:"Online store",id:"Toko online"}},
+ {name:"Andi — Bengkel Andi Motor",first:"Andi",ini:"AB",need:"web",mins:27,sub:{en:"Booking page",id:"Halaman booking"}},
+ {name:"Maya — Maya's Kitchen",first:"Maya",ini:"MM",need:"web",mins:33,sub:{en:"Restaurant menu site",id:"Website menu restoran"}},
+ {name:"Rizky — Rizky Properti",first:"Rizky",ini:"RP",need:"web",mins:39,sub:{en:"Property listings",id:"Listing properti"}},
+ {name:"Putri — Salon Putri Ayu",first:"Putri",ini:"PS",need:"web",mins:46,sub:{en:"Salon website",id:"Website salon"}},
+ {name:"Budi — Budi Furniture",first:"Budi",ini:"BF",need:"web",mins:54,sub:{en:"Furniture catalogue",id:"Katalog furnitur"}},
+ {name:"Ayu — Ayu Yoga Studio",first:"Ayu",ini:"AY",need:"web",mins:63,sub:{en:"Class schedule page",id:"Halaman jadwal kelas"}},
+ {name:"Fajar — Fajar Travel",first:"Fajar",ini:"FT",need:"web",mins:72,sub:{en:"Travel packages page",id:"Halaman paket wisata"}},
+ {name:"Intan — Intan Dental Care",first:"Intan",ini:"ID",need:"web",mins:84,sub:{en:"Clinic website",id:"Website klinik"}},
+ {name:"Dimas — Dimas Photo",first:"Dimas",ini:"DP",need:"web",mins:97,sub:{en:"Portfolio site",id:"Website portofolio"}},
+ {name:"Ratna — Ratna English Course",first:"Ratna",ini:"RE",need:"web",mins:112,sub:{en:"Course sales page",id:"Halaman jualan kursus"}},
+ {name:"Yoga — Yoga Sneakers ID",first:"Yoga",ini:"YS",need:"web",mins:128,sub:{en:"Product landing page",id:"Landing page produk"}},
+ {name:"Tania — Tania Bakery",first:"Tania",ini:"TB",need:"logo",mins:145,sub:{en:"Bakery logo + packaging",id:"Logo roti + kemasan"}},
+ {name:"Gilang — Gilang Barbershop",first:"Gilang",ini:"GB",need:"logo",mins:163,sub:{en:"Barbershop logo",id:"Logo barbershop"}},
+ {name:"Nadia — Nadia Hijab",first:"Nadia",ini:"NH",need:"logo",mins:182,sub:{en:"Fashion label logo",id:"Logo label fashion"}},
+ {name:"Reza — Reza Gym",first:"Reza",ini:"RG",need:"logo",mins:204,sub:{en:"Gym logo",id:"Logo gym"}},
+ {name:"Sinta — Sinta Skincare",first:"Sinta",ini:"SS",need:"logo",mins:228,sub:{en:"Beauty brand logo",id:"Logo brand kecantikan"}},
+ {name:"Bima — Bima Coffee Roasters",first:"Bima",ini:"BC",need:"logo",mins:254,sub:{en:"Coffee brand identity",id:"Identitas brand kopi"}},
+ {name:"Laras — Laras Batik",first:"Laras",ini:"LB",need:"logo",mins:281,sub:{en:"Batik brand logo",id:"Logo brand batik"}},
+ {name:"Hendra — Hendra Ads Agency",first:"Hendra",ini:"HA",need:"lead",mins:310,sub:{en:"Lead system for ads",id:"Sistem lead untuk iklan"}},
+ {name:"Wulan — Wulan Wedding Organizer",first:"Wulan",ini:"WW",need:"lead",mins:342,sub:{en:"Enquiry pipeline",id:"Pipeline pertanyaan masuk"}},
+ {name:"Eko — Eko Car Rental",first:"Eko",ini:"EC",need:"lead",mins:376,sub:{en:"WhatsApp lead tracker",id:"Pelacak lead WhatsApp"}},
+ {name:"Dian — Dian Property Agent",first:"Dian",ini:"DP",need:"lead",mins:412,sub:{en:"Follow-up automation",id:"Otomatisasi follow-up"}},
+ {name:"Anton — Anton AC Service",first:"Anton",ini:"AA",need:"lead",mins:451,sub:{en:"Sales follow-up system",id:"Sistem follow-up penjualan"}}
 ];
 var T={
- justNow:{en:"just now",id:"baru saja"},
  draftFor:{en:"Draft for",id:"Draf untuk"},
  errName:{en:"Please add a name (at least 2 characters).",id:"Isi nama dulu ya (minimal 2 karakter)."},
  errWa:{en:"That WhatsApp number looks off — use 9 to 15 digits, or leave it empty.",id:"Nomor WhatsApp-nya sepertinya salah — pakai 9 sampai 15 digit, atau kosongkan saja."},
  phName:{en:"Customer name *",id:"Nama pelanggan *"},
  phWa:{en:"WhatsApp number (optional)",id:"Nomor WhatsApp (boleh kosong)"},
- openWa:{en:"Open in WhatsApp ↗",id:"Buka di WhatsApp ↗"}
+ openWa:{en:"Open in WhatsApp ↗",id:"Buka di WhatsApp ↗"},
+ chatWa:{en:"Chat WA",id:"Chat WA"},
+ chatAgain:{en:"Chat again",id:"Chat lagi"},
+ contacted:{en:"Contacted",id:"Sudah dihubungi"},
+ autoLabel:{en:"Auto-reply",id:"Balasan otomatis"},
+ moreT:{en:"24 more leads today",id:"24 lead lain hari ini"},
+ moreSub:{en:"Every one with a WhatsApp number, ready to follow up",id:"Semuanya sudah ada nomor WhatsApp-nya, siap di-follow-up"},
+ lessT:{en:"Show less",id:"Tampilkan lebih sedikit"},
+ lessSub:{en:"Back to the newest three",id:"Kembali ke tiga terbaru"}
 };
 function lang(){ try{ return localStorage.getItem("carllab-v18-lang")==="id" ? "id" : (document.documentElement.lang==="id"?"id":"en"); }catch(e){ return document.documentElement.lang==="id"?"id":"en"; } }
-function load(){ try{ var v=JSON.parse(localStorage.getItem(KEY)||"[]"); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
-function save(v){ try{ localStorage.setItem(KEY,JSON.stringify(v)); }catch(e){} }
+function mig(m){
+  m=m||{};
+  return {name:String(m.name||""),need:NEEDS[m.need]?m.need:"other",wa:String(m.wa||""),
+    ts:(typeof m.ts==="number"&&isFinite(m.ts))?m.ts:Date.now(),
+    contacted:!!m.contacted,
+    replied:(m.replied===undefined)?true:!!m.replied};
+}
+function loadState(){
+  var raw=null;
+  try{ raw=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
+  var st={mine:[],sc:[]};
+  if(Array.isArray(raw)){ st.mine=raw.map(mig); }
+  else if(raw&&Array.isArray(raw.mine)){ st.mine=raw.mine.map(mig); if(Array.isArray(raw.sc)) st.sc=raw.sc.map(function(x){ return !!x; }); }
+  return st;
+}
+function saveState(st){ try{ localStorage.setItem(KEY,JSON.stringify({mine:st.mine,sc:st.sc})); }catch(e){} }
 var COLORS=[["#FFE3EC","#7A1230"],["#FFF1C7","#6B4E00"],["#DDEBFF","#123A7A"],["#D9F2E3","#14532D"],["#F3E8FF","#581C87"]];
 function initials(n){ var p=n.trim().split(/\s+/); return ((p[0]||"").charAt(0)+(p[1]||"").charAt(0)||"").toUpperCase()||"•"; }
 function esc(t){ return String(t).replace(/[&<>"']/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 var list=document.getElementById("slList"), count=document.getElementById("slCount"),
+    nAll=document.getElementById("slNAll"),
     nWeb=document.getElementById("slNWeb"), nLogo=document.getElementById("slNLogo"), nLead=document.getElementById("slNLead"),
     draft=document.getElementById("slDraft"), dTitle=document.getElementById("slDraftTitle"),
     dMsg=document.getElementById("slDraftMsg"), dWa=document.getElementById("slDraftWa");
 if(!list) return;
-function renderCounts(){
-  var mine=load(), c={total:BASE.total+mine.length,web:BASE.web,logo:BASE.logo,lead:BASE.lead};
-  mine.forEach(function(l){ if(c[l.need]!==undefined) c[l.need]++; });
-  count.textContent=c.total; nWeb.textContent=c.web; nLogo.textContent=c.logo; nLead.textContent=c.lead;
+var T0=Date.now(), filter="all", expanded=false;
+function rel(ts){
+  var L=lang(), m=Math.max(0,Math.round((Date.now()-ts)/60000));
+  if(m<1) return L==="id" ? "baru saja" : "just now";
+  if(m<60) return L==="id" ? (m+" menit lalu") : (m+" min ago");
+  var h=Math.floor(m/60);
+  return L==="id" ? (h+" jam lalu") : (h+" h ago");
+}
+function renderCounts(st){
+  var total=BASE.total+st.mine.length, contacted=0,
+      c={web:BASE.web,logo:BASE.logo,lead:BASE.lead};
+  st.sc.forEach(function(x){ if(x) contacted++; });
+  st.mine.forEach(function(l){ if(l.contacted) contacted++; if(c[l.need]!==undefined) c[l.need]++; });
+  count.textContent=total-contacted;
+  if(nAll) nAll.textContent=total;
+  nWeb.textContent=c.web; nLogo.textContent=c.logo; nLead.textContent=c.lead;
 }
 function showDraft(title,msg,wa){
   var L=lang();
@@ -1118,27 +1195,124 @@ function draftMsg(first,needText){
   return L==="id" ? ("Halo "+first+", terima kasih sudah bertanya tentang "+needText+". Dengan senang hati saya bantu — boleh ceritakan sedikit lagi rencanamu, nanti saya balas dengan langkah berikutnya.")
                   : ("Hi "+first+", thanks for reaching out about "+needText+". I'd love to help — tell me a bit more about what you're planning, and I'll reply with the next steps.");
 }
-function rowFor(l,idx){
-  var L=lang(), nd=NEEDS[l.need]||NEEDS.other, col=COLORS[idx%COLORS.length];
-  var row=document.createElement("div"); row.className="sl-row sl-mine";
-  row.innerHTML='<div class="sl-ava" style="background:'+col[0]+';color:'+col[1]+'">'+esc(initials(l.name))+'</div>'+
-    '<div class="sl-row-main"><b>'+esc(l.name)+'</b><span>'+esc(nd.sub[L])+' · '+T.justNow[L]+'</span></div>'+
-    '<button type="button" class="sl-wa">Chat WA</button>';
-  row.querySelector(".sl-wa").addEventListener("click",function(){
-    showDraft(l.name, draftMsg(l.name.split(" ")[0], nd.draft[L]), l.wa||"");
+function autoMsg(first,need){
+  var L=lang(), n=(NEEDS[need]||NEEDS.other).noun[L];
+  return L==="id" ? ("Halo Kak "+first+", terima kasih sudah order "+n+" — Carl balas sebentar lagi.")
+                  : ("Hi "+first+", thanks for your "+n+" order — Carl will reply shortly.");
+}
+function rowShell(ini,col,name,subText,done){
+  var L=lang(), row=document.createElement("div");
+  row.className="sl-row"+(done?" done":"");
+  row.innerHTML='<div class="sl-ava" style="background:'+col[0]+';color:'+col[1]+'">'+esc(ini)+'</div>'+
+    '<div class="sl-row-main"><b>'+esc(name)+'</b><span>'+esc(subText)+'</span></div>';
+  var main=row.querySelector(".sl-row-main"), pill=null;
+  if(done){
+    pill=document.createElement("button");
+    pill.type="button"; pill.className="sl-state";
+    pill.textContent="✓ "+T.contacted[L];
+    main.appendChild(pill);
+  }
+  var wb=document.createElement("button");
+  wb.type="button"; wb.className="sl-wa"+(done?" again":"");
+  wb.textContent=done ? T.chatAgain[L] : T.chatWa[L];
+  row.appendChild(wb);
+  return {row:row,wa:wb,pill:pill};
+}
+function mineRow(l,i,st){
+  var L=lang(), nd=NEEDS[l.need]||NEEDS.other, col=COLORS[i%COLORS.length];
+  var parts=rowShell(initials(l.name),col,l.name,nd.sub[L]+" · "+rel(l.ts),l.contacted);
+  parts.row.classList.add("sl-mine");
+  parts.row.setAttribute("data-need",l.need);
+  parts.wa.addEventListener("click",function(){
+    showDraft(l.name,draftMsg(l.name.split(" ")[0],nd.draft[L]),l.wa||"");
+    var s2=loadState();
+    if(s2.mine[i]&&!s2.mine[i].contacted){ s2.mine[i].contacted=true; saveState(s2); renderAll(-1); }
   });
+  if(parts.pill) parts.pill.addEventListener("click",function(){
+    var s2=loadState();
+    if(s2.mine[i]){ s2.mine[i].contacted=false; saveState(s2); renderAll(-1); }
+  });
+  return parts.row;
+}
+function sampleRow(s,i,st){
+  var L=lang(), done=!!st.sc[i], col=COLORS[i%COLORS.length];
+  var parts=rowShell(s.ini,col,s.name,s.sub[L]+" · "+rel(T0-s.mins*60000),done);
+  parts.row.setAttribute("data-need",s.need);
+  var draftText=s.draft ? s.draft[L] : (NEEDS[s.need]||NEEDS.other).draftGen[L];
+  parts.wa.addEventListener("click",function(){
+    showDraft(s.name,draftMsg(s.first,draftText),"");
+    var s2=loadState();
+    if(!s2.sc[i]){ s2.sc[i]=true; saveState(s2); renderAll(-1); }
+  });
+  if(parts.pill) parts.pill.addEventListener("click",function(){
+    var s2=loadState();
+    s2.sc[i]=false; saveState(s2); renderAll(-1);
+  });
+  return parts.row;
+}
+function replyBubble(l,anim){
+  var L=lang(), b=document.createElement("div");
+  b.className="sl-reply"+(anim?" in":"");
+  b.innerHTML="<small>"+esc(T.autoLabel[L])+"</small><p>"+esc(autoMsg(l.name.split(" ")[0],l.need))+"</p>";
+  return b;
+}
+function moreRow(){
+  var L=lang(), row=document.createElement("div");
+  row.className="sl-row sl-more"; row.setAttribute("role","button"); row.setAttribute("tabindex","0");
+  row.innerHTML='<div class="sl-ava" style="background:#2E3237;color:#E3E6E9">+24</div>'+
+    '<div class="sl-row-main"><b>'+esc(T.moreT[L])+'</b><span>'+esc(T.moreSub[L])+'</span></div>'+
+    '<span class="sl-chev" aria-hidden="true">▾</span>';
+  function go(){ expanded=true; renderAll(-1); }
+  row.addEventListener("click",go);
+  row.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
   return row;
 }
-function renderMine(){
-  list.querySelectorAll(".sl-mine").forEach(function(r){ r.remove(); });
-  var mine=load(), first=list.firstChild;
-  mine.slice().reverse().forEach(function(l,i){ list.insertBefore(rowFor(l,i), first); });
-  renderCounts();
+function lessRow(){
+  var L=lang(), row=document.createElement("div");
+  row.className="sl-row sl-more"; row.setAttribute("role","button"); row.setAttribute("tabindex","0");
+  row.innerHTML='<div class="sl-ava" style="background:#2E3237;color:#E3E6E9">−24</div>'+
+    '<div class="sl-row-main"><b>'+esc(T.lessT[L])+'</b><span>'+esc(T.lessSub[L])+'</span></div>'+
+    '<span class="sl-chev" aria-hidden="true">▴</span>';
+  function go(){ expanded=false; renderAll(-1); }
+  row.addEventListener("click",go);
+  row.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+  return row;
 }
-list.querySelectorAll(".sl-wa[data-lead]").forEach(function(btn){
-  btn.addEventListener("click",function(){
-    var ex=EXAMPLES[Number(btn.getAttribute("data-lead"))], L=lang();
-    showDraft(ex.name, draftMsg(ex.first, ex.draft[L]), "");
+function renderAll(animIdx){
+  var st=loadState();
+  renderCounts(st);
+  list.innerHTML="";
+  st.mine.map(function(l,i){ return {l:l,i:i}; }).reverse().forEach(function(o){
+    if(filter!=="all"&&o.l.need!==filter) return;
+    list.appendChild(mineRow(o.l,o.i,st));
+    if(o.l.replied) list.appendChild(replyBubble(o.l,animIdx===o.i));
+  });
+  SAMPLES.forEach(function(s,i){
+    if(filter!=="all"&&s.need!==filter) return;
+    if(filter==="all"&&!expanded&&i>=3) return;
+    list.appendChild(sampleRow(s,i,st));
+  });
+  if(filter==="all") list.appendChild(expanded?lessRow():moreRow());
+}
+function armReply(i){
+  setTimeout(function(){
+    var st=loadState(), l=st.mine[i];
+    if(l&&!l.replied){ l.replied=true; saveState(st); renderAll(i); }
+  },900);
+}
+var chips=Array.prototype.slice.call(document.querySelectorAll(".sl-chip"));
+function syncChips(){
+  chips.forEach(function(ch){
+    var on=ch.getAttribute("data-filter")===filter;
+    ch.classList.toggle("on",on);
+    ch.setAttribute("aria-pressed",on?"true":"false");
+  });
+}
+chips.forEach(function(ch){
+  ch.addEventListener("click",function(){
+    var f=ch.getAttribute("data-filter");
+    filter=(f==="all"||filter===f) ? "all" : f;
+    syncChips(); renderAll(-1);
   });
 });
 var form=document.getElementById("slForm"), err=document.getElementById("sfErr");
@@ -1154,15 +1328,26 @@ if(form){
     if(wa && (wa.length<9||wa.length>15)){ err.textContent=T.errWa[L]; return; }
     if(wa.charAt(0)==="0") wa="62"+wa.slice(1);
     err.textContent="";
-    var mine=load(); mine.push({name:name,need:need,wa:wa}); save(mine);
-    renderMine();
+    var st=loadState();
+    st.mine.push({name:name,need:need,wa:wa,ts:Date.now(),contacted:false,replied:false});
+    saveState(st);
+    var idx=st.mine.length-1;
+    renderAll(-1);
+    armReply(idx);
     form.reset(); placeholders();
     var ph=document.querySelector(".sl-phone"); if(ph) ph.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
   });
-  document.getElementById("sfReset").addEventListener("click",function(){ save([]); renderMine(); draft.hidden=true; err.textContent=""; });
+  document.getElementById("sfReset").addEventListener("click",function(){
+    saveState({mine:[],sc:[]});
+    filter="all"; expanded=false; syncChips();
+    renderAll(-1);
+    draft.hidden=true; err.textContent="";
+  });
 }
-new MutationObserver(function(){ placeholders(); renderMine(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
-renderMine();
+new MutationObserver(function(){ placeholders(); renderAll(-1); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+syncChips();
+renderAll(-1);
+loadState().mine.forEach(function(l,i){ if(!l.replied) armReply(i); });
 })();
 </script>
 </body>
