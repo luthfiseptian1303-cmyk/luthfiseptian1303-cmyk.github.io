@@ -637,8 +637,50 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 #vpVideo{flex:1;min-height:0;width:100%;border:0;display:block;background:#000;object-fit:contain}
 .vp-fallback{display:block;padding:10px 12px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:#C9A24B;text-decoration:none;background:#0A0A0C;border-top:1px solid #23262B;flex:none}
 </style>
+<style id="look-round">
+#clLoader{position:fixed;inset:0;z-index:2000;background:#050505;display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+#clLoader.lift{transform:translateY(-101%)}
+#clLoader .cl-word{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(44px,9vw,96px);letter-spacing:-.03em;line-height:1;display:flex}
+#clLoader .cl-l{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:brightness(.22) saturate(.4);transition:filter .45s cubic-bezier(.05,.7,.1,1)}
+#clLoader.fill .cl-l{filter:brightness(1.12) saturate(1)}
+html.cl-lock{overflow:hidden}
+@media (prefers-reduced-motion: reduce){#clLoader{display:none}}
+.foot-word{background-image:linear-gradient(100deg,#6E757D 0%,#AEB4BC 24%,#C9CED4 38%,#F6F8FA 50%,#C9CED4 62%,#AEB4BC 76%,#6E757D 100%);background-size:230% 100%;background-position:50% 0}
+</style>
 </head>
 <body>
+<script>
+(function(){
+  try{
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if(localStorage.getItem("carllab-loader-v1")) return;
+    localStorage.setItem("carllab-loader-v1","1");
+  }catch(e){ return; }
+  var d=document.createElement("div");
+  d.id="clLoader"; d.setAttribute("aria-hidden","true");
+  var w=document.createElement("div"); w.className="cl-word";
+  "CarlLab".split("").forEach(function(ch,i){
+    var s=document.createElement("span");
+    s.className="cl-l"; s.style.transitionDelay=(i*0.13)+"s"; s.textContent=ch;
+    w.appendChild(s);
+  });
+  d.appendChild(w);
+  document.body.appendChild(d);
+  document.documentElement.classList.add("cl-lock");
+  var done=false;
+  function lift(){
+    if(done) return; done=true;
+    d.classList.add("lift");
+    document.documentElement.classList.remove("cl-lock");
+    setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); },700);
+  }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ d.classList.add("fill"); }); });
+  d.addEventListener("click",lift);
+  window.addEventListener("keydown",lift);
+  setTimeout(lift,1350);
+  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); document.documentElement.classList.remove("cl-lock"); },2000);
+})();
+</script>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
 <div id="scrollProg"></div>
 <header class="site" id="top">
@@ -1089,5 +1131,30 @@ renderVP();
 })();
 </script>
 
+<script>
+(function(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var words=document.querySelectorAll(".foot-word");
+  if(!words.length) return;
+  words.forEach(function(w){
+    var tick=false, lastX=null;
+    function upd(){
+      tick=false;
+      if(lastX===null) return;
+      var r=w.getBoundingClientRect(); if(!r.width) return;
+      var p=Math.max(0,Math.min(100,((lastX-r.left)/r.width)*100));
+      w.style.backgroundPosition=p.toFixed(1)+"% 0";
+    }
+    function h(e){
+      lastX=(e.touches&&e.touches[0])?e.touches[0].clientX:e.clientX;
+      if(!tick){ tick=true; requestAnimationFrame(upd); }
+    }
+    var host=w.closest("footer")||w;
+    host.addEventListener("pointermove",h,{passive:true});
+    host.addEventListener("pointerdown",h,{passive:true});
+    host.addEventListener("touchmove",h,{passive:true});
+  });
+})();
+</script>
 </body>
 </html>

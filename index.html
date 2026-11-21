@@ -734,8 +734,103 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 <style id="visual-r2f">
 #proof .pcell p{color:#A8A8AE}
 </style>
+<style id="look-round">
+#clLoader{position:fixed;inset:0;z-index:2000;background:#050505;display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+#clLoader.lift{transform:translateY(-101%)}
+#clLoader .cl-word{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(44px,9vw,96px);letter-spacing:-.03em;line-height:1;display:flex}
+#clLoader .cl-l{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:brightness(.22) saturate(.4);transition:filter .45s cubic-bezier(.05,.7,.1,1)}
+#clLoader.fill .cl-l{filter:brightness(1.12) saturate(1)}
+html.cl-lock{overflow:hidden}
+@media (prefers-reduced-motion: reduce){#clLoader{display:none}}
+.foot-word{background-image:linear-gradient(100deg,#6E757D 0%,#AEB4BC 24%,#C9CED4 38%,#F6F8FA 50%,#C9CED4 62%,#AEB4BC 76%,#6E757D 100%);background-size:230% 100%;background-position:50% 0}
+.hero-dp{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:1;transition:opacity .75s ease}
+.hero-dp.dp-fade{opacity:0}
+html[data-daypart="morning"] .hero-dp{background:radial-gradient(900px 620px at 78% 16%,rgba(233,219,188,.16),rgba(233,219,188,0) 70%),linear-gradient(180deg,rgba(240,230,205,.05),rgba(240,230,205,0) 60%)}
+html[data-daypart="afternoon"] .hero-dp{background:radial-gradient(900px 620px at 78% 16%,rgba(217,222,228,.10),rgba(217,222,228,0) 70%)}
+html[data-daypart="evening"] .hero-dp{background:radial-gradient(900px 620px at 78% 16%,rgba(219,183,138,.17),rgba(219,183,138,0) 70%),linear-gradient(180deg,rgba(30,20,8,.12),rgba(30,20,8,0) 55%)}
+html[data-daypart="night"] .hero-dp{background:radial-gradient(900px 620px at 78% 16%,rgba(110,130,175,.10),rgba(110,130,175,0) 70%),linear-gradient(180deg,rgba(2,3,6,.38),rgba(2,3,6,.10) 60%)}
+.marquee .track{animation-duration:52s}
+.svc-row{grid-template-columns:64px 1fr clamp(120px,17vw,216px) auto}
+.svc-sliver{display:block;overflow:hidden;aspect-ratio:16/10;border:1px solid #2E3237}
+.svc-sliver img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.85);transform:scale(1.01);transition:filter .35s cubic-bezier(.05,.7,.1,1),transform .45s cubic-bezier(.05,.7,.1,1)}
+.svc-row:hover .svc-sliver img,.svc-row:focus-visible .svc-sliver img{filter:none;transform:scale(1.07)}
+@media(max-width:860px){.svc-row{grid-template-columns:44px 1fr auto}.svc-row .arr{grid-column:3;grid-row:1}.svc-sliver{grid-column:2/4;aspect-ratio:auto;height:54px;margin-top:4px}}
+@media(max-width:560px){.svc-row{grid-template-columns:36px 1fr auto}}
+#order{background:#F0EDE6;color:#14161A}
+#order .eyebrow{color:#5C6167}
+#order .sec-head h2{color:#14161A}
+#order .bwk{color:#5C6167}
+.order-side p{color:#26292E}
+#order .order-side li{color:#26292E}
+.order-side li::before{color:#5C6167}
+.bw{border-top-color:rgba(20,22,26,.22)}
+.bw p{color:#33373C}
+#order .dl li{border-top-color:rgba(20,22,26,.18)}
+form.order{background:#FAF8F1;color:#14161A;border-color:#14161A;box-shadow:8px 8px 0 rgba(20,22,26,.92)}
+form.order input,form.order select,form.order textarea{color:#14161A;border-bottom-color:rgba(20,22,26,.45)}
+form.order input:focus,form.order select:focus,form.order textarea:focus{border-bottom-color:#14161A}
+#order .form-note,#order .fhint{color:#5C6167}
+#order .form-status.ok{color:#1E6B34}
+#order .form-status.err{color:#A12622}
+</style>
 </head>
 <body>
+<script>
+(function(){
+  try{
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if(localStorage.getItem("carllab-loader-v1")) return;
+    localStorage.setItem("carllab-loader-v1","1");
+  }catch(e){ return; }
+  var d=document.createElement("div");
+  d.id="clLoader"; d.setAttribute("aria-hidden","true");
+  var w=document.createElement("div"); w.className="cl-word";
+  "CarlLab".split("").forEach(function(ch,i){
+    var s=document.createElement("span");
+    s.className="cl-l"; s.style.transitionDelay=(i*0.13)+"s"; s.textContent=ch;
+    w.appendChild(s);
+  });
+  d.appendChild(w);
+  document.body.appendChild(d);
+  document.documentElement.classList.add("cl-lock");
+  var done=false;
+  function lift(){
+    if(done) return; done=true;
+    d.classList.add("lift");
+    document.documentElement.classList.remove("cl-lock");
+    setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); },700);
+  }
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ d.classList.add("fill"); }); });
+  d.addEventListener("click",lift);
+  window.addEventListener("keydown",lift);
+  setTimeout(lift,1350);
+  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); document.documentElement.classList.remove("cl-lock"); },2000);
+})();
+</script>
+<script>
+(function(){
+  var OV={morning:1,afternoon:1,evening:1,night:1};
+  function jktHour(){ try{ return parseInt(new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Jakarta",hour:"2-digit",hour12:false}).format(new Date()),10)%24; }catch(e){ return 12; } }
+  function part(h){ return (h>=5&&h<11)?"morning":(h>=11&&h<17)?"afternoon":(h>=17&&h<21)?"evening":"night"; }
+  var forced=null;
+  try{ var q=new URLSearchParams(location.search).get("dp"); if(q&&OV[q]) forced=q; }catch(e){}
+  var root=document.documentElement;
+  var cur=forced||part(jktHour());
+  root.setAttribute("data-daypart",cur);
+  window.__setDaypart=function(p){ if(OV[p]){ cur=p; root.setAttribute("data-daypart",p); } };
+  if(forced) return;
+  var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  setInterval(function(){
+    var np=part(jktHour());
+    if(np===cur) return;
+    cur=np;
+    var dp=document.querySelector(".hero-dp");
+    if(!dp||reduced){ root.setAttribute("data-daypart",np); return; }
+    dp.classList.add("dp-fade");
+    setTimeout(function(){ root.setAttribute("data-daypart",np); dp.classList.remove("dp-fade"); },750);
+  },60000);
+})();
+</script>
 <a class="skip" href="#services" data-t="skip">Skip to content</a>
 <div id="scrollProg"></div>
 <div id="svcPill" data-t="pillTxt">Details &#8599;</div>
@@ -776,6 +871,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 <main>
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-dp" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
       <span class="avail"><span class="dot"></span><span data-t="avail">Available for new projects</span><span class="avail-t" id="availTime"></span></span>
@@ -820,27 +916,32 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <a class="svc-row" href="websites.html" data-rv="x-80">
         <span class="num">01</span>
         <span><h3 data-t="s1t">Websites</h3><p data-t="s1p">Company sites, landing pages, and online stores — one concept drawn from your business, checked on a real phone before launch, and pointed at one clear action.</p></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="hub-thumbs/kovra-wide.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="browser-games.html" data-rv="x-80">
         <span class="num">02</span>
         <span><h3 data-t="s2t">Browser games</h3><p data-t="s2p">Playable brand experiences and small games that run in any browser — no install, no app store, just a link people can play and share.</p></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="work-pulau.webp" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="brand-logo.html" data-rv="x-80">
         <span class="num">03</span>
         <span><h3 data-t="s3t">Brand &amp; logo</h3><p data-t="s3p">Logos and identity systems drawn for one specific business — its name, its customers, its shelves — never pulled from a template.</p></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="hub-thumbs/momirel-wide.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
       </a>
       <a class="svc-row" href="video-editing.html" data-rv="x-80">
         <span class="num">04</span>
         <span><h3 data-t="s5t">Video editing</h3><p data-t="s5p">Short-form and long-form edits for channels and brands — cut, paced, captioned and mixed from your raw footage, delivered ready to post in the format each platform wants.</p></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="video-editing/media/sam-altman-tiktok.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
         <span class="tag" data-t="s5tag">Five short-form edits — watch them on the service page, in the phone.</span>
       </a>
       <a class="svc-row" href="lead-systems.html" data-rv="x-80">
         <span class="num">05</span>
         <span><h3 data-t="s4t">Lead systems</h3><p data-t="s4p">A pipeline that tidies scattered leads, scores them, and prepares follow-up drafts. Drafts only — you review and press send yourself.</p></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="work-leadengine.webp" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
         <span class="tag" data-t="s4tag">The same system CarlLab runs on</span>
       </a>
@@ -1183,6 +1284,7 @@ function applyLang(l){
   document.getElementById("langId").classList.toggle("on",l==="id");
   document.getElementById("langEn").classList.toggle("on",l==="en");
   try{ localStorage.setItem(LANG_KEY,l); }catch(e){}
+  if(typeof buildTicker==="function") buildTicker();
 }
 document.getElementById("langId").addEventListener("click",function(){ applyLang("id"); });
 document.getElementById("langEn").addEventListener("click",function(){ applyLang("en"); });
@@ -1194,10 +1296,18 @@ if(cmBtn){ cmBtn.addEventListener("click",function(){
 }); }
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 if(curLang()==="id") applyLang("id");
-/* ---------- marquee ---------- */
-var words=["Website Design","Browser Games","Brand & Logo","Video Editing","Lead Systems"];
-var half=words.map(function(w){ return "<span>"+w+" <i>&#10022;</i></span>"; }).join("");
-document.getElementById("mqTrack").innerHTML=half+half;
+/* ---------- marquee: proof ticker (look round 21 Nov) ---------- */
+var MQ={
+ en:["15 live demo samples \u2014 open them inside the phone","5 services, one pair of hands","English / Bahasa Indonesia","PageSpeed 98 on mobile \u00b7 accessibility 100","CarlLab runs on the lead system it sells","One invitation sample runs 47 working features"],
+ id:["15 contoh demo live \u2014 buka di dalam HP-nya","5 layanan, sepasang tangan","Inggris / Bahasa Indonesia","PageSpeed 98 di seluler \u00b7 aksesibilitas 100","CarlLab memakai sistem lead yang dijualnya","Satu contoh undangan menjalankan 47 fitur yang berfungsi"]
+};
+function buildTicker(){
+  var t=document.getElementById("mqTrack"); if(!t||typeof MQ==="undefined") return;
+  var items=MQ[curLang()]||MQ.en;
+  var half=items.map(function(w){ return "<span>"+w+" <i>&#10022;</i></span>"; }).join("");
+  t.innerHTML=half+half;
+}
+buildTicker();
 /* ---------- header state ---------- */
 var root=document.documentElement;
 function onScroll(){ root.classList.toggle("scrolled", window.scrollY>40); }
@@ -1639,6 +1749,31 @@ window.addEventListener("hashchange",function(){
   if(window.__lenis) window.__lenis.scrollTo(t,{duration:.8,offset:-hh});
   else t.scrollIntoView();
 });
+</script>
+<script>
+(function(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var words=document.querySelectorAll(".foot-word");
+  if(!words.length) return;
+  words.forEach(function(w){
+    var tick=false, lastX=null;
+    function upd(){
+      tick=false;
+      if(lastX===null) return;
+      var r=w.getBoundingClientRect(); if(!r.width) return;
+      var p=Math.max(0,Math.min(100,((lastX-r.left)/r.width)*100));
+      w.style.backgroundPosition=p.toFixed(1)+"% 0";
+    }
+    function h(e){
+      lastX=(e.touches&&e.touches[0])?e.touches[0].clientX:e.clientX;
+      if(!tick){ tick=true; requestAnimationFrame(upd); }
+    }
+    var host=w.closest("footer")||w;
+    host.addEventListener("pointermove",h,{passive:true});
+    host.addEventListener("pointerdown",h,{passive:true});
+    host.addEventListener("touchmove",h,{passive:true});
+  });
+})();
 </script>
 </body>
 </html>
