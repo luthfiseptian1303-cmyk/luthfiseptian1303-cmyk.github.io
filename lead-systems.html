@@ -613,6 +613,13 @@ html.cl-lock{overflow:hidden}
 .sl-phone{border:2px solid #3A3F45!important;border-radius:42px!important;padding:11px!important;background:#101012!important;box-shadow:0 34px 70px rgba(0,0,0,.55);max-width:400px!important}
 .sl-inner{border-radius:32px;overflow:hidden;background:#141619}
 </style>
+
+<style id="demo-grid-css">
+.ld-grid{display:grid;grid-template-columns:1fr 372px;gap:40px;align-items:start}
+.ld-grid .ls-specs{grid-template-columns:1fr;gap:20px}
+.ld-grid .demo-phone{margin:0 auto}
+@media(max-width:900px){.ld-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <script>
@@ -761,23 +768,28 @@ html.cl-lock{overflow:hidden}
       <span class="eyebrow" data-t="demoEye">Live demo</span>
       <h2 data-t="demoH">The full system, behind it</h2>
     </div>
-    <p class="ls-lede" data-rv="y40" data-t="demoP">For anyone who wants the full board: below is a working lead system, not a mockup — ArusDetail, a fictional car-detailing studio. Enquiries land on one board, every number is cleaned, every lead is scored in the open, and the follow-up queue chases the hottest lead first. Add a lead, run the automation, move the cards — it all works, and it saves on this device only.</p>
-    <ul class="ls-specs">
+    <div class="ld-grid">
+      <div data-rv="y40">
+        <p class="ls-lede" data-rv="y40" data-t="demoP">For anyone who wants the full board: below is a working lead system, not a mockup — ArusDetail, a fictional car-detailing studio. Enquiries land on one board, every number is cleaned, every lead is scored in the open, and the follow-up queue chases the hottest lead first. Add a lead, run the automation, move the cards — it all works, and it saves on this device only.</p>
+        <ul class="ls-specs">
       <li data-rv="y40"><span class="n">01</span><h3 data-t="demo1t">Scored in the open</h3><p data-t="demo1p">Every lead carries a 0–100 score built from five visible parts — service, urgency, budget, source, completeness. No magic numbers; open any card and see the maths.</p></li>
       <li data-rv="y40"><span class="n">02</span><h3 data-t="demo2t">Duplicates merge themselves</h3><p data-t="demo2p">The same person enquiring twice — even with the number written differently — becomes one lead with a fresher score, never two rows to chase.</p></li>
       <li data-rv="y40"><span class="n">03</span><h3 data-t="demo3t">Follow-ups drafted, never sent</h3><p data-t="demo3p">The queue prepares a personal WhatsApp draft for every due lead. A human still presses send — the system just makes sure nobody is forgotten.</p></li>
     </ul>
-    <div class="demo-phone" data-rv="y40">
+        <a class="case-link" href="work.html#arusdetail" data-t="caseLink">Read the case study &#8599;</a>
+      </div>
+      <div>
+        <div class="demo-phone" data-rv="y40">
       <div class="demo-screen no-notch">
         <div class="demo-notch" aria-hidden="true"></div>
         <iframe src="lead-system-demo.html" title="ArusDetail — lead system demo by CarlLab" loading="lazy"></iframe>
       </div>
     </div>
-    <p class="demo-fullwrap"><a class="demo-full" href="lead-system-demo.html" data-t="demoOpen">Open the demo full-screen ↗</a></p>
-    <p class="demo-hint" data-t="demoHint">Works inside the phone · or open it full-screen</p>
-    <a class="case-link" href="work.html#arusdetail" data-t="caseLink">Read the case study &#8599;</a>
-  </div>
-</section>
+        <p class="demo-fullwrap"><a class="demo-full" href="lead-system-demo.html" data-t="demoOpen">Open the demo full-screen ↗</a></p>
+        <p class="demo-hint" data-t="demoHint">Works inside the phone · or open it full-screen</p>
+      </div>
+    </div>
+    </section>
 <section class="blk">
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
