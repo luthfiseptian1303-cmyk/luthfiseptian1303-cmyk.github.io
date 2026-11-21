@@ -852,7 +852,7 @@ function markYou(){
   youLabel();
 }
 studio(); wcTick(); markYou();
-["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
+["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); setTimeout(youLabel,0); setTimeout(youLabel,400); }); });
 setInterval(function(){ studio(); wcTick(); youLabel(); },30000);
 /* copy email */
 var cm=document.getElementById("copyMail");

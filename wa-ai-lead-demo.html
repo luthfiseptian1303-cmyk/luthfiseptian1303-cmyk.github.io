@@ -487,6 +487,7 @@
 
   function playScenario(key){
     stopAll(); clearChat(); resetDash();
+    logEl.innerHTML = '<li class="empty-log" style="border:none">Belum ada aktivitas. Jalankan skenario atau kirim chat sebagai pelanggan.</li>';
     currentScen = key; leadCounted = false; hotCounted = false;
     document.querySelectorAll(".scen").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-scen") === key); });
     var sc = SCEN[key]; running = true; stats.chat++; renderStats();

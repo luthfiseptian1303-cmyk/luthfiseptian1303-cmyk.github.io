@@ -1018,7 +1018,7 @@ function markYou(){
   youLabel();
 }
 studio(); wcTick(); markYou();
-["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
+["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); setTimeout(youLabel,0); setTimeout(youLabel,400); }); });
 setInterval(function(){ studio(); wcTick(); youLabel(); },30000);
 /* copy email */
 var cm=document.getElementById("copyMail");
@@ -1240,7 +1240,7 @@ ed.addEventListener("play",function(){ btn.textContent=bt(BA_UI.pause); if(raw.p
 ed.addEventListener("pause",function(){ btn.textContent=bt(BA_UI.play); if(!raw.paused) raw.pause(); });
 ed.addEventListener("ended",function(){ raw.pause(); btn.textContent=bt(BA_UI.play); });
 ed.addEventListener("timeupdate",function(){
-  timeEl.textContent=fmt(ed.currentTime)+" / "+fmt(ed.duration||22);
+  timeEl.textContent=fmt(ed.currentTime)+" / "+fmt(ed.duration?Math.round(ed.duration):22);
   if(Math.abs(raw.currentTime-ed.currentTime)>0.3){ try{ raw.currentTime=ed.currentTime; }catch(e){} }
 });
 ed.addEventListener("seeking",function(){ try{ raw.currentTime=ed.currentTime; }catch(e){} });

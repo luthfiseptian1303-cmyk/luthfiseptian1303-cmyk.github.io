@@ -765,6 +765,28 @@ form.order input:focus,form.order select:focus,form.order textarea:focus{border-
 #order .form-note,#order .fhint{color:#5C6167}
 #order .form-status.ok{color:#1E6B34}
 #order .form-status.err{color:#A12622}
+.ferr{color:#A12622;font-size:13.5px;line-height:1.45;margin:7px 0 0}
+form.order [aria-invalid="true"]{border-bottom-color:#A12622!important}
+.draft-note{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;border:1.5px dashed rgba(20,22,26,.5);padding:10px 14px;margin:0 0 22px;font-family:"Space Mono",monospace;font-size:12.8px;letter-spacing:.03em;color:#33373C}
+.draft-note[hidden]{display:none}
+.draft-clear{background:none;border:0;border-bottom:1.5px solid #14161A;color:#14161A;font:inherit;font-weight:700;cursor:pointer;padding:0 0 1px;text-transform:uppercase;letter-spacing:.08em}
+.draft-clear:hover{color:#A12622;border-bottom-color:#A12622}
+.about-card{background:#FAF8F1;color:#14161A;border:2px solid #14161A;box-shadow:8px 8px 0 rgba(20,22,26,.9);padding:22px 24px;justify-self:end;width:min(470px,100%)}
+.ac-top{display:flex;align-items:center;gap:10px;font-family:"Space Mono",monospace;font-size:12.8px;font-weight:700;letter-spacing:.14em}
+.ac-sq{width:15px;height:15px;background:#14161A;position:relative;flex:none}
+.ac-sq::after{content:"";position:absolute;inset:4px;background:#B9C0C8}
+.ac-clockrow{display:flex;align-items:baseline;gap:14px;margin-top:18px}
+.ac-clock{font-family:"Space Mono",monospace;font-size:clamp(34px,3.4vw,44px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.ac-tz{font-family:"Space Mono",monospace;font-size:12.8px;letter-spacing:.1em;text-transform:uppercase;color:#5C6167}
+.ac-status{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:15px;color:#26292E}
+.ac-dot{width:9px;height:9px;border-radius:50%;background:#8A8F96;flex:none}
+html.carl-working .ac-dot{background:#1E6B34}
+.ac-row{display:flex;justify-content:space-between;gap:18px;padding:10px 0;border-top:1px solid rgba(20,22,26,.18);font-family:"Space Mono",monospace;font-size:12.8px;letter-spacing:.05em;margin-top:2px}
+.ac-status + .ac-row{margin-top:16px}
+.ac-row span{color:#5C6167;text-transform:uppercase}
+.ac-row b{font-weight:700;text-align:right}
+.pq{display:flex;flex-direction:column}
+.pq .popts{flex:1;justify-content:space-between}
 </style>
 </head>
 <body>
@@ -928,7 +950,7 @@ form.order input:focus,form.order select:focus,form.order textarea:focus{border-
       <a class="svc-row" href="lead-systems.html" data-rv="x-80">
         <span class="num">04</span>
         <span><h3 data-t="s4t">Lead systems</h3><p data-t="s4p">A pipeline that tidies scattered leads, scores them, and prepares follow-up drafts. Drafts only — you review and press send yourself.</p></span>
-        <span class="svc-sliver" aria-hidden="true"><img src="work-leadengine.webp" alt="" loading="lazy"></span>
+        <span class="svc-sliver" aria-hidden="true"><img src="work-leadengine.jpg" alt="" loading="lazy"></span>
         <span class="arr">&#8599;</span>
         <span class="tag" data-t="s4tag">The same system CarlLab runs on</span>
       </a>
@@ -951,9 +973,15 @@ form.order input:focus,form.order select:focus,form.order textarea:focus{border-
         <div class="apoint" data-rv="y40"><h3 data-t="ap3t">End to end</h3><p data-t="ap3p">Design, code, launch, and care — one pair of hands, one standard of finish.</p></div>
       </div>
     </div>
-  </div>
-  <div class="wrap">
-    
+    <aside class="about-card" data-rv="y40" aria-label="Studio card">
+      <div class="ac-top"><span class="ac-sq" aria-hidden="true"></span><span class="ac-name">CARLLAB — STUDIO CARD</span></div>
+      <div class="ac-clockrow"><span class="ac-clock" data-wc="id">--:--</span><span class="ac-tz" data-t="acTz">Jakarta · GMT+7</span></div>
+      <p class="ac-status"><span class="ac-dot" aria-hidden="true"></span><span class="ac-status-txt">Studio status</span></p>
+      <div class="ac-row"><span data-t="acR1">Services</span><b data-t="acR1v">4 — websites, brand, video, leads</b></div>
+      <div class="ac-row"><span data-t="acR2">Languages</span><b>EN · ID</b></div>
+      <div class="ac-row"><span data-t="acR3">Hands on your project</span><b data-t="acR3v">One pair — Carl&rsquo;s</b></div>
+      <div class="ac-row"><span data-t="acR4">Replies</span><b data-t="acR4v">Within a day</b></div>
+    </aside>
   </div>
 </section>
 
@@ -1108,14 +1136,18 @@ form.order input:focus,form.order select:focus,form.order textarea:focus{border-
         <input type="hidden" name="access_key" value="bcecbb03-c454-406e-b8f1-693ffadc9517">
         <input type="hidden" name="subject" value="New project — CarlLab website form">
         <input type="hidden" name="from_name" value="CarlLab website">
+        <p class="draft-note" id="draftNote" hidden><span data-t="draftNote">A saved draft from this browser has been loaded — pick up where you left off.</span><button type="button" class="draft-clear" id="draftClear" data-t="draftClear">Clear draft</button></p>
         <label for="fName" data-t="fNameL">Your name</label>
-        <input id="fName" name="name" type="text" autocomplete="name" required>
+        <input id="fName" name="name" type="text" autocomplete="name" required aria-describedby="err-fName">
+        <p class="ferr" id="err-fName" role="alert" hidden></p>
         <label for="fEmail" data-t="fEmailL">Email</label>
-        <input id="fEmail" name="email" type="email" autocomplete="email" required placeholder="you@business.com">
+        <input id="fEmail" name="email" type="email" autocomplete="email" required placeholder="you@business.com" aria-describedby="err-fEmail">
+        <p class="ferr" id="err-fEmail" role="alert" hidden></p>
         <label for="fWa" data-t="fWaL">WhatsApp <span class="fhint">(optional)</span></label>
-        <input id="fWa" name="whatsapp" type="tel" autocomplete="tel" placeholder="+62 …">
+        <input id="fWa" name="whatsapp" type="tel" autocomplete="tel" placeholder="+62 …" aria-describedby="err-fWa">
+        <p class="ferr" id="err-fWa" role="alert" hidden></p>
         <label for="fService" data-t="fSvcL">What do you need?</label>
-        <select id="fService" name="service" required>
+        <select id="fService" name="service" required aria-describedby="err-fService">
           <option value="" disabled selected data-t="oPick">Choose one…</option>
           <option value="Website" data-t="oWeb">Website</option>
           <option value="Brand &amp; logo" data-t="oBrand">Brand &amp; logo</option>
@@ -1123,20 +1155,23 @@ form.order input:focus,form.order select:focus,form.order textarea:focus{border-
           <option value="Lead system" data-t="oLead">Lead system</option>
           <option value="Something else" data-t="oOther">Something else</option>
         </select>
+        <p class="ferr" id="err-fService" role="alert" hidden></p>
         <label for="fGoal" data-t="fGoalL">What should this project achieve?</label>
         <input id="fGoal" name="goal" type="text" data-ph="fGoalPh" placeholder="e.g. More orders through WhatsApp">
         <label for="fAudience" data-t="fAudL">Who is it for?</label>
         <input id="fAudience" name="audience" type="text" data-ph="fAudPh" placeholder="e.g. Home bakers ordering for events">
         <label for="fAssets" data-t="fAssetsL">What do you already have?</label>
-        <select id="fAssets" name="assets" required>
+        <select id="fAssets" name="assets" required aria-describedby="err-fAssets">
           <option value="" disabled selected data-t="oPick">Choose one…</option>
           <option value="Logo, photos and text ready" data-t="oAs1">Logo, photos and text are ready</option>
           <option value="Some of it" data-t="oAs2">Some of it</option>
           <option value="Nothing yet" data-t="oAs3">Nothing yet</option>
           <option value="Not sure yet" data-t="oAs4">Not sure yet</option>
         </select>
+        <p class="ferr" id="err-fAssets" role="alert" hidden></p>
         <label for="fDetail" data-t="fDetL">About the project</label>
-        <textarea id="fDetail" name="detail" required data-ph="fDetPh" placeholder="The short version is fine — Carl asks about the rest."></textarea>
+        <textarea id="fDetail" name="detail" required data-ph="fDetPh" placeholder="The short version is fine — Carl asks about the rest." aria-describedby="err-fDetail"></textarea>
+        <p class="ferr" id="err-fDetail" role="alert" hidden></p>
         <label for="fDeadline" data-t="fDlL">Deadline (if any)</label>
         <input id="fDeadline" name="deadline" type="text" data-ph="fDlPh" placeholder="e.g. Before the December campaign">
         <p class="send-promise" data-t="sendPromise">Carl reads it himself and replies within a day.</p>
@@ -1252,7 +1287,7 @@ ordEyebrow:"Mulai proyek",ordTitle:"Ceritakan yang sedang kamu bangun",
 ordSide:"Satu pesan cukup untuk memulai. Ceritakan bisnismu dan kebutuhanmu — Carl membalas dengan pertanyaan, penawaran tertulis, dan jadwal. Tanpa kewajiban, tanpa tekanan.",
 ordLi1:"Penawaran tertulis sebelum pekerjaan apa pun dimulai",ordLi2:"Balasan dari orang yang membangunnya",ordLi3:"Bahasa Indonesia atau Inggris — pilihanmu",ordLi4:"Satu proyek dalam satu waktu — kalau studio sedang penuh, penawaranmu menyebut kapan pekerjaan bisa dimulai",
 fNameL:"Nama kamu",fEmailL:"Email",fWaL:"WhatsApp <span class=\"fhint\">(opsional)</span>",fGoalL:"Apa yang ingin dicapai proyek ini?",fAudL:"Untuk siapa?",fAssetsL:"Apa yang sudah kamu punya?",oAs1:"Logo, foto, dan teks sudah siap",oAs2:"Sebagian",oAs3:"Belum ada apa-apa",oAs4:"Belum yakin",fGoalPh:"mis. Lebih banyak pesanan lewat WhatsApp",fAudPh:"mis. Pembuat kue rumahan yang memesan untuk acara",fDetPh:"Versi singkatnya saja cukup — sisanya Carl tanyakan.",fDlPh:"mis. Sebelum kampanye Desember",fSvcL:"Kamu butuh apa?",oWeb:"Website",oBrand:"Brand & logo",oLead:"Sistem lead",oVideo:"Editing video",oOther:"Hal lain",
-fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim pesanan",fNote:"Terkirim langsung ke Carl dari halaman ini — tidak perlu aplikasi email.",
+fDetL:"Tentang proyeknya",fDlL:"Tenggat (kalau ada)",fSend:"Kirim pesanan",fNote:"Terkirim langsung ke Carl dari halaman ini — tidak perlu aplikasi email.",draftNote:"Draf tersimpan dari browser ini sudah dimuat — lanjutkan dari tempat kamu berhenti.",draftClear:"Hapus draf",acTz:"Jakarta · GMT+7",acR1:"Layanan",acR1v:"4 — website, brand, video, lead",acR2:"Bahasa",acR3:"Tangan yang mengerjakan",acR3v:"Sepasang — tangan Carl",acR4:"Balasan",acR4v:"Dalam sehari",
 oPick:"Pilih salah satu…",copyMail:"Salin email",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",dlH:"Yang kamu terima",dl1:"Situs jadimu, live di alamatmu sendiri",dl2:"Panduan cara kerja semuanya",dl3:"Penawaran tertulis — kamu setujui sebelum apa pun dimulai",dl4:"Daftar serah terima tertulis: berkas, akses, dan cara memperbarui tiap bagian",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",footTag:"CarlLab — studio satu orang untuk website, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",footWork:"Studi kasus",footStatus:"Status proyek",footPdf:"Ringkasan satu halaman (PDF)",proofLink2:"Baca studi kasusnya",
 };
 var EN={};
@@ -1329,6 +1364,8 @@ document.querySelectorAll("[data-svc]").forEach(function(a){
     var sel=document.getElementById("fService"); if(sel) sel.value=a.getAttribute("data-svc");
   });
 });
+/* ---------- per-field form errors ---------- */
+function setFieldErr(id,msg){ var f=document.getElementById(id), e=document.getElementById("err-"+id); if(!f||!e) return; if(msg){ e.textContent=msg; e.hidden=false; f.setAttribute("aria-invalid","true"); } else { e.textContent=""; e.hidden=true; f.removeAttribute("aria-invalid"); } }
 /* ---------- order form -> Lead Tracker API (fallback: Web3Forms to Carl's inbox) ---------- */
 document.getElementById("orderForm").addEventListener("submit",function(e){
   e.preventDefault();
@@ -1336,9 +1373,22 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var v=function(id){ return (document.getElementById(id).value||"").trim(); };
   var idMode=curLang()==="id";
   var waRaw=v("fWa"), waFmt=waRaw.replace(/[\s+\-]/g,"");
-  if(waRaw && !/^\d{9,15}$/.test(waFmt)){ show("err", idMode?"Nomor WhatsApp-nya belum pas — pakai 9–15 digit (mis. 081234567890), atau kosongkan saja karena WhatsApp memang opsional.":"That WhatsApp number looks off — use 9-15 digits (e.g. 081234567890), or just clear it, since WhatsApp is optional."); document.getElementById("fWa").focus(); return; }
-  if(!v("fService")||!v("fAssets")){ show("err", idMode?"Pilih dulu layanan yang kamu butuhkan dan aset yang sudah kamu punya.":"Choose what you need and what you already have first."); var bad=!v("fService")?document.getElementById("fService"):document.getElementById("fAssets"); if(bad) bad.focus(); return; }
-  if(!v("fName")||!v("fDetail")||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))){ show("err", idMode?"Isi namamu, email yang valid, dan sedikit tentang proyeknya.":"Fill in your name, a valid email, and a few words about the project."); var bad2=!v("fName")?document.getElementById("fName"):(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))?document.getElementById("fEmail"):document.getElementById("fDetail")); if(bad2) bad2.focus(); return; }
+  var errs={};
+  if(waRaw && !/^\d{9,15}$/.test(waFmt)) errs.fWa=idMode?"Nomor WhatsApp-nya belum pas — pakai 9–15 digit (mis. 081234567890), atau kosongkan saja karena WhatsApp memang opsional.":"That WhatsApp number looks off — use 9-15 digits (e.g. 081234567890), or just clear it, since WhatsApp is optional.";
+  if(!v("fService")) errs.fService=idMode?"Pilih dulu layanan yang kamu butuhkan.":"Choose what you need first.";
+  if(!v("fAssets")) errs.fAssets=idMode?"Pilih dulu aset yang sudah kamu punya.":"Choose what you already have first.";
+  if(!v("fName")) errs.fName=idMode?"Isi namamu dulu.":"Fill in your name first.";
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("fEmail"))) errs.fEmail=idMode?"Email-nya belum valid — mis. kamu@bisnis.com.":"That email does not look valid — e.g. you@business.com.";
+  if(!v("fDetail")) errs.fDetail=idMode?"Ceritakan sedikit tentang proyeknya.":"Add a few words about the project.";
+  ["fName","fEmail","fWa","fService","fAssets","fDetail"].forEach(function(id){ setFieldErr(id, errs[id]||null); });
+  var firstBad=["fName","fEmail","fWa","fService","fAssets","fDetail"].filter(function(id){ return errs[id]; })[0];
+  if(firstBad){
+    if(errs.fWa) show("err", errs.fWa);
+    else if(errs.fService||errs.fAssets) show("err", idMode?"Pilih dulu layanan yang kamu butuhkan dan aset yang sudah kamu punya.":"Choose what you need and what you already have first.");
+    else show("err", idMode?"Isi namamu, email yang valid, dan sedikit tentang proyeknya.":"Fill in your name, a valid email, and a few words about the project.");
+    document.getElementById(firstBad).focus();
+    return;
+  }
   var subject=(idMode?"Proyek baru — ":"New project — ")+v("fService")+" — "+v("fName");
   var lines=["Name / Nama: "+v("fName"),"Email: "+v("fEmail"),"WhatsApp: "+(v("fWa")||"-"),"Service / Layanan: "+v("fService"),"Goal / Tujuan: "+(v("fGoal")||"-"),"Audience / Untuk siapa: "+(v("fAudience")||"-"),"Assets / Aset siap: "+v("fAssets"),"Deadline / Tenggat: "+(v("fDeadline")||"-"),"","Project / Proyek:",v("fDetail")];
   function show(kind,html){ if(!st) return; st.hidden=false; st.className="form-status "+kind; st.innerHTML=html; }
@@ -1351,7 +1401,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var fbRef="CARL-"+Math.floor(100+Math.random()*900);
   function pad3(n){ n=String(n); return n.length<3?("00"+n).slice(-3):n; }
   function refHtml(code){ return idMode?("Kode referensimu: <strong>"+code+"</strong> — simpan kode ini dan sebutkan saat kamu membalas, supaya Carl bisa langsung mencocokkannya dengan pesananmu."):("Your reference code: <strong>"+code+"</strong> — keep this code and mention it when you reply, so Carl can match it straight to your order."); }
-  function sentOk(msg){ show("ok", msg); form.reset(); try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){} done(); }
+  function sentOk(msg){ show("ok", msg); form.reset(); try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){} var dn2=document.getElementById("draftNote"); if(dn2) dn2.hidden=true; ["fName","fEmail","fWa","fService","fAssets","fDetail"].forEach(function(id){ setFieldErr(id,null); }); done(); }
   function mailtoFallback(){
     var linesRef=["Reference / Kode referensi: "+fbRef,""].concat(lines);
     var fb="mailto:hello@carllab.web.id?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(linesRef.join("\n"));
@@ -1367,7 +1417,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     .then(function(j){
       if(emTimer) clearTimeout(emTimer);
       if(!j.success) throw new Error("rejected");
-      sentOk(idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."+"<br>"+refHtml(fbRef));
+      sentOk((idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(fbRef));
     });
   }
   if(apiSvc && /^\d{9,15}$/.test(waDigits)){
@@ -1376,7 +1426,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},signal:apiCtl?apiCtl.signal:undefined,
       body:JSON.stringify({name:v("fName"),whatsapp:waDigits,service:apiSvc,budget:0,notes:lines.join("\n")})})
     .then(function(r){ if(!r.ok) throw new Error("api"); return r.json(); })
-    .then(function(j){ if(apiTimer) clearTimeout(apiTimer); var code=fbRef; if(j&&j.data&&/^\d+$/.test(String(j.data.id))){ code="CARL-"+pad3(j.data.id); } sentOk(idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine."+"<br>"+refHtml(code)); })
+    .then(function(j){ if(apiTimer) clearTimeout(apiTimer); var code=fbRef; if(j&&j.data&&/^\d+$/.test(String(j.data.id))){ code="CARL-"+pad3(j.data.id); } sentOk((idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(code)); })
     .catch(function(){ if(apiTimer) clearTimeout(apiTimer); sendEmail().catch(mailtoFallback); });
   } else {
     sendEmail().catch(mailtoFallback);
@@ -1403,9 +1453,11 @@ function stripAuto(v){
   }
   return out.join("\n").replace(/\n{3,}/g,"\n\n").replace(/^\s+|\s+$/g,"");
 }
-try{ var dOld=JSON.parse(localStorage.getItem(DKEY)||"null"); if(dOld){ dids.forEach(function(i){ if(dOld[i]){ var val=(i==="fDetail")? stripAuto(dOld[i]) : dOld[i]; document.getElementById(i).value=val; } }); } }catch(e){}
+try{ var dOld=JSON.parse(localStorage.getItem(DKEY)||"null"); if(dOld){ var dAny=false; dids.forEach(function(i){ if(dOld[i]){ var val=(i==="fDetail")? stripAuto(dOld[i]) : dOld[i]; if(val){ document.getElementById(i).value=val; dAny=true; } } }); if(dAny){ var dn0=document.getElementById("draftNote"); if(dn0) dn0.hidden=false; } } }catch(e){}
+var dClearBtn=document.getElementById("draftClear");
+if(dClearBtn) dClearBtn.addEventListener("click",function(){ try{ localStorage.removeItem(DKEY); }catch(e){} dids.forEach(function(i){ document.getElementById(i).value=""; setFieldErr(i,null); }); var dn1=document.getElementById("draftNote"); if(dn1) dn1.hidden=true; });
 try{ var svcQ=new URLSearchParams(location.search).get("svc"); if(svcQ){ var sEl=document.getElementById("fService"); if(sEl){ for(var oi=0;oi<sEl.options.length;oi++){ if(sEl.options[oi].value===svcQ){ sEl.selectedIndex=oi; break; } } } } }catch(e){}
-dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener("input",function(){ clearTimeout(dT); dT=setTimeout(dSave,350); }); el.addEventListener("change",dSave); });
+dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener("input",function(){ setFieldErr(i,null); clearTimeout(dT); dT=setTimeout(dSave,350); }); el.addEventListener("change",function(){ setFieldErr(i,null); dSave(); }); });
 /* draft cleared by the submit handler, only after a successful send */
 })();
 </script>
@@ -1493,11 +1545,12 @@ dids.forEach(function(i){ var el=document.getElementById(i); el.addEventListener
       var open=h>=8&&h<22, idLang=(document.documentElement.lang==="id");
       stTxt.textContent=open?(idLang?"Buka — dibalas dalam sehari":"Open — replies within a day"):(idLang?"Tutup — kembali pukul 08:00 WIB":"Closed — back at 08:00 WIB");
       if(stDot) stDot.style.background=open?"#B9C0C8":"#55565C";
+      document.querySelectorAll(".ac-status-txt").forEach(function(el){ el.textContent=stTxt.textContent; });
       document.documentElement.classList.toggle("carl-working",!!open);
     }catch(e){}
   }
   studio(); setInterval(studio,30000);
-  ["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); }); });
+  ["langId","langEn"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("click",function(){ setTimeout(studio,0); setTimeout(studio,400); setTimeout(youLabel,0); setTimeout(youLabel,400); }); });
   var wcZones={id:"Etc/GMT-7",uk:"Europe/London",us:"America/New_York",jp:"Asia/Tokyo",au:"Australia/Sydney"};
   var wcEls=document.querySelectorAll("[data-wc]");
   function wcTick(){ var now=new Date(); for (var i=0;i<wcEls.length;i++){ var k=wcEls[i].getAttribute("data-wc"); try{ wcEls[i].textContent=new Intl.DateTimeFormat("en-GB",{timeZone:wcZones[k],hour:"2-digit",minute:"2-digit"}).format(now); }catch(e){} } }
