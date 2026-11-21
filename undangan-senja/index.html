@@ -78,6 +78,10 @@ img{max-width:100%}
 #openBtn{margin-top:26px}
 .envnote{margin-top:14px;font-size:12px;color:var(--mut);letter-spacing:.04em}
 
+.langpill{position:fixed;top:14px;left:14px;z-index:70;display:inline-flex;gap:2px;padding:3px;border:1px solid var(--gold);border-radius:999px;background:rgba(20,16,12,.88);backdrop-filter:blur(4px);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.langpill button{border:0;background:transparent;color:var(--mut);font-family:var(--mono);font-size:10px;letter-spacing:.14em;padding:7px 13px;border-radius:999px;cursor:pointer;min-height:32px}
+.langpill button.on{background:var(--gold);color:#241B12;font-weight:700}
+
 /* ---------- music fab ---------- */
 #musicBtn{position:fixed;top:14px;right:14px;z-index:55;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(20,16,12,.85);color:var(--gold2);font-size:17px;cursor:pointer;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 #musicBtn.show{display:flex}
@@ -225,10 +229,12 @@ footer .fn{font-family:var(--serif);font-size:23px;margin-top:14px}
 footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
 </style>
 
-<div id="env" role="dialog" aria-label="Your invitation envelope">
+<div class="langpill" role="group" aria-label="Language"><button type="button" data-lang="en" class="on" aria-pressed="true">EN</button><button type="button" data-lang="id" aria-pressed="false">ID</button></div>
+
+<div id="env" role="dialog" aria-label="Your invitation envelope" data-t-aria="envAria">
   <div class="envscene">
-    <p class="envto">You have received an invitation</p>
-    <p class="envguest">Dear, <span id="guestName">Friend of the couple</span></p>
+    <p class="envto" data-t="envTo">You have received an invitation</p>
+    <p class="envguest"><span data-t="envDear">Dear,</span> <span id="guestName">Friend of the couple</span></p>
     <div class="envbox" id="envBox">
       <div class="env-back bg-envbody"></div>
       <div class="env-card">
@@ -237,32 +243,32 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
         <div class="cd2">12 · 06 · 2027 — Uluwatu, Bali</div>
       </div>
       <div class="env-flap bg-envflap"></div>
-      <button class="seal bg-envseal" id="sealBtn" type="button" aria-label="Open the invitation"></button>
+      <button class="seal bg-envseal" id="sealBtn" type="button" aria-label="Open the invitation" data-t-aria="sealAria"></button>
     </div>
-    <button class="btn solid" id="openBtn" type="button">Open the invitation</button>
-    <p class="envnote">The envelope is addressed to you — tap the seal.</p>
+    <button class="btn solid" id="openBtn" type="button" data-t="envOpen">Open the invitation</button>
+    <p class="envnote" data-t="envNote">The envelope is addressed to you — tap the seal.</p>
   </div>
 </div>
 
-<button id="musicBtn" type="button" aria-label="Toggle music"><span id="musicIco">♪</span></button>
+<button id="musicBtn" type="button" aria-label="Toggle music" data-t-aria="musicAria"><span id="musicIco">♪</span></button>
 
 <div id="page">
   <header class="hero">
-    <div class="himg bg-venue" role="img" aria-label="The Cliff Estate ceremony lawn above the Uluwatu ocean at dusk"></div>
+    <div class="himg bg-venue" role="img" aria-label="The Cliff Estate ceremony lawn above the Uluwatu ocean at dusk" data-t-aria="heroAria"></div>
     <div class="hero-body">
-      <p class="eyebrow">The wedding of</p>
+      <p class="eyebrow" data-t="heroEyebrow">The wedding of</p>
       <h1 class="names">Julian Hart<br><em>&amp;</em> Amara Wijaya</h1>
-      <p class="when"><b>Saturday, 12 June 2027</b><br>The Cliff Estate · Uluwatu, Bali</p>
-      <div class="cd" aria-label="Countdown to the ceremony">
-        <div><b id="cdD">–</b><span>Days</span></div>
-        <div><b id="cdH">–</b><span>Hours</span></div>
-        <div><b id="cdM">–</b><span>Minutes</span></div>
-        <div><b id="cdS">–</b><span>Seconds</span></div>
+      <p class="when" data-t="heroWhen"><b>Saturday, 12 June 2027</b><br>The Cliff Estate · Uluwatu, Bali</p>
+      <div class="cd" aria-label="Countdown to the ceremony" data-t-aria="cdAria">
+        <div><b id="cdD">–</b><span data-t="cdDays">Days</span></div>
+        <div><b id="cdH">–</b><span data-t="cdHours">Hours</span></div>
+        <div><b id="cdM">–</b><span data-t="cdMinutes">Minutes</span></div>
+        <div><b id="cdS">–</b><span data-t="cdSeconds">Seconds</span></div>
       </div>
-      <p class="daystate" id="dayState">Counting down to the cliff.</p>
+      <p class="daystate" id="dayState" data-t="dayCounting">Counting down to the cliff.</p>
       <div class="btnrow">
         <a class="btn sm" href="#rsvp">RSVP</a>
-        <button class="btn sm" id="shareBtn" type="button">Share</button>
+        <button class="btn sm" id="shareBtn" type="button" data-t="shareBtn">Share</button>
       </div>
       <div class="scrollhint" aria-hidden="true"></div>
     </div>
@@ -271,20 +277,20 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
   <div id="stageWrap">
     <div class="stage" id="stage">
       <div class="sprog" id="sprog"></div>
-      <h2 id="stageH"><span class="kw">Two lives,</span><em>one horizon.</em></h2>
+      <h2 id="stageH" data-t="stageH"><span class="kw">Two lives,</span><em>one horizon.</em></h2>
       <div class="beat" id="bt0"><div class="beat-img bg-venue"></div><div class="beat-shade"></div></div>
       <div class="beat" id="bt1"><div class="beat-img bg-rings"></div><div class="beat-fg" id="bfg"></div><div class="beat-shade"></div></div>
       <div class="beat" id="bt2"><div class="beat-img bg-table"></div><div class="beat-shade"></div></div>
       <div class="final bg-flat" id="sfinal">
         <div class="final-in">
           <div class="mono">J·A</div>
-          <div class="fd">Saturday, 12 June 2027</div>
+          <div class="fd" data-t="finalDate">Saturday, 12 June 2027</div>
           <div class="fp">The Cliff Estate — Uluwatu, Bali</div>
         </div>
       </div>
-      <div class="scap on" data-cap="0"><p class="n">01</p><h3>The journey <em>to the cliff</em></h3><p>A lawn above the Indian Ocean, where the ceremony begins as the light turns.</p></div>
-      <div class="scap" data-cap="1"><p class="n">02</p><h3>The vows <em>two rings, one question</em></h3><p>Two rings, one question — asked at this cliff, at this hour, two years ago.</p></div>
-      <div class="scap" data-cap="2"><p class="n">03</p><h3>The table <em>under the candles</em></h3><p>Then dinner under candles — forty guests, one long table, no seating plan drama. Almost.</p></div>
+      <div class="scap on" data-cap="0"><p class="n">01</p><h3 data-t="cap1h">The journey <em>to the cliff</em></h3><p data-t="cap1p">A lawn above the Indian Ocean, where the ceremony begins as the light turns.</p></div>
+      <div class="scap" data-cap="1"><p class="n">02</p><h3 data-t="cap2h">The vows <em>two rings, one question</em></h3><p data-t="cap2p">Two rings, one question — asked at this cliff, at this hour, two years ago.</p></div>
+      <div class="scap" data-cap="2"><p class="n">03</p><h3 data-t="cap3h">The table <em>under the candles</em></h3><p data-t="cap3p">Then dinner under candles — forty guests, one long table, no seating plan drama. Almost.</p></div>
     </div>
   </div>
   <noscript><style>
@@ -299,226 +305,226 @@ footer p{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:9px}
   </style></noscript>
 
   <section class="sec" id="couple">
-    <p class="num" data-rv>01 — The couple</p>
+    <p class="num" data-rv data-t="num1">01 — The couple</p>
     <h2 class="sec-t" data-rv>Julian <em>&amp;</em> Amara</h2>
     <div class="duo">
       <div class="person" data-rv>
-        <div class="ph bg-flat" style="background-position:78% 30%" role="img" aria-label="Invitation suite detail"></div>
-        <p class="role">The bride</p>
+        <div class="ph bg-flat" style="background-position:78% 30%" role="img" aria-label="Invitation suite detail" data-t-aria="brideAria"></div>
+        <p class="role" data-t="brideRole">The bride</p>
         <h3>Amara Wijaya</h3>
-        <p>Architect from Jakarta. Drew the first sketch of the cliff house they now share. Daughter of Bambang &amp; Ratna Wijaya.</p>
+        <p data-t="brideBio">Architect from Jakarta. Drew the first sketch of the cliff house they now share. Daughter of Bambang &amp; Ratna Wijaya.</p>
       </div>
       <div class="person" data-rv>
-        <div class="ph bg-venue" style="background-position:70% 40%" role="img" aria-label="The Uluwatu cliff at dusk"></div>
-        <p class="role">The groom</p>
+        <div class="ph bg-venue" style="background-position:70% 40%" role="img" aria-label="The Uluwatu cliff at dusk" data-t-aria="groomAria"></div>
+        <p class="role" data-t="groomRole">The groom</p>
         <h3>Julian Hart</h3>
-        <p>Chef from Melbourne. Proposed between the main course and dessert — she said yes before the soufflé fell. Son of Michael &amp; Claire Hart.</p>
+        <p data-t="groomBio">Chef from Melbourne. Proposed between the main course and dessert — she said yes before the soufflé fell. Son of Michael &amp; Claire Hart.</p>
       </div>
     </div>
   </section>
 
   <section class="sec" id="day">
-    <p class="num" data-rv>02 — The day</p>
-    <h2 class="sec-t" data-rv>When <em>&amp; where</em></h2>
+    <p class="num" data-rv data-t="num2">02 — The day</p>
+    <h2 class="sec-t" data-rv data-t="dayTitle">When <em>&amp; where</em></h2>
     <div class="ev" data-rv>
-      <p class="et">The ceremony</p>
-      <h3>Vows on the lawn</h3>
-      <p class="etime">4:00 PM — please arrive by 3:30 PM</p>
-      <p>The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361. An unplugged ceremony — our photographers have it covered; your only job is to watch the light change.</p>
+      <p class="et" data-t="cerEt">The ceremony</p>
+      <h3 data-t="cerH">Vows on the lawn</h3>
+      <p class="etime" data-t="cerTime">4:00 PM — please arrive by 3:30 PM</p>
+      <p data-t="cerP">The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361. An unplugged ceremony — our photographers have it covered; your only job is to watch the light change.</p>
       <div class="btnrow">
-        <button class="btn sm" type="button" data-ics="ceremony">Add to calendar</button>
+        <button class="btn sm" type="button" data-ics="ceremony" data-t="addCal">Add to calendar</button>
         <a class="btn sm" href="https://www.google.com/maps/search/?api=1&amp;query=Uluwatu+Bali" target="_blank" rel="noopener">Google Maps</a>
-        <button class="btn sm" type="button" id="copyAddr">Copy address</button>
+        <button class="btn sm" type="button" id="copyAddr" data-t="copyAddr">Copy address</button>
       </div>
     </div>
     <div class="ev" data-rv>
-      <p class="et">The reception</p>
-      <h3>Dinner under candles</h3>
-      <p class="etime">6:30 PM — until the last song</p>
-      <p>The same estate, one level down — follow the lantern path from the lawn. Shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM.</p>
+      <p class="et" data-t="recEt">The reception</p>
+      <h3 data-t="recH">Dinner under candles</h3>
+      <p class="etime" data-t="recTime">6:30 PM — until the last song</p>
+      <p data-t="recP">The same estate, one level down — follow the lantern path from the lawn. Shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM.</p>
       <div class="btnrow">
-        <button class="btn sm" type="button" data-ics="reception">Add to calendar</button>
+        <button class="btn sm" type="button" data-ics="reception" data-t="addCal">Add to calendar</button>
         <a class="btn sm" href="https://maps.apple.com/?q=Uluwatu+Bali" target="_blank" rel="noopener">Apple Maps</a>
       </div>
     </div>
-    <p class="sec-sub" data-rv>Dress code — <b style="color:var(--gold2)">garden formal</b>. Long dresses and linen suits love this lawn; stilettos do not. The evening palette, if you would like to blend in:</p>
-    <div class="dress" data-rv aria-label="Evening palette: ivory, sand, sage, terracotta, charcoal">
+    <p class="sec-sub" data-rv data-t="dressP">Dress code — <b style="color:var(--gold2)">garden formal</b>. Long dresses and linen suits love this lawn; stilettos do not. The evening palette, if you would like to blend in:</p>
+    <div class="dress" data-rv aria-label="Evening palette: ivory, sand, sage, terracotta, charcoal" data-t-aria="dressAria">
       <i style="background:#F4ECDC"></i><i style="background:#D8BE96"></i><i style="background:#9AA88F"></i><i style="background:#B4552D"></i><i style="background:#33302B"></i>
     </div>
   </section>
 
   <section class="sec" id="registry">
-    <p class="num" data-rv>03 — Registry</p>
-    <h2 class="sec-t" data-rv>Gifts, <em>only if you wish</em></h2>
-    <p class="sec-sub" data-rv>Your flight to Bali is the gift. If you would still like to give, the couple is registered at:</p>
+    <p class="num" data-rv data-t="num3">03 — Registry</p>
+    <h2 class="sec-t" data-rv data-t="regTitle">Gifts, <em>only if you wish</em></h2>
+    <p class="sec-sub" data-rv data-t="regIntro">Your flight to Bali is the gift. If you would still like to give, the couple is registered at:</p>
     <div class="reg" data-rv>
-      <a href="#" onclick="return false"><b>Zola</b><span>Registry</span></a>
-      <a href="#" onclick="return false"><b>Amazon</b><span>Registry</span></a>
-      <a href="#" onclick="return false"><b>Crate&amp;Barrel</b><span>Registry</span></a>
+      <a href="#" onclick="return false"><b>Zola</b><span data-t="regLabel">Registry</span></a>
+      <a href="#" onclick="return false"><b>Amazon</b><span data-t="regLabel">Registry</span></a>
+      <a href="#" onclick="return false"><b>Crate&amp;Barrel</b><span data-t="regLabel">Registry</span></a>
     </div>
-    <p class="sec-sub" data-rv>Registry links are demonstration slots in this sample — they do not open a live registry.</p>
+    <p class="sec-sub" data-rv data-t="regDemo">Registry links are demonstration slots in this sample — they do not open a live registry.</p>
     <div class="fund" data-rv>
-      <h3>The honeymoon fund</h3>
-      <p>Forty days, one motorbike, the whole archipelago. Contributions of any size go to the same pot:</p>
+      <h3 data-t="fundH">The honeymoon fund</h3>
+      <p data-t="fundP">Forty days, one motorbike, the whole archipelago. Contributions of any size go to the same pot:</p>
       <p class="link" id="fundLink">withlove.example/julian-amara</p>
-      <div class="btnrow"><button class="btn sm" type="button" id="copyFund">Copy fund link</button></div>
-      <p>The fund link above is a demonstration slot in this sample — it is not a live payment link.</p>
+      <div class="btnrow"><button class="btn sm" type="button" id="copyFund" data-t="copyFund">Copy fund link</button></div>
+      <p data-t="fundDemo">The fund link above is a demonstration slot in this sample — it is not a live payment link.</p>
     </div>
   </section>
 
   <section class="sec" id="rsvp">
-    <p class="num" data-rv>04 — RSVP</p>
-    <h2 class="sec-t" data-rv>Will you <em>be there?</em></h2>
-    <div class="deadline" data-rv>Kindly reply by <b>12 May 2027</b> — the cliff lawn seats <b>120 guests</b>, and the kitchen plans by name.</div>
+    <p class="num" data-rv data-t="num4">04 — RSVP</p>
+    <h2 class="sec-t" data-rv data-t="rsvpTitle">Will you <em>be there?</em></h2>
+    <div class="deadline" data-rv data-t="deadline">Kindly reply by <b>12 May 2027</b> — the cliff lawn seats <b>120 guests</b>, and the kitchen plans by name.</div>
     <form id="rsvpForm" novalidate data-rv>
       <div class="field">
-        <label for="fName">Your full name</label>
-        <input id="fName" type="text" autocomplete="name" placeholder="e.g. Alex Morgan">
-        <p class="err" id="nameErr">Please tell us your name.</p>
+        <label for="fName" data-t="fNameL">Your full name</label>
+        <input id="fName" type="text" autocomplete="name" placeholder="e.g. Alex Morgan" data-t-ph="fNamePh">
+        <p class="err" id="nameErr" data-t="nameErr">Please tell us your name.</p>
       </div>
       <div class="field">
-        <label>Will you attend?</label>
+        <label data-t="attendL">Will you attend?</label>
         <div class="pills">
-          <label><input type="radio" name="attend" value="accepts" checked><span class="pill">Joyfully accepts</span></label>
-          <label><input type="radio" name="attend" value="declines"><span class="pill">Regretfully declines</span></label>
+          <label><input type="radio" name="attend" value="accepts" checked><span class="pill" data-t="accepts">Joyfully accepts</span></label>
+          <label><input type="radio" name="attend" value="declines"><span class="pill" data-t="declines">Regretfully declines</span></label>
         </div>
       </div>
       <div id="acceptFields">
         <div class="field">
-          <label>Which events?</label>
+          <label data-t="eventsL">Which events?</label>
           <div class="checks">
-            <label><input type="checkbox" id="evCer" checked><span class="chk"><b>Ceremony</b><span>4:00 PM · the lawn</span></span></label>
-            <label><input type="checkbox" id="evRec" checked><span class="chk"><b>Reception</b><span>6:30 PM · dinner</span></span></label>
+            <label><input type="checkbox" id="evCer" checked><span class="chk"><b data-t="evCerB">Ceremony</b><span data-t="evCerS">4:00 PM · the lawn</span></span></label>
+            <label><input type="checkbox" id="evRec" checked><span class="chk"><b data-t="evRecB">Reception</b><span data-t="evRecS">6:30 PM · dinner</span></span></label>
           </div>
-          <p class="err" id="evErr">Choose at least one event.</p>
+          <p class="err" id="evErr" data-t="evErr">Choose at least one event.</p>
         </div>
         <div class="field">
-          <label for="fParty">Party size</label>
+          <label for="fParty" data-t="partyL">Party size</label>
           <select id="fParty">
-            <option value="1">Just me</option>
-            <option value="2">Me + 1 guest</option>
+            <option value="1" data-t="party1">Just me</option>
+            <option value="2" data-t="party2">Me + 1 guest</option>
           </select>
         </div>
         <div id="plusFields" hidden>
           <div class="field">
-            <label for="fPlus">Your guest's full name</label>
-            <input id="fPlus" type="text" placeholder="Your plus-one, by name — the kitchen plans by name">
-            <p class="err" id="plusErr">Please name your guest.</p>
+            <label for="fPlus" data-t="plusL">Your guest's full name</label>
+            <input id="fPlus" type="text" placeholder="Your plus-one, by name — the kitchen plans by name" data-t-ph="plusPh">
+            <p class="err" id="plusErr" data-t="plusErr">Please name your guest.</p>
           </div>
           <div class="field">
-            <label for="fPlusMeal">Your guest's meal</label>
+            <label for="fPlusMeal" data-t="plusMealL">Your guest's meal</label>
             <select id="fPlusMeal">
-              <option>Beef — slow-braised short rib</option>
-              <option>Fish — barramundi, sambal matah</option>
-              <option>Vegetarian — gnocchi, garden pesto</option>
-              <option>Vegan — jackfruit rendang</option>
+              <option value="Beef — slow-braised short rib" data-t="mealBeef">Beef — slow-braised short rib</option>
+              <option value="Fish — barramundi, sambal matah" data-t="mealFish">Fish — barramundi, sambal matah</option>
+              <option value="Vegetarian — gnocchi, garden pesto" data-t="mealVeg">Vegetarian — gnocchi, garden pesto</option>
+              <option value="Vegan — jackfruit rendang" data-t="mealVegan">Vegan — jackfruit rendang</option>
             </select>
           </div>
         </div>
         <div class="field">
-          <label for="fMeal">Your meal</label>
+          <label for="fMeal" data-t="mealL">Your meal</label>
           <select id="fMeal">
-            <option>Beef — slow-braised short rib</option>
-            <option>Fish — barramundi, sambal matah</option>
-            <option>Vegetarian — gnocchi, garden pesto</option>
-            <option>Vegan — jackfruit rendang</option>
+            <option value="Beef — slow-braised short rib" data-t="mealBeef">Beef — slow-braised short rib</option>
+            <option value="Fish — barramundi, sambal matah" data-t="mealFish">Fish — barramundi, sambal matah</option>
+            <option value="Vegetarian — gnocchi, garden pesto" data-t="mealVeg">Vegetarian — gnocchi, garden pesto</option>
+            <option value="Vegan — jackfruit rendang" data-t="mealVegan">Vegan — jackfruit rendang</option>
           </select>
         </div>
         <div class="field">
-          <label for="fDiet">Dietary notes <span style="text-transform:none;letter-spacing:0">(allergies, halal, anything)</span></label>
-          <input id="fDiet" type="text" placeholder="Optional">
+          <label for="fDiet" data-t="dietL">Dietary notes <span style="text-transform:none;letter-spacing:0">(allergies, halal, anything)</span></label>
+          <input id="fDiet" type="text" placeholder="Optional" data-t-ph="optPh">
         </div>
         <div class="field">
-          <label for="fSong">Song request <span style="text-transform:none;letter-spacing:0">(one song that gets you dancing)</span></label>
-          <input id="fSong" type="text" placeholder="Optional — the DJ reads every one">
+          <label for="fSong" data-t="songL">Song request <span style="text-transform:none;letter-spacing:0">(one song that gets you dancing)</span></label>
+          <input id="fSong" type="text" placeholder="Optional — the DJ reads every one" data-t-ph="songPh">
         </div>
       </div>
       <div class="field">
-        <label for="fWish">A wish for the couple <span style="text-transform:none;letter-spacing:0">(appears on the wishes wall)</span></label>
-        <textarea id="fWish" placeholder="Optional"></textarea>
+        <label for="fWish" data-t="wishL">A wish for the couple <span style="text-transform:none;letter-spacing:0">(appears on the wishes wall)</span></label>
+        <textarea id="fWish" placeholder="Optional" data-t-ph="optPh"></textarea>
       </div>
       <button class="btn solid" type="submit" id="rsvpSubmit" style="width:100%">Send RSVP</button>
     </form>
     <div class="pass" id="pass" role="status">
-      <p class="pt">Guest pass — keep this screen</p>
+      <p class="pt" data-t="passT">Guest pass — keep this screen</p>
       <h3 id="passName">—</h3>
       <div class="rows">
-        <div><span>Events</span><span id="passEvents">—</span></div>
-        <div><span>Party</span><span id="passParty">—</span></div>
-        <div><span>Table</span><span id="passTable">—</span></div>
+        <div><span data-t="passEventsL">Events</span><span id="passEvents">—</span></div>
+        <div><span data-t="passPartyL">Party</span><span id="passParty">—</span></div>
+        <div><span data-t="passTableL">Table</span><span id="passTable">—</span></div>
       </div>
       <p class="code" id="passCode">SJA-000</p>
-      <p>Show this pass at the welcome desk on the lawn. Changed your mind about anything? You can update your reply below — it replaces the previous one.</p>
-      <div class="btnrow" style="justify-content:flex-start"><button class="btn sm" type="button" id="editReply" style="border-color:rgba(36,27,18,.5);color:#241B12">Update my reply</button></div>
+      <p data-t="passNote">Show this pass at the welcome desk on the lawn. Changed your mind about anything? You can update your reply below — it replaces the previous one.</p>
+      <div class="btnrow" style="justify-content:flex-start"><button class="btn sm" type="button" id="editReply" style="border-color:rgba(36,27,18,.5);color:#241B12" data-t="editReply">Update my reply</button></div>
     </div>
     <div class="decline" id="declineCard" role="status">
-      <h3>You will be missed.</h3>
-      <p>Thank you for telling us early — it genuinely helps the plan. We will raise a glass to you at sunset, and the photos will find you.</p>
-      <div class="btnrow"><button class="btn sm" type="button" id="editReply2">Update my reply</button></div>
+      <h3 data-t="decH">You will be missed.</h3>
+      <p data-t="decP">Thank you for telling us early — it genuinely helps the plan. We will raise a glass to you at sunset, and the photos will find you.</p>
+      <div class="btnrow"><button class="btn sm" type="button" id="editReply2" data-t="editReply">Update my reply</button></div>
     </div>
   </section>
 
   <section class="sec" id="wishes">
-    <p class="num" data-rv>05 — Wishes</p>
-    <h2 class="sec-t" data-rv>The wishes <em>wall</em></h2>
+    <p class="num" data-rv data-t="num5">05 — Wishes</p>
+    <h2 class="sec-t" data-rv data-t="wishesTitle">The wishes <em>wall</em></h2>
     <div class="wall" id="wall"></div>
     <form id="wishForm" data-rv>
       <div class="field">
-        <label for="wName">Your name</label>
-        <input id="wName" type="text" placeholder="e.g. Sarah Kim">
+        <label for="wName" data-t="wNameL">Your name</label>
+        <input id="wName" type="text" placeholder="e.g. Sarah Kim" data-t-ph="wNamePh">
       </div>
       <div class="field">
-        <label for="wText">Your wish</label>
-        <textarea id="wText" placeholder="Write it like you mean it"></textarea>
-        <p class="err" id="wishErr">A name and a wish, please.</p>
+        <label for="wText" data-t="wTextL">Your wish</label>
+        <textarea id="wText" placeholder="Write it like you mean it" data-t-ph="wTextPh"></textarea>
+        <p class="err" id="wishErr" data-t="wishErr">A name and a wish, please.</p>
       </div>
-      <button class="btn" type="submit" style="width:100%">Add to the wall</button>
+      <button class="btn" type="submit" style="width:100%" data-t="addWishBtn">Add to the wall</button>
     </form>
   </section>
 
   <section class="sec" id="stay">
-    <p class="num" data-rv>06 — Stay &amp; travel</p>
-    <h2 class="sec-t" data-rv>Where to <em>sleep</em></h2>
-    <p class="sec-sub" data-rv>Ngurah Rai Airport (DPS) is about 45 minutes from the cliff. June is dry season — book early; these three are minutes from the estate:</p>
-    <div class="hotel" data-rv><div class="hi"><h3>Radisson Blu Uluwatu</h3><p>6 minutes by shuttle · the wedding block code is JULIANAMARA</p></div><div class="pr"><b>$142</b><span>per night</span></div></div>
-    <div class="hotel" data-rv><div class="hi"><h3>Suarga Padang Padang</h3><p>9 minutes · bamboo villas above the surf break</p></div><div class="pr"><b>$96</b><span>per night</span></div></div>
-    <div class="hotel" data-rv><div class="hi"><h3>Gravity Eco Boutique</h3><p>4 minutes · whitewashed cottages, famous breakfast</p></div><div class="pr"><b>$58</b><span>per night</span></div></div>
-    <p class="sec-sub" data-rv>Reception shuttles loop to all three from 10:30 PM until the last song. Taxis from the airport: use the official counter inside arrivals.</p>
+    <p class="num" data-rv data-t="num6">06 — Stay &amp; travel</p>
+    <h2 class="sec-t" data-rv data-t="stayTitle">Where to <em>sleep</em></h2>
+    <p class="sec-sub" data-rv data-t="stayIntro">Ngurah Rai Airport (DPS) is about 45 minutes from the cliff. June is dry season — book early; these three are minutes from the estate:</p>
+    <div class="hotel" data-rv><div class="hi"><h3>Radisson Blu Uluwatu</h3><p data-t="hotel1p">6 minutes by shuttle · the wedding block code is JULIANAMARA</p></div><div class="pr"><b>$142</b><span data-t="perNight">per night</span></div></div>
+    <div class="hotel" data-rv><div class="hi"><h3>Suarga Padang Padang</h3><p data-t="hotel2p">9 minutes · bamboo villas above the surf break</p></div><div class="pr"><b>$96</b><span data-t="perNight">per night</span></div></div>
+    <div class="hotel" data-rv><div class="hi"><h3>Gravity Eco Boutique</h3><p data-t="hotel3p">4 minutes · whitewashed cottages, famous breakfast</p></div><div class="pr"><b>$58</b><span data-t="perNight">per night</span></div></div>
+    <p class="sec-sub" data-rv data-t="stayOutro">Reception shuttles loop to all three from 10:30 PM until the last song. Taxis from the airport: use the official counter inside arrivals.</p>
   </section>
 
   <section class="sec" id="companions">
-    <p class="num" data-rv>07 — Before &amp; after</p>
-    <h2 class="sec-t" data-rv>One suite, <em>three letters</em></h2>
-    <p class="sec-sub" data-rv>This invitation is the middle of a matched set — the same paper, the same gold, before and after the day:</p>
+    <p class="num" data-rv data-t="num7">07 — Before &amp; after</p>
+    <h2 class="sec-t" data-rv data-t="compTitle">One suite, <em>three letters</em></h2>
+    <p class="sec-sub" data-rv data-t="compIntro">This invitation is the middle of a matched set — the same paper, the same gold, before and after the day:</p>
     <div class="duo2">
       <div class="mini std" data-rv>
-        <p class="mt">Sent February 2027</p>
-        <p class="mn">Save the Date</p>
+        <p class="mt" data-t="stdMt">Sent February 2027</p>
+        <p class="mn" data-t="stdMn">Save the Date</p>
         <p class="md">12 · 06 · 2027</p>
-        <p>Julian &amp; Amara are getting married in Bali. Formal invitation to follow.</p>
+        <p data-t="stdP">Julian &amp; Amara are getting married in Bali. Formal invitation to follow.</p>
       </div>
       <div class="mini thx" data-rv>
-        <p class="mt">Arrives July 2027</p>
-        <p class="mn">Thank You</p>
-        <p class="md">With love, J · A</p>
-        <p>For the flights, the dances and the songs you requested — every single one got played.</p>
+        <p class="mt" data-t="thxMt">Arrives July 2027</p>
+        <p class="mn" data-t="thxMn">Thank You</p>
+        <p class="md" data-t="thxMd">With love, J · A</p>
+        <p data-t="thxP">For the flights, the dances and the songs you requested — every single one got played.</p>
       </div>
     </div>
   </section>
 
   <section class="sec" id="faq">
-    <p class="num" data-rv>08 — Questions</p>
-    <h2 class="sec-t" data-rv>Before you <em>ask</em></h2>
-    <details data-rv><summary>Can I bring my children?</summary><p>We love them, and the cliff lawn at dusk is an adults-only evening. Babes in arms are welcome at the ceremony; our wedding team can recommend trusted Bali nannies for the night.</p></details>
-    <details data-rv><summary>Can I take photos?</summary><p>The ceremony is unplugged — phones away, photographers everywhere. From the reception onwards, shoot everything; the couple's favourite candid wins a bottle of the wedding wine.</p></details>
-    <details data-rv><summary>What about parking and getting home?</summary><p>Valet parking at the estate gate from 3:00 PM. Reception shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM, and the desk can call registered taxis all night.</p></details>
-    <details data-rv><summary>When is the RSVP deadline?</summary><p>12 May 2027. The lawn seats 120 and the kitchen plans by name — a reply after the deadline may mean a beautiful view and a very small chair.</p></details>
+    <p class="num" data-rv data-t="num8">08 — Questions</p>
+    <h2 class="sec-t" data-rv data-t="faqTitle">Before you <em>ask</em></h2>
+    <details data-rv><summary data-t="faq1q">Can I bring my children?</summary><p data-t="faq1a">We love them, and the cliff lawn at dusk is an adults-only evening. Babes in arms are welcome at the ceremony; our wedding team can recommend trusted Bali nannies for the night.</p></details>
+    <details data-rv><summary data-t="faq2q">Can I take photos?</summary><p data-t="faq2a">The ceremony is unplugged — phones away, photographers everywhere. From the reception onwards, shoot everything; the couple's favourite candid wins a bottle of the wedding wine.</p></details>
+    <details data-rv><summary data-t="faq3q">What about parking and getting home?</summary><p data-t="faq3a">Valet parking at the estate gate from 3:00 PM. Reception shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM, and the desk can call registered taxis all night.</p></details>
+    <details data-rv><summary data-t="faq4q">When is the RSVP deadline?</summary><p data-t="faq4a">12 May 2027. The lawn seats 120 and the kitchen plans by name — a reply after the deadline may mean a beautiful view and a very small chair.</p></details>
   </section>
 
   <footer>
     <div class="mono">J·A</div>
     <p class="fn">Julian &amp; Amara</p>
-    <p>Saturday, 12 June 2027 · The Cliff Estate, Uluwatu<br>Bali time now: <span id="footClock">–</span><br>© 2027 — SENJA is a fictional demonstration wedding by CarlLab.</p>
+    <p><span data-t="footDate">Saturday, 12 June 2027 · The Cliff Estate, Uluwatu</span><br><span data-t="footClockL">Bali time now:</span> <span id="footClock">–</span><br><span data-t="honesty">© 2027 — SENJA is a fictional demonstration wedding by CarlLab.</span></p>
   </footer>
 </div>
 
@@ -529,12 +535,160 @@ var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s
 var WED=new Date("2027-06-12T16:00:00+08:00").getTime();
 var TZ="Asia/Makassar";
 var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ---------- language (shared with the CarlLab main site) ---------- */
+var LANG_KEY="carllab-v18-lang";
+var lang="en";
+try{ lang=localStorage.getItem(LANG_KEY)==="id"?"id":"en"; }catch(e){}
+var T={
+en:{
+  docTitle:"Julian & Amara — Saturday 12 June 2027 · The Cliff Estate, Uluwatu Bali",
+  metaDesc:"You are invited to the wedding of Julian Hart and Amara Wijaya — Saturday 12 June 2027 at The Cliff Estate, Uluwatu, Bali. Open the envelope, then scroll: the promise, the place and the table.",
+  envAria:"Your invitation envelope", envTo:"You have received an invitation", envDear:"Dear,", guestDefault:"Friend of the couple",
+  sealAria:"Open the invitation", envOpen:"Open the invitation", envNote:"The envelope is addressed to you — tap the seal.",
+  musicAria:"Toggle music",
+  heroAria:"The Cliff Estate ceremony lawn above the Uluwatu ocean at dusk", heroEyebrow:"The wedding of",
+  heroWhen:"<b>Saturday, 12 June 2027</b><br>The Cliff Estate · Uluwatu, Bali",
+  cdAria:"Countdown to the ceremony", cdDays:"Days", cdHours:"Hours", cdMinutes:"Minutes", cdSeconds:"Seconds",
+  dayCounting:"Counting down to the cliff.", shareBtn:"Share",
+  stageH:'<span class="kw">Two lives,</span><em>one horizon.</em>', finalDate:"Saturday, 12 June 2027",
+  cap1h:"The journey <em>to the cliff</em>", cap1p:"A lawn above the Indian Ocean, where the ceremony begins as the light turns.",
+  cap2h:"The vows <em>two rings, one question</em>", cap2p:"Two rings, one question — asked at this cliff, at this hour, two years ago.",
+  cap3h:"The table <em>under the candles</em>", cap3p:"Then dinner under candles — forty guests, one long table, no seating plan drama. Almost.",
+  num1:"01 — The couple", brideAria:"Invitation suite detail", brideRole:"The bride",
+  brideBio:"Architect from Jakarta. Drew the first sketch of the cliff house they now share. Daughter of Bambang & Ratna Wijaya.",
+  groomAria:"The Uluwatu cliff at dusk", groomRole:"The groom",
+  groomBio:"Chef from Melbourne. Proposed between the main course and dessert — she said yes before the soufflé fell. Son of Michael & Claire Hart.",
+  num2:"02 — The day", dayTitle:"When <em>& where</em>",
+  cerEt:"The ceremony", cerH:"Vows on the lawn", cerTime:"4:00 PM — please arrive by 3:30 PM",
+  cerP:"The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361. An unplugged ceremony — our photographers have it covered; your only job is to watch the light change.",
+  recEt:"The reception", recH:"Dinner under candles", recTime:"6:30 PM — until the last song",
+  recP:"The same estate, one level down — follow the lantern path from the lawn. Shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM.",
+  addCal:"Add to calendar", copyAddr:"Copy address",
+  dressP:'Dress code — <b style="color:var(--gold2)">garden formal</b>. Long dresses and linen suits love this lawn; stilettos do not. The evening palette, if you would like to blend in:',
+  dressAria:"Evening palette: ivory, sand, sage, terracotta, charcoal",
+  num3:"03 — Registry", regTitle:"Gifts, <em>only if you wish</em>",
+  regIntro:"Your flight to Bali is the gift. If you would still like to give, the couple is registered at:", regLabel:"Registry",
+  regDemo:"Registry links are demonstration slots in this sample — they do not open a live registry.",
+  fundH:"The honeymoon fund", fundP:"Forty days, one motorbike, the whole archipelago. Contributions of any size go to the same pot:",
+  copyFund:"Copy fund link", fundDemo:"The fund link above is a demonstration slot in this sample — it is not a live payment link.",
+  num4:"04 — RSVP", rsvpTitle:"Will you <em>be there?</em>",
+  deadline:"Kindly reply by <b>12 May 2027</b> — the cliff lawn seats <b>120 guests</b>, and the kitchen plans by name.",
+  fNameL:"Your full name", fNamePh:"e.g. Alex Morgan", nameErr:"Please tell us your name.",
+  attendL:"Will you attend?", accepts:"Joyfully accepts", declines:"Regretfully declines",
+  eventsL:"Which events?", evCerB:"Ceremony", evCerS:"4:00 PM · the lawn", evRecB:"Reception", evRecS:"6:30 PM · dinner", evErr:"Choose at least one event.",
+  partyL:"Party size", party1:"Just me", party2:"Me + 1 guest",
+  plusL:"Your guest's full name", plusPh:"Your plus-one, by name — the kitchen plans by name", plusErr:"Please name your guest.",
+  plusMealL:"Your guest's meal", mealBeef:"Beef — slow-braised short rib", mealFish:"Fish — barramundi, sambal matah",
+  mealVeg:"Vegetarian — gnocchi, garden pesto", mealVegan:"Vegan — jackfruit rendang", mealL:"Your meal",
+  dietL:'Dietary notes <span style="text-transform:none;letter-spacing:0">(allergies, halal, anything)</span>', optPh:"Optional",
+  songL:'Song request <span style="text-transform:none;letter-spacing:0">(one song that gets you dancing)</span>', songPh:"Optional — the DJ reads every one",
+  wishL:'A wish for the couple <span style="text-transform:none;letter-spacing:0">(appears on the wishes wall)</span>',
+  sendRsvp:"Send RSVP", updRsvp:"Update my RSVP",
+  passT:"Guest pass — keep this screen", passEventsL:"Events", passPartyL:"Party", passTableL:"Table",
+  passNote:"Show this pass at the welcome desk on the lawn. Changed your mind about anything? You can update your reply below — it replaces the previous one.",
+  editReply:"Update my reply", decH:"You will be missed.",
+  decP:"Thank you for telling us early — it genuinely helps the plan. We will raise a glass to you at sunset, and the photos will find you.",
+  num5:"05 — Wishes", wishesTitle:"The wishes <em>wall</em>",
+  wNameL:"Your name", wNamePh:"e.g. Sarah Kim", wTextL:"Your wish", wTextPh:"Write it like you mean it", wishErr:"A name and a wish, please.", addWishBtn:"Add to the wall",
+  num6:"06 — Stay & travel", stayTitle:"Where to <em>sleep</em>",
+  stayIntro:"Ngurah Rai Airport (DPS) is about 45 minutes from the cliff. June is dry season — book early; these three are minutes from the estate:",
+  hotel1p:"6 minutes by shuttle · the wedding block code is JULIANAMARA", hotel2p:"9 minutes · bamboo villas above the surf break", hotel3p:"4 minutes · whitewashed cottages, famous breakfast", perNight:"per night",
+  stayOutro:"Reception shuttles loop to all three from 10:30 PM until the last song. Taxis from the airport: use the official counter inside arrivals.",
+  num7:"07 — Before & after", compTitle:"One suite, <em>three letters</em>",
+  compIntro:"This invitation is the middle of a matched set — the same paper, the same gold, before and after the day:",
+  stdMt:"Sent February 2027", stdMn:"Save the Date", stdP:"Julian & Amara are getting married in Bali. Formal invitation to follow.",
+  thxMt:"Arrives July 2027", thxMn:"Thank You", thxMd:"With love, J · A", thxP:"For the flights, the dances and the songs you requested — every single one got played.",
+  num8:"08 — Questions", faqTitle:"Before you <em>ask</em>",
+  faq1q:"Can I bring my children?", faq1a:"We love them, and the cliff lawn at dusk is an adults-only evening. Babes in arms are welcome at the ceremony; our wedding team can recommend trusted Bali nannies for the night.",
+  faq2q:"Can I take photos?", faq2a:"The ceremony is unplugged — phones away, photographers everywhere. From the reception onwards, shoot everything; the couple's favourite candid wins a bottle of the wedding wine.",
+  faq3q:"What about parking and getting home?", faq3a:"Valet parking at the estate gate from 3:00 PM. Reception shuttles loop to Jimbaran and Pecatu hotels from 10:30 PM, and the desk can call registered taxis all night.",
+  faq4q:"When is the RSVP deadline?", faq4a:"12 May 2027. The lawn seats 120 and the kitchen plans by name — a reply after the deadline may mean a beautiful view and a very small chair.",
+  footDate:"Saturday, 12 June 2027 · The Cliff Estate, Uluwatu", footClockL:"Bali time now:", honesty:"© 2027 — SENJA is a fictional demonstration wedding by CarlLab.",
+  copied:"Copied ✓", dayToday:"Today — see you on the lawn.", dayMarried:"Married at the cliff. It was golden.", dayTomorrow:"Tomorrow, at golden hour.", dayDaysSuffix:" days until the light turns gold.",
+  shareText:"Julian & Amara — Saturday 12 June 2027, The Cliff Estate, Uluwatu Bali. Your invitation: ",
+  icsCerSum:"Julian & Amara — Ceremony", icsCerDesc:"Vows on the lawn. Please arrive by 3:30 PM WITA.",
+  icsRecSum:"Julian & Amara — Reception", icsRecDesc:"Dinner under candles, then dancing until the last song.",
+  evCerName:"Ceremony", evRecName:"Reception", partyWith:"2 — with ", partySolo:"1 — just you", tableWord:"Table "
+},
+id:{
+  docTitle:"Julian & Amara — Sabtu, 12 Juni 2027 · The Cliff Estate, Uluwatu Bali",
+  metaDesc:"Anda diundang ke pernikahan Julian Hart dan Amara Wijaya — Sabtu, 12 Juni 2027 di The Cliff Estate, Uluwatu, Bali. Buka amplopnya, lalu gulir: janji, tempat, dan mejanya.",
+  envAria:"Amplop undangan Anda", envTo:"Anda menerima sebuah undangan", envDear:"Yth.", guestDefault:"Sahabat mempelai",
+  sealAria:"Buka undangan", envOpen:"Buka undangan", envNote:"Amplop ini dialamatkan untuk Anda — ketuk segelnya.",
+  musicAria:"Hidupkan/matikan musik",
+  heroAria:"Lawn upacara The Cliff Estate di atas laut Uluwatu saat senja", heroEyebrow:"Pernikahan",
+  heroWhen:"<b>Sabtu, 12 Juni 2027</b><br>The Cliff Estate · Uluwatu, Bali",
+  cdAria:"Hitung mundur menuju upacara", cdDays:"Hari", cdHours:"Jam", cdMinutes:"Menit", cdSeconds:"Detik",
+  dayCounting:"Menghitung hari menuju tebing.", shareBtn:"Bagikan",
+  stageH:'<span class="kw">Dua kehidupan,</span><em>satu cakrawala.</em>', finalDate:"Sabtu, 12 Juni 2027",
+  cap1h:"Perjalanan <em>menuju tebing</em>", cap1p:"Sebuah lawn di atas Samudra Hindia, tempat upacara dimulai saat cahaya berganti.",
+  cap2h:"Janji <em>dua cincin, satu pertanyaan</em>", cap2p:"Dua cincin, satu pertanyaan — diajukan di tebing ini, pada jam ini, dua tahun lalu.",
+  cap3h:"Meja <em>di bawah cahaya lilin</em>", cap3p:"Lalu makan malam di bawah cahaya lilin — empat puluh tamu, satu meja panjang, tanpa drama denah tempat duduk. Hampir.",
+  num1:"01 — Mempelai", brideAria:"Detail suite undangan", brideRole:"Mempelai wanita",
+  brideBio:"Arsitek dari Jakarta. Menggambar sketsa pertama rumah tebing yang kini mereka tinggali bersama. Putri dari Bapak Bambang & Ibu Ratna Wijaya.",
+  groomAria:"Tebing Uluwatu saat senja", groomRole:"Mempelai pria",
+  groomBio:"Koki dari Melbourne. Melamar di antara hidangan utama dan hidangan penutup — Amara mengiyakan sebelum soufflé-nya turun. Putra dari Bapak Michael & Ibu Claire Hart.",
+  num2:"02 — Hari H", dayTitle:"Waktu <em>& tempat</em>",
+  cerEt:"Upacara", cerH:"Janji di atas lawn", cerTime:"16.00 WITA — mohon hadir pukul 15.30 WITA",
+  cerP:"The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361. Upacara tanpa gawai — fotografer kami yang mengabadikannya; satu-satunya tugas Anda adalah menikmati perubahan cahayanya.",
+  recEt:"Resepsi", recH:"Makan malam di bawah cahaya lilin", recTime:"18.30 WITA — hingga lagu terakhir",
+  recP:"Di estate yang sama, satu tingkat ke bawah — ikuti jalur lentera dari lawn. Shuttle berputar ke hotel-hotel di Jimbaran dan Pecatu mulai pukul 22.30 WITA.",
+  addCal:"Tambahkan ke kalender", copyAddr:"Salin alamat",
+  dressP:'Kode berpakaian — <b style="color:var(--gold2)">garden formal</b>. Gaun panjang dan setelan linen sangat cocok di lawn ini; hak stiletto tidak. Palet malamnya, bila Anda ingin menyatu:',
+  dressAria:"Palet malam: gading, pasir, sage, terakota, arang",
+  num3:"03 — Daftar Hadiah", regTitle:"Hadiah, <em>hanya bila Anda berkenan</em>",
+  regIntro:"Penerbangan Anda ke Bali adalah hadiahnya. Bila Anda tetap ingin memberi, mempelai terdaftar di:", regLabel:"Daftar hadiah",
+  regDemo:"Tautan registry pada contoh ini adalah slot demonstrasi — tidak membuka registry sungguhan.",
+  fundH:"Dana bulan madu", fundP:"Empat puluh hari, satu sepeda motor, seluruh nusantara. Kontribusi dalam jumlah berapa pun masuk ke pot yang sama:",
+  copyFund:"Salin tautan dana", fundDemo:"Tautan dana di atas adalah slot demonstrasi pada contoh ini — bukan tautan pembayaran sungguhan.",
+  num4:"04 — RSVP", rsvpTitle:"Maukah Anda <em>hadir?</em>",
+  deadline:"Mohon balas paling lambat <b>12 Mei 2027</b> — lawn tebing ini menampung <b>120 tamu</b>, dan dapur merencanakan berdasarkan nama.",
+  fNameL:"Nama lengkap Anda", fNamePh:"mis. Alex Morgan", nameErr:"Mohon beritahu kami nama Anda.",
+  attendL:"Apakah Anda akan hadir?", accepts:"Dengan senang hati, hadir", declines:"Dengan berat hati, tidak bisa hadir",
+  eventsL:"Acara mana saja?", evCerB:"Upacara", evCerS:"16.00 WITA · di lawn", evRecB:"Resepsi", evRecS:"18.30 WITA · makan malam", evErr:"Pilih minimal satu acara.",
+  partyL:"Jumlah tamu", party1:"Hanya saya", party2:"Saya + 1 tamu",
+  plusL:"Nama lengkap tamu pendamping Anda", plusPh:"Nama pendamping Anda — dapur merencanakan berdasarkan nama", plusErr:"Mohon sebutkan nama tamu Anda.",
+  plusMealL:"Pilihan makan tamu Anda", mealBeef:"Daging sapi — short rib dimasak perlahan", mealFish:"Ikan — barramundi, sambal matah",
+  mealVeg:"Vegetarian — gnocchi, pesto kebun", mealVegan:"Vegan — rendang nangka", mealL:"Pilihan makan Anda",
+  dietL:'Catatan diet <span style="text-transform:none;letter-spacing:0">(alergi, halal, apa pun)</span>', optPh:"Opsional",
+  songL:'Permintaan lagu <span style="text-transform:none;letter-spacing:0">(satu lagu yang membuat Anda berdansa)</span>', songPh:"Opsional — DJ membaca semuanya",
+  wishL:'Ucapan untuk mempelai <span style="text-transform:none;letter-spacing:0">(tampil di dinding ucapan)</span>',
+  sendRsvp:"Kirim RSVP", updRsvp:"Perbarui RSVP saya",
+  passT:"Kartu tamu — simpan layar ini", passEventsL:"Acara", passPartyL:"Tamu", passTableL:"Meja",
+  passNote:"Tunjukkan kartu ini di meja penyambutan di lawn. Berubah pikiran soal apa pun? Anda dapat memperbarui jawaban Anda di bawah ini — jawaban baru menggantikan yang lama.",
+  editReply:"Perbarui jawaban saya", decH:"Anda akan sangat dirindukan.",
+  decP:"Terima kasih sudah memberitahu kami sejak awal — itu sungguh membantu perencanaan kami. Kami akan mengangkat gelas untuk Anda saat matahari terbenam, dan foto-fotonya akan sampai kepada Anda.",
+  num5:"05 — Ucapan", wishesTitle:"Dinding <em>ucapan</em>",
+  wNameL:"Nama Anda", wNamePh:"mis. Sarah Kim", wTextL:"Ucapan Anda", wTextPh:"Tulis dengan tulus", wishErr:"Mohon isi nama dan ucapan Anda.", addWishBtn:"Tambahkan ke dinding",
+  num6:"06 — Menginap & Perjalanan", stayTitle:"Tempat <em>menginap</em>",
+  stayIntro:"Bandara Ngurah Rai (DPS) berjarak sekitar 45 menit dari tebing. Juni adalah musim kemarau — pesanlah lebih awal; ketiga hotel ini hanya beberapa menit dari estate:",
+  hotel1p:"6 menit dengan shuttle · kode blok pernikahan: JULIANAMARA", hotel2p:"9 menit · vila bambu di atas deburan ombak", hotel3p:"4 menit · cottage bercat putih, sarapan yang terkenal", perNight:"per malam",
+  stayOutro:"Shuttle resepsi berputar ke ketiga hotel mulai pukul 22.30 WITA hingga lagu terakhir. Taksi dari bandara: gunakan loket resmi di dalam area kedatangan.",
+  num7:"07 — Sebelum & Sesudah", compTitle:"Satu suite, <em>tiga surat</em>",
+  compIntro:"Undangan ini adalah bagian tengah dari satu set yang serasi — kertas yang sama, emas yang sama, sebelum dan sesudah hari H:",
+  stdMt:"Dikirim Februari 2027", stdMn:"Simpan Tanggalnya", stdP:"Julian & Amara akan menikah di Bali. Undangan resmi akan menyusul.",
+  thxMt:"Tiba Juli 2027", thxMn:"Terima Kasih", thxMd:"Dengan cinta, J · A", thxP:"Untuk penerbangan, tarian, dan lagu-lagu yang Anda minta — semuanya diputar, satu per satu.",
+  num8:"08 — Pertanyaan", faqTitle:"Sebelum Anda <em>bertanya</em>",
+  faq1q:"Bolehkah saya membawa anak?", faq1a:"Kami menyayangi mereka, dan lawn tebing saat senja adalah malam khusus untuk tamu dewasa. Bayi dalam gendongan dipersilakan pada upacara; tim pernikahan kami dapat merekomendasikan pengasuh tepercaya di Bali untuk malam itu.",
+  faq2q:"Bolehkah saya mengambil foto?", faq2a:"Upacaranya tanpa gawai — jauhkan ponsel Anda, fotografer ada di mana-mana. Sejak resepsi dimulai, abadikan semuanya; foto candid favorit mempelai akan memenangkan sebotol anggur pernikahan.",
+  faq3q:"Bagaimana dengan parkir dan perjalanan pulang?", faq3a:"Parkir valet tersedia di gerbang estate mulai pukul 15.00 WITA. Shuttle resepsi berputar ke hotel-hotel di Jimbaran dan Pecatu mulai pukul 22.30 WITA, dan meja penyambutan dapat memanggil taksi resmi sepanjang malam.",
+  faq4q:"Kapan batas akhir RSVP?", faq4a:"12 Mei 2027. Lawn ini menampung 120 tamu dan dapur merencanakan berdasarkan nama — jawaban setelah batas akhir bisa berarti pemandangan yang indah dan kursi yang sangat kecil.",
+  footDate:"Sabtu, 12 Juni 2027 · The Cliff Estate, Uluwatu", footClockL:"Waktu Bali saat ini:", honesty:"© 2027 — SENJA adalah pernikahan demonstrasi fiktif oleh CarlLab.",
+  copied:"Tersalin ✓", dayToday:"Hari ini — sampai jumpa di lawn.", dayMarried:"Sudah menikah di tebing. Hari itu keemasan.", dayTomorrow:"Besok, pada jam keemasan.", dayDaysSuffix:" hari lagi menuju cahaya keemasan.",
+  shareText:"Julian & Amara — Sabtu, 12 Juni 2027, The Cliff Estate, Uluwatu Bali. Undangan untuk Anda: ",
+  icsCerSum:"Julian & Amara — Upacara", icsCerDesc:"Janji di atas lawn. Mohon hadir pukul 15.30 WITA.",
+  icsRecSum:"Julian & Amara — Resepsi", icsRecDesc:"Makan malam di bawah cahaya lilin, lalu berdansa hingga lagu terakhir.",
+  evCerName:"Upacara", evRecName:"Resepsi", partyWith:"2 — bersama ", partySolo:"1 — hanya Anda", tableWord:"Meja "
+}
+};
+function D(){ return T[lang]; }
+
 
 /* ---- guest name ---- */
-var guest="Friend of the couple";
-try{ var q=new URLSearchParams(location.search).get("to"); if(q && q.trim()) guest=q.trim().slice(0,60); }catch(e){}
+var guest=D().guestDefault, guestCustom=false;
+try{ var q=new URLSearchParams(location.search).get("to"); if(q && q.trim()){ guest=q.trim().slice(0,60); guestCustom=true; } }catch(e){}
 $("#guestName").textContent=guest;
-if(guest!=="Friend of the couple") $("#fName").value=guest;
+if(guestCustom) $("#fName").value=guest;
 
 /* ---- envelope + music ---- */
 var opened=false;
@@ -589,9 +743,34 @@ $("#sealBtn").addEventListener("click",openEnv);
 $("#openBtn").addEventListener("click",openEnv);
 $("#shareBtn").addEventListener("click",function(){
   var url=location.href.split("#")[0];
-  var txt=encodeURIComponent("Julian & Amara — Saturday 12 June 2027, The Cliff Estate, Uluwatu Bali. Your invitation: ")+encodeURIComponent(url);
+  var txt=encodeURIComponent(D().shareText)+encodeURIComponent(url);
   window.open("https://wa.me/?text="+txt,"_blank");
 });
+
+/* ---------- language apply / follow ---------- */
+function applyLang(l,save){
+  lang=(l==="id")?"id":"en";
+  if(save){ try{ localStorage.setItem(LANG_KEY,lang); }catch(e){} }
+  var Dd=T[lang];
+  document.documentElement.lang=lang;
+  document.title=Dd.docTitle;
+  var md=document.querySelector('meta[name="description"]'); if(md) md.setAttribute("content",Dd.metaDesc);
+  document.querySelectorAll("[data-t]").forEach(function(el){ var k=el.getAttribute("data-t"); if(Dd[k]==null) return; var v=Dd[k]; if(el.tagName==="OPTION"||v.indexOf("<")<0) el.textContent=v; else el.innerHTML=v; });
+  document.querySelectorAll("[data-t-ph]").forEach(function(el){ var k=el.getAttribute("data-t-ph"); if(Dd[k]!=null) el.setAttribute("placeholder",Dd[k]); });
+  document.querySelectorAll("[data-t-aria]").forEach(function(el){ var k=el.getAttribute("data-t-aria"); if(Dd[k]!=null) el.setAttribute("aria-label",Dd[k]); });
+  document.querySelectorAll(".langpill button").forEach(function(b){ var on=b.getAttribute("data-lang")===lang; b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false"); });
+  if(!guestCustom) $("#guestName").textContent=Dd.guestDefault;
+  var sb=$("#rsvpSubmit"); if(sb) sb.textContent=Dd[(typeof rsvpUpdate!=="undefined"&&rsvpUpdate)?"updRsvp":"sendRsvp"];
+  if(typeof tickClock==="function") tickClock();
+  if(typeof renderOutcome==="function") renderOutcome();
+}
+document.querySelectorAll(".langpill button").forEach(function(b){
+  b.addEventListener("click",function(){ applyLang(b.getAttribute("data-lang"),true); });
+});
+window.addEventListener("storage",function(e){
+  if(e.key===LANG_KEY){ var nl=e.newValue==="id"?"id":"en"; if(nl!==lang) applyLang(nl,false); }
+});
+applyLang(lang,false);
 </script>
 <script>
 "use strict";
@@ -605,12 +784,12 @@ function tickClock(){
   if(diff<=0){
     var since=now.getTime()-WED;
     $("#cdD").textContent="0"; $("#cdH").textContent="00"; $("#cdM").textContent="00"; $("#cdS").textContent="00";
-    ds.textContent = since<6*3600*1000 ? "Today — see you on the lawn." : "Married at the cliff. It was golden.";
+    ds.textContent = since<6*3600*1000 ? D().dayToday : D().dayMarried;
     return;
   }
   var d=Math.floor(diff/86400000), h=Math.floor(diff/3600000)%24, m=Math.floor(diff/60000)%60, s=Math.floor(diff/1000)%60;
   $("#cdD").textContent=d; $("#cdH").textContent=pad(h); $("#cdM").textContent=pad(m); $("#cdS").textContent=pad(s);
-  ds.textContent = d===0 ? "Today — see you on the lawn." : (d===1 ? "Tomorrow, at golden hour." : d+" days until the light turns gold.");
+  ds.textContent = d===0 ? D().dayToday : (d===1 ? D().dayTomorrow : d+D().dayDaysSuffix);
 }
 tickClock(); setInterval(tickClock,1000);
 
@@ -664,18 +843,18 @@ window.addEventListener("resize",stageUpdate);
 stageUpdate();
 
 /* ---- copy helpers ---- */
-function copyText(txt,btn,def){
-  var done=function(){ btn.textContent="Copied ✓"; setTimeout(function(){ btn.textContent=def; },1800); };
+function copyText(txt,btn,key){
+  var done=function(){ btn.textContent=D().copied; setTimeout(function(){ btn.textContent=D()[key]; },1800); };
   if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,done); } else done();
 }
-$("#copyAddr").addEventListener("click",function(){ copyText("The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361, Indonesia",this,"Copy address"); });
-$("#copyFund").addEventListener("click",function(){ copyText("https://withlove.example/julian-amara",this,"Copy fund link"); });
+$("#copyAddr").addEventListener("click",function(){ copyText("The Cliff Estate, Jl. Pantai Suluban No. 88, Uluwatu, Bali 80361, Indonesia",this,"copyAddr"); });
+$("#copyFund").addEventListener("click",function(){ copyText("https://withlove.example/julian-amara",this,"copyFund"); });
 
 /* ---- calendar (.ics) ---- */
 function ics(kind){
   var ev = kind==="ceremony"
-    ? ["20270612T080000Z","20270612T090000Z","Julian & Amara — Ceremony","Vows on the lawn. Please arrive by 3:30 PM WITA."]
-    : ["20270612T103000Z","20270612T143000Z","Julian & Amara — Reception","Dinner under candles, then dancing until the last song."];
+    ? ["20270612T080000Z","20270612T090000Z",D().icsCerSum,D().icsCerDesc]
+    : ["20270612T103000Z","20270612T143000Z",D().icsRecSum,D().icsRecDesc];
   var lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//SENJA//Wedding//EN","BEGIN:VEVENT",
     "UID:senja-"+kind+"@carllab.web.id","DTSTAMP:20261119T000000Z",
     "DTSTART:"+ev[0],"DTEND:"+ev[1],"SUMMARY:"+ev[2],
@@ -703,10 +882,10 @@ function renderOutcome(){
   if(!myRsvp) return;
   if(myRsvp.attend==="declines"){ dec.classList.add("show"); return; }
   $("#passName").textContent=myRsvp.name;
-  var evs=[]; if(myRsvp.events.indexOf("ceremony")>=0) evs.push("Ceremony"); if(myRsvp.events.indexOf("reception")>=0) evs.push("Reception");
+  var evs=[]; if(myRsvp.events.indexOf("ceremony")>=0) evs.push(D().evCerName); if(myRsvp.events.indexOf("reception")>=0) evs.push(D().evRecName);
   $("#passEvents").textContent=evs.join(" + ")||"—";
-  $("#passParty").textContent = myRsvp.party===2 ? "2 — with "+myRsvp.plusName : "1 — just you";
-  $("#passTable").textContent="Table "+myRsvp.table;
+  $("#passParty").textContent = myRsvp.party===2 ? D().partyWith+myRsvp.plusName : D().partySolo;
+  $("#passTable").textContent=D().tableWord+myRsvp.table;
   $("#passCode").textContent=myRsvp.code;
   pass.classList.add("show");
 }
@@ -716,6 +895,7 @@ function syncAttend(){
 }
 $$('input[name="attend"]').forEach(function(r){ r.addEventListener("change",syncAttend); });
 $("#fParty").addEventListener("change",function(){ $("#plusFields").hidden = this.value!=="2"; });
+var rsvpUpdate=false;
 function showForm(prefill){
   $("#pass").classList.remove("show"); $("#declineCard").classList.remove("show");
   $("#rsvpForm").style.display="";
@@ -732,7 +912,7 @@ function showForm(prefill){
     $("#fDiet").value=myRsvp.diet||"";
     $("#fSong").value=myRsvp.song||"";
     $("#fWish").value=myRsvp.wish||"";
-    $("#rsvpSubmit").textContent="Update my RSVP";
+    rsvpUpdate=true; $("#rsvpSubmit").textContent=D().updRsvp;
   }
   syncAttend();
   $("#rsvpForm").scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
@@ -816,7 +996,8 @@ $("#wishForm").addEventListener("submit",function(e){
 
 /* ---- init outcome ---- */
 if(myRsvp){ $("#rsvpForm").style.display="none"; renderOutcome(); }
-window.SENJA={open:openEnv,codeFor:codeFor,state:function(){return {opened:opened,rsvp:myRsvp?myRsvp.code:null,wishes:wishes.length}}};
+applyLang(lang,false);
+window.SENJA={open:openEnv,codeFor:codeFor,setLang:function(l){ applyLang(l,true); },state:function(){return {opened:opened,rsvp:myRsvp?myRsvp.code:null,wishes:wishes.length,lang:lang}}};
 </script>
 </body>
 </html>
