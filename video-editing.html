@@ -637,20 +637,6 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 #vpVideo{flex:1;min-height:0;width:100%;border:0;display:block;background:#000;object-fit:contain}
 .vp-fallback{display:block;padding:10px 12px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;color:#C9A24B;text-decoration:none;background:#0A0A0C;border-top:1px solid #23262B;flex:none}
 </style>
-<style id="vd-css">
-/* video demo set — mirrors #vpPlay, vd- prefix */
-#vdPlay{display:none;flex-direction:column;height:100%}
-#vdPlay.on{display:flex}
-#vdVideo{flex:1;min-height:0;width:100%;border:0;display:block;background:#000;object-fit:contain}
-.vd-srcnote{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:#C9A24B;margin:0 2px 12px;text-transform:uppercase}
-.vd-row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:10px;margin:0 0 8px;border:1px solid #26292F;border-radius:16px;background:#121317;color:#F3EAD8;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:transform .12s,border-color .18s}
-.vd-row:active{transform:scale(.98)}
-.vd-row.sel{border-color:#C9A24B}
-.vd-row img{width:64px;height:46px;object-fit:cover;border-radius:9px;flex:none;background:#1B1D21}
-.vd-row .vp-rt{min-width:0}
-.vd-row h4{margin:0 0 3px;font-family:'Archivo',sans-serif;font-size:13.5px;letter-spacing:.02em;line-height:1.3}
-.vd-row p{margin:0;font-size:11.5px;color:#A7ADB6;line-height:1.45}
-</style>
 </head>
 <body>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
@@ -750,39 +736,6 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       </div>
     </div>
     <p class="demo-cap" data-t="vpCap">Web copies of the portfolio, hosted with this page — the originals stay on Google Drive.</p>
-  </div>
-</section>
-<section class="blk" id="vd">
-  <div class="wrap">
-    <div class="sec-head" data-rv="y40">
-      <span class="eyebrow" data-t="vdEye">Style demos</span>
-      <h2 data-t="vdH">One set, five styles</h2>
-    </div>
-    <div class="demo-grid">
-      <div data-rv="y40">
-        <p class="vp-ptitle" id="vdPTitle"></p>
-        <ul class="vp-meta" id="vdMeta"></ul>
-        <p class="demo-lede" id="vdLine"></p>
-        <p class="demo-hint" id="vdHint"></p>
-      </div>
-      <div class="demo-phone" data-rv="y40">
-        <div class="demo-screen no-notch">
-          <div class="demo-notch" aria-hidden="true"></div>
-          <div class="vp" id="vdRoot">
-            <div class="vp-head"><b>CARLLAB</b><span id="vdHeadNote">STYLE DEMOS</span></div>
-            <div id="vdMain">
-              <div class="vp-body" id="vdBody"></div>
-            </div>
-            <div id="vdPlay">
-              <div class="vp-bar"><button class="vp-back" id="vdPlayBack" type="button"></button><b id="vdPlayName"></b></div>
-              <video id="vdVideo" controls playsinline preload="none"></video>
-              <a class="vp-fallback" id="vdFallback" target="_blank" rel="noopener"></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="demo-cap" data-t="vdCap">Two are real portfolio pieces; three are sample edits cut for this set from stock footage — labelled as samples, played the same way.</p>
   </div>
 </section>
 <section class="blk">
@@ -885,7 +838,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={waBtn:"Pesan via WhatsApp",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Satu editor membawa footage mentahmu sampai ujung: potongannya, ritmenya, teksnya, mixing-nya — sampai yang kembali adalah video siap tayang, bukan file proyek yang masih harus kamu selesaikan sendiri. Format pendek untuk feed, format panjang untuk channel, dalam format yang diminta tiap platform. Buktinya ada di bawah: lima edit pendek, diputar di dalam HP — tekan putar dan nilai hasil kerjanya, bukan janjinya.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Kamu syuting lebih banyak daripada yang sempat kamu edit — sebuah channel, feed produk, podcast — dan footage mentahnya menumpuk di folder selagi jadwal tayangnya bergeser. Bahannya ada; yang kurang adalah jam di depan timeline.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh produksi, bukan edit: kru di lokasi, syuting yang diarahkan, atau liputan langsung di hari yang sama. Carl mengedit footage yang sudah ada — kalau syutingnya sendiri butuh tim, ia akan mengatakannya dalam balasan, bukan menjual pekerjaan setengah jadi.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Footage mentahnya — tautan drive saja cukup — plus tiga catatan: akan tayang di mana, target durasinya berapa, dan apa yang wajib muncul atau tidak boleh muncul. Referensi video yang kamu sukai lebih membantu daripada kata sifat.",inc1:"Potongan format pendek — Reels, TikTok, Shorts. Hook-nya mendarat di detik-detik pertama, ritmenya tidak pernah menganggur, dan teksnya dibakar ke video atau dikirim sebagai file terpisah — pilihanmu.",inc2:"Edit format panjang — video YouTube dan video podcast. Struktur lebih dulu: argumennya urut, jeda mati dibuang, b-roll diletakkan di tempat kata-kata butuh bukti.",inc3:"Teks dan suara — subtitle dalam Bahasa Indonesia, Inggris, atau keduanya, diatur mengikuti suaranya; musik dan efek di-mixing di bawah suara, tidak pernah menutupinya.",inc4:"Judul dan motion graphics sederhana — lower-third, kartu penutup, dan kartu bab dengan huruf dan warna brand-mu, digambar untuk videonya, bukan diambil dari paket template.",inc5:"Pengiriman dan revisi — master dalam 16:9, 9:16, dan 1:1, siap tayang, dengan satu putaran revisi di setiap edit: kamu menonton, kamu menandai, ia diperbaiki.",vpEye:"Portofolio live",vpH:"Dari portofolio editing",vpCap:"Salinan web portofolio, disimpan bersama halaman ini — file aslinya tetap di Google Drive.",vdEye:"Demo gaya",vdH:"Satu set, lima gaya",vdCap:"Dua adalah karya portofolio asli; tiga adalah contoh edit yang dibuat untuk set ini dari footage stok — dilabeli sebagai contoh, diputar dengan cara yang sama.",pgQ1:"Apa yang kukirim, dan bagaimana caranya?",pgA1:"Tautan ke footage mentahnya — Drive, Dropbox, atau apa pun yang sudah kamu pakai — plus videonya akan tayang di mana, target durasinya, dan catatan wajib-simpan serta wajib-buangmu. Tidak perlu mengganti nama atau mengurutkan apa pun dulu; susunan di folder adalah bagian dari informasinya.",pgQ2:"Format apa yang kudapatkan kembali?",pgA2:"Master dalam bentuk yang diminta tiap platform: 16:9 untuk YouTube, 9:16 untuk Reels, TikTok, dan Shorts, 1:1 untuk feed — dipotong dari edit yang sama, bukan salinan yang ditarik. Teksnya dibakar ke video, sebagai file terpisah, atau keduanya.",pgQ3:"Bisakah teksnya berjalan dalam dua bahasa?",pgA3:"Bisa — Bahasa Indonesia, Inggris, atau keduanya di video yang sama, diatur dengan tangan mengikuti suaranya, bukan ditempel dari transkrip otomatis. Nama dan istilah yang ejaannya khusus bagimu tetap dieja seperti itu.",pgQ4:"Bagaimana revisinya bekerja?",pgA4:"Setiap edit termasuk satu putaran revisi. Kamu menonton hasil potongannya, menandai momennya — cap waktu dan satu kalimat saja cukup — dan perbaikannya kembali sebagai master baru, bukan tambalan pada master lama. Jumlah putaran untuk seri yang lebih besar ditulis dalam penawaran sebelum pekerjaan dimulai.",pgQ5:"Berapa lama satu edit selesai?",pgA5:"Ditentukan dalam penawaran tertulis, disesuaikan dengan panjang footage-mu dan antrean studio — potongan pendek dan podcast empat puluh menit adalah pekerjaan yang berbeda, dan penawarannya menyebutkannya dengan jujur. Kamu menerima kabar di setiap tahap, tidak pernah sepi lalu tiba-tiba muncul file."};
+var ID={waBtn:"Pesan via WhatsApp",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, game, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s2t:"Game browser",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Satu editor membawa footage mentahmu sampai ujung: potongannya, ritmenya, teksnya, mixing-nya — sampai yang kembali adalah video siap tayang, bukan file proyek yang masih harus kamu selesaikan sendiri. Format pendek untuk feed, format panjang untuk channel, dalam format yang diminta tiap platform. Buktinya ada di bawah: lima edit pendek, diputar di dalam HP — tekan putar dan nilai hasil kerjanya, bukan janjinya.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Kamu syuting lebih banyak daripada yang sempat kamu edit — sebuah channel, feed produk, podcast — dan footage mentahnya menumpuk di folder selagi jadwal tayangnya bergeser. Bahannya ada; yang kurang adalah jam di depan timeline.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh produksi, bukan edit: kru di lokasi, syuting yang diarahkan, atau liputan langsung di hari yang sama. Carl mengedit footage yang sudah ada — kalau syutingnya sendiri butuh tim, ia akan mengatakannya dalam balasan, bukan menjual pekerjaan setengah jadi.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Footage mentahnya — tautan drive saja cukup — plus tiga catatan: akan tayang di mana, target durasinya berapa, dan apa yang wajib muncul atau tidak boleh muncul. Referensi video yang kamu sukai lebih membantu daripada kata sifat.",inc1:"Potongan format pendek — Reels, TikTok, Shorts. Hook-nya mendarat di detik-detik pertama, ritmenya tidak pernah menganggur, dan teksnya dibakar ke video atau dikirim sebagai file terpisah — pilihanmu.",inc2:"Edit format panjang — video YouTube dan video podcast. Struktur lebih dulu: argumennya urut, jeda mati dibuang, b-roll diletakkan di tempat kata-kata butuh bukti.",inc3:"Teks dan suara — subtitle dalam Bahasa Indonesia, Inggris, atau keduanya, diatur mengikuti suaranya; musik dan efek di-mixing di bawah suara, tidak pernah menutupinya.",inc4:"Judul dan motion graphics sederhana — lower-third, kartu penutup, dan kartu bab dengan huruf dan warna brand-mu, digambar untuk videonya, bukan diambil dari paket template.",inc5:"Pengiriman dan revisi — master dalam 16:9, 9:16, dan 1:1, siap tayang, dengan satu putaran revisi di setiap edit: kamu menonton, kamu menandai, ia diperbaiki.",vpEye:"Portofolio live",vpH:"Dari portofolio editing",vpCap:"Salinan web portofolio, disimpan bersama halaman ini — file aslinya tetap di Google Drive.",pgQ1:"Apa yang kukirim, dan bagaimana caranya?",pgA1:"Tautan ke footage mentahnya — Drive, Dropbox, atau apa pun yang sudah kamu pakai — plus videonya akan tayang di mana, target durasinya, dan catatan wajib-simpan serta wajib-buangmu. Tidak perlu mengganti nama atau mengurutkan apa pun dulu; susunan di folder adalah bagian dari informasinya.",pgQ2:"Format apa yang kudapatkan kembali?",pgA2:"Master dalam bentuk yang diminta tiap platform: 16:9 untuk YouTube, 9:16 untuk Reels, TikTok, dan Shorts, 1:1 untuk feed — dipotong dari edit yang sama, bukan salinan yang ditarik. Teksnya dibakar ke video, sebagai file terpisah, atau keduanya.",pgQ3:"Bisakah teksnya berjalan dalam dua bahasa?",pgA3:"Bisa — Bahasa Indonesia, Inggris, atau keduanya di video yang sama, diatur dengan tangan mengikuti suaranya, bukan ditempel dari transkrip otomatis. Nama dan istilah yang ejaannya khusus bagimu tetap dieja seperti itu.",pgQ4:"Bagaimana revisinya bekerja?",pgA4:"Setiap edit termasuk satu putaran revisi. Kamu menonton hasil potongannya, menandai momennya — cap waktu dan satu kalimat saja cukup — dan perbaikannya kembali sebagai master baru, bukan tambalan pada master lama. Jumlah putaran untuk seri yang lebih besar ditulis dalam penawaran sebelum pekerjaan dimulai.",pgQ5:"Berapa lama satu edit selesai?",pgA5:"Ditentukan dalam penawaran tertulis, disesuaikan dengan panjang footage-mu dan antrean studio — potongan pendek dan podcast empat puluh menit adalah pekerjaan yang berbeda, dan penawarannya menyebutkannya dengan jujur. Kamu menerima kabar di setiap tahap, tidak pernah sepi lalu tiba-tiba muncul file."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -1133,140 +1086,6 @@ document.getElementById("vpPlayBack").addEventListener("click",closeVPPlay);
 function renderVP(){ renderVPPanel(); renderVPTabs(); renderVPBody(); }
 new MutationObserver(function(){ renderVP(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 renderVP();
-})();
-</script>
-
-
-<script id="vd-js">
-(function(){
-"use strict";
-var VD_ITEMS=[
- {m:"sam-altman-tiktok",drive:"1F7QB5xWQSYFn8KVbKn_ae4FKMj8rSE9x",t:"Sam Altman Got Addicted to TikTok",d:"0:31",real:true,
-  style:{en:"Podcast · caption-led cut",id:"Podcast · potongan teks dominan"},
-  desc:{en:"From the portfolio: a podcast moment cut for the feed — big captions, one thought, landed in 31 seconds.",id:"Dari portofolio: momen podcast yang dipotong untuk feed — teks besar, satu gagasan, sampai dalam 31 detik."}},
- {m:"elon-musk-future-work",drive:"1Gj-p8tCHaMIKbUr1fDwZQNldt2Lvjkyb",t:"Elon Musk on the Future of Work",d:"0:36",real:true,
-  style:{en:"Interview · trimmed to the spine",id:"Wawancara · dipangkas ke inti"},
-  desc:{en:"From the portfolio: an interview answer trimmed to its spine — the question, the pause, the point.",id:"Dari portofolio: jawaban wawancara yang dipangkas ke intinya — pertanyaan, jeda, poin."}},
- {m:"demo-product-commercial",t:"Kopi Pagi — Product Commercial",d:"0:22",real:false,
-  style:{en:"Product commercial · Indonesian coffee",id:"Iklan produk · kopi Indonesia"},
-  desc:{en:"Sample edit: an Indonesian coffee commercial — hook first, the product as hero, four beats and a call to action.",id:"Contoh edit: iklan kopi Indonesia — hook dulu, produk jadi pahlawan, empat beat dan ajakan bertindak."}},
- {m:"demo-wedding-highlight",t:"Ayu & Bima — Wedding Highlight",d:"0:28",real:false,
-  style:{en:"Wedding highlight · cinematic",id:"Sorotan pernikahan · sinematik"},
-  desc:{en:"Sample edit: a wedding highlight for an Indonesian couple — slow cuts, a warm grade, one day in half a minute.",id:"Contoh edit: sorotan pernikahan pasangan Indonesia — potongan lambat, warna hangat, satu hari dalam setengah menit."}},
- {m:"demo-travel-vlog",t:"Bali in a Day — Travel Vlog",d:"0:24",real:false,
-  style:{en:"Travel vlog · fast cuts, burned-in captions",id:"Vlog perjalanan · potongan cepat, teks terbakar"},
-  desc:{en:"Sample edit: a Bali travel vlog — fast cuts, burned-in captions, a new stop every few seconds.",id:"Contoh edit: vlog perjalanan Bali — potongan cepat, teks terbakar, tempat baru tiap beberapa detik."}}
-];
-var VD_UI={
- headNote:{en:"STYLE DEMOS",id:"DEMO GAYA"},
- styleK:{en:"Style",id:"Gaya"}, durK:{en:"Duration",id:"Durasi"}, srcK:{en:"Source",id:"Sumber"},
- vert:{en:"Vertical · 9:16",id:"Vertikal · 9:16"},
- srcReal:{en:"Real portfolio piece",id:"Karya portofolio asli"},
- srcSample:{en:"Sample edit — stock footage",id:"Contoh edit — footage stok"},
- tagReal:{en:"REAL",id:"ASLI"}, tagSample:{en:"SAMPLE",id:"CONTOH"},
- line:{en:"Five edits, five different briefs: a podcast cut, an interview, a product commercial, a wedding highlight and a travel vlog. Two come from the real portfolio; three are style samples edited for this page from stock footage — the label on each one says which.",id:"Lima edit, lima brief berbeda: potongan podcast, wawancara, iklan produk, sorotan pernikahan, dan vlog perjalanan. Dua berasal dari portofolio asli; tiga adalah contoh gaya yang diedit untuk halaman ini dari footage stok — label di tiap video menyebutkannya."},
- hint:{en:"Pick a style in the phone · tap · press watch",id:"Pilih gaya di HP · ketuk · tekan tonton"},
- note:{en:"The set — 5 edits",id:"Satu set — 5 edit"},
- foot:{en:"5 edits in one set — two real portfolio pieces, three labelled samples.",id:"5 edit dalam satu set — dua karya portofolio asli, tiga contoh berlabel."},
- backList:{en:"‹ All styles",id:"‹ Semua gaya"},
- backDetail:{en:"‹ Back",id:"‹ Kembali"},
- watch:{en:"▶ Watch in this phone",id:"▶ Tonton di HP ini"},
- drive:{en:"Open in Google Drive ↗",id:"Buka di Google Drive ↗"},
- fallback:{en:"Won't play here? Open in Google Drive ↗",id:"Tidak berputar di sini? Buka di Google Drive ↗"},
- sampleNote:{en:"Sample edit — footage: stock",id:"Contoh edit — footage: stok"}
-};
-function vdL(){return document.documentElement.lang==="id"?"id":"en"}
-function vdt(x){return x[vdL()]}
-function vdPoster(it){return "video-editing/media/"+it.m+".jpg"}
-function vdSrc(it){return "video-editing/media/"+it.m+".mp4"}
-var vdState={sel:VD_ITEMS[0],view:"list"};
-var vdBody=document.getElementById("vdBody");
-function renderVDPanel(){
-  var it=vdState.sel;
-  document.getElementById("vdPTitle").textContent=it.t;
-  document.getElementById("vdMeta").innerHTML="<li><span class=\"k\"></span><span class=\"v\"></span></li><li><span class=\"k\"></span><span class=\"v\"></span></li><li><span class=\"k\"></span><span class=\"v\"></span></li>";
-  var lis=document.querySelectorAll("#vdMeta li");
-  lis[0].querySelector(".k").textContent=vdt(VD_UI.styleK); lis[0].querySelector(".v").textContent=vdt(it.style);
-  lis[1].querySelector(".k").textContent=vdt(VD_UI.durK); lis[1].querySelector(".v").textContent=it.d;
-  lis[2].querySelector(".k").textContent=vdt(VD_UI.srcK); lis[2].querySelector(".v").textContent=vdt(it.real?VD_UI.srcReal:VD_UI.srcSample);
-  document.getElementById("vdLine").textContent=vdt(VD_UI.line);
-  document.getElementById("vdHint").textContent=vdt(VD_UI.hint);
-  document.getElementById("vdHeadNote").textContent=vdt(VD_UI.headNote);
-}
-function renderVDBody(){
-  var l=vdL();
-  if(vdState.view==="list"){
-    vdBody.innerHTML="";
-    var note=document.createElement("p"); note.className="vp-note"; note.textContent=vdt(VD_UI.note);
-    vdBody.appendChild(note);
-    VD_ITEMS.forEach(function(it){
-      var r=document.createElement("button"); r.type="button";
-      r.className="vd-row"+(vdState.sel===it?" sel":"");
-      r.innerHTML="<img alt=\"\" loading=\"lazy\"><span class=\"vp-rt\"><h4></h4><p></p></span><span class=\"vp-chip\"></span>";
-      r.querySelector("img").src=vdPoster(it);
-      r.querySelector("h4").textContent=it.t;
-      r.querySelector("p").textContent=vdt(it.style)+" · "+vdt(it.real?VD_UI.tagReal:VD_UI.tagSample);
-      r.querySelector(".vp-chip").textContent=it.d;
-      r.addEventListener("click",function(){ vdState.sel=it; vdState.view="detail"; renderVD(); });
-      vdBody.appendChild(r);
-    });
-    var foot=document.createElement("p"); foot.className="vp-foot"; foot.textContent=vdt(VD_UI.foot);
-    vdBody.appendChild(foot);
-  } else {
-    var it=vdState.sel;
-    vdBody.innerHTML="";
-    var back=document.createElement("button"); back.type="button"; back.className="vp-back"; back.textContent=vdt(VD_UI.backList);
-    back.addEventListener("click",function(){ vdState.view="list"; renderVD(); });
-    vdBody.appendChild(back);
-    var hero=document.createElement("div"); hero.className="vp-hero";
-    hero.innerHTML="<img alt=\"\"><b></b>";
-    hero.querySelector("img").src=vdPoster(it);
-    hero.querySelector("b").textContent=it.t;
-    vdBody.appendChild(hero);
-    var meta=document.createElement("p"); meta.className="vp-dsub";
-    meta.textContent=vdt(it.style)+" · "+it.d+" · "+vdt(VD_UI.vert);
-    vdBody.appendChild(meta);
-    var desc=document.createElement("p"); desc.className="vp-desc"; desc.textContent=vdt(it.desc);
-    vdBody.appendChild(desc);
-    var sn=document.createElement("p"); sn.className="vd-srcnote"; sn.textContent=vdt(it.real?VD_UI.srcReal:VD_UI.srcSample);
-    vdBody.appendChild(sn);
-    var play=document.createElement("button"); play.type="button"; play.className="vp-btn vp-play"; play.textContent=vdt(VD_UI.watch);
-    play.addEventListener("click",openVDPlay);
-    vdBody.appendChild(play);
-    if(it.real){
-      var full=document.createElement("a"); full.className="vp-btn vp-drive"; full.href="https://drive.google.com/file/d/"+it.drive+"/view"; full.target="_blank"; full.rel="noopener"; full.textContent=vdt(VD_UI.drive);
-      vdBody.appendChild(full);
-    }
-  }
-}
-function openVDPlay(){
-  var it=vdState.sel;
-  document.getElementById("vdMain").style.display="none";
-  var p=document.getElementById("vdPlay"); p.classList.add("on");
-  document.getElementById("vdPlayName").textContent=it.t;
-  document.getElementById("vdPlayBack").textContent=vdt(VD_UI.backDetail);
-  var fb=document.getElementById("vdFallback");
-  if(it.real){ fb.href="https://drive.google.com/file/d/"+it.drive+"/view"; fb.textContent=vdt(VD_UI.fallback); }
-  else { fb.removeAttribute("href"); fb.textContent=vdt(VD_UI.sampleNote); }
-  var vid=document.getElementById("vdVideo");
-  vid.poster=vdPoster(it);
-  vid.src=vdSrc(it);
-  var pr=vid.play();
-  if(pr&&pr.catch){ pr.catch(function(){}); }
-}
-function closeVDPlay(){
-  var vid=document.getElementById("vdVideo");
-  vid.pause();
-  vid.removeAttribute("src");
-  vid.removeAttribute("poster");
-  vid.load();
-  document.getElementById("vdPlay").classList.remove("on");
-  document.getElementById("vdMain").style.display="";
-}
-document.getElementById("vdPlayBack").addEventListener("click",closeVDPlay);
-function renderVD(){ renderVDPanel(); renderVDBody(); }
-new MutationObserver(function(){ renderVD(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
-renderVD();
 })();
 </script>
 
