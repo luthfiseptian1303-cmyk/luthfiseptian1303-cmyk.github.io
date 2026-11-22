@@ -202,8 +202,13 @@
         .clockbox{text-align:left}
         .clockbox .clock{font-size:16px}
         .stickybar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--surface);border-top:1px solid var(--line);padding:8px;gap:8px}
-        .stickybar button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--bone);border-radius:var(--r-s);font-family:var(--mono);font-size:12.8px;font-weight:700;min-height:48px;cursor:pointer;position:relative}
-        .stickybar .badge{position:absolute;top:4px;right:8px;background:var(--red);color:#fff;border-radius:var(--r-pill);font-size:12.8px;padding:0 6px;line-height:1.6}
+        .stickybar button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--bone);border-radius:var(--r-s);font-family:var(--mono);font-size:12.8px;font-weight:700;min-height:48px;cursor:pointer;position:relative;white-space:nowrap}
+/* queue button carries the longest label + count badge: give the bar proportional widths so "Follow-up" never wraps (fix 20261122) */
+.stickybar #sbAdd{flex:.95}
+.stickybar #sbAuto{flex:1.15}
+.stickybar #sbQueue{flex:1.35}
+.stickybar #sbBoard{flex:.8}
+        .stickybar .badge{position:absolute;top:-7px;right:-3px;background:var(--red);color:#fff;border-radius:var(--r-pill);font-size:12.8px;padding:0 6px;line-height:1.6}
         .toasts{bottom:80px}
         .funnel .frow2{grid-template-columns:88px 1fr 72px}
       }
