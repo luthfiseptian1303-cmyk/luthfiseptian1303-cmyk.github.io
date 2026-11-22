@@ -448,7 +448,7 @@ body.vip #openBtn{background:linear-gradient(135deg,#caa25e,#8a6c34);color:#fff;
         <h3>Sekar Ayu Lestari, S.E.</h3>
         <div class="aka" data-i="brideAka">— Mempelai Wanita —</div>
         <p data-i="bridePar">Putri kedua dari Bapak H. Agus Salim &amp; Ibu Hj. Ratna Dewi</p>
-        <a class="ig" href="#" onclick="return false">@sekarayu.lestari</a>
+        <a class="ig" href="#">@sekarayu.lestari</a>
       </div>
       <div class="amp rv">&amp;</div>
       <div class="person rv">
@@ -456,7 +456,7 @@ body.vip #openBtn{background:linear-gradient(135deg,#caa25e,#8a6c34);color:#fff;
         <h3>Raka Aditama, S.T.</h3>
         <div class="aka" data-i="groomAka">— Mempelai Pria —</div>
         <p data-i="groomPar">Putra pertama dari Bapak H. Bambang Sutrisno &amp; Ibu Hj. Sri Wahyuni</p>
-        <a class="ig" href="#" onclick="return false">@raka.aditama</a>
+        <a class="ig" href="#">@raka.aditama</a>
       </div>
     </div>
   </section>
@@ -2003,5 +2003,11 @@ setInterval(updateLive,30000);
 .hdate{color:var(--sage2)}
 .badge.yes,.rditem.live .rdstat,#qrOk,.qopt.good{color:#b9d2ae}
 </style>
+
+<script>
+/* CSP prototype override: the two placeholder IG links used inline onclick="return false".
+   Same behaviour, wired as a listener so a hash-based CSP can allow this script. */
+document.querySelectorAll("a.ig").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); }); });
+</script>
 </body>
 </html>

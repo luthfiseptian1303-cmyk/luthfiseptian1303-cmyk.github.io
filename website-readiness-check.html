@@ -797,6 +797,10 @@ if(mb) mb.addEventListener("click",function(){ menu(!mo.classList.contains("open
 if(mx) mx.addEventListener("click",function(){ menu(false); });
 if(mo) mo.querySelectorAll("a").forEach(function(a){ a.addEventListener("click",function(){ menu(false); }); });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") menu(false); });
+/* header state (fix-bugs 20261119: toggle was missing on this page, so the solid scrolled-header background never activated) */
+var hdrEl=document.documentElement;
+function hdrState(){ hdrEl.classList.toggle("scrolled", window.scrollY>40); }
+window.addEventListener("scroll",hdrState,{passive:true}); hdrState();
 /* lenis (same tokens as homepage; skipped on low-power devices) */
 try{
   var lowPow=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4);
