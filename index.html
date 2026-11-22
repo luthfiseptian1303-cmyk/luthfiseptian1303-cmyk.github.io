@@ -510,11 +510,29 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 <style id="top5fix">.hero-for{margin-top:16px;font-size:clamp(16px,1.3vw,20px);line-height:1.65;color:var(--ink2);max-width:36em}.fhint{font-weight:400;color:var(--ink2);font-size:.86em}</style>
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "zegmof193g");
+    /* Analytics, not content: inject Clarity after load + idle (or on first
+       interaction) so its long tasks stay out of the page's load window.
+       The injector below is the original snippet, deferred. */
+    (function(){
+        var done=false;
+        function boot(){
+            if(done) return; done=true;
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "zegmof193g");
+        }
+        function arm(){
+            if("requestIdleCallback" in window) requestIdleCallback(boot,{timeout:3000});
+            else setTimeout(boot,1500);
+        }
+        if(document.readyState==="complete") arm();
+        else window.addEventListener("load",arm);
+        ["pointerdown","keydown","touchstart"].forEach(function(ev){
+            window.addEventListener(ev,boot,{once:true,passive:true});
+        });
+    })();
 </script>
 <script type="application/ld+json">
 {
@@ -1326,7 +1344,21 @@ function buildTicker(){
   var half=items.map(function(w){ return "<span>"+w+" <i>&#10022;</i></span>"; }).join("");
   t.innerHTML=half+half;
 }
-buildTicker();
+/* Ticker content sits below the fold: build it when it nears the viewport,
+   on idle, or on first interaction — whichever comes first. A language
+   toggle still rebuilds it immediately via applyLang above. */
+var __tkDone=false;
+function buildTickerOnce(){ if(__tkDone) return; __tkDone=true; buildTicker(); }
+(function(){
+  var mq=document.getElementById("mqTrack");
+  if(mq&&"IntersectionObserver" in window){
+    var tio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ tio.disconnect(); buildTickerOnce(); } },{rootMargin:"900px"});
+    tio.observe(mq);
+  }
+  if("requestIdleCallback" in window) requestIdleCallback(buildTickerOnce,{timeout:2200});
+  else setTimeout(buildTickerOnce,1600);
+  ["pointerdown","keydown"].forEach(function(ev){ window.addEventListener(ev,buildTickerOnce,{once:true,passive:true}); });
+})();
 /* ---------- header state ---------- */
 var root=document.documentElement;
 function onScroll(){ root.classList.toggle("scrolled", window.scrollY>40); }

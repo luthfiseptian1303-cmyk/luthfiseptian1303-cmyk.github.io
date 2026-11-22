@@ -522,11 +522,29 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "zegmof193g");
+    /* Analytics, not content: inject Clarity after load + idle (or on first
+       interaction) so its long tasks stay out of the page's load window.
+       The injector below is the original snippet, deferred. */
+    (function(){
+        var done=false;
+        function boot(){
+            if(done) return; done=true;
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "zegmof193g");
+        }
+        function arm(){
+            if("requestIdleCallback" in window) requestIdleCallback(boot,{timeout:3000});
+            else setTimeout(boot,1500);
+        }
+        if(document.readyState==="complete") arm();
+        else window.addEventListener("load",arm);
+        ["pointerdown","keydown","touchstart"].forEach(function(ev){
+            window.addEventListener(ev,boot,{once:true,passive:true});
+        });
+    })();
 </script>
 <style id="gigit-demo">.bl-lede{font-size:clamp(16px,1.5vw,20px);line-height:1.65;color:#C9CED4;max-width:62em}.bl-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;list-style:none;margin:32px 0 0;padding:0}.bl-specs li{border-top:2px solid #2E3237;padding-top:16px}.bl-specs .n{font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD}.bl-specs h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:16px;letter-spacing:-.01em;color:#E3E6E9;text-transform:uppercase;margin:8px 0}.bl-specs p{margin:0;color:#9AA3AD;font-size:16px;line-height:1.6}.car-frame{margin-top:40px;border:1px solid #2E3237;border-radius:16px;overflow:hidden;background:#101211}.car-bar{display:flex;align-items:center;gap:16px;background:#141619;padding:8px 16px;border-bottom:1px solid #2E3237}.car-strip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:24px;-webkit-overflow-scrolling:touch}.car-strip figure{flex:0 0 auto;width:300px;scroll-snap-align:start;margin:0}.car-strip img{width:100%;display:block;border-radius:12px;border:1px solid #2E3237}.car-strip figcaption{font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD;margin-top:8px}.car-hint{margin-top:16px;font-family:"Space Mono",monospace;font-size:12.8px;color:#9AA3AD}@media (max-width:860px){.bl-specs{grid-template-columns:1fr}.car-strip figure{width:232px;padding:0}.car-strip{padding:16px}}</style>
 <style>.case-link{display:inline-block;margin-top:14px;font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E3E6E9;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
@@ -646,7 +664,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <div><h3 data-t="csBuiltT">What was built</h3><p data-t="csLBuilt">One self-contained file carrying 47 working features: a cover that opens for each guest, personal links that put a guest&rsquo;s name on the cover and their table on the seat plan, an RSVP wall that answers back, a countdown that turns itself into a live broadcast on the day, and a print companion with its own QR code — encoded from scratch, no library.</p></div>
       <div><h3 data-t="csProofT">The proof</h3><p data-t="csLProof">Passed an independent inspection with zero findings. Its behavioural test suite passes across all three themes, and a file-diet pass cut the page weight by 45% without removing a single feature.</p></div>
     </div>
-    <div class="case-demo" data-rv="y40"><div class="demo-phone"><div class="demo-screen"><iframe src="laras-demo.html" title="Laras — contoh undangan digital oleh CarlLab" loading="lazy" style="width:100%;height:100%;border:0;display:block;background:#f4efe2"></iframe></div></div></div>
+    <div class="case-demo" data-rv="y40"><div class="demo-phone"><div class="demo-screen"><iframe data-src="laras-demo.html" title="Laras — contoh undangan digital oleh CarlLab" loading="lazy" style="width:100%;height:100%;border:0;display:block;background:#f4efe2"></iframe></div></div></div>
     <a class="case-link" href="laras-demo.html" data-t="csOpen">Open the live demo &#8599;</a>
   </div>
 </section>
@@ -661,7 +679,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <div><h3 data-t="csBuiltT">What was built</h3><p data-t="csKBuilt">A walk-in queue that runs itself: three zones, take a number, watch it move. A booking flow that stacks treatments into one visit, applies the house discount by itself, exports a calendar file, and speaks two languages — with prices that follow the language, rupiah or dollars.</p></div>
       <div><h3 data-t="csProofT">The proof</h3><p data-t="csKProof">A 33-point behavioural probe passes end to end. Zero horizontal overflow at every width from 300px to 390px — including the 317px frame this very site demos it in. Accessibility pass: visible focus rings, honest aria states.</p></div>
     </div>
-    <div class="case-demo" data-rv="y40"><div class="demo-phone"><div class="demo-screen"><iframe id="kiranaFrame" src="kirana-demo.html" title="Kirana — contoh salon & spa oleh CarlLab" loading="lazy" style="width:100%;height:100%;border:0;display:block;background:#f6f1e7"></iframe></div></div></div>
+    <div class="case-demo" data-rv="y40"><div class="demo-phone"><div class="demo-screen"><iframe id="kiranaFrame" data-src="kirana-demo.html" title="Kirana — contoh salon & spa oleh CarlLab" loading="lazy" style="width:100%;height:100%;border:0;display:block;background:#f6f1e7"></iframe></div></div></div>
     <a class="case-link" href="kirana-demo.html" data-t="csOpen">Open the live demo &#8599;</a>
   </div>
 </section>
@@ -690,7 +708,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <div><h3 data-t="csBuiltT">What was built</h3><p data-t="csABuilt">An intake form that scores every lead from 0 to 100 in the open — package, urgency, budget fit, source, completeness — then a five-stage pipeline, a follow-up queue ordered by promise time, duplicate merging by phone number, and WhatsApp drafts the owner approves first. Nothing is ever sent automatically.</p></div>
       <div><h3 data-t="csProofT">The proof</h3><p data-t="csAProof">Passed an independent inspection with zero findings, after two rounds. Its one-click automation cleans ten messy rows into eight new leads and two merges — counted exactly, not estimated.</p></div>
     </div>
-    <div class="case-demo" data-rv="y40"><div class="demo-wide"><div class="dw-bar"><span class="demo-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="dw-url">carllab.web.id/lead-system-demo</span></div><iframe src="lead-system-demo.html" title="ArusDetail — contoh sistem lead oleh CarlLab" loading="lazy"></iframe></div></div>
+    <div class="case-demo" data-rv="y40"><div class="demo-wide"><div class="dw-bar"><span class="demo-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="dw-url">carllab.web.id/lead-system-demo</span></div><iframe data-src="lead-system-demo.html" title="ArusDetail — contoh sistem lead oleh CarlLab" loading="lazy"></iframe></div></div>
     <a class="case-link" href="lead-system-demo.html" data-t="csOpen">Open the live demo &#8599;</a>
   </div>
 </section>
@@ -877,16 +895,37 @@ if(curLang()==="id") applyLang("id"); else applyLang("en");
 
 <script id="kirana-sync">
 (function(){
-  var f=document.getElementById("kiranaFrame"); if(!f) return;
-  function sync(){
-    var L="en"; try{ L=localStorage.getItem("carllab-v18-lang")==="id" ? "id" : "en"; }catch(e){}
-    var want="kirana-demo.html?lang="+L;
-    if(f.getAttribute("src")!==want) f.src=want;
+  /* Demo iframes mount when their case nears the viewport (or on first
+     interaction) instead of competing with the page's own load. Kirana
+     keeps its language sync: the mounted URL carries ?lang=, and language
+     toggles update a mounted frame exactly as before. */
+  var frames=[].slice.call(document.querySelectorAll("iframe[data-src]"));
+  if(!frames.length) return;
+  function langNow(){ var L="en"; try{ L=localStorage.getItem("carllab-v18-lang")==="id" ? "id" : "en"; }catch(e){} return L; }
+  function mount(f){
+    if(!f || f.getAttribute("src")) return;
+    var base=f.getAttribute("data-src");
+    f.src=(f.id==="kiranaFrame") ? base+"?lang="+langNow() : base;
   }
-  sync();
+  function mountAll(){ frames.forEach(mount); }
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ mount(e.target); io.unobserve(e.target); } });
+    },{rootMargin:"700px"});
+    frames.forEach(function(f){ io.observe(f); });
+    ["pointerdown","keydown","touchstart"].forEach(function(ev){
+      window.addEventListener(ev,mountAll,{once:true,passive:true});
+    });
+  } else { mountAll(); }
   ["langId","langEn"].forEach(function(id){
     var el=document.getElementById(id);
-    if(el) el.addEventListener("click",function(){ setTimeout(sync,0); });
+    if(el) el.addEventListener("click",function(){ setTimeout(function(){
+      var f=document.getElementById("kiranaFrame");
+      if(f && f.getAttribute("src")){
+        var want="kirana-demo.html?lang="+langNow();
+        if(f.getAttribute("src")!==want) f.src=want;
+      }
+    },0); });
   });
 })();
 </script>

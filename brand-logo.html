@@ -522,11 +522,29 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "zegmof193g");
+    /* Analytics, not content: inject Clarity after load + idle (or on first
+       interaction) so its long tasks stay out of the page's load window.
+       The injector below is the original snippet, deferred. */
+    (function(){
+        var done=false;
+        function boot(){
+            if(done) return; done=true;
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "zegmof193g");
+        }
+        function arm(){
+            if("requestIdleCallback" in window) requestIdleCallback(boot,{timeout:3000});
+            else setTimeout(boot,1500);
+        }
+        if(document.readyState==="complete") arm();
+        else window.addEventListener("load",arm);
+        ["pointerdown","keydown","touchstart"].forEach(function(ev){
+            window.addEventListener(ev,boot,{once:true,passive:true});
+        });
+    })();
 </script>
 <style>.case-link{display:inline-block;margin-top:14px;font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E3E6E9;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
 </style>
@@ -3257,27 +3275,48 @@ window.addEventListener("hashchange",function(){
         renderList();
       }
 
-      document.getElementById("btnBack").addEventListener("click", backToList);
-      document.getElementById("glightClose").addEventListener("click", closeLightbox);
+      function dxInit(){
+        document.getElementById("btnBack").addEventListener("click", backToList);
+        document.getElementById("glightClose").addEventListener("click", closeLightbox);
 
-      var tabs = DX_ROOT.querySelectorAll(".hub-tab");
-      tabs.forEach(function (t) {
-        t.addEventListener("click", function () {
-          tabs.forEach(function (x) { x.classList.remove("on"); x.setAttribute("aria-selected", "false"); });
-          t.classList.add("on");
-          t.setAttribute("aria-selected", "true");
-          currentGroup = t.getAttribute("data-group");
-          backToList();
+        var tabs = DX_ROOT.querySelectorAll(".hub-tab");
+        tabs.forEach(function (t) {
+          t.addEventListener("click", function () {
+            tabs.forEach(function (x) { x.classList.remove("on"); x.setAttribute("aria-selected", "false"); });
+            t.classList.add("on");
+            t.setAttribute("aria-selected", "true");
+            currentGroup = t.getAttribute("data-group");
+            backToList();
+          });
         });
-      });
 
-      renderList();
-      dxApplyLang();
-      new MutationObserver(function () {
-        var nl = (document.documentElement.lang || "id").toLowerCase().indexOf("en") === 0 ? "en" : "id";
-        if (nl !== DX_LANG) { DX_LANG = nl; dxApplyLang(); }
-      }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-      try { var _b = new URLSearchParams(location.search).get("brand"); if (_b) { openDetail(_b); } } catch (e) {}
+        renderList();
+        dxApplyLang();
+        new MutationObserver(function () {
+          var nl = (document.documentElement.lang || "id").toLowerCase().indexOf("en") === 0 ? "en" : "id";
+          if (nl !== DX_LANG) { DX_LANG = nl; dxApplyLang(); }
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+        try { var _b = new URLSearchParams(location.search).get("brand"); if (_b) { openDetail(_b); } } catch (e) {}
+      }
+
+      /* The demo phone sits far below the fold: initialise it when it nears
+         the viewport, on idle, or on first interaction. Deep links
+         (?brand=) initialise immediately, exactly as before. */
+      var dxInitDone = false;
+      function dxInitOnce(){ if (dxInitDone) return; dxInitDone = true; dxInit(); }
+      var __hasBrand = false;
+      try { __hasBrand = !!new URLSearchParams(location.search).get("brand"); } catch (e) {}
+      if (__hasBrand) { dxInitOnce(); }
+      else {
+        var dxSec = document.getElementById("demo");
+        if (dxSec && "IntersectionObserver" in window) {
+          var dxIo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { dxIo.disconnect(); dxInitOnce(); } }, { rootMargin: "900px" });
+          dxIo.observe(dxSec);
+        }
+        if ("requestIdleCallback" in window) requestIdleCallback(dxInitOnce, { timeout: 2500 });
+        else setTimeout(dxInitOnce, 1800);
+        ["pointerdown", "keydown"].forEach(function (ev) { window.addEventListener(ev, dxInitOnce, { once: true, passive: true }); });
+      }
     </script>
 
 <script>
@@ -3372,12 +3411,26 @@ window.addEventListener("hashchange",function(){
   function renderAll(){ renderPanel(); renderList(); if(view==='detail') renderDetail(); if(view==='show') renderShow(); }
   el('blrcBack').addEventListener('click',function(){ setView('list'); });
   el('blrcShowBack').addEventListener('click',function(){ setView('detail'); });
-  renderAll();
-  var lastLang=L();
-  new MutationObserver(function(){
-    var nl=L();
-    if(nl!==lastLang){ lastLang=nl; renderAll(); }
-  }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  /* The showcase phone is below the fold: render it when it nears the
+     viewport, on idle, or on first interaction. */
+  var blrcInitDone=false;
+  function blrcInit(){
+    if(blrcInitDone) return; blrcInitDone=true;
+    renderAll();
+    var lastLang=L();
+    new MutationObserver(function(){
+      var nl=L();
+      if(nl!==lastLang){ lastLang=nl; renderAll(); }
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  }
+  var blrcRoot=el('blrcMain');
+  if(blrcRoot&&'IntersectionObserver' in window){
+    var bio=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ bio.disconnect(); blrcInit(); } },{rootMargin:'900px'});
+    bio.observe(blrcRoot);
+  }
+  if('requestIdleCallback' in window) requestIdleCallback(blrcInit,{timeout:2500});
+  else setTimeout(blrcInit,1800);
+  ['pointerdown','keydown'].forEach(function(ev){ window.addEventListener(ev,blrcInit,{once:true,passive:true}); });
 })();
 </script>
 
