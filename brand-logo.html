@@ -821,7 +821,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 </style>
 
 <style id="look-round">
-#clLoader{position:fixed;inset:0;z-index:2000;background:#050505;display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+#clLoader{position:fixed;inset:0;z-index:2000;background:#050505;display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.7,0,.2,1)}
 #clLoader.lift{transform:translateY(-101%)}
 #clLoader .cl-word{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(44px,9vw,96px);letter-spacing:-.03em;line-height:1;display:flex}
 #clLoader .cl-l{background:linear-gradient(178deg,#F2F4F6 0%,#C9CED4 38%,#B9C0C8 55%,#D8DDE2 78%,#C9CED4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:brightness(.22) saturate(.4);transition:filter .45s cubic-bezier(.05,.7,.1,1)}
@@ -861,7 +861,7 @@ html.cl-lock{overflow:hidden}
   var w=document.createElement("div"); w.className="cl-word";
   "CarlLab".split("").forEach(function(ch,i){
     var s=document.createElement("span");
-    s.className="cl-l"; s.style.transitionDelay=(i*0.13)+"s"; s.textContent=ch;
+    s.className="cl-l"; s.style.transitionDelay=(i*0.07)+"s"; s.textContent=ch;
     w.appendChild(s);
   });
   d.appendChild(w);
@@ -872,13 +872,13 @@ html.cl-lock{overflow:hidden}
     if(done) return; done=true;
     d.classList.add("lift");
     document.documentElement.classList.remove("cl-lock");
-    setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); },700);
+    setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); },500);
   }
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ d.classList.add("fill"); }); });
   d.addEventListener("click",lift);
   window.addEventListener("keydown",lift);
-  setTimeout(lift,1350);
-  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); document.documentElement.classList.remove("cl-lock"); },2000);
+  setTimeout(lift,700);
+  setTimeout(function(){ if(d.parentNode) d.parentNode.removeChild(d); document.documentElement.classList.remove("cl-lock"); },1250);
 })();
 </script>
 <a class="skip" href="#main" data-t="skip">Skip to content</a>
