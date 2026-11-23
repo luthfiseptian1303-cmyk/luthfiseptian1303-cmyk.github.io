@@ -642,7 +642,9 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 .ba-stage{position:relative;flex:1;min-height:0;overflow:hidden;background:#000;touch-action:pan-y;cursor:ew-resize}
 .ba-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border:0}
 .ba-rawwrap{position:absolute;inset:0;clip-path:inset(0 50% 0 0)}
-.ba-chip{position:absolute;top:10px;left:6px;z-index:3;pointer-events:none;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;padding:4px 8px;border-radius:999px;background:rgba(10,10,12,.74);color:#F3EAD8;border:1px solid rgba(255,255,255,.28)}
+.ba-chip{position:absolute;top:10px;left:6px;z-index:3;pointer-events:auto;cursor:pointer;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;padding:4px 8px;border-radius:999px;background:rgba(10,10,12,.74);color:#F3EAD8;border:1px solid rgba(255,255,255,.28)}
+.ba-chip:focus-visible{outline:2px solid #C9A24B;outline-offset:2px}
+@media (max-width:860px){.ba-chip{min-height:44px;padding:6px 12px;display:inline-flex;align-items:center}}
 .ba-div{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#F5F1E6;z-index:4;cursor:ew-resize;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
 .ba-div:focus-visible{outline:2px solid #C9A24B;outline-offset:2px}
 .ba-grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:#F5F1E6;color:#111;font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.45);pointer-events:none;letter-spacing:-.05em}
@@ -821,8 +823,8 @@ html.cl-lock{overflow:hidden}
               <div class="ba-rawwrap" id="baRawWrap">
                 <video id="baRaw" playsinline muted preload="metadata" poster="video-editing/media/before-after-raw.jpg" src="video-editing/media/before-after-raw.mp4"></video>
               </div>
-              <span class="ba-chip" id="baChipRaw">RAW</span>
-              <span class="ba-chip" id="baChipEd">EDITED</span>
+              <button type="button" class="ba-chip" id="baChipRaw">RAW</button>
+              <button type="button" class="ba-chip" id="baChipEd">EDITED</button>
               <div class="ba-div" id="baDiv" tabindex="0" role="slider" aria-label="Drag to compare raw and edited" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="ba-grip">&#8249; &#8250;</span></div>
             </div>
             <div class="ba-bar">
@@ -879,6 +881,7 @@ html.cl-lock{overflow:hidden}
       <a href="websites.html" data-t="s1t">Websites</a>
       <a href="brand-logo.html" data-t="s3t">Brand &amp; logo</a>
       <a href="lead-systems.html" data-t="s4t">Lead systems</a>
+      <a href="work.html" data-t="othWork">Work</a>
     </div>
   </div>
 </section>
@@ -934,7 +937,7 @@ html.cl-lock{overflow:hidden}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={waBtn:"Pesan via WhatsApp",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Satu editor membawa footage mentahmu sampai ujung: potongannya, ritmenya, teksnya, mixing-nya — sampai yang kembali adalah video siap tayang, bukan file proyek yang masih harus kamu selesaikan sendiri. Format pendek untuk feed, format panjang untuk channel, dalam format yang diminta tiap platform. Buktinya ada di bawah: lima edit pendek, diputar di dalam HP — tekan putar dan nilai hasil kerjanya, bukan janjinya.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Kamu syuting lebih banyak daripada yang sempat kamu edit — sebuah channel, feed produk, podcast — dan footage mentahnya menumpuk di folder selagi jadwal tayangnya bergeser. Bahannya ada; yang kurang adalah jam di depan timeline.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh produksi, bukan edit: kru di lokasi, syuting yang diarahkan, atau liputan langsung di hari yang sama. Carl mengedit footage yang sudah ada — kalau syutingnya sendiri butuh tim, ia akan mengatakannya dalam balasan, bukan menjual pekerjaan setengah jadi.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Footage mentahnya — tautan drive saja cukup — plus tiga catatan: akan tayang di mana, target durasinya berapa, dan apa yang wajib muncul atau tidak boleh muncul. Referensi video yang kamu sukai lebih membantu daripada kata sifat.",inc1:"Potongan format pendek — Reels, TikTok, Shorts. Hook-nya mendarat di detik-detik pertama, ritmenya tidak pernah menganggur, dan teksnya dibakar ke video atau dikirim sebagai file terpisah — pilihanmu.",inc2:"Edit format panjang — video YouTube dan video podcast. Struktur lebih dulu: argumennya urut, jeda mati dibuang, b-roll diletakkan di tempat kata-kata butuh bukti.",inc3:"Teks dan suara — subtitle dalam Bahasa Indonesia, Inggris, atau keduanya, diatur mengikuti suaranya; musik dan efek di-mixing di bawah suara, tidak pernah menutupinya.",inc4:"Judul dan motion graphics sederhana — lower-third, kartu penutup, dan kartu bab dengan huruf dan warna brand-mu, digambar untuk videonya, bukan diambil dari paket template.",inc5:"Pengiriman dan revisi — master dalam 16:9, 9:16, dan 1:1, siap tayang, dengan satu putaran revisi di setiap edit: kamu menonton, kamu menandai, ia diperbaiki.",vpEye:"Portofolio live",vpH:"Dari portofolio editing",vpCap:"Salinan web portofolio, disimpan bersama halaman ini — file aslinya tetap di Google Drive.",baEye:"Sebelum / sesudah",baH:"Footage mentah masuk, editan jadi keluar",pgQ1:"Apa yang kukirim, dan bagaimana caranya?",pgA1:"Tautan ke footage mentahnya — Drive, Dropbox, atau apa pun yang sudah kamu pakai — plus videonya akan tayang di mana, target durasinya, dan catatan wajib-simpan serta wajib-buangmu. Tidak perlu mengganti nama atau mengurutkan apa pun dulu; susunan di folder adalah bagian dari informasinya.",pgQ2:"Format apa yang kudapatkan kembali?",pgA2:"Master dalam bentuk yang diminta tiap platform: 16:9 untuk YouTube, 9:16 untuk Reels, TikTok, dan Shorts, 1:1 untuk feed — dipotong dari edit yang sama, bukan salinan yang ditarik. Teksnya dibakar ke video, sebagai file terpisah, atau keduanya.",pgQ3:"Bisakah teksnya berjalan dalam dua bahasa?",pgA3:"Bisa — Bahasa Indonesia, Inggris, atau keduanya di video yang sama, diatur dengan tangan mengikuti suaranya, bukan ditempel dari transkrip otomatis. Nama dan istilah yang ejaannya khusus bagimu tetap dieja seperti itu.",pgQ4:"Bagaimana revisinya bekerja?",pgA4:"Setiap edit termasuk satu putaran revisi. Kamu menonton hasil potongannya, menandai momennya — cap waktu dan satu kalimat saja cukup — dan perbaikannya kembali sebagai master baru, bukan tambalan pada master lama. Jumlah putaran untuk seri yang lebih besar ditulis dalam penawaran sebelum pekerjaan dimulai.",pgQ5:"Berapa lama satu edit selesai?",pgA5:"Ditentukan dalam penawaran tertulis, disesuaikan dengan panjang footage-mu dan antrean studio — potongan pendek dan podcast empat puluh menit adalah pekerjaan yang berbeda, dan penawarannya menyebutkannya dengan jujur. Kamu menerima kabar di setiap tahap, tidak pernah sepi lalu tiba-tiba muncul file."};
+var ID={waBtn:"Pesan via WhatsApp",navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",othWork:"Karya",pgLede:"Satu editor membawa footage mentahmu sampai ujung: potongannya, ritmenya, teksnya, mixing-nya — sampai yang kembali adalah video siap tayang, bukan file proyek yang masih harus kamu selesaikan sendiri. Format pendek untuk feed, format panjang untuk channel, dalam format yang diminta tiap platform. Buktinya ada di bawah: lima edit pendek, diputar di dalam HP — tekan putar dan nilai hasil kerjanya, bukan janjinya.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Kamu syuting lebih banyak daripada yang sempat kamu edit — sebuah channel, feed produk, podcast — dan footage mentahnya menumpuk di folder selagi jadwal tayangnya bergeser. Bahannya ada; yang kurang adalah jam di depan timeline.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh produksi, bukan edit: kru di lokasi, syuting yang diarahkan, atau liputan langsung di hari yang sama. Carl mengedit footage yang sudah ada — kalau syutingnya sendiri butuh tim, ia akan mengatakannya dalam balasan, bukan menjual pekerjaan setengah jadi.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Footage mentahnya — tautan drive saja cukup — plus tiga catatan: akan tayang di mana, target durasinya berapa, dan apa yang wajib muncul atau tidak boleh muncul. Referensi video yang kamu sukai lebih membantu daripada kata sifat.",inc1:"Potongan format pendek — Reels, TikTok, Shorts. Hook-nya mendarat di detik-detik pertama, ritmenya tidak pernah menganggur, dan teksnya dibakar ke video atau dikirim sebagai file terpisah — pilihanmu.",inc2:"Edit format panjang — video YouTube dan video podcast. Struktur lebih dulu: argumennya urut, jeda mati dibuang, b-roll diletakkan di tempat kata-kata butuh bukti.",inc3:"Teks dan suara — subtitle dalam Bahasa Indonesia, Inggris, atau keduanya, diatur mengikuti suaranya; musik dan efek di-mixing di bawah suara, tidak pernah menutupinya.",inc4:"Judul dan motion graphics sederhana — lower-third, kartu penutup, dan kartu bab dengan huruf dan warna brand-mu, digambar untuk videonya, bukan diambil dari paket template.",inc5:"Pengiriman dan revisi — master dalam 16:9, 9:16, dan 1:1, siap tayang, dengan satu putaran revisi di setiap edit: kamu menonton, kamu menandai, ia diperbaiki.",vpEye:"Portofolio live",vpH:"Dari portofolio editing",vpCap:"Salinan web portofolio, disimpan bersama halaman ini — file aslinya tetap di Google Drive.",baEye:"Sebelum / sesudah",baH:"Footage mentah masuk, editan jadi keluar",pgQ1:"Apa yang kukirim, dan bagaimana caranya?",pgA1:"Tautan ke footage mentahnya — Drive, Dropbox, atau apa pun yang sudah kamu pakai — plus videonya akan tayang di mana, target durasinya, dan catatan wajib-simpan serta wajib-buangmu. Tidak perlu mengganti nama atau mengurutkan apa pun dulu; susunan di folder adalah bagian dari informasinya.",pgQ2:"Format apa yang kudapatkan kembali?",pgA2:"Master dalam bentuk yang diminta tiap platform: 16:9 untuk YouTube, 9:16 untuk Reels, TikTok, dan Shorts, 1:1 untuk feed — dipotong dari edit yang sama, bukan salinan yang ditarik. Teksnya dibakar ke video, sebagai file terpisah, atau keduanya.",pgQ3:"Bisakah teksnya berjalan dalam dua bahasa?",pgA3:"Bisa — Bahasa Indonesia, Inggris, atau keduanya di video yang sama, diatur dengan tangan mengikuti suaranya, bukan ditempel dari transkrip otomatis. Nama dan istilah yang ejaannya khusus bagimu tetap dieja seperti itu.",pgQ4:"Bagaimana revisinya bekerja?",pgA4:"Setiap edit termasuk satu putaran revisi. Kamu menonton hasil potongannya, menandai momennya — cap waktu dan satu kalimat saja cukup — dan perbaikannya kembali sebagai master baru, bukan tambalan pada master lama. Jumlah putaran untuk seri yang lebih besar ditulis dalam penawaran sebelum pekerjaan dimulai.",pgQ5:"Berapa lama satu edit selesai?",pgA5:"Ditentukan dalam penawaran tertulis, disesuaikan dengan panjang footage-mu dan antrean studio — potongan pendek dan podcast empat puluh menit adalah pekerjaan yang berbeda, dan penawarannya menyebutkannya dengan jujur. Kamu menerima kabar di setiap tahap, tidak pernah sepi lalu tiba-tiba muncul file."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -1219,6 +1222,14 @@ function setPct(p){
   var x=w*pct/100;
   chipL.style.left=Math.max(6,Math.min(x-chipL.offsetWidth-10,w-chipL.offsetWidth-6))+"px";
   chipR.style.left=Math.max(6,Math.min(x+10,w-chipR.offsetWidth-6))+"px";
+  /* Near the end stops the two chip buttons would overlap and shadow each
+     other's tap target — drop the intruding chip below the home-side one. */
+  var lL=parseFloat(chipL.style.left)||6, lR=parseFloat(chipR.style.left)||6;
+  if(lL+chipL.offsetWidth>lR){
+    var drop=(16+chipL.offsetHeight)+"px";
+    if(pct<=50){ chipL.style.top="10px"; chipR.style.top=drop; }
+    else { chipR.style.top="10px"; chipL.style.top=drop; }
+  } else { chipL.style.top="10px"; chipR.style.top="10px"; }
 }
 function renderBA(){
   document.getElementById("baPTitle").textContent=bt(BA_UI.pTitle);
@@ -1244,9 +1255,9 @@ ed.addEventListener("timeupdate",function(){
   if(Math.abs(raw.currentTime-ed.currentTime)>0.3){ try{ raw.currentTime=ed.currentTime; }catch(e){} }
 });
 ed.addEventListener("seeking",function(){ try{ raw.currentTime=ed.currentTime; }catch(e){} });
-var dragging=false;
+var dragging=false, snapRAF=null;
 function fromEvent(e){ var r=stage.getBoundingClientRect(); return (e.clientX-r.left)/r.width*100; }
-stage.addEventListener("pointerdown",function(e){ dragging=true; try{ stage.setPointerCapture(e.pointerId); }catch(err){} setPct(fromEvent(e)); });
+stage.addEventListener("pointerdown",function(e){ if(snapRAF){ cancelAnimationFrame(snapRAF); snapRAF=null; } dragging=true; try{ stage.setPointerCapture(e.pointerId); }catch(err){} setPct(fromEvent(e)); });
 stage.addEventListener("pointermove",function(e){ if(dragging) setPct(fromEvent(e)); });
 stage.addEventListener("pointerup",function(){ dragging=false; });
 stage.addEventListener("pointercancel",function(){ dragging=false; });
@@ -1256,6 +1267,26 @@ div.addEventListener("keydown",function(e){
   else if(e.key==="Home"){ setPct(4); e.preventDefault(); }
   else if(e.key==="End"){ setPct(96); e.preventDefault(); }
 });
+/* Chips are real buttons: RAW snaps the divider fully to the raw side (96),
+   EDITED fully to the edited side (4) — the same end stops as Home/End.
+   280ms ease-out via rAF on the existing setPct path; instant under reduced motion. */
+function snapTo(target){
+  if(snapRAF) cancelAnimationFrame(snapRAF);
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){ setPct(target); return; }
+  var from=pct, t0=null;
+  function step(ts){
+    if(!t0) t0=ts;
+    var k=Math.min(1,(ts-t0)/280), e=1-Math.pow(1-k,3);
+    setPct(from+(target-from)*e);
+    if(k<1) snapRAF=requestAnimationFrame(step); else snapRAF=null;
+  }
+  snapRAF=requestAnimationFrame(step);
+}
+[chipL,chipR].forEach(function(chip){
+  chip.addEventListener("pointerdown",function(e){ e.stopPropagation(); });
+});
+chipL.addEventListener("click",function(){ snapTo(96); });
+chipR.addEventListener("click",function(){ snapTo(4); });
 window.addEventListener("resize",function(){ setPct(pct); });
 new MutationObserver(function(){ renderBA(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 renderBA();

@@ -806,6 +806,28 @@ html.carl-working .ac-dot{background:#1E6B34}
 .pq{display:flex;flex-direction:column}
 .pq .popts{flex:1;justify-content:space-between}
 </style>
+<style id="cl-datafix">
+/* Data-review fixes 2026-11-23: about link row (all widths) + hero compression (mobile only).
+   Clarity: mobile scroll falls off inside the 1,329px hero; desktop falls off at #about (~29%). */
+.about-links{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:26px}
+.about-links a{font-family:"Space Mono",monospace;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#14161A;text-decoration:none;border-bottom:2px solid #767D85;padding-bottom:4px}
+.about-links a:hover{border-color:#14161A}
+.about-links .sep{color:#767D85}
+@media (max-width:860px){
+.hero-grid{gap:14px}
+.hero-fig .frame{height:120px}
+.hero-fig img{object-position:50% 58%}
+.avail{padding-top:6px;padding-bottom:6px}
+.hero .eyebrow{margin-top:12px!important}
+.hero h1{font-size:clamp(33px,9.6vw,42px);margin:10px 0 6px}
+.hero-cta{margin-top:14px;gap:8px}
+.hero-cta .btn{padding:10px 18px}
+.hero .role{margin-top:14px;font-size:16px;line-height:1.55}
+.hero-for{margin-top:14px;line-height:1.5}
+.hero-meta{margin-top:14px;padding-top:8px;gap:6px 18px}
+.hero{padding-bottom:14px}
+}
+</style>
 </head>
 <body>
 <script>
@@ -986,10 +1008,11 @@ html.carl-working .ac-dot{background:#1E6B34}
       <span class="eyebrow" data-t="aboutEyebrow">About</span>
       <h2 data-rv="y40" data-t="aboutTitle">One person, the whole pipeline</h2>
       <div class="about-points">
-        <div class="apoint" data-rv="y40"><h3 data-t="ap1t">Direct</h3><p data-t="ap1p">You talk to the person who does the work — replies come from the builder, not a relay.</p></div>
-        <div class="apoint" data-rv="y40"><h3 data-t="ap2t">Bilingual</h3><p data-t="ap2p">Projects run in Bahasa Indonesia or English, whichever your customers read.</p></div>
-        <div class="apoint" data-rv="y40"><h3 data-t="ap3t">End to end</h3><p data-t="ap3p">Design, code, launch, and care — one pair of hands, one standard of finish.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap1t">Direct</h3><p data-t="ap1p">Every order gets a CARL-### code and a live status page — you follow the same checklist Carl works from, and replies come from the person writing the code, not a relay.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap2t">Bilingual</h3><p data-t="ap2p">This whole site — and all 15 of its live demos — switches between English and Bahasa Indonesia from one toggle. Your project ships bilingual the same way, no separate translation pass.</p></div>
+        <div class="apoint" data-rv="y40"><h3 data-t="ap3t">End to end</h3><p data-t="ap3p">Design, code, launch, and care from one pair of hands — held to the standard in the proof band below: 97 / 98 / 100, measured across 16 pages checked live, not promised.</p></div>
       </div>
+      <p class="about-links" data-rv="y40"><a href="work.html" data-t="apWork">See the work &#8594;</a><span class="sep" aria-hidden="true">&middot;</span><a href="project-status.html" data-t="apStatus">Live project status &#8594;</a></p>
     </div>
     <aside class="about-card" data-rv="y40" aria-label="Studio card">
       <div class="ac-top"><span class="ac-sq" aria-hidden="true"></span><span class="ac-name">CARLLAB — STUDIO CARD</span></div>
@@ -1280,9 +1303,9 @@ w3p:"Katalog konsep untuk brand cokelat Indonesia: 52 produk asli dalam 8 rak, s
 w4p:"Game pulau piksel single-player yang jalan di browser — satu pulau padat, lima skill, ekonomi NPC, siang dan malam.",
 w5p:"Situs ini sendiri — didesain, dibangun, dan dibangun ulang dengan tangan sampai setiap halaman layak tampil. Etalase sang studio sendiri.",
 aboutEyebrow:"Tentang",aboutTitle:"Satu orang, seluruh pipeline",
-ap1t:"Langsung",ap1p:"Kamu bicara dengan orang yang mengerjakannya — balasan datang dari pembangunnya, bukan perantara.",
-ap2t:"Dwibahasa",ap2p:"Proyek berjalan dalam Bahasa Indonesia atau Inggris, mana pun yang dibaca pelangganmu.",
-ap3t:"Awal sampai akhir",ap3p:"Desain, kode, peluncuran, dan perawatan — sepasang tangan, satu standar kerapian.",proofEyebrow:"Bukti",proofTitle:"Terukur, bukan sekadar janji",pf1t:"Audit SEO — nilai A",pf1p:"Audit Audit SEO baru atas seluruh 16 halaman, November 2026.",pf2t:"PageSpeed — seluler",pf2p:"Performa Google PageSpeed. Desktop mencapai 100.",pf3t:"Aksesibilitas",pf3p:"Google PageSpeed, seluler dan desktop, November 2026.",pf4t:"Halaman dicek langsung",pf4p:"Setiap halaman di situs ini diverifikasi dari luar — 0 tautan rusak.",proofNote:"Contohnya juga tayang — mesin booking salon dan undangan pernikahan dengan 47 fitur yang berfungsi, masing-masing terverifikasi ujung ke ujung.",proofLink:"Lihat contoh live-nya",
+ap1t:"Langsung",ap1p:"Setiap pesanan dapat kode CARL-### dan halaman status live — kamu mengikuti daftar cek yang sama dengan yang Carl kerjakan, dan balasan datang dari orang yang menulis kodenya, bukan perantara.",
+ap2t:"Dwibahasa",ap2p:"Seluruh situs ini — dan ke-15 demo live-nya — berganti antara Inggris dan Bahasa Indonesia dari satu tombol. Proyekmu dikirim dwibahasa dengan cara yang sama, tanpa proses terjemahan terpisah.",
+ap3t:"Awal sampai akhir",ap3p:"Desain, kode, peluncuran, dan perawatan dari sepasang tangan — dengan standar yang sama seperti pita bukti di bawah: 97 / 98 / 100, terukur di 16 halaman yang dicek live, bukan sekadar janji.",apWork:"Lihat karyanya →",apStatus:"Status proyek live →",proofEyebrow:"Bukti",proofTitle:"Terukur, bukan sekadar janji",pf1t:"Audit SEO — nilai A",pf1p:"Audit Audit SEO baru atas seluruh 16 halaman, November 2026.",pf2t:"PageSpeed — seluler",pf2p:"Performa Google PageSpeed. Desktop mencapai 100.",pf3t:"Aksesibilitas",pf3p:"Google PageSpeed, seluler dan desktop, November 2026.",pf4t:"Halaman dicek langsung",pf4p:"Setiap halaman di situs ini diverifikasi dari luar — 0 tautan rusak.",proofNote:"Contohnya juga tayang — mesin booking salon dan undangan pernikahan dengan 47 fitur yang berfungsi, masing-masing terverifikasi ujung ke ujung.",proofLink:"Lihat contoh live-nya",
 procEyebrow:"Proses",procTitle:"Cara proyek berjalan",
 p1t:"Dengar",p1p:"Kita bicara soal bisnismu dulu — pelanggan, rak, angka. Template belakangan, kalau memang perlu.",
 p2t:"Desain",p2p:"Satu konsep, digambar dari hal yang membuat bisnismu jadi dirimu. Kamu melihatnya sebagai halaman asli, bukan moodboard.",
