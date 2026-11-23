@@ -628,15 +628,15 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
       <span class="eyebrow" data-t="psEye">For clients</span>
       <h1 data-t="psH">Where is my project?</h1>
     </div>
-    <p class="svc-lede" data-rv="y40" data-t="psP">Every CarlLab project carries a code, printed on your written offer. Type it below to see exactly where the work stands — the same board the studio works from.</p>
+    <p class="svc-lede" data-rv="y40" data-t="psP">Every CarlLab order carries a code — it is shown when your order is sent and printed on your written offer. Type it below to see exactly where your order stands — the same board the studio works from.</p>
     <form class="st-form" id="stForm" data-rv="y40">
       <label class="sr-only" for="stCode" data-t="psLabel" style="position:absolute;left:-9999px">Project code</label>
-      <input id="stCode" type="text" autocomplete="off" spellcheck="false" placeholder="SAMPLE-01">
+      <input id="stCode" type="text" autocomplete="off" spellcheck="false" placeholder="CARL-001">
       <button class="btn" type="submit" data-t="psBtn">Check status</button>
     </form>
-    <p class="st-note" data-rv="y40" data-t="psNote">Trying it out? Use the sample code SAMPLE-01 or SAMPLE-02 — fictional projects kept here so you can see how the board reads.</p>
+    <p class="st-note" data-rv="y40" data-t="psNote">Your own CARL code works here. Trying it out? Use the sample code SAMPLE-01 or SAMPLE-02 — fictional projects kept here so you can see how the board reads.</p>
     <div id="stResult" aria-live="polite"></div>
-    <div class="st-idle" id="stIdle" data-rv="y40"><p data-t="psIdle">Your project&rsquo;s stages will appear here — five stages, with the one in progress marked. The board only reads the code you type; nothing is stored.</p></div>
+    <div class="st-idle" id="stIdle" data-rv="y40"><p data-t="psIdle">Your order&rsquo;s stages will appear here, with the current one marked. The board only reads the code you type; nothing is stored.</p></div>
   </div>
 </section>
 
@@ -718,7 +718,7 @@ footer.site{padding-top:clamp(40px,5vw,56px)}
 "use strict";
 document.documentElement.classList.add("js");
 var LANG_KEY="carllab-v18-lang";
-var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Feed yang dibangun untuk digeser",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",psEye:"Untuk klien",psH:"Proyek saya sampai mana?",psP:"Setiap proyek CarlLab membawa kode, tercetak di penawaran tertulismu. Ketik di bawah untuk melihat persis di mana pekerjaanmu berdiri — papan yang sama dengan yang dipakai studio.",psLabel:"Kode proyek",psBtn:"Cek status",psIdle:"Tahap proyekmu akan muncul di sini — lima tahap, dengan tahap yang sedang berjalan ditandai. Papan ini hanya membaca kode yang kamu ketik; tidak ada yang disimpan.",stgEye:"Cara membacanya",stgH:"Arti setiap tahap",sg1t:"Brief",sg1p:"Jawabanmu dan pertanyaan Carl — ruang lingkup ditulis jelas sebelum apa pun dibangun.",sg2t:"Desain",sg2p:"Satu konsep yang digambar dari bisnismu, ditunjukkan sebagai halaman sungguhan — bukan moodboard.",sg3t:"Bangun",sg3p:"Halaman dan sistem dibangun dan disambungkan satu sama lain.",sg4t:"Poles",sg4p:"Dicek di HP sungguhan, dirapikan, dan dibaca ulang.",sg5t:"Tayang",sg5p:"Di domainmu sendiri, terverifikasi dari luar — alamatnya milikmu, bukan sewaan.",psNote:"Mau coba? Pakai kode contoh SAMPLE-01 atau SAMPLE-02 — proyek fiktif yang disimpan di sini supaya kamu bisa melihat cara papannya terbaca.",psNext:"Langkah berikutnya",psUpd:"Terakhir diperbarui",psNone:"Kode itu tidak cocok dengan proyek mana pun di papan. Cek ejaan di penawaranmu — kode berbentuk seperti SAMPLE-01."};
+var ID={navServices:"Layanan",navAbout:"Tentang",navFaq:"FAQ",navOrder:"Mulai proyek",navProcess:"Proses",footTag:"CarlLab — studio satu orang untuk website, brand, editing video, dan sistem lead dari Indonesia.",footSite:"Situs",footSvc:"Layanan",footElse:"Di tempat lain",copyMail:"Salin email",wcId:"Indonesia",wcUk:"Inggris",wcUs:"Amerika Serikat",wcJp:"Jepang",wcAu:"Australia",skip:"Lewati ke konten",sendPromise:"Dibaca langsung oleh Carl dan dibalas dalam sehari.",s1t:"Website",s3t:"Brand & logo",s4t:"Sistem lead",s5t:"Editing video",q1:"Brand-mu sekarang posisinya di mana?",qa1:"Tergantung ruang lingkup. Kamu menerima rincian harga tertulis sebelum pekerjaan dimulai, dan angka itu tidak pernah berubah di tengah jalan tanpa persetujuanmu. Tidak ada harga di halaman ini karena tidak ada dua bisnis yang kebutuhannya sama.",q4:"Apakah sistem lead mengirim pesan ke lead saya otomatis?",qa4:"Tidak pernah. Sistem hanya menyiapkan draf tindak lanjut. Kamu meninjau setiap pesan sendiri, dan kamu yang menekan kirim — tidak ada pesan yang keluar tanpa persetujuanmu.",q7:"Bisakah saya memperbarui situsnya sendiri nanti?",qa7:"Tergantung yang kita bangun, dan itu diputuskan di penawaran. Setiap serah terima termasuk penjelasan cara kerja semuanya — dan kalau kamu lebih suka tidak menyentuhnya, pembaruan kecil bisa kembali ke studio.",svcEyebrow:"Layanan",backSvc:"Semua layanan",incEye:"Isi layanan",incH:"Yang kamu dapatkan",faqEye:"FAQ",pgFaqH:"Pertanyaan, dijawab",othH:"Layanan lain",pgLede:"Logo di sini digambar dengan cara yang tidak terburu-buru: dari namamu, pelangganmu, dan rak tempat produkmu diletakkan. Lalu ia diuji dalam ukuran kecil, satu warna, dan seukuran ikon HP — hanya tanda yang lolos uji itu yang boleh disebut selesai.",fitEye:"Kecocokan",fitH:"Apakah ini alat yang tepat?",fit1t:"Cocok kalau…",fit1p:"Produkmu duduk di rak atau di feed di sebelah pesaing, dan tandamu saat ini berupa template, tangkapan layar, atau belum ada sama sekali.",fit2t:"Bukan alat yang tepat kalau…",fit2p:"Kamu butuh strategi brand penuh, riset nama, atau pendaftaran merek — Carl menggambar identitas; pekerjaan legal dan strategi adalah ranah spesialis, dan ia akan mengarahkanmu ke sana.",fit3t:"Yang Carl butuhkan darimu",fit3p:"Nama bisnismu persis seperti harus tampil, di mana logo akan tinggal (kemasan, profil, papan nama), dan apa pun yang sudah kamu pakai — logo lama yang kasar pun membantu.",inc1:"Logo yang digambar untuk satu bisnis spesifik — namanya, pelanggannya, raknya.",inc2:"Versi yang benar-benar kamu butuhkan: logo utama, badge profil, ikon aplikasi, terang dan gelap.",inc3:"Pasangan warna dan huruf yang konsisten di semua yang kamu cetak atau unggah.",inc4:"Berkas dalam SVG dan PNG, siap untuk cetak dan layar.",inc5:"Panduan singkat tentang pemakaian tiap versi, dikirim bersama berkasnya.",pgQ1:"Bagaimana kalau arah pertama belum cocok?",pgA1:"Carl akan menanyakan apa persisnya yang belum cocok — bentuknya, warnanya, atau rasanya — lalu menggambar putaran berikutnya dari jawaban itu. Jumlah putarannya disepakati di awal dan ditulis dalam penawaran.",pgQ2:"Aku sudah punya logo. Bisakah Carl merapikannya?",pgA2:"Bisa. Logo yang sudah ada dapat dibersihkan, digambar ulang menjadi berkas yang benar, dan dilengkapi versi yang belum ada — tanpa mulai dari nol.",pgQ3:"Berkas apa persisnya yang menjadi milikku?",pgA3:"Paket jadinya: logo utama, badge profil, ikon, dan versi terang/gelap dalam SVG dan PNG, plus panduan pemakaian singkat. Berkasnya milikmu untuk dipakai bagi bisnismu — cetak, kemasan, media sosial, papan nama.",demoEye:"Contoh langsung",demoH:"Feed yang dibangun untuk digeser",demoP:"Satu set carousel Instagram lengkap untuk GIGIT!, brand cookies fiktif yang diciptakan khusus untuk contoh ini. Satu sistem warna, satu sistem huruf, satu tanda kecil di sudut setiap panel — sepuluh bingkai yang membawa orang yang sedang menggulir dari gigitan pertama sampai tombol pesan. Geser setnya di bawah, atau buka layar penuh — set lengkapnya juga punya versi format story dan palet warna kedua yang lebih gelap.",demo1t:"Satu sistem, sepuluh panel",demo1p:"Oranye terang, krem hangat, cokelat. Tiga warna yang sama, dua huruf yang sama, tanda sudut yang sama — pengenalan menumpuk di setiap geseran.",demo2t:"Huruf yang berbicara",demo2p:"Judul sebesar poster, aksen script untuk momen manusianya, fotografi yang tetap jujur. Tidak ada dekorasi yang tidak bisa dipertahankan feed toko roti sungguhan, minggu demi minggu.",demo3t:"Dibuat untuk diposting",demo3p:"Setiap panel 1080 × 1350, bernomor, dan setnya ditutup ajakan bertindak — dikirim sebagai berkas jadi yang siap unggah, bukan template yang harus diperjuangkan.",demoOpen:"Buka set layar penuh \u2197",demoHint:"Geser ke samping \u00b7 atau buka set layar penuh",caseLink:"Baca studi kasusnya ↗",psEye:"Untuk klien",psH:"Proyek saya sampai mana?",psP:"Setiap pesanan CarlLab membawa kode — ditampilkan saat pesananmu terkirim dan tercetak di penawaran tertulismu. Ketik di bawah untuk melihat persis di mana pesananmu berdiri — papan yang sama dengan yang dipakai studio.",psLabel:"Kode proyek",psBtn:"Cek status",psIdle:"Tahap pesananmu akan muncul di sini, dengan tahap saat ini ditandai. Papan ini hanya membaca kode yang kamu ketik; tidak ada yang disimpan.",stgEye:"Cara membacanya",stgH:"Arti setiap tahap",sg1t:"Brief",sg1p:"Jawabanmu dan pertanyaan Carl — ruang lingkup ditulis jelas sebelum apa pun dibangun.",sg2t:"Desain",sg2p:"Satu konsep yang digambar dari bisnismu, ditunjukkan sebagai halaman sungguhan — bukan moodboard.",sg3t:"Bangun",sg3p:"Halaman dan sistem dibangun dan disambungkan satu sama lain.",sg4t:"Poles",sg4p:"Dicek di HP sungguhan, dirapikan, dan dibaca ulang.",sg5t:"Tayang",sg5p:"Di domainmu sendiri, terverifikasi dari luar — alamatnya milikmu, bukan sewaan.",psNote:"Kode CARL-mu sendiri bisa dipakai di sini. Mau coba? Pakai kode contoh SAMPLE-01 atau SAMPLE-02 — proyek fiktif yang disimpan di sini supaya kamu bisa melihat cara papannya terbaca.",psNext:"Langkah berikutnya",psUpd:"Terakhir diperbarui",psNone:"Kode itu tidak cocok dengan proyek mana pun di papan. Cek ejaan di penawaranmu — kode berbentuk seperti SAMPLE-01."};
 try{ if(!localStorage.getItem(LANG_KEY)){ var nl=(navigator.language||"en").toLowerCase(); if(nl.indexOf("id")===0) localStorage.setItem(LANG_KEY,"id"); } }catch(e){}
 function curLang(){ try{ return localStorage.getItem(LANG_KEY)==="id" ? "id" : "en"; }catch(e){ return "en"; } }
 function applyLang(l){
@@ -830,10 +830,61 @@ if(curLang()==="id") applyLang("id"); else applyLang("en");
     "SAMPLE-02": { name:"Teduh Villa — sample project", svc:{en:"Website with booking", id:"Website dengan booking"}, stage:5, upd:"15 Nov 2026",
       next:{ en:"Live. In the care period — small updates return to the studio.", id:"Sudah tayang. Dalam masa perawatan — pembaruan kecil kembali ke studio." } }
   };
-  var box = document.getElementById("stResult"), last = null;
+  var box = document.getElementById("stResult"), last = null, lastReal = null;
   function lang(){ try{ return localStorage.getItem("carllab-v18-lang")==="id" ? "id" : "en"; }catch(e){ return "en"; } }
+  /* Real orders (24 Nov 2026): CARL-### codes are read live from the studio's
+     own board via /api/status/<id> (same origin; the endpoint returns only
+     service, stage and received date — never personal details). SAMPLE codes
+     keep the fictional board below. */
+  var ORDER_STAGES = { en:["Received","Contacted","In discussion","Confirmed"], id:["Diterima","Dihubungi","Diskusi","Terkonfirmasi"] };
+  var ORDER_NEXT = {
+    received:{ en:"Carl has your order and replies within a day with questions or a first direction.", id:"Pesananmu sudah diterima Carl — dibalas dalam sehari dengan pertanyaan atau arah pertama." },
+    contacted:{ en:"You and Carl are in contact — the scope is being pinned down.", id:"Kamu dan Carl sudah terhubung — ruang lingkupnya sedang dimatangkan." },
+    discussion:{ en:"Details and terms are being discussed — nothing is built until the scope is written down.", id:"Detail dan ketentuannya sedang dibahas — belum ada yang dibangun sampai ruang lingkupnya tertulis." },
+    confirmed:{ en:"Confirmed — the project moves onto the board: Brief, Design, Build, Polish, Live (the five stages below).", id:"Terkonfirmasi — proyeknya naik ke papan: Brief, Desain, Bangun, Poles, Tayang (lima tahap di bawah)." },
+    closed:{ en:"This order was closed without going ahead. If that is unexpected, message Carl on WhatsApp.", id:"Pesanan ini ditutup tanpa dilanjutkan. Kalau ini di luar dugaanmu, hubungi Carl lewat WhatsApp." }
+  };
+  function fmtDate(iso, l){
+    var m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(!m) return iso || "";
+    var MO = { en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], id:["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"] };
+    return Number(m[3]) + " " + MO[l][Number(m[2]) - 1] + " " + m[1];
+  }
+  function renderReal(d){
+    lastReal = d; last = null;
+    var l = lang();
+    var idx = ["received","contacted","discussion","confirmed"].indexOf(d.stage);
+    var nameLine = (l === "id" ? "Pesanan " : "") + d.service + (l === "id" ? "" : " order");
+    var head = '<div class="st-card"><p class="st-name">' + nameLine + '</p>'
+      + '<p class="st-meta">' + d.code + ' &middot; ' + (l === "id" ? "Diterima " : "Received ") + fmtDate(d.received, l) + '</p>';
+    if(d.stage === "closed" || idx < 0){
+      box.innerHTML = head + '<p class="st-next"><b data-t="psNext">Next step</b> — ' + ORDER_NEXT.closed[l] + '</p></div>';
+    } else {
+      var chips = ORDER_STAGES[l].map(function(nm, ix){
+        var cls = (ix < idx) ? "done" : (ix === idx ? "now" : "");
+        return '<span class="st-stage ' + cls + '">' + nm + '</span>';
+      }).join("");
+      box.innerHTML = head + '<div class="st-stages">' + chips + '</div>'
+        + '<p class="st-next"><b data-t="psNext">Next step</b> — ' + ORDER_NEXT[d.stage][l] + '</p></div>';
+    }
+    if(window.applyLang) applyLang(l);
+  }
+  function lookupReal(num){
+    var l = lang();
+    box.innerHTML = '<div class="st-card"><p class="st-meta">' + (l === "id" ? "Mengecek&hellip;" : "Checking&hellip;") + '</p></div>';
+    fetch("/api/status/" + num, { headers:{ "Accept":"application/json" } })
+      .then(function(r){ if(r.status === 404) throw new Error("nf"); if(!r.ok) throw new Error("net"); return r.json(); })
+      .then(function(j){ renderReal(j.data); })
+      .catch(function(e){
+        lastReal = null;
+        var msg = (e && e.message === "nf")
+          ? (l === "id" ? "Kode CARL itu tidak ada di papan. Cek lagi kode di pesan sukses pesananmu — atau tanya Carl lewat WhatsApp." : "That CARL code is not on the board. Check the code in your order success message — or ask Carl on WhatsApp.")
+          : (l === "id" ? "Papannya sedang tidak bisa dijangkau. Coba lagi sebentar lagi." : "The board could not be reached just now. Try again in a moment.");
+        box.innerHTML = '<div class="st-err">' + msg + '</div>';
+      });
+  }
   function render(code){
-    last = code;
+    last = code; lastReal = null;
     var p = PROJECTS[code], l = lang();
     if(!p){
       box.innerHTML = '<div class="st-err" data-t="psNone">That code doesn&rsquo;t match a project on the board. Check the spelling on your offer — codes look like SAMPLE-01.</div>';
@@ -855,9 +906,11 @@ if(curLang()==="id") applyLang("id"); else applyLang("en");
     var code = document.getElementById("stCode").value.trim().toUpperCase();
     var idle = document.getElementById("stIdle");
     if(idle) idle.hidden = true;
-    if(code) render(code);
+    var m = code.match(/^CARL-(\d{1,9})$/);
+    if(m) lookupReal(m[1]);
+    else if(code) render(code);
   });
-  new MutationObserver(function(){ if(last) render(last); }).observe(document.documentElement, { attributes:true, attributeFilter:["lang"] });
+  new MutationObserver(function(){ if(lastReal) renderReal(lastReal); else if(last) render(last); }).observe(document.documentElement, { attributes:true, attributeFilter:["lang"] });
 })();
 </script>
 

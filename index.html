@@ -1468,11 +1468,12 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
   var fbRef="CARL-"+Math.floor(100+Math.random()*900);
   function pad3(n){ n=String(n); return n.length<3?("00"+n).slice(-3):n; }
   function refHtml(code){ return idMode?("Kode referensimu: <strong>"+code+"</strong> — simpan kode ini dan sebutkan saat kamu membalas, supaya Carl bisa langsung mencocokkannya dengan pesananmu."):("Your reference code: <strong>"+code+"</strong> — keep this code and mention it when you reply, so Carl can match it straight to your order."); }
+  function waBtnHtml(code){ var sel=document.getElementById("fService"); var svc=sel&&sel.selectedIndex>=0?sel.options[sel.selectedIndex].text:""; var nm=v("fName"); var text=idMode?("Halo Carl, saya baru saja mengirim pesanan di carllab.web.id. Kode referensi: "+code+". Nama: "+nm+". Layanan: "+svc+"."):("Hi Carl, I have just sent an order on carllab.web.id. Reference code: "+code+". Name: "+nm+". Service: "+svc+"."); return "<div style=\"margin-top:14px\"><a class=\"btn ghost\" href=\"https://wa.me/6281584543140?text="+encodeURIComponent(text)+"\" target=\"_blank\" rel=\"noopener\">"+(idMode?"Lanjut lewat WhatsApp":"Continue on WhatsApp")+"</a></div>"; }
   function sentOk(msg){ show("ok", msg); form.reset(); try{ localStorage.removeItem("carllab-v18-draft"); }catch(err){} var dn2=document.getElementById("draftNote"); if(dn2) dn2.hidden=true; ["fName","fEmail","fWa","fService","fAssets","fDetail"].forEach(function(id){ setFieldErr(id,null); }); done(); }
   function mailtoFallback(){
     var linesRef=["Reference / Kode referensi: "+fbRef,""].concat(lines);
     var fb="mailto:hello@carllab.web.id?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(linesRef.join("\n"));
-    show("err", (idMode?("Tidak bisa terkirim dari sini. Kode referensimu: <strong>"+fbRef+"</strong> — "):("Could not send from here. Your reference code: <strong>"+fbRef+"</strong> — "))+'<a href="'+fb+'">'+(idMode?"Buka di aplikasi email kamu":"Open it in your email app")+"</a>"+(idMode?". Kode itu sudah tertulis di isi pesannya.":". The code is already written in the message."));
+    show("err", (idMode?("Tidak bisa terkirim dari sini. Kode referensimu: <strong>"+fbRef+"</strong> — "):("Could not send from here. Your reference code: <strong>"+fbRef+"</strong> — "))+'<a href="'+fb+'">'+(idMode?"Buka di aplikasi email kamu":"Open it in your email app")+"</a>"+(idMode?". Kode itu sudah tertulis di isi pesannya.":". The code is already written in the message.")+waBtnHtml(fbRef));
     done();
   }
   function sendEmail(){
@@ -1484,7 +1485,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     .then(function(j){
       if(emTimer) clearTimeout(emTimer);
       if(!j.success) throw new Error("rejected");
-      sentOk((idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(fbRef));
+      sentOk((idMode?"Terkirim — sudah masuk ke inbox Carl. Dibalas dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — it is in Carl\u2019s inbox now. He replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(fbRef)+waBtnHtml(fbRef));
     });
   }
   if(apiSvc && /^\d{9,15}$/.test(waDigits)){
@@ -1493,7 +1494,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
     fetch("https://carllab-lead-tracker.luthfiseptian1303.workers.dev/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},signal:apiCtl?apiCtl.signal:undefined,
       body:JSON.stringify({name:v("fName"),whatsapp:waDigits,service:apiSvc,budget:0,notes:lines.join("\n")})})
     .then(function(r){ if(!r.ok) throw new Error("api"); return r.json(); })
-    .then(function(j){ if(apiTimer) clearTimeout(apiTimer); var code=fbRef; if(j&&j.data&&/^\d+$/.test(String(j.data.id))){ code="CARL-"+pad3(j.data.id); } sentOk((idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(code)); })
+    .then(function(j){ if(apiTimer) clearTimeout(apiTimer); var code=fbRef; if(j&&j.data&&/^\d+$/.test(String(j.data.id))){ code="CARL-"+pad3(j.data.id); } sentOk((idMode?"Terkirim — pesananmu sudah tercatat. Dibalas Carl dalam sehari dengan pertanyaan atau arah pertama. Siapkan foto dan teksmu — kasar pun tidak apa-apa.":"Sent — your order is recorded. Carl replies within a day with questions or a first direction. Keep your photos and text handy — rough is fine.")+"<br>"+refHtml(code)+waBtnHtml(code)); })
     .catch(function(){ if(apiTimer) clearTimeout(apiTimer); sendEmail().catch(mailtoFallback); });
   } else {
     sendEmail().catch(mailtoFallback);
