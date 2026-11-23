@@ -510,8 +510,13 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
 </style>
 <style id="top5fix">.hero-for{margin-top:16px;font-size:clamp(16px,1.3vw,20px);line-height:1.65;color:var(--ink2);max-width:36em}.fhint{font-weight:400;color:var(--ink2);font-size:.86em}</style>
 <script type="text/javascript">
-    /* Analytics, not content: inject Clarity after load + idle (or on first
-       interaction) so its long tasks stay out of the page's load window.
+    /* Analytics, not content: inject Clarity 5s after load (or on first
+       engagement) so its long tasks and cookies stay out of the page's load
+       window. (requestIdleCallback fired almost immediately on the idle main
+       thread and still landed Clarity's ~290ms boot inside the measured
+       window, so the gate is a plain delay.) Any real engagement — click,
+       key, touch, scroll, wheel — boots it instantly, so only a fully
+       passive visit is ever recorded a few seconds late.
        The injector below is the original snippet, deferred. */
     (function(){
         var done=false;
@@ -524,12 +529,11 @@ html.carl-working .hero-fig img.pimg{animation:carlFloat 7s cubic-bezier(.45,0,.
             })(window, document, "clarity", "script", "zegmof193g");
         }
         function arm(){
-            if("requestIdleCallback" in window) requestIdleCallback(boot,{timeout:3000});
-            else setTimeout(boot,1500);
+            setTimeout(boot,5000);
         }
         if(document.readyState==="complete") arm();
         else window.addEventListener("load",arm);
-        ["pointerdown","keydown","touchstart"].forEach(function(ev){
+        ["pointerdown","keydown","touchstart","wheel","scroll"].forEach(function(ev){
             window.addEventListener(ev,boot,{once:true,passive:true});
         });
     })();
@@ -805,6 +809,14 @@ html.carl-working .ac-dot{background:#1E6B34}
 .ac-row b{font-weight:700;text-align:right}
 .pq{display:flex;flex-direction:column}
 .pq .popts{flex:1;justify-content:space-between}
+</style>
+<style id="cl-cv">
+/* Perf round 2026-11-23 (cycle 2): skip off-screen layout/paint for the long
+   below-fold sections. content-visibility:auto only defers work while a
+   section is far off-screen; contain-intrinsic-size:auto reserves its last
+   rendered height so scroll geometry and CLS stay stable. #order is
+   deliberately excluded (form layout must never be deferred). */
+#about,#proof,#process,#path,#faq,footer.site{content-visibility:auto;contain-intrinsic-size:auto 900px}
 </style>
 <style id="cl-datafix">
 /* Data-review fixes 2026-11-23: about link row (all widths) + hero compression (mobile only).
