@@ -791,11 +791,9 @@ html.cl-lock{overflow:hidden}
 </section>
 <style id="pf-css">
 #pfHubMain{flex:1;display:flex;flex-direction:column;min-height:0}
-.pf-hub-shot{margin:0 0 12px}
+.pf-hub-shot{margin:0 0 12px;flex:none}
 .pf-hub-shot img{width:100%;height:auto;display:block;border-radius:14px}
 .pf-hub-shot figcaption{margin-top:8px;font-size:11px;line-height:1.5;color:#8F96A0}
-#pfHub .hub-hero{flex:none}
-#pfHub .pf-hub-shot{flex:none}
 </style>
 <section class="blk" id="portfolio">
   <div class="wrap">
@@ -817,11 +815,11 @@ html.cl-lock{overflow:hidden}
       <div class="demo-phone" data-rv="y40">
         <div class="demo-screen no-notch">
           <div class="demo-notch" aria-hidden="true"></div>
-          <div class="hub" id="pfHub">
-            <div class="hub-head"><b>CARLLAB</b><span id="pfHubNote">PORTFOLIO</span></div>
+          <div class="rc-hub" id="pfHub">
+            <div class="rc-hub-head"><b>CARLLAB</b><span id="pfHubNote">PORTFOLIO</span></div>
             <div id="pfHubMain">
-              <div class="hub-tabs" id="pfHubTabs" role="tablist"></div>
-              <div class="hub-body" id="pfHubBody"></div>
+              <div class="rc-hub-tabs" id="pfHubTabs" role="tablist"></div>
+              <div class="rc-hub-body" id="pfHubBody"></div>
             </div>
           </div>
         </div>
@@ -832,63 +830,69 @@ html.cl-lock{overflow:hidden}
 </section>
 <script id="pf-hub-js">
 (function(){
-var GROUPS={
- "inv":{label:{en:"Digital Invitations",id:"Undangan Digital"},note:{en:"DIGITAL INVITATIONS",id:"UNDANGAN DIGITAL"},items:[]},
- "web":{label:{en:"Websites",id:"Website"},note:{en:"WEBSITES",id:"WEBSITE"},items:["lumera"]},
- "port":{label:{en:"Portfolio",id:"Portofolio"},note:{en:"PORTFOLIO",id:"PORTOFOLIO"},items:[]}
-};
-var ITEM={
- "lumera":{name:"LUMÉRA",img:"hub-thumbs/lumera.jpg",wide:"hub-thumbs/lumera-wide.jpg",
-  sub:{en:"Website · Maison de Parfum · 2026",id:"Website · Maison de Parfum · 2026"},
-  d:{en:"A fictional luxury perfume house built as a single-screen gallery — five bottles in niches along a basalt wall, one continuous camera zoom, and a shop that really checks out. Prices follow the language: rupiah in Bahasa Indonesia, dollars in English.",id:"Rumah parfum mewah fiktif yang dibangun sebagai galeri satu layar — lima botol di relung sepanjang dinding basalt, satu zoom kamera kontinu, dan toko yang sungguh menyelesaikan pesanan. Harganya mengikuti bahasa: rupiah dalam Bahasa Indonesia, dolar dalam bahasa Inggris."},
-  shotcap:{en:"The phone wall — its own portrait render, niches stacked 2 + 3.",id:"Dinding versi HP — render potret tersendiri, relung tersusun 2 + 3."},
-  by:{en:"A CarlLab portfolio piece.",id:"Karya portfolio CarlLab."}}
-};
-var UI={headNote:{en:"PORTFOLIO",id:"PORTOFOLIO"},empty:{en:"No work in this group yet — coming soon.",id:"Belum ada karya di grup ini — menyusul."}};
-var state={group:"web"};
-function L(){return document.documentElement.lang==="id"?"id":"en"}
-function t(x){return x[L()]}
-var tabsEl=document.getElementById("pfHubTabs"), bodyEl=document.getElementById("pfHubBody");
-function renderTabs(){
-  tabsEl.innerHTML="";
-  Object.keys(GROUPS).forEach(function(k){
-    var b=document.createElement("button"); b.type="button"; b.className="hub-tab"+(state.group===k?" on":"");
-    b.textContent=t(GROUPS[k].label); b.setAttribute("role","tab"); b.setAttribute("aria-selected",state.group===k?"true":"false");
-    b.addEventListener("click",function(){ state.group=k; render(); });
-    tabsEl.appendChild(b);
+"use strict";
+var PF_ITEMS={"lumera":{"name":"LUM\u00c9RA","img":"hub-thumbs/lumera.jpg","wide":"hub-thumbs/lumera-wide.jpg",
+"sub":{"en":"Maison de Parfum \u2014 Website \u00b7 2026","id":"Maison de Parfum \u2014 Website \u00b7 2026"},
+"d":{"en":"A fictional luxury perfume house built as a single-screen gallery \u2014 five bottles in niches along a basalt wall, opened with one continuous 1,500 ms camera zoom, and a shop that really checks out. Prices follow the language: rupiah in Bahasa Indonesia, dollars in English.","id":"Rumah parfum mewah fiktif yang dibangun sebagai galeri satu layar \u2014 lima botol di relung sepanjang dinding basalt, dibuka dengan satu zoom kamera kontinu 1.500 ms, dan toko yang sungguh menyelesaikan pesanan. Harganya mengikuti bahasa: rupiah dalam Bahasa Indonesia, dolar dalam bahasa Inggris."},
+"shotcap":{"en":"The phone wall \u2014 its own portrait render, niches stacked 2 + 3.","id":"Dinding versi HP \u2014 render potret tersendiri, relung tersusun 2 + 3."},
+"by":{"en":"A CarlLab portfolio piece.","id":"Karya portfolio CarlLab."}}};
+var PF_GROUPS={"inv":{"label":{"en":"Digital Invitations","id":"Undangan Digital"},"note":{"en":"PORTFOLIO \u2014 DIGITAL INVITATIONS","id":"PORTOFOLIO \u2014 UNDANGAN DIGITAL"},"items":[]},"web":{"label":{"en":"Websites","id":"Website"},"note":{"en":"PORTFOLIO \u2014 WEBSITES","id":"PORTOFOLIO \u2014 WEBSITE"},"items":["lumera"]},"port":{"label":{"en":"Portfolio","id":"Portofolio"},"note":{"en":"PORTFOLIO","id":"PORTOFOLIO"},"items":[]}};
+var PF_UI={"backGroups":{"en":"\u2039 Groups","id":"\u2039 Grup"},"headNote":{"en":"PORTFOLIO","id":"PORTOFOLIO"},"empty":{"en":"No work in this group yet \u2014 coming soon.","id":"Belum ada karya di grup ini \u2014 menyusul."},"foot":{"en":"1 portfolio piece \u2014 presented right inside this phone.","id":"1 karya portfolio \u2014 ditampilkan langsung di HP ini."}};
+var pfState={group:'web',sel:'lumera',view:'list'};
+function pL(){return document.documentElement.lang==='id'?'id':'en'}
+function pT(x){return x[pL()]}
+var pfTabsEl=document.getElementById('pfHubTabs'), pfBodyEl=document.getElementById('pfHubBody');
+function pfRenderTabs(){
+  pfTabsEl.innerHTML='';
+  Object.keys(PF_GROUPS).forEach(function(k){
+    var b=document.createElement('button'); b.type='button'; b.className='rc-hub-tab'+(pfState.group===k?' on':'');
+    b.textContent=pT(PF_GROUPS[k].label); b.setAttribute('role','tab'); b.setAttribute('aria-selected',pfState.group===k?'true':'false');
+    b.addEventListener('click',function(){ pfState.group=k; pfState.view='list'; pfRender(); });
+    pfTabsEl.appendChild(b);
   });
 }
-function renderBody(){
-  var l=L(), g=GROUPS[state.group];
-  bodyEl.innerHTML="";
-  var note=document.createElement("p"); note.className="hub-note"; note.textContent=t(g.note); bodyEl.appendChild(note);
-  if(!g.items.length){
-    var e=document.createElement("p"); e.className="hub-desc"; e.textContent=t(UI.empty); bodyEl.appendChild(e);
+function pfRenderBody(){
+  var l=pL();
+  if(pfState.view==='list'){
+    var g=PF_GROUPS[pfState.group];
+    pfBodyEl.innerHTML='<p class="rc-hub-note">'+pT(g.note)+'</p>';
+    if(!g.items.length){ var e=document.createElement('p'); e.className='rc-hub-desc'; e.textContent=pT(PF_UI.empty); pfBodyEl.appendChild(e); }
+    g.items.forEach(function(id){
+      var it=PF_ITEMS[id];
+      var r=document.createElement('button'); r.type='button'; r.className='rc-hub-row'+(pfState.sel===id?' sel':'');
+      r.innerHTML='<img alt="" loading="lazy"><span><h4></h4><p></p></span><span class="arr">&#8250;</span>';
+      r.querySelector('img').src=it.img;
+      r.querySelector('h4').textContent=it.name;
+      r.querySelector('p').textContent=it.sub[l];
+      r.addEventListener('click',function(){ pfState.sel=id; pfState.view='detail'; pfRender(); });
+      pfBodyEl.appendChild(r);
+    });
+    var foot=document.createElement('p'); foot.className='rc-hub-foot'; foot.textContent=pT(PF_UI.foot);
+    pfBodyEl.appendChild(foot);
+  } else {
+    var it=PF_ITEMS[pfState.sel];
+    pfBodyEl.innerHTML='';
+    var back=document.createElement('button'); back.type='button'; back.className='rc-hub-back'; back.textContent=pT(PF_UI.backGroups);
+    back.addEventListener('click',function(){ pfState.view='list'; pfRender(); });
+    pfBodyEl.appendChild(back);
+    var hero=document.createElement('div'); hero.className='rc-hub-hero';
+    hero.innerHTML='<img alt=""><b></b>';
+    hero.querySelector('img').src=it.wide;
+    hero.querySelector('b').textContent=it.name;
+    pfBodyEl.appendChild(hero);
+    var sub=document.createElement('p'); sub.className='rc-hub-dsub'; sub.textContent=it.sub[l]; pfBodyEl.appendChild(sub);
+    var desc=document.createElement('p'); desc.className='rc-hub-desc'; desc.textContent=it.d[l]; pfBodyEl.appendChild(desc);
+    var fig=document.createElement('figure'); fig.className='pf-hub-shot';
+    var im=document.createElement('img'); im.src=it.img; im.alt=it.name+' \u2014 on a phone'; im.loading='lazy'; fig.appendChild(im);
+    var cap=document.createElement('figcaption'); cap.textContent=it.shotcap[l]; fig.appendChild(cap);
+    pfBodyEl.appendChild(fig);
+    var by=document.createElement('p'); by.className='rc-hub-desc'; by.textContent=it.by[l]; pfBodyEl.appendChild(by);
   }
-  g.items.forEach(function(id){
-    var it=ITEM[id];
-    var hero=document.createElement("div"); hero.className="hub-hero";
-    hero.innerHTML="<img alt=\"\"><b></b>";
-    hero.querySelector("img").src=it.wide; hero.querySelector("img").alt=it.name+" — the desktop wall";
-    hero.querySelector("b").textContent=it.name;
-    bodyEl.appendChild(hero);
-    var sub=document.createElement("p"); sub.className="hub-dsub"; sub.textContent=it.sub[l]; bodyEl.appendChild(sub);
-    var desc=document.createElement("p"); desc.className="hub-desc"; desc.textContent=it.d[l]; bodyEl.appendChild(desc);
-    var fig=document.createElement("figure"); fig.className="pf-hub-shot";
-    var im=document.createElement("img"); im.src=it.img; im.alt=it.name+" — on a phone"; im.loading="lazy"; fig.appendChild(im);
-    var cap=document.createElement("figcaption"); cap.textContent=it.shotcap[l]; fig.appendChild(cap);
-    bodyEl.appendChild(fig);
-    var by=document.createElement("p"); by.className="hub-desc"; by.textContent=it.by[l]; bodyEl.appendChild(by);
-  });
-  var foot=document.createElement("p"); foot.className="hub-foot";
-  var _n=0,_g=0; Object.keys(GROUPS).forEach(function(k){ _n+=GROUPS[k].items.length; if(GROUPS[k].items.length)_g++; });
-  foot.textContent=(l==="id"?_n+" karya portfolio dalam "+_g+" grup — ditampilkan langsung di HP ini.":_n+" portfolio piece in "+_g+" group — presented right inside this phone.");
-  bodyEl.appendChild(foot);
-  bodyEl.scrollTop=0;
+  pfBodyEl.scrollTop=0;
 }
-function render(){ document.getElementById("pfHubNote").textContent=t(UI.headNote); renderTabs(); renderBody(); }
-new MutationObserver(function(){ render(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
-render();
+function pfRender(){ document.getElementById('pfHubNote').textContent=pT(PF_UI.headNote); pfRenderTabs(); pfRenderBody(); }
+new MutationObserver(function(){ pfRender(); }).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+pfRender();
 })();
 </script>
 <section class="blk" id="real-client">
