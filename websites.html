@@ -790,14 +790,12 @@ html.cl-lock{overflow:hidden}
   </div>
 </section>
 <style id="pf-css">
-.pf-shot{position:absolute;inset:0;background:#0A0A0C}
-.pf-shot img{width:100%;height:100%;object-fit:cover;display:block}
-.pf-ol{position:absolute;left:0;right:0;bottom:0;padding:44px 18px 16px;background:linear-gradient(transparent,rgba(4,4,6,.85));color:#F3EAD8}
-.pf-ol b{display:block;font-family:'Archivo',sans-serif;font-size:24px;letter-spacing:.18em}
-.pf-ol span{font-size:10px;letter-spacing:.3em;color:#C9A24B}
-.pf-wide{margin:36px 0 0}
-.pf-wide img{width:100%;height:auto;display:block;border-radius:18px}
-.pf-wide figcaption{margin-top:10px;font-size:12px;color:#8F96A0;text-align:center}
+#pfHubMain{flex:1;display:flex;flex-direction:column;min-height:0}
+.pf-hub-shot{margin:0 0 12px}
+.pf-hub-shot img{width:100%;height:auto;display:block;border-radius:14px}
+.pf-hub-shot figcaption{margin-top:8px;font-size:11px;line-height:1.5;color:#8F96A0}
+#pfHub .hub-hero{flex:none}
+#pfHub .pf-hub-shot{flex:none}
 </style>
 <section class="blk" id="portfolio">
   <div class="wrap">
@@ -819,20 +817,80 @@ html.cl-lock{overflow:hidden}
       <div class="demo-phone" data-rv="y40">
         <div class="demo-screen no-notch">
           <div class="demo-notch" aria-hidden="true"></div>
-          <div class="pf-shot">
-            <img src="hub-thumbs/lumera.jpg" alt="LUMÉRA — Maison de Parfum on a phone: perfume niches in a dark basalt wall">
-            <div class="pf-ol"><b>LUMÉRA</b><span>MAISON DE PARFUM</span></div>
+          <div class="hub" id="pfHub">
+            <div class="hub-head"><b>CARLLAB</b><span id="pfHubNote">PORTFOLIO</span></div>
+            <div id="pfHubMain">
+              <div class="hub-tabs" id="pfHubTabs" role="tablist"></div>
+              <div class="hub-body" id="pfHubBody"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <figure class="pf-wide" data-rv="y40">
-      <img src="hub-thumbs/lumera-wide.jpg" alt="LUMÉRA on desktop — five perfume niches in a basalt wall over black water" loading="lazy">
-      <figcaption data-t="pfWideCap">The desktop wall — five niches over black water.</figcaption>
-    </figure>
     <p class="demo-cap" data-t="pfCap">LUMÉRA — Maison de Parfum · Website · 2026 · A CarlLab portfolio piece. A concept store: orders are recorded, no payment is taken.</p>
   </div>
 </section>
+<script id="pf-hub-js">
+(function(){
+var GROUPS={
+ "inv":{label:{en:"Digital Invitations",id:"Undangan Digital"},note:{en:"DIGITAL INVITATIONS",id:"UNDANGAN DIGITAL"},items:[]},
+ "web":{label:{en:"Websites",id:"Website"},note:{en:"WEBSITES",id:"WEBSITE"},items:["lumera"]},
+ "port":{label:{en:"Portfolio",id:"Portofolio"},note:{en:"PORTFOLIO",id:"PORTOFOLIO"},items:[]}
+};
+var ITEM={
+ "lumera":{name:"LUMÉRA",img:"hub-thumbs/lumera.jpg",wide:"hub-thumbs/lumera-wide.jpg",
+  sub:{en:"Website · Maison de Parfum · 2026",id:"Website · Maison de Parfum · 2026"},
+  d:{en:"A fictional luxury perfume house built as a single-screen gallery — five bottles in niches along a basalt wall, one continuous camera zoom, and a shop that really checks out. Prices follow the language: rupiah in Bahasa Indonesia, dollars in English.",id:"Rumah parfum mewah fiktif yang dibangun sebagai galeri satu layar — lima botol di relung sepanjang dinding basalt, satu zoom kamera kontinu, dan toko yang sungguh menyelesaikan pesanan. Harganya mengikuti bahasa: rupiah dalam Bahasa Indonesia, dolar dalam bahasa Inggris."},
+  shotcap:{en:"The phone wall — its own portrait render, niches stacked 2 + 3.",id:"Dinding versi HP — render potret tersendiri, relung tersusun 2 + 3."},
+  by:{en:"A CarlLab portfolio piece.",id:"Karya portfolio CarlLab."}}
+};
+var UI={headNote:{en:"PORTFOLIO",id:"PORTOFOLIO"},empty:{en:"No work in this group yet — coming soon.",id:"Belum ada karya di grup ini — menyusul."}};
+var state={group:"web"};
+function L(){return document.documentElement.lang==="id"?"id":"en"}
+function t(x){return x[L()]}
+var tabsEl=document.getElementById("pfHubTabs"), bodyEl=document.getElementById("pfHubBody");
+function renderTabs(){
+  tabsEl.innerHTML="";
+  Object.keys(GROUPS).forEach(function(k){
+    var b=document.createElement("button"); b.type="button"; b.className="hub-tab"+(state.group===k?" on":"");
+    b.textContent=t(GROUPS[k].label); b.setAttribute("role","tab"); b.setAttribute("aria-selected",state.group===k?"true":"false");
+    b.addEventListener("click",function(){ state.group=k; render(); });
+    tabsEl.appendChild(b);
+  });
+}
+function renderBody(){
+  var l=L(), g=GROUPS[state.group];
+  bodyEl.innerHTML="";
+  var note=document.createElement("p"); note.className="hub-note"; note.textContent=t(g.note); bodyEl.appendChild(note);
+  if(!g.items.length){
+    var e=document.createElement("p"); e.className="hub-desc"; e.textContent=t(UI.empty); bodyEl.appendChild(e);
+  }
+  g.items.forEach(function(id){
+    var it=ITEM[id];
+    var hero=document.createElement("div"); hero.className="hub-hero";
+    hero.innerHTML="<img alt=\"\"><b></b>";
+    hero.querySelector("img").src=it.wide; hero.querySelector("img").alt=it.name+" — the desktop wall";
+    hero.querySelector("b").textContent=it.name;
+    bodyEl.appendChild(hero);
+    var sub=document.createElement("p"); sub.className="hub-dsub"; sub.textContent=it.sub[l]; bodyEl.appendChild(sub);
+    var desc=document.createElement("p"); desc.className="hub-desc"; desc.textContent=it.d[l]; bodyEl.appendChild(desc);
+    var fig=document.createElement("figure"); fig.className="pf-hub-shot";
+    var im=document.createElement("img"); im.src=it.img; im.alt=it.name+" — on a phone"; im.loading="lazy"; fig.appendChild(im);
+    var cap=document.createElement("figcaption"); cap.textContent=it.shotcap[l]; fig.appendChild(cap);
+    bodyEl.appendChild(fig);
+    var by=document.createElement("p"); by.className="hub-desc"; by.textContent=it.by[l]; bodyEl.appendChild(by);
+  });
+  var foot=document.createElement("p"); foot.className="hub-foot";
+  var _n=0,_g=0; Object.keys(GROUPS).forEach(function(k){ _n+=GROUPS[k].items.length; if(GROUPS[k].items.length)_g++; });
+  foot.textContent=(l==="id"?_n+" karya portfolio dalam "+_g+" grup — ditampilkan langsung di HP ini.":_n+" portfolio piece in "+_g+" group — presented right inside this phone.");
+  bodyEl.appendChild(foot);
+  bodyEl.scrollTop=0;
+}
+function render(){ document.getElementById("pfHubNote").textContent=t(UI.headNote); renderTabs(); renderBody(); }
+new MutationObserver(function(){ render(); }).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+render();
+})();
+</script>
 <section class="blk" id="real-client">
   <div class="wrap">
     <div class="sec-head" data-rv="y40">
