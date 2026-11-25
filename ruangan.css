@@ -1,0 +1,327 @@
+:root{
+  --ink:#10151c; --ink2:#3d4754; --mut:#6d7887;
+  --bg:#eef3f6; --card:#ffffff; --line:#dde5ea;
+  --cyan:#0e9db8; --cyan-d:#0b7e94; --cyan-l:#57c8de;
+  --dark:#0a1119; --r:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#1e1712}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#1e1712;color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+/* ---------- nav pil melayang ---------- */
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:26px;
+  background:rgba(13,20,29,.92);color:#e8eef3;border-radius:999px;padding:9px 10px 9px 22px;box-shadow:0 14px 34px rgba(10,20,30,.28);backdrop-filter:blur(8px);white-space:nowrap;
+  opacity:0;transition:opacity 900ms cubic-bezier(.22,.8,.2,1) 200ms}
+body.ready nav{opacity:1}
+nav .brand{font-weight:800;letter-spacing:.14em;font-size:15px}
+nav .brand b{color:var(--cyan-l);font-weight:800}
+nav a.nl{color:#b9c5cf;text-decoration:none;font-size:13.5px}
+nav a.nl:hover{color:#fff}
+nav .cta{background:#fff;color:var(--dark);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13.5px;text-decoration:none;display:flex;align-items:center;gap:8px}
+nav .cta i{width:8px;height:8px;border-radius:50%;background:var(--cyan);display:block}
+@media(max-width:640px){nav{gap:14px;padding-left:16px}nav a.nl{display:none}}
+
+/* ================================================================
+   PANGGUNG — ruangan foto memenuhi viewport (rasio 3:2)
+   ================================================================ */
+.stage-sec{padding:0}
+.stage{position:relative;margin:0 auto;background:#1e1712;overflow:hidden;
+  width:min(100vw,calc((100vh - 52px)*1.5));height:min(66.667vw,calc(100vh - 52px));
+  container-type:inline-size;perspective:1600px}
+/* MASUK HALAMAN — samakan KAPSEL asli: tanpa loader, tanpa zoom pembuka.
+   Latar halaman (nada bayangan foto sendiri, #1e1712) langsung terlukis;
+   ruangan mulai opacity 0 dan memudar masuk SEKALI (±900ms) begitu foto
+   pertamanya benar-benar ter-decode — ditandai class .ready di <body>.
+   Napas Ken Burns baru mulai setelah .ready, dari scale 1.0 persis,
+   jadi satu-satunya gerak saat masuk adalah pudar itu sendiri. */
+.cam{position:absolute;inset:0;will-change:transform;opacity:0;
+  transition:transform 1600ms cubic-bezier(.22,.8,.2,1), opacity 900ms cubic-bezier(.22,.8,.2,1)}
+body.ready .cam{opacity:1}
+.stage.returning .cam{transition-duration:900ms}
+.breath{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform;animation:none}
+body.ready .breath{animation:kb 24s ease-in-out infinite}
+@keyframes kb{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+/* Saat zoom: napas dimatikan total (bukan pause) — foto menetap di
+   scale 1.0 persis, skala yang dipakai matematika dive; kalau hanya
+   di-pause di tengah siklus (s/d 1.05), monitor asli membesar s/d 5%
+   dari hitungan dan inset display ikut termakan. Setelah tutup, napas
+   jalan lagi dari scale 1 — tanpa lompatan di kedua arah. */
+.stage.zoomed .breath{animation:none}
+.cam img#room{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.cam img#roomP{position:absolute;inset:0;width:100%;height:100%;display:none;user-select:none;-webkit-user-drag:none}
+
+/* ---------- petunjuk di bawah panggung (di luar foto) ---------- */
+.stage-hint{max-width:1240px;margin:0 auto;padding:12px 20px 0;color:#9a9186;
+  font-size:13.5px;letter-spacing:.04em;text-align:center;
+  opacity:0;transition:opacity 900ms cubic-bezier(.22,.8,.2,1) 200ms}
+body.ready .stage-hint{opacity:1}
+
+/* ---------- zona pencet monitor (quad terukur dari foto) ----------
+   Keadaan diam: TIDAK ADA apa pun di atas foto — monitor hanya
+   menampilkan wallpaper foto. Zona ini transparan penuh; satu-satunya
+   tanda adalah glow tepi sangat tipis saat hover (desktop). */
+.scr{position:absolute;z-index:5;border-radius:1.2cqw;
+  transform-style:preserve-3d;backface-visibility:hidden}
+.scr-l{left:7.3%;top:29.8%;width:24.6%;height:25.8%;transform-origin:100% 50%;transform:rotateY(19deg)}
+.scr-c{left:32.2%;top:33.0%;width:22.7%;height:21.5%}
+.scr-r{left:54.8%;top:31.4%;width:23.6%;height:24.1%;transform-origin:0% 50%;transform:rotateY(-19deg)}
+.stage.zoomed .scr{pointer-events:none}
+.zone{position:absolute;inset:0;width:100%;height:100%;display:block;border:0;border-radius:inherit;
+  background:transparent;cursor:pointer;padding:0;transition:box-shadow .25s ease;-webkit-tap-highlight-color:transparent}
+.zone:focus:not(:focus-visible){outline:none}
+.zone:hover{box-shadow:inset 0 0 0 2px rgba(87,200,222,.45), inset 0 0 2.6cqw rgba(46,170,200,.18)}
+@media(hover:none){.zone:hover{box-shadow:none}}
+
+/* ---------- klik di luar display = tutup ---------- */
+/* ditangani handler klik di stage
+   (display sekarang di dalam .cam, jadi scrim stage-level tidak dipakai;
+   peredup fokus pindah ke .veil di dalam bingkai foto) */
+.stage.zoomed{cursor:zoom-out}
+
+/* ================================================================
+   HUB v3i — teks display DI DALAM bingkai foto (anak .breath, koordinat
+   foto), jadi ikut persis setiap transform foto: napas Ken Burns + dive.
+   Geometrinya = quad DISPLAY terukur, di-inset 1.5% tiap sisi (diatur JS).
+   TANPA background / backdrop-filter sama sekali: tidak ada kotak yang
+   bisa terlihat — yang tampil hanya teks, langsung di atas piksel layar
+   monitor sendiri, dengan pose trapesium rotateY yang sama seperti zona
+   .scr (TIDAK diluruskan di akhir). Radius sudut mengikuti sudut display. */
+.veil{position:absolute;inset:0;z-index:6;background:rgba(3,6,9,.28);opacity:0;pointer-events:none;transition:opacity .5s ease}
+.stage.zoomed .veil{opacity:1}
+.hub{position:absolute;z-index:9;overflow:hidden;color:#eef6fa;display:flex;flex-direction:column;
+  background:transparent;border:0;outline:none;box-shadow:none;border-radius:4px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease, visibility 0s linear .35s}
+.hub.show{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s ease}
+.hub[hidden]{display:none!important}
+.hub .view{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;padding:5px;min-height:0}
+.hub.tilt .view{padding-top:12px}
+/* KANVAS LAYAR HP (v3n): isi hub digambar pada kanvas ukuran tetap
+   340x280 px "ruang desain" dengan tipografi ukuran HP asli (label 11px,
+   headline 25px, angka raksasa 148px, tab kategori 10px), lalu JS
+   menskalakan kanvas ini agar pas di dalam hub (scale k dihitung dari
+   ukuran lokal hub + skala dive, dengan CAP skala-tergambar 1.2) —
+   teks TIDAK lagi membesar mengikuti zoom kamera seperti bug cqw v3m. */
+.screen{flex:none;width:340px;height:280px;transform-origin:center center;display:flex;flex-direction:column;
+  padding:10px 14px;color:#eef6fa}
+.hub [hidden]{display:none!important}
+.scr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:none;margin-bottom:6px}
+.scr-label{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(233,246,251,.92);
+  text-shadow:0 1px 8px rgba(4,20,30,.45)}
+.scr-label .no{color:rgba(190,225,240,.6);font-weight:300;letter-spacing:.1em}
+.xbtn{flex:none;width:24px;height:24px;border:0;background:transparent;outline:none;-webkit-tap-highlight-color:transparent;
+  color:rgba(233,246,251,.7);font-size:13px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:color .2s ease;text-shadow:0 1px 8px rgba(4,20,30,.45)}
+.xbtn:hover{color:#fff}
+.xbtn:focus{outline:none}
+/* ================================================================
+   ISI LAYAR v3q — IDENTITAS GRUP SAJA (presentasi CUES KAPSEL v3k):
+   label kecil kiri-atas + ✕, angka raksasa tipis, headline dua baris
+   (tipis/tebal), lalu baris TAB KATEGORI grup di bawahnya. Di bawah
+   tab: KOSONG — tidak ada karya, detail, atau pemutar apa pun
+   (perintah user: "hapus dulu isinya, buat grupnya dulu aja").
+   v3r: SATU pengecualian — Websites tab "Toko Online" berisi
+   LUMÉRA (baris -> detail -> pratinjau). v3s: pratinjaunya LOKAL
+   (showcase bawaan berkas), lihat blok v3s di bawah.
+   Semua teks langsung di atas piksel layar monitor itu sendiri;
+   hub tetap tanpa latar/garis/kotak. */
+.scr-mid{flex:1;display:flex;align-items:center;min-height:0;padding:0 2px}
+.scr-num{flex:none;font-size:148px;font-weight:200;line-height:.78;letter-spacing:-.01em;
+  color:rgba(214,238,247,.5);margin-right:12px;transform:translateY(4px);
+  text-shadow:0 0 22px rgba(140,210,235,.22)}
+.scr-head{flex:1;display:flex;flex-direction:column;line-height:1.05;min-width:0}
+.scr-head .l1,.scr-head .l2{font-size:25px;letter-spacing:.015em;color:#f2f9fc;white-space:nowrap;
+  text-shadow:0 0 18px rgba(140,210,235,.35)}
+.scr-head .l1{font-weight:300}
+.scr-head .l2{font-weight:700}
+
+/* ================================================================
+   MODE PORTRAIT (HP tegak — aspek < 0.8 atau lebar <= 640px):
+   foto portrait asli (9:20) memenuhi SELURUH layar (100dvh).
+   Karena foto lebih TINGGI dari layar HP, object-fit:cover hanya
+   memangkas langit-langit/lantai — ketiga monitor selalu utuh.
+   Quad portrait (display, % foto room-portrait.jpg 1152x2560):
+   kiri  x 1.5-27.9  y 42.3-53.7 -> pusat (14.7, 48.0)
+   tengah x 28.0-55.6 y 43.5-53.7 -> pusat (41.8, 48.6)
+   kanan x 55.9-80.1  y 42.8-54.2 -> pusat (68.0, 48.5)
+   ================================================================ */
+@media (max-width:640px), (max-aspect-ratio:4/5){
+  html,body{background:#1e1712}
+  .stage-sec{height:100vh;height:100dvh;position:relative}
+  .stage{width:100vw;height:100%}
+  .cam img#room{display:none}
+  .cam img#roomP{display:block}
+  .scr-l{left:0.5%;top:42.0%;width:27.4%;height:12.0%}
+  .scr-c{left:28.0%;top:43.2%;width:27.6%;height:10.8%}
+  .scr-r{left:55.6%;top:42.5%;width:25.6%;height:12.0%}
+  .stage-hint{position:absolute;left:0;right:0;bottom:0;z-index:6;max-width:none;margin:0;
+    padding:44px 20px 16px;color:#d9e8ef;pointer-events:none;
+    background:linear-gradient(to top, rgba(4,8,12,.8), rgba(4,8,12,0))}
+  /* hub di HP = teks display di dalam layar monitor itu sendiri (bukan
+     sheet): geometri % foto dari quad portrait (JS). Tipografi TIDAK
+     dioverride di sini — kanvas .screen berukuran tetap (JS scale)
+     berlaku sama di semua mode: ukuran teks tergambar selalu setara
+     HP. Padding atas ekstra monitor samping (.hub.tilt .view) sudah
+     diatur di aturan dasar dalam px lokal. */
+
+}
+
+
+/* ================================================================
+   TAB KATEGORI GRUP — nama-nama kategori saja (pill seperti v3p).
+   Bisa dipencet untuk mengganti tab aktif; area di bawahnya tetap
+   KOSONG (isi per kategori belum dibuat — tahap grup dulu).
+   Websites punya 5 tab: di kanvas 340px mereka membungkus rapi ke
+   dua baris (flex-wrap), tanpa overflow. */
+.tabs{display:flex;flex-wrap:wrap;gap:5px;flex:none}
+.tab{flex:none;border:1px solid rgba(165,218,238,.22);background:rgba(4,15,23,.42);color:rgba(214,233,242,.8);
+  font:inherit;font-size:10px;font-weight:700;letter-spacing:.03em;border-radius:99px;padding:4px 9px;cursor:pointer;
+  white-space:nowrap;outline:none;-webkit-tap-highlight-color:transparent}
+.tab.on{background:var(--cyan-l);color:#06222e;border-color:transparent}
+
+/* ================================================================
+   ISI LAYAR v3s — HANYA Websites tab "Toko Online": LUMÉRA
+   (perintah user: "Masukan lumera buy" + "Ganti pratinjau lokal
+   dulu"). Di bawah tab itu tampil baris karya -> detail ->
+   SHOWCASE LOKAL (hero + 5 produk The Night Collection + tampilan
+   produk), semua dari berkas lokal — tanpa bingkai halaman luar,
+   karena situs live menolak dibingkai dari berkas lokal
+   (ERR_BLOCKED_BY_CSP di HP user pada v3r). Tab Websites lain +
+   grup Brand/Video tetap TANPA isi (struktur grup saja, warisan
+   v3q). Badan layar bisa scroll internal. Semua gambar LUMÉRA =
+   berkas lokal (lihat JS). */
+.screen.content .tabs{margin-bottom:7px}
+.scr-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:none;padding-top:0}
+.scr-body::-webkit-scrollbar{display:none}
+.scr-body.fill{display:flex;flex-direction:column;overflow:hidden}
+.note{font-size:9.5px;letter-spacing:.16em;color:rgba(190,225,240,.62);margin:1px 0 7px;text-transform:uppercase;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.foot{font-size:10px;line-height:1.45;color:rgba(190,225,240,.55);margin-top:8px;text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.rows{display:flex;flex-direction:column;gap:7px}
+.row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;
+  font:inherit;color:#eef6fa;background:rgba(4,15,23,.42);border:1px solid rgba(165,218,238,.18);
+  border-radius:12px;padding:6px 10px 6px 8px;-webkit-tap-highlight-color:transparent;outline:none;
+  transition:background .2s ease,border-color .2s ease}
+.row:hover{background:rgba(8,26,38,.55);border-color:rgba(165,218,238,.4)}
+.row .timg{flex:none;width:30px;height:38px;border-radius:7px;object-fit:cover;display:block;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.row .timg.sq{width:34px;height:34px}
+.rtx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.rnm{font-size:15px;font-weight:700;line-height:1.15;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.rsb{font-size:11.5px;line-height:1.25;color:rgba(214,233,242,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.arw{flex:none;font-size:17px;color:rgba(190,225,240,.55)}
+/* ---------- detail LUMÉRA (tetap di dalam display yang sama) ---------- */
+.backbar{align-self:flex-start;border:0;background:transparent;font:inherit;cursor:pointer;padding:0;outline:none;
+  color:var(--cyan-l);font-size:13px;font-weight:700;letter-spacing:.05em;-webkit-tap-highlight-color:transparent;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.hero{position:relative;border-radius:10px;overflow:hidden;margin:6px 0 7px;background:#10151c;flex:none}
+.hero img{width:100%;height:64px;object-fit:cover;display:block}
+.hero b{position:absolute;left:8px;bottom:6px;font-size:16px;letter-spacing:.03em;color:#fff;
+  text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.dds{font-size:12.5px;line-height:1.5;color:rgba(226,240,247,.92);text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.dmeta{margin-top:10px;border-top:1px solid rgba(165,218,238,.18)}
+.dmeta div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;
+  border-bottom:1px solid rgba(165,218,238,.18);font-size:11.5px}
+.dmeta dt{color:rgba(190,220,233,.6);letter-spacing:.12em;text-transform:uppercase;font-size:9.5px;padding-top:1px}
+.dmeta dd{font-weight:600;text-align:right;color:#eef6fa}
+.pbtn{display:block;width:100%;text-align:center;border:0;border-radius:10px;padding:8px 10px;margin-top:10px;
+  cursor:pointer;font:inherit;font-size:12.5px;font-weight:800;background:var(--cyan-l);color:#06222e;
+  text-decoration:none;-webkit-tap-highlight-color:transparent;outline:none}
+.lbtn{display:block;width:100%;text-align:center;border:1px solid rgba(165,218,238,.3);border-radius:10px;
+  padding:7px 10px;margin-top:7px;font:inherit;font-size:12px;font-weight:700;background:rgba(4,15,23,.42);
+  color:#eef6fa;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.bar{display:flex;align-items:center;gap:8px;flex:none;margin-bottom:6px}
+.bar b{flex:1;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.bar a{color:var(--cyan-l);text-decoration:none;font-size:15px;flex:none}
+/* ---------- showcase LOKAL LUMÉRA (v3s) ---------- */
+/* v3t — ZONA PENCET DI ATAS HERO: hero showcase memajang 5 botol
+   berdampingan, dan di HP user justru botol DI FOTO itulah yang
+   dipencet ("Gabisa di pencet buy parfumnya") — padahal hero cuma
+   <img> polos (elementFromPoint di kelima posisi botol = img,
+   tanpa leluhur actionable). Sekarang 5 tombol transparan menutupi
+   hero, masing-masing selebar 20% (urutan = urutan produk), dan
+   label hero tidak lagi menelan ketukan. */
+.hero b{pointer-events:none}
+.herozones{position:absolute;inset:0;display:flex}
+.herozone{flex:1 1 20%;border:0;background:transparent;padding:0;margin:0;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+/* v3t — SENTUHAN: tanpa touch-action, browser/viewer mencadangkan
+   gestur untuk scroll/zoom dobel-ketuk sebelum click disintesis —
+   di dalam .scr-body yang bisa scroll, ketukan baris dengan gerak
+   mikro dibatalkan sebagai scroll dan click tidak pernah lahir.
+   manipulation = scroll tetap boleh, zoom dobel-ketuk mati, ketuk
+   langsung diproses. Badan scroll mempertahankan pan-y vertikal. */
+.hub button,.hub a,.zone{touch-action:manipulation}
+.scr-body{touch-action:pan-y}
+/* v3u — TAMPILAN PRODUK mengikuti komposisi live CarlLab (bingkai HP
+   di situs live: bar atas TETAP di dalam bingkai, isi di SATU area
+   scroll, tidak ada elemen terpotong di tepi bingkai). Di v3t foto
+   produk 150px + nama + puisi + notes menumpuk di badan scroll
+   sehingga pada paint pertama nama produk mulai DI BAWAH lipatan
+   (terukur: nameTopIn 181 > bodyH 176) — di HP user nama "Encre
+   Marine" tampak terpotong dua di tepi bawah display dan bar kembali
+   ikut terseret scroll. Sekarang: bar produk (‹ Koleksi + posisi
+   n / 5 + ✕) adalah .scr-top kanvas itu sendiri (tetap, di luar
+   scroll), tab grup tidak dirender di tampilan produk, dan foto
+   tampil di PANGGUNG gelap setinggi 134px (~48% tinggi kanvas)
+   TANPA crop: sumber foto produk itu potret (480x720/960, botol
+   menempati ~30-88% tinggi foto) — object-fit:cover di kotak lebar
+   mana pun pasti memotong botol, jadi foto ditampilkan utuh
+   (tinggi dikunci, lebar mengikuti rasio) di atas latar gradasi
+   gelap yang menyatu dengan relung batu fotonya sendiri, persis
+   presentasi relung di situs live LUMÉRA. Botol selalu utuh. */
+.prodstage{flex:none;height:134px;border-radius:10px;margin:0 0 6px;overflow:hidden;
+  background:radial-gradient(120% 130% at 50% 38%, #242a33 0%, #12161d 58%, #0a0d12 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.prodstage img{height:100%;width:auto;max-width:100%;display:block}
+.pnm{font-size:17px;font-weight:800;letter-spacing:.02em;margin:1px 0 2px;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.poem{font-size:12px;line-height:1.4}
+.prodmeta{margin-top:6px}
+.prodpos{font-size:10px;font-weight:600;letter-spacing:.18em;color:rgba(190,225,240,.62);
+  margin-left:auto;margin-right:10px;text-shadow:0 1px 6px rgba(4,20,30,.5)}
+
+/* FOKUS — di layar sentuh TIDAK ADA outline untuk elemen APA PUN
+   di panggung/hub. Riwayat cacatnya: v3m = outline cyan :focus-visible
+   tombol zona tertinggal setelah ketuk lalu membesar ~3.3x oleh skala
+   dive; v3p di HP user = outline ORANYE TEBAL membingkai seluruh layar
+   pada grup Video + Websites (tidak di Brand): ring fokus bawaan
+   browser Android/WebView yang digambar di elemen yang masih fokus
+   setelah disentuh — tombol zona selebar display penuh, jadi ring-nya
+   membingkai display, dan kontrol hub v3p (.tab/.row/dll.) tidak punya
+   reset :focus sama sekali. Obat rangkap tiga: (1) outline:none pada
+   :focus untuk semua elemen panggung/hub (di bawah), (2) outline:none
+   eksplisit di tiap kontrol (.xbtn/.tab/.zone), (3) JS blurIfTouch()
+   melepas fokus elemen yang disentuh. Ring fokus TETAP hidup untuk
+   keyboard/mouse lewat :focus-visible khusus pointer halus. */
+.stage :focus,.hub :focus{outline:none!important}
+@media (hover:hover) and (pointer:fine){
+  .zone:focus-visible{outline:2px solid rgba(87,200,222,.95);outline-offset:-3px;
+    box-shadow:inset 0 0 0 2px rgba(87,200,222,.6), inset 0 0 2.6cqw rgba(46,170,200,.22)}
+  .xbtn:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+  .tab:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+  .row:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:1px}
+  .backbar:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+  .pbtn:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+  .lbtn:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+/* ================================================================
+   DEPLOY /ruangan — TAMPILAN LIVE LUMÉRA (iframe situs asli).
+   "Lihat di HP ini" kini membuka situs live LUMÉRA (iframe
+   same-origin /lumera.html) DI DALAM display — persis pola bingkai
+   HP di halaman live CarlLab. Bila iframe gagal dimuat/terblokir,
+   JS menukar otomatis ke showcase lokal v3s (lihat ruangan.js),
+   jadi layar tidak pernah menampilkan halaman error browser. */
+.liveframe{flex:1;width:100%;min-height:0;border:0;border-radius:10px;background:#060607;display:block}
+
