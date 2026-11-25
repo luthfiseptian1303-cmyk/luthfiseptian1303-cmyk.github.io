@@ -57,6 +57,12 @@ body.ready .breath{animation:kb 24s ease-in-out infinite}
   font-size:13.5px;letter-spacing:.04em;text-align:center;
   opacity:0;transition:opacity 900ms cubic-bezier(.22,.8,.2,1) 200ms}
 body.ready .stage-hint{opacity:1}
+/* v3v (dive full layar): selama grup terbuka petunjuk disembunyikan —
+   di mode portrait ia menempel sebagai lapisan gradien di dasar
+   panggung, jadi pada kedatangan full layar ia akan menimpa isi
+   layar (dan teksnya pun sudah tidak relevan). Muncul lagi saat
+   kamera kembali ke tampilan ruangan. */
+.stage.zoomed ~ .stage-hint{opacity:0}
 
 /* ---------- zona pencet monitor (quad terukur dari foto) ----------
    Keadaan diam: TIDAK ADA apa pun di atas foto — monitor hanya

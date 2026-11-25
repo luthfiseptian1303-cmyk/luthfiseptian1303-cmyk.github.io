@@ -54,7 +54,18 @@
      panggung gelap 134px (sumbernya potret — cover pasti memotong
      botol), nama + baris notes pertama selalu terlihat pada paint
      pertama. Bar kembali detail/showcase dihoist keluar dari badan
-     scroll jadi bar tetap. Jalur sentuh v3t tidak berubah. */
+     scroll jadi bar tetap. Jalur sentuh v3t tidak berubah.
+     v3v (perintah user di HP asli pada versi LIVE /ruangan: "Pas di
+     pencet buat full layar"): framing kedatangan dive diganti dari
+     fit 88-92% (bezel + rim ruangan disisakan) menjadi COVER —
+     display yang dipencet memenuhi seluruh panggung tepi-ke-tepi,
+     tanpa dinding/bezel/rim. Konsekuensinya diatur di tiga tempat:
+     diveTransform (skala cover + over-cover 1.04 + faktor cos(rotY)
+     untuk monitor samping), correctFit (koreksi ukur sekarang
+     menegakkan COVER, dibatasi kanvas), dan placeHub (skala
+     tergambar kanvas dibatasi juga oleh ukuran panggung agar
+     kanvas + tombol x tidak terpotong tepi viewport). Isi grup,
+     jalur sentuh, iframe live + fallback lokal: TIDAK berubah. */
   var GROUPS = {
     brand: { no:"01", label:"BRAND & LOGO",  l1:"Brand &", l2:"Logo.",
              tabs:["Kuliner", "Beauty", "Jasa & Tech"] },
@@ -113,20 +124,30 @@
      tengah x 32.3-54.8 y 33.0-54.5; kanan x 55.1-77.1 y 31.4-55.5.
      PORTRAIT room-portrait.jpg — kiri x 1.5-27.9 y 42.3-53.7;
      tengah x 28.0-55.6 y 43.5-53.7; kanan x 55.9-80.1 y 42.8-54.2.
-     Skala dive TIDAK lagi tetap: dihitung agar lebar display yang
-     ter-zoom = 88% lebar panggung (s = 0.88 * lebarPanggung / lebarDisplayPx)
-     — samakan bingkai terdekat reel KAPSEL: bezel monitor + sisa rim
-     ruangan gelap tetap terlihat, layar tidak pernah memenuhi tepi.
+     Skala dive TIDAK lagi tetap: sejak v3v dihitung COVER — display
+     yang dipencet memenuhi seluruh panggung tepi-ke-tepi saat dive
+     mendarat (perintah user di HP asli pada versi live: "Pas di
+     pencet buat full layar"); bezel/dinding/rim ruangan tidak
+     terlihat lagi selama grup terbuka. Dulu (v3k-v3u) framing-nya
+     fit 88-92% dengan bezel + rim sengaja disisakan — DITOLAK user.
+     REKTANG DALAM (iy/ih per quad, % foto) = tepi display NYATA,
+     hasil pindai piksel kedua foto (klasifikasi teal display:
+     B-R > 25) pada kolom-kolom sekitar pusat tiap monitor, diambil
+     konservatif (persentil ke-2 dari 5 kolom). Trapesium display
+     selalu miring DI DALAM bbox-nya — mis. portrait tengah: bbox
+     y 43.5-53.7, display nyata hanya 43.98-52.62. Cover dihitung
+     dari rektang dalam ini; bbox tetap dipakai untuk lebar,
+     geometri hub, dan zona pencet.
      rotY = perspektif trapesium monitor samping di foto (samakan .scr). */
   var QUADS_L = {
-    web:   { x:32.3, y:33.0, w:22.5, h:21.5, rotY:0,   org:"50% 50%" },
-    brand: { x:8.8,  y:29.8, w:23.1, h:25.8, rotY:19,  org:"100% 50%" },
-    video: { x:55.1, y:31.4, w:22.0, h:24.1, rotY:-19, org:"0% 50%" }
+    web:   { x:32.3, y:33.0, w:22.5, h:21.5, iy:33.67, ih:20.24, rotY:0,   org:"50% 50%" },
+    brand: { x:8.8,  y:29.8, w:23.1, h:25.8, iy:34.69, ih:17.89, rotY:19,  org:"100% 50%" },
+    video: { x:55.1, y:31.4, w:22.0, h:24.1, iy:33.20, ih:20.86, rotY:-19, org:"0% 50%" }
   };
   var QUADS_P = {
-    web:   { x:28.0, y:43.5, w:27.6, h:10.2, rotY:0,   org:"50% 50%" },
-    brand: { x:1.5,  y:42.3, w:26.4, h:11.4, rotY:19,  org:"100% 50%" },
-    video: { x:55.9, y:42.8, w:24.2, h:11.4, rotY:-19, org:"0% 50%" }
+    web:   { x:28.0, y:43.5, w:27.6, h:10.2, iy:43.98, ih:8.64, rotY:0,   org:"50% 50%" },
+    brand: { x:1.5,  y:42.3, w:26.4, h:11.4, iy:44.14, ih:7.66, rotY:19,  org:"100% 50%" },
+    video: { x:55.9, y:42.8, w:24.2, h:11.4, iy:43.67, ih:9.14, rotY:-19, org:"0% 50%" }
   };
   function quad(key){ return (portrait() ? QUADS_P : QUADS_L)[key]; }
   var lastDive = null;   /* {key, s, q} hasil dive terakhir — untuk ukuran hub */
@@ -194,37 +215,75 @@
   }
   function diveTransform(key){
     var q = quad(key), r = stage.getBoundingClientRect();
-    var px = frame.x + (q.x + q.w/2)/100 * frame.w;   /* pusat display dlm koordinat panggung */
-    var py = frame.y + (q.y + q.h/2)/100 * frame.h;
-    /* Lebar display ter-zoom: portrait 92% lebar panggung (target
-       90-94%), landscape 88% (bingkai reel v3k); tinggi dibatasi 94%
-       tinggi panggung agar display tak pernah terpotong vertikal. */
-    var frac = portrait() ? 0.92 : 0.88;
-    var s = Math.min(frac * r.width / (q.w/100 * frame.w),
-                     0.94 * r.height / (q.h/100 * frame.h));
+    var px = frame.x + (q.x + q.w/2)/100 * frame.w;   /* pusat display (x) dlm koordinat panggung */
+    var py = frame.y + (q.iy + q.ih/2)/100 * frame.h; /* pusat REKTANG DALAM display (y) */
+    /* FULL LAYAR (v3v — perintah user: "Pas di pencet buat full
+       layar"): skala dive sekarang COVER, bukan fit — dan dihitung
+       dari REKTANG DALAM display (iy/ih), bukan bbox quad:
+       trapesium display miring di dalam bbox-nya, jadi cover atas
+       bbox terbukti menyisakan irisan dinding krem ~5px di tepi
+       atas + bezel ~30px di tepi bawah (pindai piksel screenshot
+       rig v3v putaran pertama, kedatangan 390x844). Rumus:
+       s = OVER * maks(vw/lebarDisplay, vh/tinggiDalamDisplay),
+       pusat rektang dalam dipetakan ke pusat panggung (diveT di
+       bawah). Lebar efektif monitor samping dikali cos(rotY):
+       proyeksi trapesiumnya menyempit secara horizontal, jadi
+       tanpa faktor ini sisi lebarnya kurang-cover. OVER 1.03 =
+       cadangan di atas rektang dalam (yang sendirinya konservatif)
+       agar koreksi ukur (correctFit) hampir tidak pernah perlu
+       memperbesar lagi melewati batas aman kanvas. */
+    var effW = (q.w/100 * frame.w) * (q.rotY ? Math.cos(q.rotY * Math.PI/180) : 1);
+    var s = 1.03 * Math.max(r.width / effW, r.height / (q.ih/100 * frame.h));
     lastDive = { key:key, s:s, q:q };
     diveO = { x:px, y:py }; diveS = s;
     diveT = { x:r.width/2 - px, y:r.height/2 - py };
     applyCam();
   }
-  /* KOREKSI PAS BERBASIS UKURAN NYATA (cacat 3 v3m di HP user: display
-     samping terpotong tepi viewport). Setelah dive mendarat, rect
-     monitor (.scr) diukur; bila keluar dari [8, W-8]x[6, H-6] atau
-     pusatnya meleset > 3px, transform ditulis ulang dari hasil ukur:
-     R2(p) = Sc + cs*(R(p) - Mc)  ->  s' = cs*s,
-     t' = Sc + cs*(O + t - Mc) - O. Di browser normal koreksi ~= 0;
-     di perangkat yang matematikanya meleset, framing dipaksa pas. */
+  /* KOREKSI COVER BERBASIS UKURAN NYATA (v3v; menggantikan koreksi
+     fit v3m yang MENYUSUTKAN display ke dalam [8, W-8]x[6, H-6]).
+     Setelah dive mendarat: (1) rect HUB diukur lalu digelembungkan
+     balik sebesar inset-nya (hub = quad x (1-2*HUB_INSET), konsentris
+     dengan quad) menjadi proksi rect DISPLAY — lebarnya dari bbox
+     quad, TINGGI dan PUSATNYA dari rektang dalam (iy/ih), karena
+     hanya rektang dalam yang menjamin tepi display nyata (bukan
+     dinding/bezel) yang menutupi panggung; (2) bila proksi itu
+     belum MENUTUPI panggung atau pusatnya meleset > 3px, transform
+     ditulis ulang dari hasil ukur: R2(p) = Sc + cs*(R(p) - Mc) ->
+     s' = cs*s, t' = Sc + cs*(O + t - Mc) - O, Mc = pusat hub terukur;
+     (3) cs DIBATASI kanvas .screen: faktor terbesar yang menjaga
+     kanvas tetap utuh di dalam panggung (margin 4px) MENANG atas
+     cover — kanvas tidak boleh terpotong. Karena dive analitik
+     sudah over-cover 1.04 dan placeHub membatasi skala tergambar
+     kanvas dari ukuran panggung, kedua syarat praktis selalu
+     terpenuhi bersamaan; bila suatu perangkat memaksa konflik,
+     kanvas yang didahulukan dan display bisa kurang-cover < 1%. */
   function correctFit(){
     if(!curGroup || (state !== "open" && state !== "diving")) return;
-    var zone = document.querySelector('[data-open="' + curGroup + '"]');
-    if(!zone || !zone.parentElement) return;
+    if(!hub || hub.hidden) return;
     var sr = stage.getBoundingClientRect();
-    var mr = zone.parentElement.getBoundingClientRect();
-    if(mr.width < 10 || sr.width < 10) return;
-    var cs = Math.min((sr.width - 16) / mr.width, (sr.height - 12) / mr.height, 1);
-    var mcx = mr.left - sr.left + mr.width/2, mcy = mr.top - sr.top + mr.height/2;
+    var hr = hub.getBoundingClientRect();
+    if(hr.width < 10 || sr.width < 10) return;
+    var inv = 1 / (1 - 2 * HUB_INSET);   /* hub -> quad bbox */
+    var qw = hr.width * inv;   /* lebar proksi: bbox quad (sisi lebar selalu jauh over-cover) */
+    var qh = hr.height * inv * (lastDive.q.ih / lastDive.q.h);   /* tinggi proksi: REKTANG DALAM display */
+    /* Pusat proksi = pusat rektang dalam yang ter-render: pusat hub
+       (= pusat quad) digeser selisih pusat-dalam-vs-bbox, diskalakan
+       skala dive saat ini. */
+    var dyOff = ((lastDive.q.iy + lastDive.q.ih/2) - (lastDive.q.y + lastDive.q.h/2)) / 100 * frame.h * diveS;
+    var mcx = hr.left - sr.left + hr.width/2, mcy = hr.top - sr.top + hr.height/2 + dyOff;
     var dx = sr.width/2 - mcx, dy = sr.height/2 - mcy;
-    if(cs > 0.999 && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
+    var covers = (mcx - qw/2 <= 0.5) && (mcy - qh/2 <= 0.5)
+              && (mcx + qw/2 >= sr.width - 0.5) && (mcy + qh/2 >= sr.height - 0.5);
+    var csCover = covers ? 1 : Math.max(sr.width / qw, sr.height / qh);
+    var csCap = Infinity;
+    var scEl = document.getElementById("screen");
+    if(scEl){
+      var cr = scEl.getBoundingClientRect();
+      if(cr.width > 10 && cr.height > 10)
+        csCap = Math.min((sr.width - 8) / cr.width, (sr.height - 8) / cr.height);
+    }
+    var cs = Math.min(csCover, csCap);
+    if(Math.abs(cs - 1) < 0.002 && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
     cs = Math.max(cs, 0.5);
     var t2x = sr.width/2  + cs * (diveO.x + diveT.x - mcx) - diveO.x;
     var t2y = sr.height/2 + cs * (diveO.y + diveT.y - mcy) - diveO.y;
@@ -258,14 +317,23 @@
     hub.style.transform = "rotateY(" + q.rotY + "deg)";
     hub.classList.toggle("tilt", q.rotY !== 0);
     /* Kanvas layar HP: skala k (koordinat lokal hub) dipilih agar
-       (a) kanvas 340x280 muat di dalam hub (faktor 0.98), dan
+       (a) kanvas 340x280 muat di dalam hub (faktor 0.98),
        (b) skala TERGAMBAR k*s tidak pernah melebihi 1.2 — teks tetap
-       berukuran HP walau display raksasa di desktop. */
+       berukuran HP walau display raksasa di desktop, dan
+       (c) sejak v3v (dive COVER full layar): kanvas tergambar juga
+       tidak boleh melebihi PANGGUNG (margin 12px per sisi). Tanpa
+       (c), di HP 390px cap (a)/(b) memberi kanvas tergambar 408px —
+       lebih lebar dari layar, tepi kanvas + tombol x terpotong tepi
+       viewport. Cap panggung ini yang menjamin kanvas selalu utuh
+       terlihat dan terpusat pada kedatangan full layar. */
     var sc = document.getElementById("screen");
     if(sc && lastDive.s > 0){
       var Hw = q.w * (1 - 2 * HUB_INSET) / 100 * frame.w;
       var Hh = q.h * (1 - 2 * HUB_INSET) / 100 * frame.h;
-      var k = Math.min(Hw * 0.98 / 340, Hh * 0.98 / 280, 1.2 / lastDive.s);
+      var sr2 = stage.getBoundingClientRect();
+      var capStage = Math.min((sr2.width - 24) / 340, (sr2.height - 24) / 280);
+      var k = Math.min(Hw * 0.98 / 340, Hh * 0.98 / 280,
+                       Math.min(1.2, capStage) / lastDive.s);
       sc.style.transform = "scale(" + k.toFixed(4) + ")";
     }
   }
