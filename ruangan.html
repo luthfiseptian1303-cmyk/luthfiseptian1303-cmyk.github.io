@@ -49,6 +49,14 @@
         <div class="hub" id="hub" role="dialog" aria-label="Identitas grup di dalam monitor" hidden></div>
         </div>
       </div>
+
+      <!-- TAKEOVER LIVE (v3w): lapisan di atas SELURUH panggung (saudara
+           .cam, BUKAN anak .breath/.cam) — iframe situs live LUMÉRA +
+           chip kembali melayang dirender JS ke sini saat view "live"
+           dibuka. inset:0 terhadap .stage = viewport panggung penuh:
+           di HP panggung memang 100vw x 100dvh, jadi situs asli tampil
+           persis seperti dibuka layar penuh. Kosong + hidden saat diam. -->
+      <div class="takeover" id="takeover" hidden></div>
     </div>
 
     <p class="stage-hint">Pencet salah satu monitornya — kamera akan mendekat.</p>

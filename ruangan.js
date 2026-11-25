@@ -65,7 +65,21 @@
      menegakkan COVER, dibatasi kanvas), dan placeHub (skala
      tergambar kanvas dibatasi juga oleh ukuran panggung agar
      kanvas + tombol x tidak terpotong tepi viewport). Isi grup,
-     jalur sentuh, iframe live + fallback lokal: TIDAK berubah. */
+     jalur sentuh, iframe live + fallback lokal: TIDAK berubah.
+     v3w (perintah user di HP asli pada versi LIVE: "Fullin buy
+     tampilannya", membalas screenshot view live yang masih duduk
+     di dalam kanvas hub ~336px di bawah bar hub): view LIVE kini
+     TAKEOVER LAYAR PENUH — iframe situs asli dirender di lapisan
+     .takeover (saudara .cam, inset:0 terhadap .stage = seluruh
+     viewport panggung; di HP = 100vw x 100dvh), tanpa bar hub /
+     tab / margin kanvas, jadi LUMÉRA tampil persis seperti dibuka
+     layar penuh dan layout responsifnya sendiri yang berlaku.
+     Keluar lewat chip melayang "‹ Kembali" (kanan-atas — pojok
+     yang sengaja dikosongkan masthead HP situs asli; lihat
+     ruangan.css) -> kembali ke DETAIL di dalam monitor, dari sana
+     x bertahap seperti biasa. Deteksi fallback sama, tapi kini
+     keluar dari takeover secara bersih ke showcase lokal DI DALAM
+     kanvas (fallback tidak ikut takeover). Sisanya tidak berubah. */
   var GROUPS = {
     brand: { no:"01", label:"BRAND & LOGO",  l1:"Brand &", l2:"Logo.",
              tabs:["Kuliner", "Beauty", "Jasa & Tech"] },
@@ -79,7 +93,8 @@
   /* ================= LUMÉRA (v3s) — satu-satunya isi =================
      Keadaan tampilan di dalam layar Websites: main (identitas grup
      saja, seperti v3q) | list (baris LUMÉRA di tab Toko Online) |
-     detail | live (situs asli via iframe — utama di deploy) |
+     detail | live (situs asli via iframe TAKEOVER layar penuh —
+     utama di deploy, sejak v3w) |
      show (showcase lokal — fallback otomatis) | prod (produk).
      Grup lain selalu "main". */
   var view = "main";
@@ -178,6 +193,7 @@
   var stage = document.getElementById("stage");
   var cam = document.getElementById("cam");
   var hub = document.getElementById("hub");
+  var takeover = document.getElementById("takeover");
   var breath = cam.querySelector(".breath");
 
   /* Mode portrait: aspek viewport < 0.8 ATAU lebar <= 640px (samakan dgn CSS) */
@@ -402,25 +418,54 @@
   }
 
   /* ---------- TAMPILAN LIVE (deploy): iframe situs asli + fallback ----------
-     data-play membuka view "live": iframe same-origin /lumera.html
-     memenuhi badan layar di bawah bar tetap (pola live CarlLab).
-     Konfirmasi positif wajib: dokumen iframe bisa diakses (same-origin),
+     data-play membuka view "live": iframe same-origin /lumera.html.
+     v3w: iframe TIDAK lagi dirender di badan kanvas hub — ia masuk
+     lapisan TAKEOVER layar penuh (.takeover, lihat showTakeover),
+     dan hub di belakangnya hanya memuat placeholder. Konfirmasi
+     positif wajib: dokumen iframe bisa diakses (same-origin),
      URL-nya lumera.html, dan teks badannya memuat "LUMÉRA". Bila dalam
      ±4 detik tidak terkonfirmasi (terblokir CSP/X-Frame, 404, error),
-     ATAU dokumen selesai dimuat tapi terbukti bukan LUMÉRA, tampilan
-     ditukar otomatis ke showcase lokal ("show") — layar tidak pernah
-     menampilkan halaman error browser. */
+     ATAU dokumen selesai dimuat tapi terbukti bukan LUMÉRA, takeover
+     ditutup bersih dan tampilan ditukar otomatis ke showcase lokal
+     ("show") DI DALAM kanvas — layar tidak pernah menampilkan
+     halaman error browser, dan fallback tidak pernah ikut takeover. */
   var liveSeq = 0, liveTimer = null;
   function clearLiveTimer(){ if(liveTimer){ clearTimeout(liveTimer); liveTimer = null; } }
   function liveFallback(seq){
     if(seq !== liveSeq) return;
     if(view !== "live" || (state !== "open" && state !== "diving")) return;
+    hideTakeover();
     view = "show"; renderScreen();
+  }
+  /* TAKEOVER (v3w): tampilkan/sembunyikan lapisan layar penuh.
+     showTakeover merender iframe + chip "‹ Kembali" ke .takeover;
+     hideTakeover mengosongkannya lagi (iframe dibuang = muatannya
+     berhenti) dan membatalkan cek fallback yang menggantung lewat
+     liveSeq++ — pola yang sama seperti liveSeq++ di closeGroup. */
+  function showTakeover(){
+    takeover.innerHTML = liveHTML()
+      + '<button class="backchip" type="button" data-backlive aria-label="Kembali ke detail LUM\u00c9RA">\u2039 Kembali</button>';
+    takeover.hidden = false;
+    document.body.classList.add("live-open");   /* pil nav disembunyikan selama takeover (lihat CSS) */
+  }
+  function hideTakeover(){
+    document.body.classList.remove("live-open");
+    if(takeover.hidden && !takeover.innerHTML) return;
+    takeover.hidden = true;
+    takeover.innerHTML = "";
+    liveSeq++;
+    clearLiveTimer();
+  }
+  /* Keluar dari live: tutup takeover, kembali ke DETAIL di dalam
+     monitor (keadaan sebelum "Lihat di HP ini" dipencet). */
+  function exitLive(){
+    hideTakeover();
+    view = "detail"; renderScreen();
   }
   function armLiveFrame(){
     var seq = ++liveSeq;
     clearLiveTimer();
-    var f = hub.querySelector("iframe.liveframe");
+    var f = takeover.querySelector("iframe.liveframe");
     if(!f){ liveFallback(seq); return; }
     var done = false;
     function check(){
@@ -479,7 +524,10 @@
       if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live"){
-        h += '<div class="scr-body fill" id="uiBody">' + liveHTML() + "</div>";
+        /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
+           di lapisan TAKEOVER layar penuh di atas seluruh panggung
+           (showTakeover di akhir render ini), bukan di sini lagi. */
+        h += '<div class="scr-body fill" id="uiBody"><p class="note">Situs live dibuka memenuhi layar\u2026</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
           + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "show" ? showHTML() : prodHTML())
@@ -492,7 +540,7 @@
     }
     hub.innerHTML = h + "</div></div>";
     placeHub();   /* skala kanvas .screen dihitung ulang tiap render */
-    if(view === "live") armLiveFrame();
+    if(view === "live"){ showTakeover(); armLiveFrame(); }
   }
   function renderHub(){
     /* Websites dibuka langsung di tab Toko Online — tab satu-satunya
@@ -506,7 +554,7 @@
      seperti v3q. */
   function backOrClose(){
     if(view === "prod"){ view = "show"; renderScreen(); return; }
-    if(view === "live"){ view = "detail"; renderScreen(); return; }
+    if(view === "live"){ exitLive(); return; }
     if(view === "show"){ view = "detail"; renderScreen(); return; }
     if(view === "detail"){ view = "list"; renderScreen(); return; }
     closeGroup();
@@ -544,6 +592,7 @@
   function closeGroup(done){
     if(state === "idle") { if(done) done(); return; }
     clearTimers(); clearLiveTimer(); liveSeq++;
+    hideTakeover();   /* v3w: takeover live tidak boleh tertinggal di atas ruangan */
     state = "returning";
     hub.classList.remove("show");
     stage.classList.remove("zoomed");
@@ -568,6 +617,10 @@
        dari DOM sebelum event selesai bubbling), jadi contains() bisa
        false untuk klik yang sah di dalam hub — path saat dispatch
        yang benar. */
+    /* v3w: ketukan pada lapisan takeover (chip kembali) BUKAN klik
+       di luar display — jangan tutup grup karenanya. (Ketukan di
+       dalam iframe sendiri tidak pernah mencapai dokumen induk.) */
+    if(!takeover.hidden && e.composedPath().indexOf(takeover) !== -1) return;
     if(state === "open" && e.composedPath().indexOf(hub) === -1) closeGroup();
   });
 
@@ -592,7 +645,7 @@
     if(!webContent()) return false;
     if(t.closest("[data-work]")){ view = "detail"; renderScreen(); return true; }
     if(t.closest("[data-play]")){ view = "live"; renderScreen(); return true; }
-    if(t.closest("[data-backlive]")){ view = "detail"; renderScreen(); return true; }
+    if(t.closest("[data-backlive]")){ exitLive(); return true; }
     var pr = t.closest("[data-prod]");
     if(pr){ curProd = +pr.getAttribute("data-prod"); view = "prod"; renderScreen(); return true; }
     if(t.closest("[data-backprod]")){ view = "show"; renderScreen(); return true; }
@@ -607,6 +660,38 @@
     if(Date.now() - lastTouchAction < 800) return;
     hubAction(e.target);
   });
+
+  /* v3w — CHIP KEMBALI di lapisan takeover. Chip adalah satu-satunya
+     elemen dokumen induk yang bisa dipencet selama takeover (sisanya
+     wilayah iframe, dokumen terpisah). Jalur ganda seperti hub:
+     click biasa + touchend langsung (ambang gerak/waktu yang sama
+     dengan jalur sentuh hub v3t) dengan stempel dedupe bersama,
+     supaya ketukan chip tidak pernah gugur atau jalan dua kali. */
+  takeover.addEventListener("click", function(e){
+    if(Date.now() - lastTouchAction < 800) return;
+    if(e.target.closest && e.target.closest("[data-backlive]")) exitLive();
+  });
+  var tkStart = null;
+  takeover.addEventListener("touchstart", function(e){
+    var t = e.changedTouches[0];
+    tkStart = { x:t.clientX, y:t.clientY, time:Date.now() };
+  }, { passive:true });
+  takeover.addEventListener("touchend", function(e){
+    if(!tkStart) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - tkStart.x, dy = t.clientY - tkStart.y;
+    var dt = Date.now() - tkStart.time;
+    tkStart = null;
+    if(dx * dx + dy * dy > 144 || dt > 600) return;   /* ini scroll, bukan ketuk */
+    var el = document.elementFromPoint(t.clientX, t.clientY);
+    if(!el || !takeover.contains(el)) return;
+    if(el.closest && el.closest("[data-backlive]")){
+      exitLive();
+      e.preventDefault();
+      lastTouchAction = Date.now();
+    }
+  }, { passive:false });
+  takeover.addEventListener("touchcancel", function(){ tkStart = null; }, { passive:true });
 
   /* v3t — JALUR SENTUH LANGSUNG. Diagnosis HP user: baris produk
      hanya bergantung pada event click sintetis. Di WebView/viewer
@@ -664,6 +749,7 @@
 
   function hardReset(){
     clearTimers(); clearLiveTimer(); liveSeq++;
+    hideTakeover();   /* v3w: ganti mode portrait/landscape juga menutup takeover */
     hub.classList.remove("show"); hub.hidden = true; hub.innerHTML = "";
     stage.classList.remove("zoomed"); stage.classList.remove("returning");
     cam.style.transform = "";

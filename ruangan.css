@@ -331,3 +331,53 @@ body.ready .stage-hint{opacity:1}
    jadi layar tidak pernah menampilkan halaman error browser. */
 .liveframe{flex:1;width:100%;min-height:0;border:0;border-radius:10px;background:#060607;display:block}
 
+/* ================================================================
+   v3w — TAKEOVER LIVE LAYAR PENUH (perintah user di HP asli pada
+   versi live: "Fullin buy tampilannya", membalas screenshot LUMÉRA
+   live yang masih duduk kecil di dalam kanvas hub di bawah bar).
+   "Lihat di HP ini" kini mengambil alih SELURUH viewport panggung:
+   lapisan .takeover (saudara .cam di dalam .stage, z-index 50)
+   menutupi panggung tepi-ke-tepi — tanpa bar hub, tanpa tab, tanpa
+   margin kanvas — dan iframe situs asli dirender di dalamnya pada
+   lebar panggung penuh (390px di HP), jadi layout responsif
+   LUMÉRA sendiri yang berlaku, persis seperti situsnya dibuka
+   layar penuh. Keluar: chip melayang "‹ Kembali" -> kembali ke
+   detail di dalam monitor; dari sana x bertahap seperti biasa.
+   POSISI CHIP (keputusan berbasis header situs asli, terverifikasi
+   dari byte live lumera.html): masthead LUMÉRA mengelompokkan
+   SEMUA kontrolnya ke KIRI di HP (brand + toggle ID/EN sebaris,
+   pil Koleksi/Tas di baris bawahnya) dan pojok kanan atas SENGAJA
+   dikosongkan situsnya untuk tombol melayang aplikasi pratinjau —
+   chip duduk di sana (top:14px; right:14px pada lebar <= 640px,
+   selalu < 760px = breakpoint masthead HP situsnya). Bawah-kiri
+   ditolak: teks hero situs (judul + lede) tetap di kiri-bawah;
+   bawah-kanan ditolak: pil petunjuk "Pilih parfum" situs duduk di
+   kanan-bawah. Di layar lebar (> 640px) masthead desktop situs
+   setinggi 96px dengan toggle ID/EN di kanan-atas, jadi chip
+   digeser ke bawah masthead (top:112px; right:22px) — tetap tidak
+   menimpa ID/EN maupun pil Koleksi/Tas yang di tengah.
+   Fallback lokal TIDAK berubah: showcase tetap di dalam kanvas. */
+.takeover{position:absolute;inset:0;z-index:50;background:#060607;overflow:hidden}
+/* Selama takeover, pil nav halaman (chrome di luar panggung, fixed
+   z-80) disembunyikan: di HP ia melayang tepat di atas masthead
+   situs dan menutupi toggle ID/EN LUMÉRA — takeover harus bersih
+   seperti situsnya dibuka layar penuh. Pola yang sama seperti
+   petunjuk panggung yang disembunyikan selama zoom (v3v). Nav
+   kembali begitu takeover ditutup (class dilepas hideTakeover). */
+body.live-open nav{opacity:0;pointer-events:none}
+.takeover[hidden]{display:none!important}
+.takeover .liveframe{position:absolute;inset:0;width:100%;height:100%;min-height:0;
+  border:0;border-radius:0;background:#060607;display:block}
+.backchip{position:absolute;top:112px;right:22px;z-index:2;display:inline-flex;align-items:center;
+  border:1px solid rgba(255,255,255,.22);background:rgba(10,10,12,.72);color:#f4efe8;
+  border-radius:999px;padding:9px 15px;font:inherit;font-size:13px;font-weight:700;letter-spacing:.02em;
+  cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation;
+  box-shadow:0 8px 24px rgba(0,0,0,.45)}
+@media (max-width:640px){
+  .backchip{top:14px;right:14px}
+}
+@media (hover:hover) and (pointer:fine){
+  .backchip:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+}
+
