@@ -703,6 +703,19 @@
   function hubAction(t){
     if(!t || !t.closest) return false;
     if(state !== "open" && state !== "diving") return false;
+    /* v4.3 — KUNCI INPUT PASCA-GANTI-VIEW: aksi apa pun dalam 600ms
+       sesudah render view terakhir DIBUANG. Sesudah chip menjalankan
+       exitLive, view DETAIL muncul dengan tombol ✕ TEPAT di titik
+       layar yang sama dengan chip barusan — kejadian susulan dari
+       ketukan yang sama (click sintetis pasca-touchend / dispatch
+       kedua) mendarat di ✕ itu dan memutar backOrClose berantai
+       (detail → daftar → ruangan) dalam satu kedipan: itulah
+       lompatan chip (7x reproduksi; Escape & ✕ manual sehat karena
+       tidak ada view baru yang muncul di bawah kursornya). Manusia
+       tidak mungkin menekan aksi berikut <600ms sesudah view berganti
+       (rantai ✕ tetap nyaman dipakai), jadi kunci ini hanya memakan
+       kejadian sintetis. */
+    if(Date.now() - lastViewChange < 600) return false;
     if(t.closest("[data-close]")){ backOrClose(); return true; }
     if(state !== "open") return false;
     var tb = t.closest("[data-tab]");
