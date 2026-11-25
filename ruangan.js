@@ -251,6 +251,27 @@
     frame = { x:(r.width - fw) / 2, y:(r.height - fh) / 2, w:fw, h:fh };
     breath.style.left = frame.x + "px"; breath.style.top = frame.y + "px";
     breath.style.width = frame.w + "px"; breath.style.height = frame.h + "px";
+    placeWakes();
+  }
+
+  /* v4.5 — posisi lapisan cahaya istirahat: geometri yang sama
+     persis dengan placeHub (quad display + inset 1.5% + pose
+     rotateY), supaya cahaya duduk tepat di permukaan kaca monitor
+     seperti isi grup saat dive — bukan kotak tempelan. */
+  var wakeEls = { brand:document.getElementById("wake-brand"),
+                  web:document.getElementById("wake-web"),
+                  video:document.getElementById("wake-video") };
+  function placeWakes(){
+    ["brand","web","video"].forEach(function(key){
+      var el = wakeEls[key]; if(!el) return;
+      var q = quad(key);
+      el.style.left   = (q.x + q.w * HUB_INSET).toFixed(3) + "%";
+      el.style.top    = (q.iy + q.ih * HUB_INSET).toFixed(3) + "%";
+      el.style.width  = (q.w * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
+      el.style.height = (q.ih * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
+      el.style.transformOrigin = q.org;
+      el.style.transform = "rotateY(" + q.rotY + "deg)";
+    });
   }
 
   var state = "idle";            /* idle | diving | open | returning */
@@ -402,7 +423,7 @@
       + '<div class="rows">'
       + '<button class="row" type="button" data-work="0"><img class="timg sq" alt="" src="' + LUMERA.img + '">'
       + '<span class="rtx"><span class="rnm">' + esc(LUMERA.nm) + '</span><span class="rsb">' + esc(LUMERA.sb) + "</span></span>"
-      + '<span class="arw">›</span></button>'
+      + '<span class="arw">\u203a</span></button>'
       + "</div>"
       + '<p class="foot">' + esc(WEB_FOOT) + "</p>";
   }
@@ -414,7 +435,7 @@
       + metaHTML(LUMERA.meta)
       + '<p class="dds" style="margin-top:7px">' + esc(LUMERA.ds) + "</p>"
       + '<button class="pbtn" type="button" data-play>Lihat di HP ini</button>'
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya ↗</a>';
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya \u2197</a>';
   }
   /* Showcase LOKAL: kepala LUMÉRA + The Night Collection, hero wide,
      lalu 5 produk sebagai daftar ala HP (gambar + nama + garis
@@ -430,16 +451,16 @@
   function showHTML(){
     /* v3u: bar (‹ Detail + nama) dihoist jadi viewbar tetap oleh
        renderScreen — di sini tinggal isi scroll-nya. */
-    var h = '<p class="note">The Night Collection · 5 wewangian</p>'
+    var h = '<p class="note">The Night Collection \u00b7 5 wewangian</p>'
       + '<div class="hero"><img alt="" src="' + LUMERA.wide + '"><b>The Night Collection</b>' + heroZonesHTML() + '</div>'
       + '<div class="rows">';
     LUMERA_PRODUCTS.forEach(function(p, i){
       h += '<button class="row" type="button" data-prod="' + i + '"><img class="timg" alt="" src="' + p.img + '">'
         + '<span class="rtx"><span class="rnm">' + esc(p.nm) + '</span><span class="rsb">' + esc(p.notes[1][1]) + "</span></span>"
-        + '<span class="arw">›</span></button>';
+        + '<span class="arw">\u203a</span></button>';
     });
     return h + "</div>"
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya ↗</a>';
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya \u2197</a>';
   }
   /* Tampilan produk (v3u): bar atas (‹ Koleksi + posisi n / 5 + ✕)
      adalah .scr-top kanvas — tetap, di luar scroll (lihat
@@ -471,7 +492,8 @@
   /* Stempel waktu keluar terakhir dari takeover (diisi exitLive).
      Dipakai penjaga klik-luar di panggung: klik yang menutup
      takeover tidak boleh ikut menutup grup pada dispatch yang sama. */
-  var lastTakeoverExit = 0;  var lastViewChange = 0;   /* v4.1: stempel render view terakhir (penjaga klik-luar) */
+  var lastTakeoverExit = 0;
+  var lastViewChange = 0;   /* v4.1: stempel render view terakhir (penjaga klik-luar) */
   function clearLiveTimer(){ if(liveTimer){ clearTimeout(liveTimer); liveTimer = null; } }
   function liveFallback(seq){
     if(seq !== liveSeq) return;
@@ -486,7 +508,7 @@
      liveSeq++ — pola yang sama seperti liveSeq++ di closeGroup. */
   function showTakeover(){
     takeover.innerHTML = liveHTML()
-      + '<button class="backchip" type="button" data-backlive aria-label="Kembali ke detail LUMÉRA">‹ Kembali</button>';
+      + '<button class="backchip" type="button" data-backlive aria-label="Kembali ke detail LUM\u00c9RA">\u2039 Kembali</button>';
     takeover.hidden = false;
     document.body.classList.add("live-open");   /* pil nav disembunyikan selama takeover (lihat CSS) */
   }
@@ -507,7 +529,7 @@
   function exitLive(){
     lastTakeoverExit = Date.now();
     hideTakeover();
-    view = "list"; renderScreen();
+    view = "list"; renderScreen();   /* v4.4: kembali dari live langsung ke DAFTAR — view detail dihapus dari alur atas perintah user (pencet LUMÉRA langsung situsnya full) */
   }
   function armLiveFrame(){
     var seq = ++liveSeq;
@@ -521,7 +543,7 @@
       try {
         var d = f.contentWindow.document;
         ok = !!d && /lumera\.html/.test(d.URL || "") && !!d.body
-             && /LUMÉRA/.test(d.body.innerText || "");
+             && /LUM\u00c9RA/.test(d.body.innerText || "");
       } catch(e){ ok = false; }
       if(ok){ done = true; clearLiveTimer(); return; }
       /* dokumen termuat tapi terbukti BUKAN LUMÉRA (mis. halaman 404):
@@ -535,7 +557,7 @@
     liveTimer = setTimeout(function(){ if(!done) liveFallback(seq); }, 4000);
   }
   function liveHTML(){
-    return '<iframe class="liveframe" src="/lumera.html" title="Situs live LUMÉRA di dalam monitor" loading="eager"></iframe>';
+    return '<iframe class="liveframe" src="/lumera.html" title="Situs live LUM\u00c9RA di dalam monitor" loading="eager"></iframe>';
   }
   /* Render seluruh isi layar. Mode identitas (view "main") = markup
      v3q persis: label + angka + headline + tab, tanpa badan isi.
@@ -557,25 +579,25 @@
          ia di dalam scroll: ikut terseret dan terpotong di tepi). */
     var top;
     if(view === "prod"){
-      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>‹ Koleksi</button>'
+      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>\u2039 Koleksi</button>'
         + '<span class="prodpos">' + (curProd + 1) + " / " + LUMERA_PRODUCTS.length + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">✕</button></div>';
+        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
     } else {
-      top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> · ' + g.label + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">✕</button></div>';
+      top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> \u00b7 ' + g.label + '</span>'
+        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
     }
     var h = '<div class="view scr-view"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
-      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>‹ Grup</button></div>';
-      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>‹ Grup</button><b>' + esc(LUMERA.nm) + '</b></div>';
-      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>‹ Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 Grup</button></div>';
+      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 Grup</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live"){
         /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
            di lapisan TAKEOVER layar penuh di atas seluruh panggung
            (showTakeover di akhir render ini), bukan di sini lagi. */
-        h += '<div class="scr-body fill" id="uiBody"><p class="note">Situs live dibuka memenuhi layar…</p></div>';
+        h += '<div class="scr-body fill" id="uiBody"><p class="note">Situs live dibuka memenuhi layar\u2026</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
           + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "show" ? showHTML() : prodHTML())
@@ -615,6 +637,7 @@
       return;
     }
     curGroup = key;
+    stage.classList.remove("awake"); stage.classList.remove("waking");   /* v4.5: layar istirahat padam begitu dive mulai */
     blurIfTouch();   /* lepas ring fokus oranye dari tombol zona sejak dive mulai */
     state = "diving";
     stage.classList.remove("returning");
@@ -656,6 +679,7 @@
       hub.innerHTML = "";   /* konten layar dibersihkan total */
       stage.classList.remove("returning");
       state = "idle"; curGroup = null; view = "main";
+      wakeNow();   /* v4.5: kembali ke ruangan = monitor menyala lagi */
       if(done) done();
     }, RETURN_MS);
   }
@@ -681,7 +705,7 @@
        ruangan). Path saat dispatch adalah bukti asal klik, bukan
        keadaan sesudahnya. Lapisan pertahanan kedua: klik-luar
        diabaikan 600ms setelah takeover ditutup lewat exitLive. */
-        if(e.composedPath().indexOf(takeover) !== -1) return;
+    if(e.composedPath().indexOf(takeover) !== -1) return;
     if(Date.now() - lastTakeoverExit < 1200) return;
     if(Date.now() - lastViewChange < 1000) return;
     if(state !== "open") return;
@@ -690,11 +714,11 @@
        elemen UI mana pun, sisa lapisan, atau klik sintetis susulan yang
        terarah ulang setelah takeover hilang TIDAK PERNAH menutup grup. */
     /* v4.2 — klik-luar TIDAK LAGI menutup grup (dihapus total: jalur
-   inilah satu-satunya jalan klik tak bertombol menuju closeGroup,
-   dan di browser live ia terpicu oleh klik susulan dari ketukan
-   chip yang jatuh ke lapisan ruangan sesudah takeover hilang —
-   6x reproduksi. Menutup grup sekarang HANYA lewat tombol ✕ di
-   layar dan tombol Escape, yang terverifikasi benar.) */
+       inilah satu-satunya jalan klik tak bertombol menuju closeGroup,
+       dan di browser live ia terpicu oleh klik susulan dari ketukan
+       chip yang jatuh ke lapisan ruangan sesudah takeover hilang —
+       6x reproduksi. Menutup grup sekarang HANYA lewat tombol ✕ di
+       layar dan tombol Escape, yang terverifikasi benar.) */
     return;
   });
 
@@ -868,8 +892,30 @@
     stage.classList.remove("zoomed"); stage.classList.remove("returning");
     cam.style.transform = "";
     state = "idle"; curGroup = null; view = "main";
+    stage.classList.toggle("awake", woke); stage.classList.remove("waking");   /* v4.5 */
   }
   if(MQ.addEventListener) MQ.addEventListener("change", function(){ hardReset(); layout(); });
+
+  /* v4.5 — MONITOR MENYALA 5 DETIK SESUDAH MASUK (perintah user):
+     halaman dibuka = foto bersih, monitor padam; 5 detik kemudian
+     ketiga monitor menyala berurutan (kiri → tengah → kanan, ramp
+     .waking) dan menyala terang polos tanpa tulisan di layar istirahat
+     (.wake), mengundang pencetan pertama. Bila user sudah lebih dulu
+     mencet monitor sebelum 5 detik, timer ini gugur (state bukan
+     idle) dan monitor menyala saat ia kembali ke ruangan — lihat
+     penutup closeGroup. */
+  var woke = false;
+  function wakeNow(){
+    woke = true;
+    stage.classList.add("awake"); stage.classList.add("waking");
+    setTimeout(function(){ stage.classList.remove("waking"); }, 1900);
+  }
+  /* v4.5 final (perintah user 01:44): komputer SUDAH nyala begitu
+     masuk web — tanpa jeda tunggu. Ramp menyala 1,3 dtk berjalan
+     seiring fade-in masuk, sesudahnya layar tetap menyala. */
+  woke = true;
+  stage.classList.add("awake", "waking");
+  setTimeout(function(){ stage.classList.remove("waking"); }, 1750);
 
   layout();
   window.addEventListener("load", layout);
