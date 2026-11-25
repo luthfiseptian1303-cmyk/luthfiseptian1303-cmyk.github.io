@@ -471,7 +471,7 @@
   /* Stempel waktu keluar terakhir dari takeover (diisi exitLive).
      Dipakai penjaga klik-luar di panggung: klik yang menutup
      takeover tidak boleh ikut menutup grup pada dispatch yang sama. */
-  var lastTakeoverExit = 0;
+  var lastTakeoverExit = 0;  var lastViewChange = 0;   /* v4.1: stempel render view terakhir (penjaga klik-luar) */
   function clearLiveTimer(){ if(liveTimer){ clearTimeout(liveTimer); liveTimer = null; } }
   function liveFallback(seq){
     if(seq !== liveSeq) return;
@@ -494,7 +494,11 @@
     document.body.classList.remove("live-open");
     if(takeover.hidden && !takeover.innerHTML) return;
     takeover.hidden = true;
-    takeover.innerHTML = "";
+    /* v4.1: pengosongan DOM DITUNDA 400ms — selama jendela ini chip
+       masih ada di DOM, jadi klik susulan dari ketukan yang sama tetap
+       terarah ke lapisan takeover dan tertangkap penjaga capture,
+       bukan jatuh ke lapisan ruangan. */
+    setTimeout(function(){ if(takeover.hidden) takeover.innerHTML = ""; }, 400);
     liveSeq++;
     clearLiveTimer();
   }
@@ -539,6 +543,7 @@
      diganti badan layar (daftar/detail/showcase/produk) di bawah tab. */
   function renderScreen(){
     clearLiveTimer();
+    lastViewChange = Date.now();   /* v4.1 */
     var g = GROUPS[curGroup];
     var content = (view !== "main");
     /* v3u — STANDAR PAS CARLLAB LIVE untuk semua tampilan di layar:
@@ -676,9 +681,18 @@
        ruangan). Path saat dispatch adalah bukti asal klik, bukan
        keadaan sesudahnya. Lapisan pertahanan kedua: klik-luar
        diabaikan 600ms setelah takeover ditutup lewat exitLive. */
-    if(e.composedPath().indexOf(takeover) !== -1) return;
-    if(Date.now() - lastTakeoverExit < 600) return;
-    if(state === "open" && e.composedPath().indexOf(hub) === -1) closeGroup();
+        if(e.composedPath().indexOf(takeover) !== -1) return;
+    if(Date.now() - lastTakeoverExit < 1200) return;
+    if(Date.now() - lastViewChange < 1000) return;
+    if(state !== "open") return;
+    /* v4.1 — WHITELIST POSITIF: grup hanya tertutup bila target klik
+       PERSIS lapisan ruangan (panggung/cam/breath/foto/veil). Klik dari
+       elemen UI mana pun, sisa lapisan, atau klik sintetis susulan yang
+       terarah ulang setelah takeover hilang TIDAK PERNAH menutup grup. */
+    var t = e.target;
+    if(!(t === stage || t === cam || t === breath || t.classList.contains("veil")
+         || t.id === "room" || t.id === "roomP")) return;
+    closeGroup();
   });
 
   /* Aksi hub dipakai bersama oleh jalur click (mouse/keyboard) dan
@@ -725,6 +739,7 @@
      dengan jalur sentuh hub v3t) dengan stempel dedupe bersama,
      supaya ketukan chip tidak pernah gugur atau jalan dua kali. */
   takeover.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest("[data-backlive]")) e.stopPropagation();
     if(Date.now() - lastTouchAction < 800) return;
     if(e.target.closest && e.target.closest("[data-backlive]")){
       /* konsumsi PENUH: klik chip tidak boleh bubbling ke handler
@@ -737,6 +752,17 @@
       exitLive();
     }
   });
+  /* v4.1 — PENJAGA CAPTURE: klik apa pun yang targetnya di dalam
+     lapisan takeover dikonsumsi pada fase capture di dokumen, sebelum
+     handler bubble mana pun (termasuk klik-luar panggung) melihatnya;
+     chip dijalankan dari sini. Berlaku selama chip masih di DOM
+     (pengosongan takeover kini tertunda — lihat hideTakeover). */
+  document.addEventListener("click", function(e){
+    if(takeover.hidden || !e.target || !takeover.contains(e.target)) return;
+    e.stopPropagation();
+    if(e.target.closest && e.target.closest("[data-backlive]")
+       && Date.now() - lastTouchAction >= 800) exitLive();
+  }, true);
   var tkStart = null;
   takeover.addEventListener("touchstart", function(e){
     var t = e.changedTouches[0];
