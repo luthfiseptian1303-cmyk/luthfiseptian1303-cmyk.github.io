@@ -689,10 +689,13 @@
        PERSIS lapisan ruangan (panggung/cam/breath/foto/veil). Klik dari
        elemen UI mana pun, sisa lapisan, atau klik sintetis susulan yang
        terarah ulang setelah takeover hilang TIDAK PERNAH menutup grup. */
-    var t = e.target;
-    if(!(t === stage || t === cam || t === breath || t.classList.contains("veil")
-         || t.id === "room" || t.id === "roomP")) return;
-    closeGroup();
+    /* v4.2 — klik-luar TIDAK LAGI menutup grup (dihapus total: jalur
+   inilah satu-satunya jalan klik tak bertombol menuju closeGroup,
+   dan di browser live ia terpicu oleh klik susulan dari ketukan
+   chip yang jatuh ke lapisan ruangan sesudah takeover hilang —
+   6x reproduksi. Menutup grup sekarang HANYA lewat tombol ✕ di
+   layar dan tombol Escape, yang terverifikasi benar.) */
+    return;
   });
 
   /* Aksi hub dipakai bersama oleh jalur click (mouse/keyboard) dan
