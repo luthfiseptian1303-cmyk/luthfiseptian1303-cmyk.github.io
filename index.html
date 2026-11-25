@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarlLab — Pencet Monitornya, Kamera Mendekat</title>
 <meta name="description" content="Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.">
-<link rel="stylesheet" href="ruangan.css?v=45">
+<link rel="stylesheet" href="ruangan.css?v=46">
 </head>
 <body>
 
@@ -46,12 +46,15 @@
         <!-- HUB: teks display di dalam layar monitor yang dipencet.
              Anak .breath: posisi/ukuran dalam % foto (quad display,
              inset 1.5%), pose rotateY sama seperti layar di foto. -->
-        <!-- WAKE v4.5: lapisan cahaya layar istirahat, diposisikan JS
-             persis di rect display terukur (geometri yang sama dengan
-             hub) — menyala 5 detik sesudah masuk, terang polos. -->
-        <div class="wake" id="wake-brand" aria-hidden="true"></div>
-        <div class="wake" id="wake-web" aria-hidden="true"></div>
-        <div class="wake" id="wake-video" aria-hidden="true"></div>
+        <!-- NYALA v4.6: cahaya monitor dibakar ke piksel foto —
+             crop pita WebP ber-alpha per monitor (siluet kaca asli),
+             versi landscape + portrait mengikuti foto yang tampil. -->
+        <div class="onlayer onl-l onl-brand" aria-hidden="true"><img src="room-on-brand-l.webp" alt=""></div>
+        <div class="onlayer onl-l onl-web" aria-hidden="true"><img src="room-on-web-l.webp" alt=""></div>
+        <div class="onlayer onl-l onl-video" aria-hidden="true"><img src="room-on-video-l.webp" alt=""></div>
+        <div class="onlayer onl-p onl-brand" aria-hidden="true"><img src="room-on-brand-p.webp" alt=""></div>
+        <div class="onlayer onl-p onl-web" aria-hidden="true"><img src="room-on-web-p.webp" alt=""></div>
+        <div class="onlayer onl-p onl-video" aria-hidden="true"><img src="room-on-video-p.webp" alt=""></div>
 
         <div class="hub" id="hub" role="dialog" aria-label="Identitas grup di dalam monitor" hidden></div>
         </div>
@@ -72,6 +75,6 @@
 
 </main>
 
-<script src="ruangan.js?v=45"></script>
+<script src="ruangan.js?v=46"></script>
 </body>
 </html>
