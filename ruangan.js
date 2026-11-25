@@ -507,7 +507,7 @@
   function exitLive(){
     lastTakeoverExit = Date.now();
     hideTakeover();
-    view = "detail"; renderScreen();
+    view = "list"; renderScreen();
   }
   function armLiveFrame(){
     var seq = ++liveSeq;
@@ -569,7 +569,7 @@
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>‹ Grup</button></div>';
-      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>‹ Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>‹ Grup</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>‹ Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live"){
         /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
@@ -603,7 +603,7 @@
   function backOrClose(){
     if(view === "prod"){ view = "show"; renderScreen(); return; }
     if(view === "live"){ exitLive(); return; }
-    if(view === "show"){ view = "detail"; renderScreen(); return; }
+    if(view === "show"){ view = "list"; renderScreen(); return; }
     if(view === "detail"){ view = "list"; renderScreen(); return; }
     closeGroup();
   }
@@ -730,13 +730,13 @@
       return true;
     }
     if(!webContent()) return false;
-    if(t.closest("[data-work]")){ view = "detail"; renderScreen(); return true; }
+    if(t.closest("[data-work]")){ view = "live"; renderScreen(); return true; }
     if(t.closest("[data-play]")){ view = "live"; renderScreen(); return true; }
     if(t.closest("[data-backlive]")){ exitLive(); return true; }
     var pr = t.closest("[data-prod]");
     if(pr){ curProd = +pr.getAttribute("data-prod"); view = "prod"; renderScreen(); return true; }
     if(t.closest("[data-backprod]")){ view = "show"; renderScreen(); return true; }
-    if(t.closest("[data-backshow]")){ view = "detail"; renderScreen(); return true; }
+    if(t.closest("[data-backshow]")){ view = "list"; renderScreen(); return true; }
     if(t.closest("[data-back]")){ view = "list"; renderScreen(); return true; }
     return false;
   }
