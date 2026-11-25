@@ -80,25 +80,24 @@ body.ready .stage-hint{opacity:1}
 .zone:hover{box-shadow:inset 0 0 0 2px rgba(87,200,222,.45), inset 0 0 2.6cqw rgba(46,170,200,.18)}
 @media(hover:none){.zone:hover{box-shadow:none}}
 
-/* ---------- v4.5 — LAYAR ISTIRAHAT MENYALA (WAKE) ----------
-   Perintah user: masuk website = foto bersih, monitor padam; 5 detik
-   kemudian ketiga monitor MENYALA berurutan (kiri → tengah → kanan)
-   menyala TERANG polos tanpa tulisan apa pun (pilihan user). Lapisan .wake duduk di dalam
-   .scr (pose trapesium sama), inset mengikuti rect display terukur
-   (iy/ih): kiri & tengah display-nya tinggi, kanan berdagu tebal.
-   pointer-events:none — pencetan tetap milik .zone. Kelas .awake di
-   panggung menyalakan; .waking hanya untuk ramp animasi pertama. */
-.wake{position:absolute;z-index:7;pointer-events:none;opacity:0;overflow:hidden;border-radius:4px;
-  transform-style:preserve-3d;backface-visibility:hidden;
-  background:radial-gradient(115% 120% at 50% 46%, rgba(235,244,250,.96) 0%, rgba(219,233,243,.94) 55%, rgba(197,217,233,.8) 78%, rgba(180,204,222,.6) 100%);
-  box-shadow:inset 0 0 2.2cqw rgba(30,50,70,.16)}
-.stage.awake .wake{opacity:1}
-.stage.waking .wake{animation:wakeOn 1300ms cubic-bezier(.22,.8,.2,1) both}
-.stage.waking #wake-web{animation-delay:160ms}
-.stage.waking #wake-video{animation-delay:320ms}
-@keyframes wakeOn{0%{opacity:0;filter:brightness(.35)}45%{opacity:1;filter:brightness(1.28)}100%{opacity:1;filter:brightness(1)}}
+/* ---------- v4.6 — MONITOR MENYALA DI FOTONYA SENDIRI ----------
+   Perintah user final: komputer nyala begitu masuk web, dan cahayanya
+   harus SESUAI MONITORNYA — bukan kotak. Jadi tidak ada lapisan gambar
+   geometris lagi: cahaya dibakar ke piksel foto (versi foto dengan
+   monitor menyala, dipotong persis siluet kaca monitor foto asli,
+   tepi feather) sebagai crop pita WebP ber-alpha per monitor.
+   .stage.awake memudarkannya masuk berurutan (kiri → tengah →
+   kanan); padam saat dive, menyala lagi saat kembali. */
+.onlayer{position:absolute;left:0;width:100%;z-index:3;pointer-events:none;opacity:0;
+  transition:opacity 1.25s ease}
+.onlayer img{width:100%;height:100%;display:block}
+.onl-l{top:45%;height:20%}
+.onl-p{top:56%;height:15%;display:none}
+.stage.awake .onlayer{opacity:1}
+.stage.awake .onl-web{transition-delay:160ms}
+.stage.awake .onl-video{transition-delay:320ms}
 @media (prefers-reduced-motion: reduce){
-  .stage.waking .wake{animation:none}
+  .onlayer{transition:none}
 }
 
 /* ---------- klik di luar display = tutup ---------- */
@@ -215,6 +214,8 @@ body.ready .stage-hint{opacity:1}
   .stage{width:100vw;height:100%}
   .cam img#room{display:none}
   .cam img#roomP{display:block}
+  .onl-l{display:none}
+  .onl-p{display:block}
   .scr-l{left:0.8%;top:57.7%;width:31.1%;height:10.9%}
   .scr-c{left:31.8%;top:58.2%;width:34.4%;height:8.5%}
   .scr-r{left:66.0%;top:57.8%;width:32.2%;height:10.5%}

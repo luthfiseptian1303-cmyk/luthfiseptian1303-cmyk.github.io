@@ -251,27 +251,6 @@
     frame = { x:(r.width - fw) / 2, y:(r.height - fh) / 2, w:fw, h:fh };
     breath.style.left = frame.x + "px"; breath.style.top = frame.y + "px";
     breath.style.width = frame.w + "px"; breath.style.height = frame.h + "px";
-    placeWakes();
-  }
-
-  /* v4.5 — posisi lapisan cahaya istirahat: geometri yang sama
-     persis dengan placeHub (quad display + inset 1.5% + pose
-     rotateY), supaya cahaya duduk tepat di permukaan kaca monitor
-     seperti isi grup saat dive — bukan kotak tempelan. */
-  var wakeEls = { brand:document.getElementById("wake-brand"),
-                  web:document.getElementById("wake-web"),
-                  video:document.getElementById("wake-video") };
-  function placeWakes(){
-    ["brand","web","video"].forEach(function(key){
-      var el = wakeEls[key]; if(!el) return;
-      var q = quad(key);
-      el.style.left   = (q.x + q.w * HUB_INSET).toFixed(3) + "%";
-      el.style.top    = (q.iy + q.ih * HUB_INSET).toFixed(3) + "%";
-      el.style.width  = (q.w * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
-      el.style.height = (q.ih * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
-      el.style.transformOrigin = q.org;
-      el.style.transform = "rotateY(" + q.rotY + "deg)";
-    });
   }
 
   var state = "idle";            /* idle | diving | open | returning */
@@ -637,7 +616,7 @@
       return;
     }
     curGroup = key;
-    stage.classList.remove("awake"); stage.classList.remove("waking");   /* v4.5: layar istirahat padam begitu dive mulai */
+    stage.classList.remove("awake");   /* v4.6: lapisan nyala padam begitu dive mulai */
     blurIfTouch();   /* lepas ring fokus oranye dari tombol zona sejak dive mulai */
     state = "diving";
     stage.classList.remove("returning");
@@ -892,30 +871,32 @@
     stage.classList.remove("zoomed"); stage.classList.remove("returning");
     cam.style.transform = "";
     state = "idle"; curGroup = null; view = "main";
-    stage.classList.toggle("awake", woke); stage.classList.remove("waking");   /* v4.5 */
+    stage.classList.toggle("awake", woke);   /* v4.6 */
   }
   if(MQ.addEventListener) MQ.addEventListener("change", function(){ hardReset(); layout(); });
 
-  /* v4.5 — MONITOR MENYALA 5 DETIK SESUDAH MASUK (perintah user):
-     halaman dibuka = foto bersih, monitor padam; 5 detik kemudian
-     ketiga monitor menyala berurutan (kiri → tengah → kanan, ramp
-     .waking) dan menyala terang polos tanpa tulisan di layar istirahat
-     (.wake), mengundang pencetan pertama. Bila user sudah lebih dulu
-     mencet monitor sebelum 5 detik, timer ini gugur (state bukan
-     idle) dan monitor menyala saat ia kembali ke ruangan — lihat
-     penutup closeGroup. */
+  /* v4.6 — MONITOR MENYALA SEJAK MASUK, DI FOTONYA SENDIRI
+     (perintah user final): cahaya bukan lapisan geometris — piksel
+     foto versi monitor-menyala yang dipotong persis siluet kacanya
+     (.onlayer). Menyala begitu gambar-gambar nyala siap (fallback
+     2,8 dtk), berurutan kiri → tengah → kanan lewat transition-delay;
+     padam saat dive mulai, menyala lagi saat kembali ke ruangan. */
   var woke = false;
   function wakeNow(){
     woke = true;
-    stage.classList.add("awake"); stage.classList.add("waking");
-    setTimeout(function(){ stage.classList.remove("waking"); }, 1900);
+    stage.classList.add("awake");
   }
-  /* v4.5 final (perintah user 01:44): komputer SUDAH nyala begitu
-     masuk web — tanpa jeda tunggu. Ramp menyala 1,3 dtk berjalan
-     seiring fade-in masuk, sesudahnya layar tetap menyala. */
-  woke = true;
-  stage.classList.add("awake", "waking");
-  setTimeout(function(){ stage.classList.remove("waking"); }, 1750);
+  var onImgs = document.querySelectorAll(".onlayer img"), onReady = 0, onLit = false;
+  function lightUp(){
+    if(onLit) return; onLit = true;
+    if(state === "idle") wakeNow(); else woke = true;
+  }
+  if(!onImgs.length) lightUp();
+  onImgs.forEach(function(im){
+    function done(){ onReady++; if(onReady >= onImgs.length) lightUp(); }
+    if(im.complete) done(); else { im.addEventListener("load", done); im.addEventListener("error", done); }
+  });
+  setTimeout(lightUp, 2800);
 
   layout();
   window.addEventListener("load", layout);
