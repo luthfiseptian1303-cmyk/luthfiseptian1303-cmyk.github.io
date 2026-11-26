@@ -163,8 +163,8 @@ body.awake .glow{opacity:1}
   .hub.powering .power{opacity:1;filter:none}
 }
 .hub[hidden]{display:none!important}
-.hub .view{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;padding:5px;min-height:0}
-.hub.tilt .view{padding-top:12px}
+.hub .view{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;height:100%;padding:0;min-height:0}
+.hub.tilt .view{padding-top:0}
 /* KANVAS LAYAR HP (v3n): isi hub digambar pada kanvas ukuran tetap
    340x280 px "ruang desain" dengan tipografi ukuran HP asli (label 11px,
    headline 25px, angka raksasa 148px, tab kategori 10px), lalu JS
@@ -183,7 +183,7 @@ body.awake .glow{opacity:1}
    di dalam JENDELA akrilik gelap ala Windows 11 (panel + title bar
    + tombol tutup), bukan lagi teks melayang di kehampaan. */
 .deskbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-.screen{background:rgba(22,26,42,.90);border:1px solid rgba(255,255,255,.16);border-radius:10px;
+.screen{background:rgba(22,26,42,.90);border:1px solid rgba(255,255,255,.16);border-radius:6px;
   box-shadow:0 18px 50px rgba(2,6,14,.55), inset 0 1px 0 rgba(255,255,255,.08)}
 .scr-top{border-bottom:1px solid rgba(255,255,255,.10);padding-bottom:7px}
 .xbtn{border-radius:6px}
@@ -282,12 +282,12 @@ body.awake .glow{opacity:1}
    berkas lokal (lihat JS). */
 .screen.content .tabs{margin-bottom:7px}
 .scr-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
-  scrollbar-width:none;padding-top:0}
+  scrollbar-width:none;padding-top:0;display:flex;flex-direction:column}
 .scr-body::-webkit-scrollbar{display:none}
 .scr-body.fill{display:flex;flex-direction:column;overflow:hidden}
 .note{font-size:9.5px;letter-spacing:.16em;color:rgba(190,225,240,.62);margin:1px 0 7px;text-transform:uppercase;
   text-shadow:0 1px 6px rgba(4,20,30,.5)}
-.foot{font-size:10px;line-height:1.45;color:rgba(190,225,240,.55);margin-top:8px;text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.foot{font-size:10px;line-height:1.45;color:rgba(190,225,240,.55);margin-top:auto;padding-top:8px;text-shadow:0 1px 6px rgba(4,20,30,.5)}
 .rows{display:flex;flex-direction:column;gap:7px}
 .row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;
   font:inherit;color:#eef6fa;background:rgba(4,15,23,.42);border:1px solid rgba(165,218,238,.18);

@@ -328,25 +328,20 @@
   }
   function diveTransform(key){
     var q = quad(key), r = stage.getBoundingClientRect();
-    var px = frame.x + (q.x + q.w/2)/100 * frame.w;   /* pusat display (x) dlm koordinat panggung */
-    var py = frame.y + (q.iy + q.ih/2)/100 * frame.h; /* pusat REKTANG DALAM display (y) */
-    /* FULL LAYAR (v3v — perintah user: "Pas di pencet buat full
-       layar"): skala dive sekarang COVER, bukan fit — dan dihitung
-       dari REKTANG DALAM display (iy/ih), bukan bbox quad:
-       trapesium display miring di dalam bbox-nya, jadi cover atas
-       bbox terbukti menyisakan irisan dinding krem ~5px di tepi
-       atas + bezel ~30px di tepi bawah (pindai piksel screenshot
-       rig v3v putaran pertama, kedatangan 390x844). Rumus:
-       s = OVER * maks(vw/lebarDisplay, vh/tinggiDalamDisplay),
-       pusat rektang dalam dipetakan ke pusat panggung (diveT di
-       bawah). Lebar efektif monitor samping dikali cos(rotY):
-       proyeksi trapesiumnya menyempit secara horizontal, jadi
-       tanpa faktor ini sisi lebarnya kurang-cover. OVER 1.03 =
-       cadangan di atas rektang dalam (yang sendirinya konservatif)
-       agar koreksi ukur (correctFit) hampir tidak pernah perlu
-       memperbesar lagi melewati batas aman kanvas. */
+    var px = frame.x + (q.x + q.w/2)/100 * frame.w;   /* pusat quad (x) dlm koordinat panggung */
+    var py = frame.y + (q.y + q.h/2)/100 * frame.h;   /* pusat quad (y) */
+    /* v7.1 — DIVE = FIT MONITOR KE PANGGUNG (perintah user 26 Nov
+       14:30: "Kotaknya sesuaikan monitornya buy"). Sejak v7.1 kotak
+       hub = monitor itu sendiri (kanvas mengisi hub penuh), jadi
+       kamera tidak lagi COVER (yang memotong sisi kotak di HP tegak:
+       monitor hampir persegi dipaksa menutupi panggung tinggi)
+       melainkan FIT: seluruh monitor tampil utuh di tengah panggung
+       (margin 4px), di semua orientasi sama. Lebar efektif monitor
+       samping dikali cos(rotY) — proyeksi trapesiumnya menyempit
+       secara horizontal. correctFit tinggal mengoreksi sisa ukur. */
     var effW = (q.w/100 * frame.w) * (q.rotY ? Math.cos(q.rotY * Math.PI/180) : 1);
-    var s = 1.03 * Math.max(r.width / effW, r.height / (q.ih/100 * frame.h));
+    var qh = q.h/100 * frame.h;
+    var s = Math.min((r.width - 8) / effW, (r.height - 8) / qh);
     lastDive = { key:key, s:s, q:q };
     diveO = { x:px, y:py }; diveS = s;
     diveT = { x:r.width/2 - px, y:r.height/2 - py };
@@ -376,26 +371,13 @@
     var sr = stage.getBoundingClientRect();
     var hr = hub.getBoundingClientRect();
     if(hr.width < 10 || sr.width < 10) return;
-    var inv = 1 / (1 - 2 * HUB_INSET);   /* hub -> quad bbox */
-    var qw = hr.width * inv;   /* lebar proksi: bbox quad (sisi lebar selalu jauh over-cover) */
-    var qh = hr.height * inv * (lastDive.q.ih / lastDive.q.h);   /* tinggi proksi: REKTANG DALAM display */
-    /* Pusat proksi = pusat rektang dalam yang ter-render: pusat hub
-       (= pusat quad) digeser selisih pusat-dalam-vs-bbox, diskalakan
-       skala dive saat ini. */
-    var dyOff = ((lastDive.q.iy + lastDive.q.ih/2) - (lastDive.q.y + lastDive.q.h/2)) / 100 * frame.h * diveS;
-    var mcx = hr.left - sr.left + hr.width/2, mcy = hr.top - sr.top + hr.height/2 + dyOff;
+    /* v7.1: koreksi = FIT hub ke panggung + pusatkan pusat hub.
+       (Logika proksi rektang-dalam + cap kanvas lama dibuang: kotak
+       sekarang = hub itu sendiri, jadi yang dijaga pas adalah hub.) */
+    var mcx = hr.left - sr.left + hr.width/2, mcy = hr.top - sr.top + hr.height/2;
     var dx = sr.width/2 - mcx, dy = sr.height/2 - mcy;
-    var covers = (mcx - qw/2 <= 0.5) && (mcy - qh/2 <= 0.5)
-              && (mcx + qw/2 >= sr.width - 0.5) && (mcy + qh/2 >= sr.height - 0.5);
-    var csCover = covers ? 1 : Math.max(sr.width / qw, sr.height / qh);
-    var csCap = Infinity;
-    var scEl = document.getElementById("screen");
-    if(scEl){
-      var cr = scEl.getBoundingClientRect();
-      if(cr.width > 10 && cr.height > 10)
-        csCap = Math.min((sr.width - 8) / cr.width, (sr.height - 8) / cr.height);
-    }
-    var cs = Math.min(csCover, csCap);
+    var csFit = Math.min((sr.width - 8) / hr.width, (sr.height - 8) / hr.height);
+    var cs = csFit < 1 ? csFit : 1;
     if(Math.abs(cs - 1) < 0.002 && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
     cs = Math.max(cs, 0.5);
     var t2x = sr.width/2  + cs * (diveO.x + diveT.x - mcx) - diveO.x;
@@ -429,24 +411,26 @@
     hub.style.transformOrigin = q.org;
     hub.style.transform = "rotateY(" + q.rotY + "deg)";
     hub.classList.toggle("tilt", q.rotY !== 0);
-    /* Kanvas layar HP: skala k (koordinat lokal hub) dipilih agar
-       (a) kanvas 340x280 muat di dalam hub (faktor 0.98),
-       (b) skala TERGAMBAR k*s tidak pernah melebihi 1.2 — teks tetap
-       berukuran HP walau display raksasa di desktop, dan
-       (c) sejak v3v (dive COVER full layar): kanvas tergambar juga
-       tidak boleh melebihi PANGGUNG (margin 12px per sisi). Tanpa
-       (c), di HP 390px cap (a)/(b) memberi kanvas tergambar 408px —
-       lebih lebar dari layar, tepi kanvas + tombol x terpotong tepi
-       viewport. Cap panggung ini yang menjamin kanvas selalu utuh
-       terlihat dan terpusat pada kedatangan full layar. */
+    /* v7.1 — KOTAK MENYESUAIKAN MONITOR (perintah user 26 Nov 14:30:
+       "Kotaknya sesuaikan monitornya buy"). Kanvas tidak lagi ukuran
+       tetap 340x280 yang mengambang di tengah layar: lebar kanvas
+       tetap 340, TINGGI kanvas dihitung dari rasio hub monitor yang
+       dipencet (clamp 230..380 agar tipografi tetap waras), lalu
+       skala k mengisi hub SEPENUHNYA (faktor 0.998) — jendela =
+       layar monitor itu sendiri, seperti aplikasi dibuka full-screen.
+       Cap skala-tergambar 1.2 + cap panggung lama DICABUT: keduanya
+       memang dibuat untuk jendela mengambang, bukan layar penuh.
+       correctFit tetap menjaga seluruh kanvas terlihat di panggung
+       (rect kanvas kini ≈ rect hub ≈ rect display). */
     var sc = document.getElementById("screen");
     if(sc && lastDive.s > 0){
       var Hw = q.w * (1 - 2 * HUB_INSET) / 100 * frame.w;
       var Hh = q.h * (1 - 2 * HUB_INSET) / 100 * frame.h;
-      var sr2 = stage.getBoundingClientRect();
-      var capStage = Math.min((sr2.width - 24) / 340, (sr2.height - 24) / 280);
-      var k = Math.min(Hw * 0.98 / 340, Hh * 0.98 / 280,
-                       Math.min(1.2, capStage) / lastDive.s);
+      var cH = Math.round(340 * Hh / Hw);
+      cH = Math.max(230, Math.min(380, cH));
+      sc.style.width = "340px";
+      sc.style.height = cH + "px";
+      var k = Math.min(Hw / 340, Hh / cH) * 0.998;
       sc.style.transform = "scale(" + k.toFixed(4) + ")";
     }
   }
@@ -689,6 +673,7 @@
     later(function(){
       if(state === "diving") state = "open";
       correctFit();   /* ukur rect nyata display; paksa pas di viewport */
+      later(correctFit, 450);   /* v7.1: sapuan kedua setelah transisi benar-benar diam — koreksi pertama bisa membaca rect tengah-terbang */
       /* fokus ke x hanya untuk pointer halus/keyboard — di layar sentuh
          JANGAN autofocus (kotak fokus oranye bawaan browser merusak layar) */
       if(window.matchMedia("(hover: hover) and (pointer: fine)").matches){
