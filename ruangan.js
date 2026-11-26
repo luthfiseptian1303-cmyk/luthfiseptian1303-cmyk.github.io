@@ -942,6 +942,24 @@
   });
   setTimeout(lightUp, 2800);
 
+  /* v7.2 — LAMPU = STATUS STUDIO: jam buka 08.00–22.00 WIB
+     (Asia/Jakarta, apa pun zona waktu pengunjung). Buka: body.open
+     menyalakan glow lampu foto + chip "Studio buka · sampai 22.00";
+     tutup: glow padam + "Studio tutup · pesan tetap masuk".
+     Dicek ulang tiap 60 detik. */
+  var statusTx = document.querySelector("#studioStatus .st-tx");
+  function applyStudioStatus(){
+    var h;
+    try { h = parseInt(new Intl.DateTimeFormat("en-GB", { timeZone:"Asia/Jakarta", hour:"2-digit", hourCycle:"h23" }).format(new Date()), 10); }
+    catch(e){ h = new Date().getHours(); }
+    if(isNaN(h)) h = new Date().getHours();
+    var open = h >= 8 && h < 22;
+    document.body.classList.toggle("open", open);
+    if(statusTx) statusTx.textContent = open ? "Studio buka · sampai 22.00" : "Studio tutup · pesan tetap masuk";
+  }
+  applyStudioStatus();
+  setInterval(applyStudioStatus, 60000);
+
   layout();
   window.addEventListener("load", layout);
 
