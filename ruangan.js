@@ -431,8 +431,13 @@
     if(cs){
       var cx = (cs[0][0] + cs[1][0] + cs[2][0] + cs[3][0]) / 4;
       var cy = (cs[0][1] + cs[1][1] + cs[2][1] + cs[3][1]) / 4;
+      /* Monitor tengah: inset diperbesar (5%) — verdict user
+         26 Nov 22:22 'Kegedean dikit': jendela tengah sedikit
+         melewati kaca monitornya; susutkan sedikit ke pusat kaca.
+         Monitor samping tetap 2% (sudah pas). */
+      var insetF = lastDive.key === "web" ? 0.05 : 0.02;
       var dst = cs.map(function(p){
-        var ix = p[0] + (cx - p[0]) * 0.02, iy = p[1] + (cy - p[1]) * 0.02;
+        var ix = p[0] + (cx - p[0]) * insetF, iy = p[1] + (cy - p[1]) * insetF;
         return [ix / 100 * frame.w, iy / 100 * frame.h];
       });
       hub.style.transform = homography(Hw * SS, Hh * SS, dst);
