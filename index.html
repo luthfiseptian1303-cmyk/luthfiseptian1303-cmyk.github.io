@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarlLab — Pencet Monitornya, Kamera Mendekat</title>
 <meta name="description" content="Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.">
-<link rel="stylesheet" href="ruangan.css?v=84">
+<link rel="stylesheet" href="ruangan.css?v=85">
 </head>
 <body>
 
@@ -23,6 +23,10 @@
         <div class="breath">
         <img id="room" src="room-nyala-l.jpg" alt="Foto ruangan gaming CarlLab dengan tiga monitor menyala" width="1920" height="1280">
         <img id="roomP" src="room-nyala-p.jpg" alt="" aria-hidden="true" width="1184" height="2096">
+        <!-- LAMPU STUDIO (v7.2): glow hangat persis di titik lampu meja
+             foto (terukur: landscape 75.3%/38.8%, portrait 78.2%/46.9%);
+             menyala hanya saat studio buka (kelas .open di body). -->
+        <div class="lampglow" aria-hidden="true"></div>
 
         <!-- MONITOR KIRI — BRAND & LOGO (zona pencet tak terlihat: diam = foto bersih) -->
         <div class="scr scr-l">
@@ -63,6 +67,9 @@
            di HP panggung memang 100vw x 100dvh, jadi situs asli tampil
            persis seperti dibuka layar penuh. Kosong + hidden saat diam. -->
       <div class="takeover" id="takeover" hidden></div>
+
+      <!-- STATUS STUDIO (v7.2): chip jam buka, diisi JS (WIB). -->
+      <div class="status" id="studioStatus" role="status"><i></i><span class="st-tx">Studio buka · sampai 22.00</span></div>
     </div>
 
     <p class="stage-hint">Pencet salah satu monitornya — kamera akan mendekat.</p>
@@ -71,6 +78,6 @@
 
 </main>
 
-<script src="ruangan.js?v=84"></script>
+<script src="ruangan.js?v=85"></script>
 </body>
 </html>
