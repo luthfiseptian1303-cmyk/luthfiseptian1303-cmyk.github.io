@@ -5,8 +5,8 @@
   --dark:#0a1119; --r:20px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;background:#1e1712}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#1e1712;color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;background:#16101f}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#16101f;color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
 
@@ -27,7 +27,7 @@ nav .cta i{width:8px;height:8px;border-radius:50%;background:var(--cyan);display
    PANGGUNG — ruangan foto memenuhi viewport (rasio 3:2)
    ================================================================ */
 .stage-sec{padding:0}
-.stage{position:relative;margin:0 auto;background:#1e1712;overflow:hidden;
+.stage{position:relative;margin:0 auto;background:#16101f;overflow:hidden;
   width:min(100vw,calc((100vh - 52px)*1.5));height:min(66.667vw,calc(100vh - 52px));
   container-type:inline-size;perspective:1600px}
 /* MASUK HALAMAN — samakan KAPSEL asli: tanpa loader, tanpa zoom pembuka.
@@ -70,9 +70,9 @@ body.ready .stage-hint{opacity:1}
    tanda adalah glow tepi sangat tipis saat hover (desktop). */
 .scr{position:absolute;z-index:5;border-radius:1.2cqw;
   transform-style:preserve-3d;backface-visibility:hidden}
-.scr-l{left:19.0%;top:47.1%;width:20.0%;height:15.9%;transform-origin:100% 50%;transform:rotateY(24deg)}
-.scr-c{left:38.9%;top:48.1%;width:21.1%;height:12.6%}
-.scr-r{left:59.8%;top:47.3%;width:20.6%;height:15.5%;transform-origin:0% 50%;transform:rotateY(-24deg)}
+.scr-l{left:17.2%;top:47.1%;width:19.0%;height:19.2%;transform-origin:100% 50%;transform:rotateY(24deg)}
+.scr-c{left:37.6%;top:47.7%;width:16.9%;height:16.4%}
+.scr-r{left:55.9%;top:48.0%;width:19.6%;height:18.7%;transform-origin:0% 50%;transform:rotateY(-24deg)}
 .stage.zoomed .scr{pointer-events:none}
 .zone{position:absolute;inset:0;width:100%;height:100%;display:block;border:0;border-radius:inherit;
   background:transparent;cursor:pointer;padding:0;transition:box-shadow .25s ease;-webkit-tap-highlight-color:transparent}
@@ -80,24 +80,24 @@ body.ready .stage-hint{opacity:1}
 .zone:hover{box-shadow:inset 0 0 0 2px rgba(87,200,222,.45), inset 0 0 2.6cqw rgba(46,170,200,.18)}
 @media(hover:none){.zone:hover{box-shadow:none}}
 
-/* ---------- v4.6 — MONITOR MENYALA DI FOTONYA SENDIRI ----------
-   Perintah user final: komputer nyala begitu masuk web, dan cahayanya
-   harus SESUAI MONITORNYA — bukan kotak. Jadi tidak ada lapisan gambar
-   geometris lagi: cahaya dibakar ke piksel foto (versi foto dengan
-   monitor menyala, dipotong persis siluet kaca monitor foto asli,
-   tepi feather) sebagai crop pita WebP ber-alpha per monitor.
-   .stage.awake memudarkannya masuk berurutan (kiri → tengah →
-   kanan); padam saat dive, menyala lagi saat kembali. */
-.onlayer{position:absolute;left:0;width:100%;z-index:3;pointer-events:none;opacity:0;
-  transition:opacity 1.25s ease}
-.onlayer img{width:100%;height:100%;display:block}
-.onl-l{top:45%;height:20%}
-.onl-p{top:56%;height:15%;display:none}
-.stage.awake .onlayer{opacity:1}
-.stage.awake .onl-web{transition-delay:160ms}
-.stage.awake .onl-video{transition-delay:320ms}
+/* ---------- v6 — LAYAR DOM (cara baru atas perintah user: layar
+   monitor = elemen asli web, BUKAN tempelan gambar di foto) ----------
+   Tiap .domscreen adalah satu persegi utuh 480x270 berisi desktop
+   Win11 monitor itu; JS memasangnya ke empat sudut kaca monitor di
+   foto dengan homografi matrix3d (layoutScreens di ruangan.js).
+   Satu persegi utuh = tidak ada jahitan/blok/warp yang bisa pecah;
+   sudut terkunci matematis ke sudut kaca. Menyala berurutan saat
+   masuk (.stage.awake), padam saat dive, menyala lagi saat kembali. */
+.domscreen{position:absolute;left:0;top:0;width:480px;height:270px;z-index:3;pointer-events:none;
+  overflow:hidden;transform-origin:0 0;opacity:0;transition:opacity 1.25s ease;background:#000}
+.domscreen img{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.domscreen::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg, rgba(190,160,255,.10) 0%, rgba(255,255,255,.03) 34%, rgba(0,0,0,0) 55%, rgba(255,150,80,.05) 100%)}
+.stage.awake .domscreen{opacity:1}
+.stage.awake .domscreen[data-mon="web"]{transition-delay:160ms}
+.stage.awake .domscreen[data-mon="video"]{transition-delay:320ms}
 @media (prefers-reduced-motion: reduce){
-  .onlayer{transition:none}
+  .domscreen{transition:none}
 }
 
 /* ---------- klik di luar display = tutup ---------- */
@@ -166,6 +166,20 @@ body.ready .stage-hint{opacity:1}
 .screen{flex:none;width:340px;height:280px;transform-origin:center center;display:flex;flex-direction:column;
   padding:10px 14px;color:#eef6fa;position:relative;z-index:2;
   opacity:0;transition:opacity .5s ease}
+/* ================================================================
+   v6 — LAYAR JADI DESKTOP WINDOWS ASLI (perintah user 26 Nov 03:31:
+   "Tiga ini juga ubah buy" + gambar desktopnya, "biar kaya real"):
+   di belakang isi hub kini terbentang desktop Windows 11 user
+   (win11-desktop.jpg, cover penuh quad display) — layar monitor
+   yang dizoom terlihat seperti PC beneran menyala. Isi grup duduk
+   di dalam JENDELA akrilik gelap ala Windows 11 (panel + title bar
+   + tombol tutup), bukan lagi teks melayang di kehampaan. */
+.deskbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.screen{background:rgba(22,26,42,.90);border:1px solid rgba(255,255,255,.16);border-radius:10px;
+  box-shadow:0 18px 50px rgba(2,6,14,.55), inset 0 1px 0 rgba(255,255,255,.08)}
+.scr-top{border-bottom:1px solid rgba(255,255,255,.10);padding-bottom:7px}
+.xbtn{border-radius:6px}
+.xbtn:hover{background:#e81123;color:#fff;text-shadow:none}
 .hub.show .screen{opacity:1}
 .hub [hidden]{display:none!important}
 .scr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:none;margin-bottom:6px}
@@ -209,16 +223,14 @@ body.ready .stage-hint{opacity:1}
    kanan x 66.1-96.9  y 57.78-68.30 -> pusat (81.5, 63.0)
    ================================================================ */
 @media (max-width:640px), (max-aspect-ratio:4/5){
-  html,body{background:#1e1712}
+  html,body{background:#16101f}
   .stage-sec{height:100vh;height:100dvh;position:relative}
   .stage{width:100vw;height:100%}
   .cam img#room{display:none}
   .cam img#roomP{display:block}
-  .onl-l{display:none}
-  .onl-p{display:block}
-  .scr-l{left:0.8%;top:57.7%;width:31.1%;height:10.9%}
-  .scr-c{left:31.8%;top:58.2%;width:34.4%;height:8.5%}
-  .scr-r{left:66.0%;top:57.8%;width:32.2%;height:10.5%}
+  .scr-l{left:14.6%;top:53.9%;width:20.4%;height:11.0%}
+  .scr-c{left:36.5%;top:53.9%;width:18.9%;height:10.7%}
+  .scr-r{left:56.3%;top:54.3%;width:24.8%;height:11.9%}
   .stage-hint{position:absolute;left:0;right:0;bottom:0;z-index:6;max-width:none;margin:0;
     padding:44px 20px 16px;color:#d9e8ef;pointer-events:none;
     background:linear-gradient(to top, rgba(4,8,12,.8), rgba(4,8,12,0))}

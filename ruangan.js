@@ -192,16 +192,72 @@
      hub, dan zona pencet.
      rotY = perspektif trapesium monitor samping di foto (samakan
      .scr): lebar tampak panel samping / panel tengah ~= cos(24°). */
+  /* v6 — RUANGAN BARU (gaming ungu-oranye, perintah user "Semuanya
+     ganti ini") + LAYAR DOM: quad di bawah = bbox sudut kaca terukur
+     di foto gelap room-baru-{l,p}.jpg; sudut pastinya di CORNERS. */
   var QUADS_L = {
-    web:   { x:39.0, y:48.12, w:20.9, h:12.58, iy:48.28, ih:12.19, rotY:0,   org:"50% 50%" },
-    brand: { x:20.3, y:47.11, w:18.7, h:15.94, iy:48.05, ih:12.81, rotY:24,  org:"100% 50%" },
-    video: { x:59.9, y:47.27, w:19.2, h:15.53, iy:48.20, ih:9.60,  rotY:-24, org:"0% 50%" }
+    web:   { x:37.6, y:47.7, w:16.9, h:16.4, iy:48.0, ih:15.8, rotY:0,   org:"50% 50%" },
+    brand: { x:17.2, y:47.1, w:19.0, h:19.2, iy:47.4, ih:18.6, rotY:24,  org:"100% 50%" },
+    video: { x:55.9, y:48.0, w:19.6, h:18.7, iy:48.3, ih:18.0, rotY:-24, org:"0% 50%" }
   };
   var QUADS_P = {
-    web:   { x:31.9, y:58.25, w:34.2, h:8.50, iy:58.29, ih:8.29, rotY:0,   org:"50% 50%" },
-    brand: { x:2.0,  y:57.74, w:29.9, h:10.93, iy:58.21, ih:8.67, rotY:24,  org:"100% 50%" },
-    video: { x:66.1, y:57.78, w:30.8, h:10.52, iy:58.21, ih:6.29, rotY:-24, org:"0% 50%" }
+    web:   { x:36.5, y:53.9, w:18.9, h:10.7, iy:54.2, ih:10.1, rotY:0,   org:"50% 50%" },
+    brand: { x:14.6, y:53.9, w:20.4, h:11.1, iy:54.2, ih:10.5, rotY:24,  org:"100% 50%" },
+    video: { x:56.3, y:54.3, w:24.8, h:11.9, iy:54.6, ih:11.3, rotY:-24, org:"0% 50%" }
   };
+  /* Sudut kaca NYATA (TL, TR, BR, BL — % foto) untuk homografi
+     .domscreen. Terukur dari foto gelap (slab hitam) + overlay
+     koreksi visual dua putaran. */
+  var CORNERS_L = {
+    brand: [[17.3,47.1],[36.2,47.4],[36.1,64.3],[17.2,66.3]],
+    web:   [[37.6,47.7],[54.5,47.9],[54.4,64.0],[37.7,64.1]],
+    video: [[55.9,48.0],[75.4,48.8],[75.5,66.7],[56.0,65.8]]
+  };
+  var CORNERS_P = {
+    brand: [[14.6,54.2],[35.0,53.9],[34.9,64.6],[14.8,65.0]],
+    web:   [[36.5,53.9],[55.4,54.2],[55.3,64.4],[36.5,64.6]],
+    video: [[56.3,54.3],[81.1,56.0],[80.9,66.2],[56.4,64.9]]
+  };
+  function corners(key){ return (portrait() ? CORNERS_P : CORNERS_L)[key]; }
+  /* Homografi: petakan persegi sumber (0,0),(w,0),(w,h),(0,h) ke
+     empat titik tujuan (px bingkai foto). Selesaikan sistem 8x8
+     (eliminasi Gauss) untuk koefisien a..h dengan penyebut
+     (g*x + h*y + 1), lalu tulis sebagai matrix3d kolom-mayor. */
+  function homography(sw, sh, dst){
+    var src = [[0,0],[sw,0],[sw,sh],[0,sh]];
+    var A = [], b = [];
+    for(var i = 0; i < 4; i++){
+      var x = src[i][0], y = src[i][1], X = dst[i][0], Y = dst[i][1];
+      A.push([x, y, 1, 0, 0, 0, -X*x, -X*y]); b.push(X);
+      A.push([0, 0, 0, x, y, 1, -Y*x, -Y*y]); b.push(Y);
+    }
+    for(var col = 0; col < 8; col++){
+      var piv = col;
+      for(var r2 = col + 1; r2 < 8; r2++) if(Math.abs(A[r2][col]) > Math.abs(A[piv][col])) piv = r2;
+      var tmpA = A[col]; A[col] = A[piv]; A[piv] = tmpA;
+      var tmpB = b[col]; b[col] = b[piv]; b[piv] = tmpB;
+      var d = A[col][col] || 1e-12;
+      for(var r3 = 0; r3 < 8; r3++){
+        if(r3 === col) continue;
+        var f = A[r3][col] / d;
+        if(!f) continue;
+        for(var c2 = col; c2 < 8; c2++) A[r3][c2] -= f * A[col][c2];
+        b[r3] -= f * b[col];
+      }
+    }
+    var s = [];
+    for(var k = 0; k < 8; k++) s.push(b[k] / (A[k][k] || 1e-12));
+    return "matrix3d(" + [s[0], s[3], 0, s[6], s[1], s[4], 0, s[7], 0, 0, 1, 0, s[2], s[5], 0, 1].map(function(v){ return v.toFixed(6); }).join(",") + ")";
+  }
+  var domScreens = document.querySelectorAll(".domscreen");
+  function layoutScreens(){
+    domScreens.forEach(function(el){
+      var cs = corners(el.getAttribute("data-mon"));
+      if(!cs) return;
+      var dst = cs.map(function(p){ return [p[0]/100 * frame.w, p[1]/100 * frame.h]; });
+      el.style.transform = homography(480, 270, dst);
+    });
+  }
   function quad(key){ return (portrait() ? QUADS_P : QUADS_L)[key]; }
   var lastDive = null;   /* {key, s, q} hasil dive terakhir — untuk ukuran hub */
   var DIVE_MS = 1600, RETURN_MS = 900;
@@ -241,7 +297,7 @@
   /* Bingkai foto = rect gambar setelah object-fit:cover di dalam panggung.
      .breath diset persis ke rect ini (JS), jadi zona % dan titik dive selalu
      menempel di foto pada ukuran layar berapa pun. Landscape: rect = panggung. */
-  var IMG_L = { w:1920, h:1280 }, IMG_P = { w:1040, h:2352 };
+  var IMG_L = { w:1920, h:1280 }, IMG_P = { w:1184, h:2096 };
   var frame = { x:0, y:0, w:0, h:0 };
   function layout(){
     var r = stage.getBoundingClientRect();
@@ -251,6 +307,7 @@
     frame = { x:(r.width - fw) / 2, y:(r.height - fh) / 2, w:fw, h:fh };
     breath.style.left = frame.x + "px"; breath.style.top = frame.y + "px";
     breath.style.width = frame.w + "px"; breath.style.height = frame.h + "px";
+    layoutScreens();   /* v6: kunci layar DOM ke sudut kaca foto aktif */
   }
 
   var state = "idle";            /* idle | diving | open | returning */
@@ -565,7 +622,7 @@
       top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> \u00b7 ' + g.label + '</span>'
         + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
     }
-    var h = '<div class="view scr-view"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
+    var h = '<div class="view scr-view"><img class="deskbg" src="win11-desktop.jpg" alt="" aria-hidden="true"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
@@ -886,7 +943,7 @@
     woke = true;
     stage.classList.add("awake");
   }
-  var onImgs = document.querySelectorAll(".onlayer img"), onReady = 0, onLit = false;
+  var onImgs = document.querySelectorAll(".domscreen img"), onReady = 0, onLit = false;
   function lightUp(){
     if(onLit) return; onLit = true;
     if(state === "idle") wakeNow(); else woke = true;
