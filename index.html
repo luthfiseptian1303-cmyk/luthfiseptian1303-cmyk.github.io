@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarlLab — Pencet Monitornya, Kamera Mendekat</title>
 <meta name="description" content="Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.">
-<link rel="stylesheet" href="ruangan.css?v=80">
+<link rel="stylesheet" href="ruangan.css?v=81">
 </head>
 <body>
 
@@ -50,9 +50,10 @@
              crop pita WebP ber-alpha per monitor (siluet kaca asli),
              versi landscape + portrait mengikuti foto yang tampil. -->
 
-        <div class="domscreen" data-mon="brand" aria-hidden="true"><img src="desk-brand.jpg" alt=""></div>
-        <div class="domscreen" data-mon="web" aria-hidden="true"><img src="desk-web.jpg" alt=""></div>
-        <div class="domscreen" data-mon="video" aria-hidden="true"><img src="desk-video.jpg" alt=""></div>
+        <div class="glow glow-b"></div><div class="glow glow-w"></div><div class="glow glow-v"></div>
+    <div class="domscreen" data-mon="brand" aria-hidden="true"><img class="d-l" src="desk2-brand-l.jpg" alt=""><img class="d-p" src="desk2-brand-p.jpg" alt=""></div>
+        <div class="domscreen" data-mon="web" aria-hidden="true"><img class="d-l" src="desk2-web-l.jpg" alt=""><img class="d-p" src="desk2-web-p.jpg" alt=""></div>
+        <div class="domscreen" data-mon="video" aria-hidden="true"><img class="d-l" src="desk2-video-l.jpg" alt=""><img class="d-p" src="desk2-video-p.jpg" alt=""></div>
 
         <div class="hub" id="hub" role="dialog" aria-label="Identitas grup di dalam monitor" hidden></div>
         </div>
@@ -73,6 +74,6 @@
 
 </main>
 
-<script src="ruangan.js?v=80"></script>
+<script src="ruangan.js?v=81"></script>
 </body>
 </html>
