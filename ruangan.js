@@ -404,12 +404,41 @@
   function placeHub(){
     if(!lastDive) return;
     var q = lastDive.q;
-    hub.style.left   = (q.x + q.w * HUB_INSET).toFixed(3) + "%";
-    hub.style.top    = (q.y + q.h * HUB_INSET).toFixed(3) + "%";
-    hub.style.width  = (q.w * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
-    hub.style.height = (q.h * (1 - 2 * HUB_INSET)).toFixed(3) + "%";
-    hub.style.transformOrigin = q.org;
-    hub.style.transform = "rotateY(" + q.rotY + "deg)";
+    /* v7.4 — BUKAN KOTAK, IKUTI MONITOR (perintah user 26 Nov 15:45
+       dari rekaman HP-nya: "Jangan di buat kotak tapi di sesuain
+       monitornya"). Hub tidak lagi persegi sumbu-lurus + rotateY:
+       keempat sudutnya di-warp HOMOGRAPHY persis ke sudut kaca
+       monitor di foto (CORNERS terukur, di-inset 2% ke pusat kaca
+       agar tidak menutupi bezel) — tepi atas/bawah/samping hub
+       miring mengikuti panelnya, termasuk lengkung trapesium
+       monitor samping. Ukuran layout hub = bbox quad ter-inset
+       (px bingkai), transform-origin 0 0, matriks dari solver yang
+       sama seperti layar DOM v6 dulu. */
+    var Hw = q.w * (1 - 2 * HUB_INSET) / 100 * frame.w;
+    var Hh = q.h * (1 - 2 * HUB_INSET) / 100 * frame.h;
+    /* SUPERSAMPLE x4: hub diraster browser pada ukuran layout-nya;
+       tanpa ini teks hub (layout ±96px) diperbesar zoom kamera
+       ±3.9x dari raster kecil -> buram/bergelombang (bukti cek
+       v7.4 pertama). Layout 4x + matriks yang sama = raster padat,
+       teks tetap tajam setelah di-warp + di-zoom. */
+    var SS = 4;
+    hub.style.left = "0px";
+    hub.style.top = "0px";
+    hub.style.width = (Hw * SS).toFixed(1) + "px";
+    hub.style.height = (Hh * SS).toFixed(1) + "px";
+    hub.style.transformOrigin = "0 0";
+    var cs = corners(lastDive.key);
+    if(cs){
+      var cx = (cs[0][0] + cs[1][0] + cs[2][0] + cs[3][0]) / 4;
+      var cy = (cs[0][1] + cs[1][1] + cs[2][1] + cs[3][1]) / 4;
+      var dst = cs.map(function(p){
+        var ix = p[0] + (cx - p[0]) * 0.02, iy = p[1] + (cy - p[1]) * 0.02;
+        return [ix / 100 * frame.w, iy / 100 * frame.h];
+      });
+      hub.style.transform = homography(Hw * SS, Hh * SS, dst);
+    } else {
+      hub.style.transform = "";
+    }
     hub.classList.toggle("tilt", q.rotY !== 0);
     /* v7.1 — KOTAK MENYESUAIKAN MONITOR (perintah user 26 Nov 14:30:
        "Kotaknya sesuaikan monitornya buy"). Kanvas tidak lagi ukuran
@@ -430,7 +459,7 @@
       cH = Math.max(230, Math.min(380, cH));
       sc.style.width = "340px";
       sc.style.height = cH + "px";
-      var k = Math.min(Hw / 340, Hh / cH) * 0.998;
+      var k = 4 * Math.min(Hw / 340, Hh / cH) * 0.998;   /* x4 mengikuti supersample hub */
       sc.style.transform = "scale(" + k.toFixed(4) + ")";
     }
   }
