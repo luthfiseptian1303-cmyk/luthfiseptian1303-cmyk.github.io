@@ -196,12 +196,12 @@
      ganti ini") + LAYAR DOM: quad di bawah = bbox sudut kaca terukur
      di foto gelap room-baru-{l,p}.jpg; sudut pastinya di CORNERS. */
   var QUADS_L = {
-    web:   { x:37.2, y:47.5, w:17.7, h:17.0, iy:47.8, ih:16.4, rotY:0,   org:"50% 50%" },
+    web:   { x:37.2, y:47.5, w:17.7, h:16.6, iy:47.8, ih:16.0, rotY:0,   org:"50% 50%" },
     brand: { x:17.0, y:46.9, w:19.6, h:19.2, iy:47.2, ih:18.6, rotY:24,  org:"100% 50%" },
     video: { x:55.5, y:47.9, w:19.4, h:18.6, iy:48.2, ih:18.0, rotY:-24, org:"0% 50%" }
   };
   var QUADS_P = {
-    web:   { x:35.7, y:53.7, w:20.7, h:10.7, iy:54.0, ih:10.1, rotY:0,   org:"50% 50%" },
+    web:   { x:35.35, y:53.35, w:21.4, h:11.1, iy:53.65, ih:10.5, rotY:0,   org:"50% 50%" },
     brand: { x:14.5, y:53.5, w:20.8, h:11.7, iy:53.8, ih:11.1, rotY:24,  org:"100% 50%" },
     video: { x:56.8, y:53.9, w:20.8, h:11.5, iy:54.2, ih:10.9, rotY:-24, org:"0% 50%" }
   };
@@ -212,12 +212,12 @@
      dari foto versi menyala — posisi monitornya bergeser ±2–3%. */
   var CORNERS_L = {
     brand: [[17.0,46.9],[36.6,47.5],[36.6,63.6],[17.0,66.1]],
-    web:   [[37.2,47.5],[54.9,47.9],[54.9,64.5],[37.2,64.1]],
+    web:   [[37.2,47.5],[54.9,47.9],[54.9,64.1],[37.2,63.7]],
     video: [[55.5,47.9],[74.9,48.0],[74.9,66.5],[55.5,63.9]]
   };
   var CORNERS_P = {
     brand: [[14.5,53.5],[35.3,53.7],[35.3,63.9],[14.5,65.2]],
-    web:   [[35.7,53.7],[56.4,53.9],[56.4,64.4],[35.7,64.1]],
+    web:   [[35.35,53.35],[56.75,53.55],[56.75,64.45],[35.35,64.15]],
     video: [[56.8,53.9],[77.6,54.0],[77.6,65.4],[56.8,64.0]]
   };
   function corners(key){ return (portrait() ? CORNERS_P : CORNERS_L)[key]; }
