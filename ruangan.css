@@ -463,30 +463,3 @@ body.live-open nav{opacity:0;pointer-events:none}
 @media (hover:hover) and (pointer:fine){
   .backchip:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
 }
-
-
-/* ================================================================
-   v7.2 — LAMPU = STATUS STUDIO (ide user, dipilih 26 Nov 14:40).
-   Jam buka 08.00–22.00 WIB: kelas .open di body menyalakan glow
-   hangat di titik lampu meja foto (anak .breath, % foto, blend
-   screen) + titik chip status menyala amber. Di luar jam itu glow
-   padam dan chip berbunyi "Studio tutup · pesan tetap masuk".
-   Chip bersembunyi saat dive (zoomed) dan tertutup takeover (z 50).
-   ================================================================ */
-.lampglow{position:absolute;left:75.3%;top:38.8%;width:34%;aspect-ratio:1/1;z-index:2;
-  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;mix-blend-mode:screen;
-  background:radial-gradient(circle, rgba(255,198,98,.50) 0%, rgba(255,168,66,.20) 38%, rgba(255,168,66,0) 68%);
-  opacity:0;transition:opacity 1.2s ease}
-body.open .lampglow{opacity:1}
-.status{position:absolute;left:14px;bottom:14px;z-index:40;display:flex;align-items:center;gap:8px;
-  background:rgba(10,17,24,.72);border:1px solid rgba(255,255,255,.14);color:#e8eef3;
-  border-radius:999px;padding:7px 13px 7px 10px;font-size:12px;letter-spacing:.02em;
-  backdrop-filter:blur(6px);opacity:0;transition:opacity .5s ease;pointer-events:none}
-body.ready .status{opacity:1}
-.status i{width:8px;height:8px;border-radius:50%;background:#7d8894;flex:none;transition:background .5s ease, box-shadow .5s ease}
-body.open .status i{background:#ffc46b;box-shadow:0 0 10px 2px rgba(255,196,96,.55)}
-.stage.zoomed .status{opacity:0}
-@media (max-width:640px), (max-aspect-ratio:4/5){
-  .lampglow{left:78.2%;top:46.9%;width:54%}
-  .status{bottom:74px}
-}
