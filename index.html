@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarlLab — Pencet Monitornya, Kamera Mendekat</title>
 <meta name="description" content="Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.">
-<link rel="stylesheet" href="ruangan.css?v=79">
+<link rel="stylesheet" href="ruangan.css?v=80">
 </head>
 <body>
 
@@ -21,8 +21,8 @@
     <div class="stage" id="stage">
       <div class="cam" id="cam">
         <div class="breath">
-        <img id="room" src="room-final.jpg" alt="Foto ruangan kerja CarlLab dengan tiga monitor besar melengkung" width="1920" height="1280">
-        <img id="roomP" src="room-portrait.jpg" alt="" aria-hidden="true" width="1040" height="2352">
+        <img id="room" src="room-baru-l.jpg" alt="Foto ruangan gaming CarlLab dengan tiga monitor menyala" width="1920" height="1280">
+        <img id="roomP" src="room-baru-p.jpg" alt="" aria-hidden="true" width="1184" height="2096">
 
         <!-- MONITOR KIRI — BRAND & LOGO (zona pencet tak terlihat: diam = foto bersih) -->
         <div class="scr scr-l">
@@ -50,12 +50,9 @@
              crop pita WebP ber-alpha per monitor (siluet kaca asli),
              versi landscape + portrait mengikuti foto yang tampil. -->
 
-        <div class="onlayer onl-l onl-brand" aria-hidden="true"><img src="room-on-brand-l58.webp" alt=""></div>
-        <div class="onlayer onl-p onl-brand" aria-hidden="true"><img src="room-on-brand-p58.webp" alt=""></div>
-        <div class="onlayer onl-l onl-web" aria-hidden="true"><img src="room-on-web-l58.webp" alt=""></div>
-        <div class="onlayer onl-p onl-web" aria-hidden="true"><img src="room-on-web-p58.webp" alt=""></div>
-        <div class="onlayer onl-l onl-video" aria-hidden="true"><img src="room-on-video-l57.webp" alt=""></div>
-        <div class="onlayer onl-p onl-video" aria-hidden="true"><img src="room-on-video-p57.webp" alt=""></div>
+        <div class="domscreen" data-mon="brand" aria-hidden="true"><img src="desk-brand.jpg" alt=""></div>
+        <div class="domscreen" data-mon="web" aria-hidden="true"><img src="desk-web.jpg" alt=""></div>
+        <div class="domscreen" data-mon="video" aria-hidden="true"><img src="desk-video.jpg" alt=""></div>
 
         <div class="hub" id="hub" role="dialog" aria-label="Identitas grup di dalam monitor" hidden></div>
         </div>
@@ -76,6 +73,6 @@
 
 </main>
 
-<script src="ruangan.js?v=79"></script>
+<script src="ruangan.js?v=80"></script>
 </body>
 </html>
