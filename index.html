@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarlLab — Pencet Monitornya, Kamera Mendekat</title>
 <meta name="description" content="Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.">
-<link rel="stylesheet" href="ruangan.css?v=81">
+<link rel="stylesheet" href="ruangan.css?v=82">
 </head>
 <body>
 
@@ -21,8 +21,8 @@
     <div class="stage" id="stage">
       <div class="cam" id="cam">
         <div class="breath">
-        <img id="room" src="room-baru-l.jpg" alt="Foto ruangan gaming CarlLab dengan tiga monitor menyala" width="1920" height="1280">
-        <img id="roomP" src="room-baru-p.jpg" alt="" aria-hidden="true" width="1184" height="2096">
+        <img id="room" src="room-nyala-l.jpg" alt="Foto ruangan gaming CarlLab dengan tiga monitor menyala" width="1920" height="1280">
+        <img id="roomP" src="room-nyala-p.jpg" alt="" aria-hidden="true" width="1184" height="2096">
 
         <!-- MONITOR KIRI — BRAND & LOGO (zona pencet tak terlihat: diam = foto bersih) -->
         <div class="scr scr-l">
@@ -46,14 +46,11 @@
         <!-- HUB: teks display di dalam layar monitor yang dipencet.
              Anak .breath: posisi/ukuran dalam % foto (quad display,
              inset 1.5%), pose rotateY sama seperti layar di foto. -->
-        <!-- NYALA v4.6: cahaya monitor dibakar ke piksel foto —
-             crop pita WebP ber-alpha per monitor (siluet kaca asli),
-             versi landscape + portrait mengikuti foto yang tampil. -->
-
-        <div class="glow glow-b"></div><div class="glow glow-w"></div><div class="glow glow-v"></div>
-    <div class="domscreen" data-mon="brand" aria-hidden="true"><img class="d-l" src="desk2-brand-l.jpg" alt=""><img class="d-p" src="desk2-brand-p.jpg" alt=""></div>
-        <div class="domscreen" data-mon="web" aria-hidden="true"><img class="d-l" src="desk2-web-l.jpg" alt=""><img class="d-p" src="desk2-web-p.jpg" alt=""></div>
-        <div class="domscreen" data-mon="video" aria-hidden="true"><img class="d-l" src="desk2-video-l.jpg" alt=""><img class="d-p" src="desk2-video-p.jpg" alt=""></div>
+        <!-- NYALA v7: monitor sudah menyala DI FOTONYA SENDIRI —
+             foto dasar digambar ulang dengan ketiga monitor menyala
+             wallpaper Bloom menyambung (satu sumber, tanpa lapisan
+             layar tempelan). Zona pencet + hub dive memakai quad
+             yang sama seperti sebelumnya. -->
 
         <div class="hub" id="hub" role="dialog" aria-label="Identitas grup di dalam monitor" hidden></div>
         </div>
@@ -74,6 +71,6 @@
 
 </main>
 
-<script src="ruangan.js?v=81"></script>
+<script src="ruangan.js?v=82"></script>
 </body>
 </html>
