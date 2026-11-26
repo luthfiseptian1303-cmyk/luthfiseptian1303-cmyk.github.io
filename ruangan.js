@@ -637,7 +637,13 @@
       top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> \u00b7 ' + g.label + '</span>'
         + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
     }
-    var h = '<div class="view scr-view"><img class="deskbg" src="win11-desktop.jpg" alt="" aria-hidden="true"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
+    /* Wallpaper desktop di dalam monitor DISAMAKAN dengan wallpaper
+       monitornya di foto (perintah user 26 Nov 18:38): file yang sama
+       persis dengan span Bloom yang membentang di tiga monitor foto,
+       dan tiap monitor menampilkan sepertiga bagiannya sendiri
+       (kiri 0% / tengah 50% / kanan 100%). */
+    var wallPos = curGroup === "brand" ? "0%" : (curGroup === "video" ? "100%" : "50%");
+    var h = '<div class="view scr-view"><img class="deskbg" src="desk-wallpaper.jpg" alt="" aria-hidden="true" style="object-position:' + wallPos + ' 50%"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
