@@ -111,7 +111,7 @@
     brand: { no:"01", label:"BRAND & LOGO",  l1:"Brand &", l2:"Logo.",
              tabs:["Kuliner"] },
     web:   { no:"02", label:"WEBSITES",      l1:"Our",     l2:"Websites.",
-             tabs:["Toko Online"] },
+             tabs:["Toko Online", "Undangan Digital"] },
     video: { no:"03", label:"VIDEO EDITING", l1:"Video",   l2:"Editing.",
              tabs:["Podcast", "Explainer", "Wawancara"] }
   };
@@ -130,7 +130,7 @@
   function T(id, en){ return LANG === "en" ? en : id; }
   var TAB_EN = {
     brand: ["Culinary"],
-    web:   ["Online Store"],
+    web:   ["Online Store", "Digital Invitations"],
     video: ["Podcast", "Explainer", "Interview"]
   };
   var LUMERA_EN = {
@@ -225,7 +225,11 @@
      Landing / Portofolio hilang dari grup Websites sampai demo
      penggantinya jadi. Undangan diisi LARIK (demo baru pertama) +
      PAGI SORE (klien asli, TIDAK ikut dihapus). */
-  var SITE_TABS = {};   /* v8.18: folder Undangan Digital dihapus dari ruangan — halaman pagi-sore.html tetap live sebagai halaman klien asli */
+  var SITE_TABS = {
+    1: [
+      { nm:"PAGI SORE", sb:"Grand Opening — Klien Asli", sbEn:"Grand Opening — Real Client", img:"hub-thumbs/pagi-sore.jpg", url:ABS + "pagi-sore.html", path:"pagi-sore" }
+    ]
+  };   /* v8.19: PAGI SORE DIPERTAHANKAN di ruangan — perintah user 28 Nov 05:14 "jangan di hapus" (masuk daftar simpan: Video, LUMÉRA, GIGIT!, MomiRel, PAGI SORE) */
   /* Video Editing per folder (indeks tab): MP4 + poster live di
      video-editing/media/<m>.mp4|.jpg; Drive hanya tautan cadangan. */
   var VID_TABS = [
