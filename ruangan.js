@@ -834,7 +834,7 @@
       h += '<button class="sw" type="button" data-hex="' + p[1] + '"><i style="background:' + p[1] + '"></i><b>' + esc(en ? l.en.pal[i] : p[0]) + "</b><span>" + p[1] + "</span></button>";
     });
     h += "</div>";
-    if(l.id === "gigit") h += '<a class="lbtn" href="' + ABS + 'gigit-carousel.html" target="_blank" rel="noopener">' + T("Lihat set lengkapnya \\u2197", "See the full set \\u2197") + "</a>";
+    if(l.id === "gigit") h += '<a class="lbtn" href="' + ABS + 'gigit-carousel.html" target="_blank" rel="noopener">' + T("Lihat set lengkapnya ↗", "See the full set ↗") + "</a>";
     return h;
   }
   /* Pemutar video di dalam jendela (v8.7): MP4 live dari halaman
@@ -845,7 +845,7 @@
     var src = ABS + "video-editing/media/" + v.m + ".mp4";
     return '<div class="vidwrap"><video id="scrVideo" controls playsinline preload="none" poster="' + poster + '" src="' + src + '"></video></div>'
       + '<p class="rsb" style="white-space:normal">' + esc(tabLabel()) + " · " + v.d + " · " + T("Vertikal", "Vertical") + "</p>"
-      + '<a class="lbtn" href="https://drive.google.com/file/d/' + v.drv + '/view" target="_blank" rel="noopener">' + T("Tidak berputar? Buka di Google Drive \\u2197", "Not playing? Open in Google Drive \\u2197") + "</a>";
+      + '<a class="lbtn" href="https://drive.google.com/file/d/' + v.drv + '/view" target="_blank" rel="noopener">' + T("Tidak berputar? Buka di Google Drive ↗", "Not playing? Open in Google Drive ↗") + "</a>";
   }
   function stopVideo(){
     var v = hub.querySelector("video");
