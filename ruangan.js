@@ -897,10 +897,23 @@
     renderHub();
     placeHub();                                   /* geometri foto + pose trapesium, tetap sampai akhir */
     hub.hidden = false;
-    hub.classList.add("powering");   /* v4: monitor MENYALA sejak dive mulai — lapisan .power menjalankan ramp power-on 1500ms tersinkron dolly */
-    later(function(){ hub.classList.add("show"); }, 700);        /* isi layar menyusul ramp terang di tengah dolly 1600ms */
+    /* v8.6 — TANPA KEDIP: hub TIDAK ditampilkan selama dive. Selama
+       kamera mendekat, yang terlihat hanya foto + ikon file diam
+       (.rest) yang ikut membesar di kaca — persis menyamperi monitor
+       betulan. Ramp power-on v4 (monitor menyala di tengah jalan +
+       isi menyusul di +700ms) DICABUT dari jalur dive: gejalanya
+       persis yang user keluhkan dari rekaman HP-nya — ikon hilang
+       dulu, desktop muncul kemudian. Hub baru memudar masuk .35s
+       TEPAT saat kamera tiba (di callback DIVE_MS di bawah), dengan
+       kelas .arrive (tanpa sapuan .power, tanpa glow), di atas ikon
+       diam yang geometrinya sudah disamakan. */
     later(function(){
-      if(state === "diving") state = "open";
+      if(state === "diving"){
+        state = "open";
+        hub.classList.add("arrive");
+        hub.classList.add("powering");
+        hub.classList.add("show");
+      }
       correctFit();   /* ukur rect nyata display; paksa pas di viewport */
       later(correctFit, 450);   /* v7.1: sapuan kedua setelah transisi benar-benar diam — koreksi pertama bisa membaca rect tengah-terbang */
       /* fokus ke x hanya untuk pointer halus/keyboard — di layar sentuh
@@ -918,6 +931,7 @@
     clearTimers(); clearLiveTimer(); liveSeq++;
     hideTakeover();   /* v3w: takeover live tidak boleh tertinggal di atas ruangan */
     state = "returning";
+    hub.classList.remove("arrive");   /* v8.6: penanda kedatangan lepas bersama jalan pulang */
     hub.classList.remove("show");   /* isi meredup duluan (ramp .screen) */
     /* v4 power-off: cahaya layar menyusul padam di tengah jalan
        pulang — .powering dilepas +350ms, glow memudar saat kamera
@@ -1152,7 +1166,7 @@
   function hardReset(){
     clearTimers(); clearLiveTimer(); liveSeq++;
     hideTakeover();   /* v3w: ganti mode portrait/landscape juga menutup takeover */
-    hub.classList.remove("show"); hub.classList.remove("powering"); hub.hidden = true; hub.innerHTML = "";
+    hub.classList.remove("show"); hub.classList.remove("powering"); hub.classList.remove("arrive"); hub.hidden = true; hub.innerHTML = "";
     stage.classList.remove("zoomed"); stage.classList.remove("returning");
     cam.style.transform = "";
     state = "idle"; curGroup = null; view = "main";
