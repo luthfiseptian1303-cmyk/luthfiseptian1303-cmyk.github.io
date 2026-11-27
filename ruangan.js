@@ -818,7 +818,7 @@
       h += "</div>";
       foot = T("Pencet satu karya untuk membukanya langsung di HP ini.", "Tap a work to open it live on this phone.");
     }
-    return h;
+    return h + '<p class="foot">' + foot + "</p>";
   }
   /* Detail logo (v8.7): sampul warna brand + thumbnail asli, nama,
      garis peran, deskripsi, palet (pencet swatch = salin hex). */
@@ -1029,6 +1029,7 @@
       + '<div class="win' + winCls + '" id="win">'
       + top;
    if(content){
+     if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
       if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
       if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
