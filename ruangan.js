@@ -208,11 +208,11 @@
   var BRAND_GNAME = { kuliner:"grup kuliner", beauty:"grup beauty", jasa:"grup jasa & tech" };
   var BRAND_GNAME_EN = { kuliner:"culinary group", beauty:"beauty group", jasa:"services & tech group" };
   var LOGOS = [
-    { id:"gigit", g:"kuliner", nm:"GIGIT!", rl:"Cookies & Crumble — ceria dan berani",
+    { id:"gigit", set:"gigit-carousel.html", g:"kuliner", nm:"GIGIT!", rl:"Cookies & Crumble — ceria dan berani",
       en:{ rl:"Cookies & Crumble — cheerful and bold", ds:"This is the original finished set, not a mock-up: nineteen panels from one design system — the feed carousel, the 9:16 stories, and the darker Chocolate Edition. One system that stretches across every post the brand will ever make.", pal:["Orange","Cream","Edition Chocolate","Caramel"] },
       ds:"Ini file aslinya, bukan reka ulang: set jadi GIGIT! berisi sembilan belas panel dari satu sistem desain — carousel feed, story 9:16, dan Edisi Cokelat. Satu sistem yang meregang ke semua postingan brand ini.",
       pal:[["Oranye","#F96A0D"],["Krem","#FFF3E0"],["Cokelat Edisi","#2B170B"],["Karamel","#E8A33D"]], bg:"#F96A0D" },
-    { id:"momirel", tv:"2", g:"kuliner", nm:"MomiRel", rl:"Homemade Dessert — hangat dan rumahan",
+    { id:"momirel", tv:"2", set:"momirel-set.html", g:"kuliner", nm:"MomiRel", rl:"Homemade Dessert — hangat dan rumahan",
       en:{ rl:"Homemade Dessert — warm and homemade", ds:"CarlLab's first real client logo — a homemade dessert brand from BSD. A mother and daughter baking together, hand-drawn with thick lines so it stays legible printed on a spunbond bag, with a black brush-script wordmark. Approved by the client on 14 Nov 2026 and published with her permission.", pal:["Burgundy","Cream","Script Black"] },
       ds:"Logo klien asli pertama CarlLab — brand dessert rumahan dari BSD. Ilustrasi ibu dan anak memanggang bersama, digambar tangan dengan garis tebal supaya tetap terbaca saat dicetak di tas spunbond, wordmark brush script hitam. Disetujui klien 14 Nov 2026 dan dipublikasikan atas izinnya.",
       pal:[["Burgundy","#6E1423"],["Krem","#F5E9DA"],["Hitam Script","#14100E"]], bg:"#FAF6EE" }
@@ -823,7 +823,7 @@
       h += '<button class="sw" type="button" data-hex="' + p[1] + '"><i style="background:' + p[1] + '"></i><b>' + esc(en ? l.en.pal[i] : p[0]) + "</b><span>" + p[1] + "</span></button>";
     });
     h += "</div>";
-    if(l.id === "gigit") h += '<a class="lbtn" href="' + ABS + 'gigit-carousel.html" target="_blank" rel="noopener">' + T("Lihat set lengkapnya ↗", "See the full set ↗") + "</a>";
+    if(l.set) h += '<a class="lbtn" href="' + ABS + l.set + '" target="_blank" rel="noopener">' + T("Lihat set lengkapnya ↗", "See the full set ↗") + "</a>";   /* v8.21: semua demo logo diarahkan ke full set-nya (perintah user 28 Nov 05:33; khusus Websites dibiarkan apa adanya) */
     return h;
   }
   /* Pemutar video di dalam jendela (v8.7): MP4 live dari halaman
