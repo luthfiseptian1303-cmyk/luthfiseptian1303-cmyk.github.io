@@ -117,6 +117,39 @@
   };
   var activeTab = 0;   /* tab kategori aktif di layar yang sedang terbuka */
 
+  /* ================= BAHASA ID/EN (ide 5, perintah user 27 Nov) =====
+     Seluruh CarlLab dwibahasa; halaman ruangan ini yang terakhir
+     masih ID saja. Toggle di pil nav menukar SEMUA teks halaman +
+     isi hub (tab, daftar, detail, showcase, produk, chip takeover).
+     Pilihan tersimpan di localStorage ("carllab-lang"); bawaan ID.
+     T(id, en) memilih string aktif; data EN untuk tab / LUMÉRA /
+     produk adalah peta override di bawah — data ID tetap sumber
+     utama dan tidak berubah. */
+  var LANG = "id";
+  try { if(localStorage.getItem("carllab-lang") === "en") LANG = "en"; } catch(e){}
+  function T(id, en){ return LANG === "en" ? en : id; }
+  var TAB_EN = {
+    brand: ["Culinary", "Beauty", "Services & Tech"],
+    web:   ["Company Site", "Landing Page", "Online Store", "Digital Invitations", "Portfolio"],
+    video: ["Podcast", "Explainer", "Interview"]
+  };
+  var LUMERA_EN = {
+    ds: "The LUMÉRA perfume house website — The Night Collection of five fragrances, complete with a concept store and checkout inside. The collection can be previewed right on this phone; the full interactive store runs on the live site.",
+    meta: [["Type","Website"],["Brand","LUMÉRA — Maison de Parfum"],["Collection","The Night Collection · 5 products"],["Year","2026"]]
+  };
+  var PROD_EN = [
+    { poem:"Ember light trapped in glass — warm resin melting slowly over cold stone.",
+      notes:[["Top","Mandarin · Cardamom"],["Heart","Amber Resin · Iris"],["Base","Sandalwood · Vanilla · Tonka"]] },
+    { poem:"A peony blooming after dark — petals cool as freshly polished marble.",
+      notes:[["Top","Red Currant · Bergamot"],["Heart","Peony · Rose Water"],["Base","Musk · Bright Cedar"]] },
+    { poem:"Sage leaves crushed over wet granite — green, mineral, and deeply calm.",
+      notes:[["Top","Clary Sage · Grapefruit"],["Heart","Olive Leaf · Neroli"],["Base","Vetiver · White Amber"]] },
+    { poem:"Ink-blue water at midnight — sea salt clinging to dark wood.",
+      notes:[["Top","Bergamot · Juniper"],["Heart","Blue Iris · Violet Leaf"],["Base","Driftwood · Salt Musk"]] },
+    { poem:"A garnet stone lifted to candlelight — dark plum, warm spice, and soft leather.",
+      notes:[["Top","Black Plum · Cinnamon"],["Heart","Hibiscus · Black Tea"],["Base","Leather · Myrrh · Cacao"]] }
+  ];
+
   /* ================= LUMÉRA (v3s) — satu-satunya isi =================
      Keadaan tampilan di dalam layar Websites: main (identitas grup
      saja, seperti v3q) | list (baris LUMÉRA di tab Toko Online) |
@@ -158,7 +191,6 @@
       poem:"Batu garnet yang diangkat ke cahaya lilin — plum gelap, rempah hangat, dan kulit yang lembut.",
       notes:[["Top","Plum Hitam · Kayu Manis"],["Jantung","Hibiskus · Teh Hitam"],["Dasar","Kulit · Mirra · Kakao"]] }
   ];
-  var WEB_FOOT = "1 karya — ditampilkan langsung di HP ini.";
   function webContent(){ return curGroup === "web" && activeTab === WEB_TOKO; }
 
   /* Quad DISPLAY tiap monitor (persen dari foto, hasil ukur):
@@ -267,7 +299,8 @@
   function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
   function tabsHTML(){
     var g = GROUPS[curGroup], h = "";
-    g.tabs.forEach(function(t, i){
+    var tabList = (LANG === "en" && TAB_EN[curGroup]) ? TAB_EN[curGroup] : g.tabs;
+    tabList.forEach(function(t, i){
       h += '<button class="tab' + (activeTab === i ? " on" : "") + '" type="button" data-tab="' + i + '">' + esc(t) + "</button>";
     });
     return h;
@@ -485,23 +518,23 @@
     return h + "</dl>";
   }
   function listHTML(){
-    return '<p class="note">Toko Online — 1 karya</p>'
+    return '<p class="note">' + T("Toko Online — 1 karya", "Online Store — 1 work") + '</p>'
       + '<div class="rows">'
       + '<button class="row" type="button" data-work="0"><img class="timg sq" alt="" src="' + LUMERA.img + '">'
       + '<span class="rtx"><span class="rnm">' + esc(LUMERA.nm) + '</span><span class="rsb">' + esc(LUMERA.sb) + "</span></span>"
       + '<span class="arw">\u203a</span></button>'
       + "</div>"
-      + '<p class="foot">' + esc(WEB_FOOT) + "</p>";
+      + '<p class="foot">' + T("1 karya — ditampilkan langsung di HP ini.", "1 work — shown live on this phone.") + "</p>";
   }
   function detailHTML(){
     /* v3u: bar kembali BUKAN di sini lagi — ia tetap (viewbar) di
        luar badan scroll, dirender oleh renderScreen. */
     return '<div class="hero"><img alt="" src="' + LUMERA.wide + '"><b>' + esc(LUMERA.nm) + "</b></div>"
       + '<p class="rsb" style="white-space:normal">' + esc(LUMERA.sb) + "</p>"
-      + metaHTML(LUMERA.meta)
-      + '<p class="dds" style="margin-top:7px">' + esc(LUMERA.ds) + "</p>"
-      + '<button class="pbtn" type="button" data-play>Lihat di HP ini</button>'
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya \u2197</a>';
+      + metaHTML(LANG === "en" ? LUMERA_EN.meta : LUMERA.meta)
+      + '<p class="dds" style="margin-top:7px">' + esc(LANG === "en" ? LUMERA_EN.ds : LUMERA.ds) + "</p>"
+      + '<button class="pbtn" type="button" data-play>' + T("Lihat di HP ini", "View on this phone") + '</button>'
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya \u2197", "Open the original site \u2197") + '</a>';
   }
   /* Showcase LOKAL: kepala LUMÉRA + The Night Collection, hero wide,
      lalu 5 produk sebagai daftar ala HP (gambar + nama + garis
@@ -510,23 +543,23 @@
   function heroZonesHTML(){
     var h = '<span class="herozones" aria-hidden="false">';
     LUMERA_PRODUCTS.forEach(function(p, i){
-      h += '<button class="herozone" type="button" data-prod="' + i + '" aria-label="Buka produk ' + esc(p.nm) + '"></button>';
+      h += '<button class="herozone" type="button" data-prod="' + i + '" aria-label="' + T("Buka produk ", "Open product ") + esc(p.nm) + '"></button>';
     });
     return h + "</span>";
   }
   function showHTML(){
     /* v3u: bar (‹ Detail + nama) dihoist jadi viewbar tetap oleh
        renderScreen — di sini tinggal isi scroll-nya. */
-    var h = '<p class="note">The Night Collection \u00b7 5 wewangian</p>'
+    var h = '<p class="note">' + T("The Night Collection \u00b7 5 wewangian", "The Night Collection \u00b7 5 fragrances") + '</p>'
       + '<div class="hero"><img alt="" src="' + LUMERA.wide + '"><b>The Night Collection</b>' + heroZonesHTML() + '</div>'
       + '<div class="rows">';
     LUMERA_PRODUCTS.forEach(function(p, i){
       h += '<button class="row" type="button" data-prod="' + i + '"><img class="timg" alt="" src="' + p.img + '">'
-        + '<span class="rtx"><span class="rnm">' + esc(p.nm) + '</span><span class="rsb">' + esc(p.notes[1][1]) + "</span></span>"
+        + '<span class="rtx"><span class="rnm">' + esc(p.nm) + '</span><span class="rsb">' + esc(LANG === "en" ? PROD_EN[i].notes[1][1] : p.notes[1][1]) + "</span></span>"
         + '<span class="arw">\u203a</span></button>';
     });
     return h + "</div>"
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">Buka situs aslinya \u2197</a>';
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya \u2197", "Open the original site \u2197") + '</a>';
   }
   /* Tampilan produk (v3u): bar atas (‹ Koleksi + posisi n / 5 + ✕)
      adalah .scr-top kanvas — tetap, di luar scroll (lihat
@@ -536,10 +569,11 @@
      pertama. Tanpa harga (aturan CarlLab untuk halaman ini). */
   function prodHTML(){
     var p = LUMERA_PRODUCTS[curProd];
+    var pd = LANG === "en" ? PROD_EN[curProd] : p;
     return '<div class="prodstage"><img alt="" src="' + p.img + '"></div>'
       + '<p class="pnm">' + esc(p.nm) + "</p>"
-      + '<p class="dds poem">' + esc(p.poem) + "</p>"
-      + metaHTML(p.notes, "prodmeta");
+      + '<p class="dds poem">' + esc(pd.poem) + "</p>"
+      + metaHTML(pd.notes, "prodmeta");
   }
 
   /* ---------- TAMPILAN LIVE (deploy): iframe situs asli + fallback ----------
@@ -574,7 +608,7 @@
      liveSeq++ — pola yang sama seperti liveSeq++ di closeGroup. */
   function showTakeover(){
     takeover.innerHTML = liveHTML()
-      + '<button class="backchip" type="button" data-backlive aria-label="Kembali ke detail LUM\u00c9RA">\u2039 Kembali</button>';
+      + '<button class="backchip" type="button" data-backlive aria-label="' + T("Kembali ke detail LUM\u00c9RA", "Back to the LUM\u00c9RA detail") + '">\u2039 ' + T("Kembali", "Back") + '</button>';
     takeover.hidden = false;
     document.body.classList.add("live-open");   /* pil nav disembunyikan selama takeover (lihat CSS) */
   }
@@ -623,7 +657,7 @@
     liveTimer = setTimeout(function(){ if(!done) liveFallback(seq); }, 4000);
   }
   function liveHTML(){
-    return '<iframe class="liveframe" src="/lumera.html" title="Situs live LUM\u00c9RA di dalam monitor" loading="eager"></iframe>';
+    return '<iframe class="liveframe" src="/lumera.html" title="' + T("Situs live LUM\u00c9RA di dalam monitor", "Live LUM\u00c9RA site inside the monitor") + '" loading="eager"></iframe>';
   }
   /* Render seluruh isi layar. Mode identitas (view "main") = markup
      v3q persis: label + angka + headline + tab, tanpa badan isi.
@@ -645,12 +679,12 @@
          ia di dalam scroll: ikut terseret dan terpotong di tepi). */
     var top;
     if(view === "prod"){
-      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>\u2039 Koleksi</button>'
+      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>\u2039 ' + T("Koleksi", "Collection") + '</button>'
         + '<span class="prodpos">' + (curProd + 1) + " / " + LUMERA_PRODUCTS.length + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
+        + '<button class="xbtn" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '">\u2715</button></div>';
     } else {
       top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> \u00b7 ' + g.label + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="Tutup grup">\u2715</button></div>';
+        + '<button class="xbtn" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '">\u2715</button></div>';
     }
     /* Wallpaper desktop di dalam monitor DISAMAKAN dengan wallpaper
        monitornya di foto (perintah user 26 Nov 18:38): file yang sama
@@ -662,14 +696,14 @@
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
-      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 Grup</button></div>';
-      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 Grup</button><b>' + esc(LUMERA.nm) + '</b></div>';
-      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 Detail</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
+      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 ' + T("Grup", "Group") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 ' + T("Detail", "Detail") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live"){
         /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
            di lapisan TAKEOVER layar penuh di atas seluruh panggung
            (showTakeover di akhir render ini), bukan di sini lagi. */
-        h += '<div class="scr-body fill" id="uiBody"><p class="note">Situs live dibuka memenuhi layar\u2026</p></div>';
+        h += '<div class="scr-body fill" id="uiBody"><p class="note">' + T("Situs live dibuka memenuhi layar\u2026", "Opening the live site full-screen\u2026") + '</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
           + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "show" ? showHTML() : prodHTML())
@@ -1022,6 +1056,62 @@
       entryImg.addEventListener("error", entryDone);
     }
   }
+
+  /* ================= TOGGLE BAHASA — penerapan =================
+     applyLang menukar seluruh teks statis halaman (judul, meta,
+     nav, petunjuk, label zona, alt foto, label hub) dan label
+     tombol toggle itu sendiri (menampilkan bahasa TUJUAN).
+     Bila sebuah grup sedang terbuka, isi hub dirender ulang pada
+     view yang sama agar teksnya ikut berganti di tempat; selama
+     takeover live, hanya teks chip-nya yang ditukar. */
+  var langBtn = document.getElementById("langBtn");
+  function applyLang(){
+    document.documentElement.lang = LANG;
+    document.title = T("CarlLab — Pencet Monitornya, Kamera Mendekat",
+                       "CarlLab — Tap a Monitor, the Camera Moves In");
+    var md = document.querySelector('meta[name="description"]');
+    if(md) md.setAttribute("content", T(
+      "Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.",
+      "CarlLab's realistic photo room with three monitors. Tap a monitor: the camera glides in and that group's identity appears inside its screen — left Brand & Logo, centre Websites, right Video Editing."));
+    var nl = document.querySelector("nav .nl");
+    if(nl) nl.textContent = T("Ruangan", "Room");
+    var cta = document.querySelector("nav .cta");
+    if(cta && cta.childNodes.length > 1) cta.childNodes[cta.childNodes.length - 1].textContent = T("Pesan", "Order");
+    var hint = document.querySelector(".stage-hint");
+    if(hint) hint.textContent = T("Pencet salah satu monitornya — kamera akan mendekat.",
+                                  "Tap one of the monitors — the camera will move in.");
+    var zoneLbl = {
+      brand: T("Buka grup Brand dan Logo di monitor kiri", "Open the Brand & Logo group on the left monitor"),
+      web:   T("Buka grup Websites di monitor tengah", "Open the Websites group on the centre monitor"),
+      video: T("Buka grup Video Editing di monitor kanan", "Open the Video Editing group on the right monitor")
+    };
+    document.querySelectorAll("[data-open]").forEach(function(b){
+      var lbl = zoneLbl[b.getAttribute("data-open")];
+      if(lbl) b.setAttribute("aria-label", lbl);
+    });
+    var roomImg = document.getElementById("room");
+    if(roomImg) roomImg.setAttribute("alt", T("Foto ruangan gaming CarlLab dengan tiga monitor menyala",
+                                              "Photo of the CarlLab gaming room with three monitors lit"));
+    if(hub) hub.setAttribute("aria-label", T("Identitas grup di dalam monitor", "Group identity inside the monitor"));
+    if(langBtn) langBtn.textContent = (LANG === "en") ? "ID" : "EN";
+  }
+  if(langBtn) langBtn.addEventListener("click", function(){
+    LANG = (LANG === "en") ? "id" : "en";
+    try { localStorage.setItem("carllab-lang", LANG); } catch(e){}
+    applyLang();
+    if(curGroup && (state === "open" || state === "diving")){
+      if(view === "live"){
+        var chip = takeover.querySelector("[data-backlive]");
+        if(chip){
+          chip.textContent = "\u2039 " + T("Kembali", "Back");
+          chip.setAttribute("aria-label", T("Kembali ke detail LUM\u00c9RA", "Back to the LUM\u00c9RA detail"));
+        }
+      } else {
+        renderScreen();
+      }
+    }
+  });
+  applyLang();
 
   /* Ruangan hidup: napas Ken Burns murni CSS (.breath, 24 dtk) — tidak ada JS film. */
 
