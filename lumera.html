@@ -142,7 +142,11 @@
       }
       .hint .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px 2px var(--accent);transition:background .6s,box-shadow .6s;animation:pulse 2.6s ease-in-out infinite}
       @keyframes pulse{50%{opacity:.55}}
-      body.detail-open .intro,body.detail-open .hint{opacity:0;pointer-events:none}
+      /* !important: onScroll() menulis opacity inline ke .intro/.hint, yang
+         menimpa aturan ini — judul intro jadi hantu di belakang sheet detail
+         dan tertabrak baris tombol kembali/stepper. Maksud desainnya memang
+         intro+hint hilang penuh selama detail terbuka. */
+      body.detail-open .intro,body.detail-open .hint{opacity:0 !important;pointer-events:none}
       @media (max-width:760px){
         .intro{left:18px;right:18px;bottom:15svh;max-width:none}
         .intro h1{font-size:clamp(1.7rem,8.4vw,2.3rem)}
@@ -161,7 +165,24 @@
         .cu-wrap{inset:0 0 auto 0;height:57svh;
           -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
           mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
-        .cu-wrap img{object-position:50% 30%}
+        .cu-wrap img{object-position:50% 40%}
+      }
+      /* HP landscape: panel atas terlalu ceper untuk cover — tampilkan
+         foto utuh (contain) supaya botol tidak kepotong atas-bawah. */
+      @media (max-width:760px) and (min-aspect-ratio: 1/1){
+        .cu-wrap img{object-fit:contain;object-position:50% 50%}
+      }
+      /* Desktop landscape: foto portrait TIDAK lagi direntangkan cover
+         sepenuh layar (yang tampil cuma ±28% tinggi frame — tutup botol,
+         baris bawah label, dasar botol, dan rak batu semuanya kepotong).
+         Foto ditampung panel kanan setinggi layar: crop tinggal ±19%
+         di pita gelap atas-bawah, botol tampil utuh dari tutup sampai
+         rak, dan tepi kiri panel melebur ke dinding gelap halaman. */
+      @media (min-width:761px) and (min-aspect-ratio: 19/25){
+        .cu-wrap{left:auto;right:0;width:min(62svh,58vw);
+          -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 96px);
+          mask-image:linear-gradient(90deg,transparent 0,#000 96px)}
+        .cu-wrap img{object-position:50% 42%}
       }
       .d-shade{
         position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;
