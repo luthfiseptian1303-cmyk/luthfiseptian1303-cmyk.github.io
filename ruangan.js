@@ -208,11 +208,11 @@
   var BRAND_GNAME = { kuliner:"grup kuliner", beauty:"grup beauty", jasa:"grup jasa & tech" };
   var BRAND_GNAME_EN = { kuliner:"culinary group", beauty:"beauty group", jasa:"services & tech group" };
   var LOGOS = [
-    { id:"gigit", set:"gigit-carousel.html", setpath:"gigit-carousel", g:"kuliner", nm:"GIGIT!", rl:"Cookies & Crumble — ceria dan berani",
+    { id:"gigit", sets:[{t:"Carousel Feed",imgs:["gigit-panel-1.jpg","gigit-panel-2.jpg","gigit-panel-3.jpg","gigit-panel-4.jpg","gigit-panel-5.jpg","gigit-panel-6.jpg","gigit-panel-7.jpg","gigit-panel-8.jpg","gigit-panel-9.jpg","gigit-panel-10.jpg"]},{t:"Story 9:16",imgs:["gigit-story-1.jpg","gigit-story-2.jpg","gigit-story-3.jpg","gigit-story-4.jpg","gigit-story-5.jpg"]},{t:"Edisi Cokelat",ten:"Chocolate Edition",imgs:["gigit-dark-5.jpg","gigit-dark-6.jpg","gigit-dark-7.jpg","gigit-dark-8.jpg"]}], set:"gigit-carousel.html", setpath:"gigit-carousel", g:"kuliner", nm:"GIGIT!", rl:"Cookies & Crumble — ceria dan berani",
       en:{ rl:"Cookies & Crumble — cheerful and bold", ds:"This is the original finished set, not a mock-up: nineteen panels from one design system — the feed carousel, the 9:16 stories, and the darker Chocolate Edition. One system that stretches across every post the brand will ever make.", pal:["Orange","Cream","Edition Chocolate","Caramel"] },
       ds:"Ini file aslinya, bukan reka ulang: set jadi GIGIT! berisi sembilan belas panel dari satu sistem desain — carousel feed, story 9:16, dan Edisi Cokelat. Satu sistem yang meregang ke semua postingan brand ini.",
       pal:[["Oranye","#F96A0D"],["Krem","#FFF3E0"],["Cokelat Edisi","#2B170B"],["Karamel","#E8A33D"]], bg:"#F96A0D" },
-    { id:"momirel", tv:"2", set:"momirel-set.html", setpath:"momirel-set", g:"kuliner", nm:"MomiRel", rl:"Homemade Dessert — hangat dan rumahan",
+    { id:"momirel", tv:"2", sets:[{t:"Set Lengkap",ten:"Full Set",imgs:["brand-media/momirel-lockup.jpeg","brand-media/momirel-seal.jpeg","brand-media/momirel-sticker.jpeg"],caps:["Logo Utama","Segel Bundar","Versi Stiker"]}], set:"momirel-set.html", setpath:"momirel-set", g:"kuliner", nm:"MomiRel", rl:"Homemade Dessert — hangat dan rumahan",
       en:{ rl:"Homemade Dessert — warm and homemade", ds:"CarlLab's first real client logo — a homemade dessert brand from BSD. A mother and daughter baking together, hand-drawn with thick lines so it stays legible printed on a spunbond bag, with a black brush-script wordmark. Approved by the client on 14 Nov 2026 and published with her permission.", pal:["Burgundy","Cream","Script Black"] },
       ds:"Logo klien asli pertama CarlLab — brand dessert rumahan dari BSD. Ilustrasi ibu dan anak memanggang bersama, digambar tangan dengan garis tebal supaya tetap terbaca saat dicetak di tas spunbond, wordmark brush script hitam. Disetujui klien 14 Nov 2026 dan dipublikasikan atas izinnya.",
       pal:[["Burgundy","#6E1423"],["Krem","#F5E9DA"],["Hitam Script","#14100E"]], bg:"#FAF6EE" }
@@ -823,11 +823,21 @@
       h += '<button class="sw" type="button" data-hex="' + p[1] + '"><i style="background:' + p[1] + '"></i><b>' + esc(en ? l.en.pal[i] : p[0]) + "</b><span>" + p[1] + "</span></button>";
     });
     h += "</div>";
-    if(l.set) h += '<button class="lbtn" type="button" data-setlive="' + l.set + '" data-setpath="' + (l.setpath || "") + '" data-setnm="' + esc(l.nm) + '">' + T("Lihat set lengkapnya ↗", "See the full set ↗") + "</button>";   /* v8.22: full set tampil DI DALAM ruangan (takeover bermesin sama dengan situs live), bukan tab baru — perintah user 28 Nov 05:38 dari screenshot HP-nya */
+    if(l.sets) h += '<button class="lbtn" type="button" data-setview>' + T("Lihat set lengkapnya", "See the full set") + "</button>";   /* v8.23: set tampil NATIV di dalam jendela monitor (view lset), bukan takeover/iframe — perintah user 28 Nov 05:57 (screenshot HP: takeover kebuka tapi isi tak turun di koneksi 1,44 K/s) */   /* v8.22: full set tampil DI DALAM ruangan (takeover bermesin sama dengan situs live), bukan tab baru — perintah user 28 Nov 05:38 dari screenshot HP-nya */
     return h;
   }
   /* Pemutar video di dalam jendela (v8.7): MP4 live dari halaman
      Video Editing CarlLab sendiri; Drive hanya cadangan. */
+  function logoSetHTML(){
+    var l = curLogo; if(!l || !l.sets) return "";
+    var h = "";
+    l.sets.forEach(function(g){
+      h += '<div class="setgrp"><div class="setgh">' + esc(T(g.t, g.ten || g.t)) + '</div><div class="setgrid">'
+        + g.imgs.map(function(src, i){ return '<figure class="setfig"><img loading="lazy" src="' + ABS + src + '" alt="' + esc(l.nm) + '">' + (g.caps && g.caps[i] ? "<figcaption>" + esc(g.caps[i]) + "</figcaption>" : "") + "</figure>"; }).join("")
+        + "</div></div>";
+    });
+    return h;
+  }
   function videoPlayHTML(){
     var v = curVid; if(!v) return listHTML();
     var poster = ABS + "video-editing/media/" + v.m + ".jpg";
@@ -1021,6 +1031,7 @@
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
       if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
+      if(view === "lset") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backdetail>\u2039 ' + esc(curLogo ? curLogo.nm : "") + '</button><b>' + T("Set Lengkap", "Full Set") + '</b></div>';
       if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
       if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 ' + T("Grup", "Group") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
       if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 ' + T("Folder", "Folder") + '</button><b>' + esc(liveItem ? liveItem.nm : LUMERA.nm) + '</b></div>';
@@ -1031,7 +1042,7 @@
         h += '<div class="scr-body fill" id="uiBody"><p class="note">' + T("Situs live dibuka memenuhi layar\u2026", "Opening the live site full-screen\u2026") + '</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
-          + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "ldetail" ? logoDetailHTML() : view === "vplay" ? videoPlayHTML() : view === "show" ? showHTML() : prodHTML())
+          + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "ldetail" ? logoDetailHTML() : view === "lset" ? logoSetHTML() : view === "vplay" ? videoPlayHTML() : view === "show" ? showHTML() : prodHTML())
           + "</div>";
       }
     } else {
@@ -1067,6 +1078,7 @@
     if(view === "live"){ exitLive(); return; }
     if(view === "show"){ view = "list"; renderScreen(); return; }
     if(view === "detail"){ view = "list"; renderScreen(); return; }
+    if(view === "lset"){ view = "ldetail"; renderScreen(); return; }
     if(view === "ldetail"){ view = "list"; renderScreen(); return; }
     if(view === "vplay"){ view = "list"; renderScreen(); return; }
     closeGroup();
@@ -1225,8 +1237,8 @@
        semua aksi hanya untuk LUMÉRA; sekarang tiap folder hidup). */
     var lg = t.closest("[data-logo]");
     if(lg){ curLogo = logoById(lg.getAttribute("data-logo")); view = "ldetail"; renderScreen(); return true; }
-    var sl = t.closest("[data-setlive]");
-    if(sl){ liveItem = { nm: sl.getAttribute("data-setnm") || "", url: ABS + sl.getAttribute("data-setlive"), path: sl.getAttribute("data-setpath") || "", lumera:false }; view = "live"; renderScreen(); return true; }
+    if(t.closest("[data-setview]")){ view = "lset"; renderScreen(); return true; }
+    if(t.closest("[data-backdetail]")){ view = "ldetail"; renderScreen(); return true; }
     var st = t.closest("[data-site]");
     if(st){ var sit = (SITE_TABS[activeTab] || [])[+st.getAttribute("data-site")]; if(sit){ liveItem = { nm:sit.nm, url:sit.url, path:sit.path, lumera:false }; view = "live"; renderScreen(); } return true; }
     var vd = t.closest("[data-vid]");
@@ -1341,7 +1353,7 @@
     if(dx * dx + dy * dy > 144 || dt > 600) return;   /* ini scroll, bukan ketuk */
     var el = document.elementFromPoint(t.clientX, t.clientY);
     if(!el || !hub.contains(el)) return;
-    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close],[data-winmin],[data-winmax],[data-tbapp],[data-start],[data-goto],[data-logo],[data-site],[data-setlive],[data-vid],[data-hex]")) return;
+    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close],[data-winmin],[data-winmax],[data-tbapp],[data-start],[data-goto],[data-logo],[data-site],[data-setview],[data-backdetail],[data-vid],[data-hex]")) return;
     if(hubAction(el)){
       e.preventDefault();
       lastTouchAction = Date.now();

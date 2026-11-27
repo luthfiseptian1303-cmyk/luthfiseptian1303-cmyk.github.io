@@ -660,3 +660,9 @@ body.live-open nav{opacity:0;pointer-events:none}
   .vidwrap video{max-height:120px}
   .cover img{height:44px}
 }
+  .setgrp{margin-bottom:14px}
+  .setgh{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(165,218,238,.85);margin:12px 0 8px}
+  .setgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .setfig{margin:0}
+  .setfig img{width:100%;height:auto;display:block;border-radius:8px;background:rgba(255,255,255,.06)}
+  .setfig figcaption{font-size:10px;color:rgba(238,243,246,.75);margin-top:4px}
