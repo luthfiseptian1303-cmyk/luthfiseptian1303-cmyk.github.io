@@ -440,6 +440,16 @@
         var ix = p[0] + (cx - p[0]) * insetF, iy = p[1] + (cy - p[1]) * insetF;
         return [ix / 100 * frame.w, iy / 100 * frame.h];
       });
+      /* Monitor tengah, tepi BAWAH diangkat ekstra (verdict user
+         27 Nov 12:18 'Bawahnya kelewatan monitor'): sudut bawah
+         warp-nya naik 0.45% tinggi bingkai agar tepi bawah jendela
+         berhenti di dalam kaca, tidak melewati batas bawah monitor.
+         Sisi lain tidak berubah. */
+      if(lastDive.key === "web"){
+        var liftB = 0.0045 * frame.h;
+        dst[2][1] -= liftB;
+        dst[3][1] -= liftB;
+      }
       hub.style.transform = homography(Hw * SS, Hh * SS, dst);
     } else {
       hub.style.transform = "";
