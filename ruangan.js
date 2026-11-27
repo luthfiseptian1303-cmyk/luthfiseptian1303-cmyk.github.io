@@ -111,7 +111,7 @@
     brand: { no:"01", label:"BRAND & LOGO",  l1:"Brand &", l2:"Logo.",
              tabs:["Kuliner", "Beauty", "Jasa & Tech"] },
     web:   { no:"02", label:"WEBSITES",      l1:"Our",     l2:"Websites.",
-             tabs:["Company Site", "Landing Page", "Toko Online", "Undangan Digital", "Portofolio"] },
+             tabs:["Toko Online", "Undangan Digital"] },
     video: { no:"03", label:"VIDEO EDITING", l1:"Video",   l2:"Editing.",
              tabs:["Podcast", "Explainer", "Wawancara"] }
   };
@@ -130,7 +130,7 @@
   function T(id, en){ return LANG === "en" ? en : id; }
   var TAB_EN = {
     brand: ["Culinary", "Beauty", "Services & Tech"],
-    web:   ["Company Site", "Landing Page", "Online Store", "Digital Invitations", "Portfolio"],
+    web:   ["Online Store", "Digital Invitations"],
     video: ["Podcast", "Explainer", "Interview"]
   };
   var LUMERA_EN = {
@@ -161,7 +161,7 @@
   var winState = "normal";   /* jendela Windows di desktop monitor: normal | min | max (v8) */
   var curProd = 0;     /* produk yang sedang dibuka di tampilan produk */
   var ABS = "https://carllab.web.id/";
-  var WEB_TOKO = 2;    /* indeks tab "Toko Online" pada grup Websites */
+  var WEB_TOKO = 0;    /* indeks tab "Toko Online" pada grup Websites (v8.9: folder web lain dikosongkan — demo lama dihapus perintah user 27 Nov 22:19, dibuat ulang satu-satu) */
   var LUMERA = {
     nm:"LUMÉRA", sb:"Maison de Parfum — Website · 2026",
     img:"lumera-thumb.jpg", wide:"lumera-wide.jpg",
@@ -270,34 +270,16 @@
       pal:[["Hutan Pawon","#23402F"],["Aprikot Ceria","#E8A05C"],["Krem Hangat","#F3E9D2"]], bg:"#23402F" }
   ];
   function logoById(id){ for(var i = 0; i < LOGOS.length; i++) if(LOGOS[i].id === id) return LOGOS[i]; return null; }
-  /* Websites per folder (indeks tab): 0 Company, 1 Landing,
-     3 Undangan, 4 Portofolio. Tab 2 (Toko Online) tetap LUMÉRA. */
+  /* Websites per folder (indeks tab): 0 = Toko Online (LUMÉRA,
+     ditangani khusus), 1 = Undangan Digital. v8.9 (perintah user
+     27 Nov 22:19–22:24): SEMUA halaman demo lama dihapus dari situs
+     dan dibuat ulang SATU-SATU, tiap demo beda — folder Company /
+     Landing / Portofolio hilang dari grup Websites sampai demo
+     penggantinya jadi. Undangan diisi LARIK (demo baru pertama) +
+     PAGI SORE (klien asli, TIDAK ikut dihapus). */
   var SITE_TABS = {
-    0: [
-      { nm:"CRUMB", sb:"Bakery — Copenhagen", img:"hub-thumbs/crumb.jpg", url:ABS + "website-crumb/", path:"website-crumb" },
-      { nm:"EMBER", sb:"Fine Dining — London", img:"hub-thumbs/ember.jpg", url:ABS + "website-ember/", path:"website-ember" },
-      { nm:"HALDEN", sb:"Home Builder — Melbourne", img:"hub-thumbs/halden.jpg", url:ABS + "website-halden/", path:"website-halden" },
-      { nm:"HARLOW", sb:"Real Estate — Sydney", img:"hub-thumbs/harlow.jpg", url:ABS + "website-harlow/", path:"website-harlow" },
-      { nm:"LUMEN", sb:"Photography Studio — Berlin", img:"hub-thumbs/lumen.jpg", url:ABS + "website-lumen/", path:"website-lumen" }
-    ],
     1: [
-      { nm:"KELAM", sb:"Parfum — Landing Page", tile:{ bg:"#141114", fg:"#ece5d8" }, url:ABS + "kelam/", path:"kelam" },
-      { nm:"KAVUNA", sb:"Parfum — Landing Page", tile:{ bg:"#8a5a1d", fg:"#f9edd6" }, url:ABS + "kavuna/", path:"kavuna" }
-    ],
-    3: [
-      { nm:"KOVRA", sb:"Grand Opening", img:"hub-thumbs/kovra.jpg", url:ABS + "grand-opening-kovra/", path:"grand-opening-kovra" },
-      { nm:"SENJA", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/senja.jpg", url:ABS + "undangan-senja/", path:"undangan-senja" },
-      { nm:"VELA", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/vela.jpg", url:ABS + "undangan-vela/", path:"undangan-vela" },
-      { nm:"PETAL", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/petal.jpg", url:ABS + "undangan-petal/", path:"undangan-petal" },
-      { nm:"LAUREL", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/laurel.jpg", url:ABS + "undangan-laurel/", path:"undangan-laurel" },
       { nm:"PAGI SORE", sb:"Grand Opening — Klien Asli", sbEn:"Grand Opening — Real Client", img:"hub-thumbs/pagi-sore.jpg", url:ABS + "pagi-sore.html", path:"pagi-sore" }
-    ],
-    4: [
-      { nm:"CAMILLE", sb:"Private Chef — Lyon", img:"hub-thumbs/camille.jpg", url:ABS + "website-camille/", path:"website-camille" },
-      { nm:"ELIAS", sb:"Jazz Pianist — New Orleans", img:"hub-thumbs/elias.jpg", url:ABS + "website-elias/", path:"website-elias" },
-      { nm:"LENA", sb:"Strength Coach — Hamburg", img:"hub-thumbs/lena.jpg", url:ABS + "website-lena/", path:"website-lena" },
-      { nm:"MARA", sb:"Filmmaker — Lisbon", img:"hub-thumbs/mara.jpg", url:ABS + "website-mara/", path:"website-mara" },
-      { nm:"TOMAS", sb:"Architect — Prague", img:"hub-thumbs/tomas.jpg", url:ABS + "website-tomas/", path:"website-tomas" }
     ]
   };
   /* Video Editing per folder (indeks tab): MP4 + poster live di
@@ -1028,8 +1010,8 @@
       + deskIconsHTML()
       + '<div class="win' + winCls + '" id="win">'
       + top;
-   if(content){
-     if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
+    if(content){
+      if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
       if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
       if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';

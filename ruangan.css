@@ -361,6 +361,23 @@ body.awake .glow{opacity:1}
 
 
 /* ================================================================
+   LAPTOP/DESKTOP LEBAR — FULLSCREEN (perintah user 27 Nov 22:15 dari
+   foto laptopnya: foto ruangan jangan mengambang di tengah dengan
+   bar hitam kiri-kanan; panggung memenuhi SELURUH layar, sama seperti
+   mode HP). Foto 3:2 di-cover ke panggung 16:9 oleh layout() (JS):
+   lebar penuh, langit-langit + lantai terpotong simetris di tengah —
+   pita monitor (y 47–66% foto) selalu utuh di dalam layar. Hint jadi
+   overlay gradien di bawah, persis mode portrait. Syarat media =
+   komplemen mode portrait JS: lebar > 640 DAN rasio > 4/5. */
+@media (min-width:641px) and (min-aspect-ratio:801/1000){
+  .stage-sec{height:100vh;height:100dvh;position:relative}
+  .stage{width:100vw;height:100%}
+  .stage-hint{position:absolute;left:0;right:0;bottom:0;z-index:6;max-width:none;margin:0;
+    padding:44px 20px 16px;color:#d9e8ef;pointer-events:none;
+    background:linear-gradient(to top, rgba(4,8,12,.8), rgba(4,8,12,0))}
+}
+
+/* ================================================================
    TAB KATEGORI GRUP — nama-nama kategori saja (pill seperti v3p).
    Bisa dipencet untuk mengganti tab aktif; area di bawahnya tetap
    KOSONG (isi per kategori belum dibuat — tahap grup dulu).
