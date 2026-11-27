@@ -109,9 +109,9 @@
      layar yang sama PADAM lagi (power-off) sampai foto bersih utuh. */
   var GROUPS = {
     brand: { no:"01", label:"BRAND & LOGO",  l1:"Brand &", l2:"Logo.",
-             tabs:["Kuliner", "Beauty", "Jasa & Tech"] },
+             tabs:["Kuliner"] },
     web:   { no:"02", label:"WEBSITES",      l1:"Our",     l2:"Websites.",
-             tabs:["Toko Online", "Undangan Digital"] },
+             tabs:["Toko Online"] },
     video: { no:"03", label:"VIDEO EDITING", l1:"Video",   l2:"Editing.",
              tabs:["Podcast", "Explainer", "Wawancara"] }
   };
@@ -129,8 +129,8 @@
   try { if(localStorage.getItem("carllab-lang") === "en") LANG = "en"; } catch(e){}
   function T(id, en){ return LANG === "en" ? en : id; }
   var TAB_EN = {
-    brand: ["Culinary", "Beauty", "Services & Tech"],
-    web:   ["Online Store", "Digital Invitations"],
+    brand: ["Culinary"],
+    web:   ["Online Store"],
     video: ["Podcast", "Explainer", "Interview"]
   };
   var LUMERA_EN = {
@@ -204,7 +204,7 @@
      Brand 15 logo demo (data v3p, thumbnail brand-media/ yang masih
      live), Websites 10 demo website-* + KELAM/KAVUNA + 6 undangan,
      Video 5 edit (MP4 + poster di video-editing/media/, live). */
-  var BRAND_KEYS = ["kuliner", "beauty", "jasa"];
+  var BRAND_KEYS = ["kuliner"];
   var BRAND_GNAME = { kuliner:"grup kuliner", beauty:"grup beauty", jasa:"grup jasa & tech" };
   var BRAND_GNAME_EN = { kuliner:"culinary group", beauty:"beauty group", jasa:"services & tech group" };
   var LOGOS = [
@@ -212,62 +212,10 @@
       en:{ rl:"Cookies & Crumble — cheerful and bold", ds:"This is the original finished set, not a mock-up: nineteen panels from one design system — the feed carousel, the 9:16 stories, and the darker Chocolate Edition. One system that stretches across every post the brand will ever make.", pal:["Orange","Cream","Edition Chocolate","Caramel"] },
       ds:"Ini file aslinya, bukan reka ulang: set jadi GIGIT! berisi sembilan belas panel dari satu sistem desain — carousel feed, story 9:16, dan Edisi Cokelat. Satu sistem yang meregang ke semua postingan brand ini.",
       pal:[["Oranye","#F96A0D"],["Krem","#FFF3E0"],["Cokelat Edisi","#2B170B"],["Karamel","#E8A33D"]], bg:"#F96A0D" },
-    { id:"rawitara", g:"kuliner", nm:"RAWITARA", rl:"Sambal Nusantara — berani dan menggugah",
-      en:{ rl:"Nusantara Sambal — bold and appetising", ds:"Made for a home sambal brand moving up to retail packaging. Its single chilli emblem is drawn thick, with no fine detail, so it stays legible on a 3 cm bottle label and on a warung banner metres away.", pal:["Chilli Red","Stem Green","Charred Brown"] },
-      ds:"Dibuat untuk brand sambal rumahan yang naik kelas ke kemasan retail. Lengkung cabainya digambar tebal tanpa detail kecil, jadi tetap terbaca jelas di label botol 3 cm maupun di papan warung dari jarak beberapa meter.",
-      pal:[["Merah Cabai","#D8432B"],["Hijau Tangkai","#3E7C4F"],["Cokelat Bakar","#2A1409"]], bg:"#D8432B" },
-    { id:"lunara", g:"kuliner", nm:"LUNARA", rl:"Bakehouse — hangat dan artisan",
-      en:{ rl:"Bakehouse — warm and artisan", ds:"Made for a bakehouse that fires its ovens before dawn: the crescent marks the baker's hours, the wheat marks the ingredients. Two simple marks that stamp cleanly on boxes, bread paper, and greeting cards without losing their shape.", pal:["Amber Gold","Caramel","Dough Brown"] },
-      ds:"Dibuat untuk bakehouse yang memanggang dari dini hari: bulan sabit menandai jam kerja sang baker, gandum menandai bahannya. Dua ikon sederhana ini gampang distempel di box, kertas roti, dan kartu ucapan tanpa kehilangan bentuk.",
-      pal:[["Emas Amber","#E39A1B"],["Karamel","#B97A0F"],["Cokelat Adonan","#241806"]], bg:"#E39A1B" },
-    { id:"arunika", g:"kuliner", nm:"ARUNIKA", rl:"Kopi susu & roastery — segar dan berani",
-      en:{ rl:"Kopi susu & roastery — fresh and bold", ds:"Made for a kopi susu shop in Semarang that roasts its own beans. The wordmark is thick and friendly — legible on plastic cups, seal stickers, and the menu board behind the bar — and its tosca field stands apart from the usual brown-and-cream coffee shops.", pal:["Vivid Tosca","Burnt Orange","Roast Brown"] },
-      ds:"Dibuat untuk kedai kopi susu yang menyangrai bijinya sendiri di Semarang. Wordmark-nya tebal dan ramah, terbaca jelas di cup plastik, stiker segel, sampai papan menu di belakang bar — dan bidang toscanya langsung beda dari kedai kopi cokelat-krem pada umumnya.",
-      pal:[["Tosca Vivid","#0E9594"],["Oranye Bakar","#D95F16"],["Cokelat Sangrai","#241611"]], bg:"#0E9594" },
-    { id:"kuwah", g:"kuliner", nm:"KUWAH!", rl:"Bakso & mie kuah — panas dan nampol",
-      en:{ rl:"Bakso & noodle soup — hot and punchy", ds:"Made for a bakso stall in Malang levelling up without losing its street-food soul. The wordmark is big and loud — readable across the street, on the stall banner, and on takeaway bowl stickers.", pal:["Vivid Fuchsia","Deep Magenta","Rich Broth"] },
-      ds:"Dibuat untuk warung bakso di Malang yang ingin naik kelas tanpa kehilangan rasa kaki limanya. Wordmark-nya besar dan berani — terbaca dari seberang jalan, di spanduk warung, sampai di stiker mangkuk bungkus untuk dibawa pulang.",
-      pal:[["Fuchsia Vivid","#D81B9A"],["Magenta Dalam","#A30D72"],["Kaldu Pekat","#1E1210"]], bg:"#D81B9A" },
-    { id:"sekar", g:"beauty", nm:"SEKAR", rl:"Skincare alami — lembut dan natural",
-      en:{ rl:"Natural skincare — soft and natural", ds:"Made for a natural skincare brand that sells calm, not overpromises. Its three petals are symmetrical and open, staying tidy on small bottle labels, pouch seals, and shipping stickers.", pal:["Vivid Terracotta","Sage","Shaded Forest"] },
-      ds:"Dibuat untuk brand skincare alami yang menjual ketenangan, bukan janji berlebihan. Tiga kelopaknya simetris dan terbuka, terbaca rapi di label botol kecil, segel pouch, sampai stiker paket pengiriman.",
-      pal:[["Terakota Vivid","#D97757"],["Sage","#A8B79A"],["Hutan Teduh","#22301F"]], bg:"#D97757" },
-    { id:"vanara", g:"beauty", nm:"VANARA", rl:"Salon & spa — segar dan elegan",
-      en:{ rl:"Salon & spa — fresh and elegant", ds:"Made for a premium salon & spa that wants to feel fresh without looking generic. The V monogram works as a booking-app icon, a mirror engraving, and a member-card pattern — one form for every touchpoint.", pal:["Vivid Emerald","Fresh Mint","Deep Emerald"] },
-      ds:"Dibuat untuk salon & spa premium yang ingin terasa segar tanpa terlihat generik. Monogram V-nya bekerja sebagai ikon aplikasi booking, grafir di cermin, dan pola di kartu member — satu bentuk untuk semua titik sentuh.",
-      pal:[["Zamrud Vivid","#17A06B"],["Mint Segar","#7FBF9E"],["Zamrud Dalam","#0C2B1E"]], bg:"#17A06B" },
-    { id:"klar", g:"beauty", nm:"KLAR", rl:"Skin lab — klinis dan terukur",
-      en:{ rl:"Skin lab — clinical and measured", ds:"Made for a skin clinic that sells precision, not sweet promises. The wordmark is tight and firm like a lab instrument label, and the drop icon stays legible as a booking-app favicon or a stamp on packaging.", pal:["Ice Blue","Clinical Cyan","Lab Navy"] },
-      ds:"Dibuat untuk klinik perawatan kulit yang menjual ketepatan, bukan janji manis. Wordmark-nya rapat dan tegas seperti label alat lab, dan ikon tetesnya tetap terbaca sebagai favicon aplikasi booking maupun cap di kemasan.",
-      pal:[["Biru Es","#DCEBF5"],["Sian Klinis","#12A5C4"],["Navy Lab","#0C2D48"]], bg:"#0C2D48" },
-    { id:"wulan", g:"beauty", nm:"WULAN", rl:"Jamu & botanicals — hangat dan berakar",
-      en:{ rl:"Jamu & botanicals — warm and rooted", ds:"Made for a modern jamu brand levelling up without losing its roots. The italic serif feels like the maker's handwriting, and the moon mark is simple enough to embroider on aprons or stamp on wrapping paper.", pal:["Turmeric Gold","Silk Cream","Bark Brown"] },
-      ds:"Dibuat untuk brand jamu modern yang ingin naik kelas tanpa kehilangan akarnya. Huruf serif miringnya terasa seperti tulisan tangan peracik, dan ikon bulannya cukup sederhana untuk dibordir di apron maupun dicap di kertas pembungkus.",
-      pal:[["Kunyit Emas","#C99012"],["Krem Sutra","#F1E3C8"],["Cokelat Kulit Kayu","#3A2410"]], bg:"#C99012" },
-    { id:"bara", g:"beauty", nm:"BARA", rl:"Barber co. — tegas dan maskulin",
-      en:{ rl:"Barber co. — firm and masculine", ds:"Made for a barbershop that sells precision. The letters are wide and anchored like a classic workshop sign, and the razor line works as a divider on price lists, queue-card stamps, and comb-handle engraving.", pal:["Ember Charcoal","Cold Steel","Antique Brass"] },
-      ds:"Dibuat untuk barbershop yang menjual ketepatan. Hurufnya lebar dan berjangkar seperti papan nama bengkel klasik, dan garis pisaunya bekerja sebagai pembatas di price list, stempel kartu antrian, sampai grafir di gagang sisir.",
-      pal:[["Arang Bara","#1B1C1E"],["Baja Dingin","#9AA3AD"],["Kuningan Antik","#B08D4A"]], bg:"#1B1C1E" },
-    { id:"arus", g:"jasa", nm:"ARUS", rl:"Logistik — cepat dan tegas",
-      en:{ rl:"Logistics — fast and firm", ds:"Made for an intercity logistics service competing on speed. The letter A stands solid like a fleet frame, and the arrow through it marks direction and motion — readable at a glance on a moving truck sticker or a 16-pixel dashboard favicon.", pal:["Arus Blue","Steel Blue","Deep Sea"] },
-      ds:"Dibuat untuk jasa logistik yang bersaing di kecepatan. Huruf A-nya kokoh seperti rangka armada, panah di tengahnya menegaskan arah dan gerak — terbaca sekilas di stiker truk yang sedang melaju maupun favicon dashboard 16 piksel.",
-      pal:[["Biru Arus","#1B7BD4"],["Biru Baja","#5EA9E6"],["Laut Dalam","#0F2740"]], bg:"#1B7BD4" },
-    { id:"artha", g:"jasa", nm:"ARTHA", rl:"Konsultan keuangan — terpercaya dan mapan",
-      en:{ rl:"Financial consulting — trusted and established", ds:"Made for an independent financial consultant who must look established from the first business card. The stacked coins form a stable triangle and the letter A at once, and stay polite printed in gold on cards and annual-report covers.", pal:["Vivid Gold","Pale Gold","Vault Brown"] },
-      ds:"Dibuat untuk konsultan keuangan independen yang perlu terlihat mapan sejak kartu nama pertama. Tumpukan koinnya membentuk segitiga stabil sekaligus huruf A, dan tetap sopan tercetak emas di kartu nama maupun sampul laporan tahunan.",
-      pal:[["Emas Vivid","#DFA81E"],["Emas Muda","#E3C878"],["Cokelat Brankas","#241B06"]], bg:"#DFA81E" },
-    { id:"kilau", g:"jasa", nm:"KILAU", rl:"Home care — segar dan cerah",
-      en:{ rl:"Home care — fresh and bright", ds:"Made for a home-cleaning service competing on trust. The sparkle star is simple and friendly, easy to recognise on team uniforms, door-seal stickers after a clean, and the booking-app icon.", pal:["Fresh Aqua","Pale Mint","Deep Teal"] },
-      ds:"Dibuat untuk layanan home cleaning yang bersaing di kepercayaan. Bintang kilanya sederhana dan ramah, mudah dikenali di seragam tim, stiker segel pintu setelah pembersihan, dan ikon aplikasi pemesanan.",
-      pal:[["Aqua Segar","#12B5A5"],["Mint Muda","#A9E8DF"],["Teal Dalam","#0B3B3F"]], bg:"#12B5A5" },
-    { id:"sektor", g:"jasa", nm:"SEKTOR", rl:"Coworking — arsitektural dan tegas",
-      en:{ rl:"Coworking — architectural and firm", ds:"Made for a coworking space that wants to feel architectural, not like a café with Wi-Fi. The window grid becomes a graphic system for desk numbering, floor signage, and member access cards.", pal:["Signal Yellow","Warm Concrete","Structure Black"] },
-      ds:"Dibuat untuk ruang kerja bersama yang ingin terasa arsitektural, bukan kafe yang kebetulan ada Wi-Fi. Grid jendelanya menjadi sistem grafis untuk penomoran meja, signage lantai, dan kartu akses member.",
-      pal:[["Kuning Sinyal","#E4B33C"],["Beton Hangat","#CFC6B4"],["Hitam Struktur","#1A1A1A"]], bg:"#E4B33C" },
-    { id:"pawon", g:"jasa", nm:"PAWON", rl:"Pet care — ramah dan playful",
-      en:{ rl:"Pet care — friendly and playful", ds:"Made for pet grooming and daycare selling peace of mind. The letters are round and humble, and the paw mark becomes a stamp on member cards, a pattern on pet bandanas, and a marker on every photo report.", pal:["Pawon Forest","Cheerful Apricot","Warm Cream"] },
-      ds:"Dibuat untuk grooming dan daycare hewan yang menjual rasa aman. Hurufnya bulat dan rendah hati, ikon jejaknya menjadi stempel di kartu member, pola di bandana anabul, dan tanda di setiap laporan foto.",
-      pal:[["Hutan Pawon","#23402F"],["Aprikot Ceria","#E8A05C"],["Krem Hangat","#F3E9D2"]], bg:"#23402F" }
+    { id:"momirel", g:"kuliner", nm:"MomiRel", rl:"Homemade Dessert — hangat dan rumahan",
+      en:{ rl:"Homemade Dessert — warm and homemade", ds:"CarlLab's first real client logo — a homemade dessert brand from BSD. A mother and daughter baking together, hand-drawn with thick lines so it stays legible printed on a spunbond bag, with a black brush-script wordmark. Approved by the client on 14 Nov 2026 and published with her permission.", pal:["Burgundy","Cream","Script Black"] },
+      ds:"Logo klien asli pertama CarlLab — brand dessert rumahan dari BSD. Ilustrasi ibu dan anak memanggang bersama, digambar tangan dengan garis tebal supaya tetap terbaca saat dicetak di tas spunbond, wordmark brush script hitam. Disetujui klien 14 Nov 2026 dan dipublikasikan atas izinnya.",
+      pal:[["Burgundy","#6E1423"],["Krem","#F5E9DA"],["Hitam Script","#14100E"]], bg:"#FAF6EE" }
   ];
   function logoById(id){ for(var i = 0; i < LOGOS.length; i++) if(LOGOS[i].id === id) return LOGOS[i]; return null; }
   /* Websites per folder (indeks tab): 0 = Toko Online (LUMÉRA,
@@ -277,11 +225,7 @@
      Landing / Portofolio hilang dari grup Websites sampai demo
      penggantinya jadi. Undangan diisi LARIK (demo baru pertama) +
      PAGI SORE (klien asli, TIDAK ikut dihapus). */
-  var SITE_TABS = {
-    1: [
-      { nm:"PAGI SORE", sb:"Grand Opening — Klien Asli", sbEn:"Grand Opening — Real Client", img:"hub-thumbs/pagi-sore.jpg", url:ABS + "pagi-sore.html", path:"pagi-sore" }
-    ]
-  };
+  var SITE_TABS = {};   /* v8.18: folder Undangan Digital dihapus dari ruangan — halaman pagi-sore.html tetap live sebagai halaman klien asli */
   /* Video Editing per folder (indeks tab): MP4 + poster live di
      video-editing/media/<m>.mp4|.jpg; Drive hanya tautan cadangan. */
   var VID_TABS = [
