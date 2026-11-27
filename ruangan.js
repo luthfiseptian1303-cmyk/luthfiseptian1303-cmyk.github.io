@@ -1029,7 +1029,6 @@
       + '<div class="win' + winCls + '" id="win">'
       + top;
    if(content){
-      
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
       if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
       if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
