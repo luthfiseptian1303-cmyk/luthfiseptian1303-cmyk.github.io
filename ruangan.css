@@ -15,7 +15,8 @@ nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:80;displ
   background:rgba(13,20,29,.92);color:#e8eef3;border-radius:999px;padding:9px 10px 9px 22px;box-shadow:0 14px 34px rgba(10,20,30,.28);backdrop-filter:blur(8px);white-space:nowrap;
   opacity:0;transition:opacity 900ms cubic-bezier(.22,.8,.2,1) 200ms}
 body.ready nav{opacity:1}
-nav .brand{font-weight:800;letter-spacing:.14em;font-size:15px}
+nav .brand{font-weight:800;letter-spacing:.14em;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+nav .brand svg{height:1.35em;width:1.35em;flex:none;display:block}   /* mark Cincin Lab di nav (paket logo 27 Nov) */
 nav .brand b{color:var(--cyan-l);font-weight:800}
 nav a.nl{color:#b9c5cf;text-decoration:none;font-size:13.5px}
 nav a.nl:hover{color:#fff}
@@ -260,8 +261,16 @@ body.awake .glow{opacity:1}
 .taskbar{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:5;display:flex;align-items:center;justify-content:center;
   background:rgba(15,19,33,.85);border-top:1px solid rgba(255,255,255,.09);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.tb-center{display:flex;align-items:center;gap:3px}
-.tb-btn{width:27px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;
+.tb-center{display:flex;align-items:center;gap:2px;margin:0 auto}
+/* v8.12 — widget ujung kiri + deret pin taskbar (samakan foto);
+   ukuran diperkecil supaya seluruh baris + tray + jam muat di
+   lebar internal hub tanpa overflow (terukur: total ≤ 338px) */
+.tb-left{flex:none;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:0;background:transparent;border-radius:4px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.tb-left:hover{background:rgba(255,255,255,.10)}
+.tb-left>svg{width:15px;height:15px;display:block}
+.tb-pin{width:22px;height:24px;display:flex;align-items:center;justify-content:center;flex:none}
+.tb-pin>svg{width:13.5px;height:13.5px;display:block}
+.tb-btn{width:24px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;
   display:flex;align-items:center;justify-content:center;color:#eef6fa;padding:0;
   -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
 .tb-btn:hover{background:rgba(255,255,255,.10)}
@@ -271,7 +280,7 @@ body.awake .glow{opacity:1}
 .tb-app::after{content:"";position:absolute;bottom:1.5px;left:50%;transform:translateX(-50%);
   width:13px;height:2.5px;border-radius:2px;background:var(--cyan-l)}
 .tb-app.idle::after{width:6px;background:rgba(220,235,245,.4)}
-.tb-tray{position:absolute;right:7px;top:0;height:26px;display:flex;align-items:center;gap:6px;color:rgba(233,244,250,.88)}
+.tb-tray{flex:none;display:flex;align-items:center;gap:4px;padding-right:6px;color:rgba(233,244,250,.88)}
 .tb-ic{width:13px;height:13px;display:block}
 .tb-icb{width:16px;height:13px;display:block}
 .tb-clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
