@@ -148,6 +148,13 @@ body.awake .glow{opacity:1}
    .stage.zoomed .rest{opacity:0} adalah separuh penyebab kedip. */
 .rest-icons{position:absolute;left:1.5%;top:2.5%;display:flex;flex-direction:column;flex-wrap:wrap;
   max-height:95%;column-gap:4px;gap:7px}
+/* v8.15 — tambalan tekstur strip menutup widget pojok foto (logo
+   Windows dobel sebelum dipencet); posisi % terhadap kaca, terukur
+   dari foto 1920px; tekstur = irisan strip asli di sebelah widget */
+.tbpatch{position:absolute;display:block;background-size:cover;background-position:center;pointer-events:none}
+.tbpatch-web{left:0;top:89.5%;width:6.2%;height:8%;background-image:url("tb-patch-web.png")}
+.tbpatch-brand{left:1.2%;top:89.5%;width:5.8%;height:8%;background-image:url("tb-patch-brand.png")}
+.tbpatch-video{left:0;top:89%;width:5.2%;height:10%;background-image:url("tb-patch-video.png")}
 .rest-ic{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:66px;padding-left:2px}
 .rest-ic svg{width:36px;height:29px;filter:drop-shadow(0 1px 3px rgba(2,10,18,.55))}
 .rest-ic span{font-size:12.5px;font-weight:600;color:#eaf6fb;text-align:left;line-height:1.15;
@@ -261,32 +268,32 @@ body.awake .glow{opacity:1}
 .taskbar{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:5;display:flex;align-items:center;justify-content:center;
   background:rgba(15,19,33,.85);border-top:1px solid rgba(255,255,255,.09);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.tb-center{display:flex;align-items:center;gap:2px;margin:0 auto}
+.tb-center{display:flex;align-items:center;gap:1px;margin:0 auto}
 /* v8.12 — widget ujung kiri + deret pin taskbar (samakan foto);
    ukuran diperkecil supaya seluruh baris + tray + jam muat di
    lebar internal hub tanpa overflow (terukur: total ≤ 338px) */
-/* v8.14 — Start tunggal di pojok kiri bawah (tanpa ikon dobel) */
-.tb-left{flex:none;width:21px;height:24px;display:flex;align-items:center;justify-content:center;border:0;background:transparent;border-radius:4px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
-.tb-left:hover{background:rgba(255,255,255,.10)}
-.tb-left>svg{width:13px;height:13px;display:block}
-.tb-pin{width:19px;height:24px;display:flex;align-items:center;justify-content:center;flex:none}
-.tb-pin>svg{width:12px;height:12px;display:block}
-.tb-btn{width:21px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;
+/* v8.15 — deret tengah plek foto: Start pertama di deret tengah,
+   pojok kiri kosong, ukuran diperkecil ke proporsi foto */
+.tb-pin{width:16px;height:24px;display:flex;align-items:center;justify-content:center;flex:none}
+.tb-pin>svg{width:10px;height:10px;display:block}
+.tb-btn{width:17px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;
   display:flex;align-items:center;justify-content:center;color:#eef6fa;padding:0;
   -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
 .tb-btn:hover{background:rgba(255,255,255,.10)}
-.tb-btn>svg{width:13px;height:13px;display:block}
+.tb-btn>svg{width:11px;height:11px;display:block}
 .tb-appglyph{font-size:8.5px;font-weight:800;letter-spacing:.04em;background:rgba(87,200,222,.22);
   border:1px solid rgba(87,200,222,.4);border-radius:4px;padding:2.5px 4px;line-height:1}
 .tb-app::after{content:"";position:absolute;bottom:1.5px;left:50%;transform:translateX(-50%);
   width:13px;height:2.5px;border-radius:2px;background:var(--cyan-l)}
 .tb-app.idle::after{width:6px;background:rgba(220,235,245,.4)}
-.tb-tray{flex:none;display:flex;align-items:center;gap:3px;padding-right:5px;color:rgba(233,244,250,.88)}
-.tb-ic{width:12px;height:12px;display:block}
-.tb-icb{width:15px;height:12px;display:block}
+/* v8.15 — tray absolut di kanan supaya deret tengah benar-benar
+   di tengah strip, plek foto; ikon + jam diperkecil */
+.tb-tray{position:absolute;right:0;top:0;height:26px;display:flex;align-items:center;gap:1.5px;padding-right:4px;color:rgba(233,244,250,.88)}
+.tb-ic{width:10px;height:10px;display:block}
+.tb-icb{width:13px;height:10px;display:block}
 .tb-clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
-.tb-time{font-size:8px;font-weight:600}
-.tb-date{font-size:8px;color:rgba(233,244,250,.75)}
+.tb-time{font-size:7px;font-weight:600}
+.tb-date{font-size:7px;color:rgba(233,244,250,.75)}
 /* menu Start */
 .startmenu{position:absolute;left:50%;bottom:32px;z-index:6;width:198px;padding:10px 10px 8px;
   background:rgba(19,23,39,.95);border:1px solid rgba(255,255,255,.13);border-radius:10px;

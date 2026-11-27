@@ -455,14 +455,17 @@
   var CHEVRON_SVG = '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M6 14.4l6-5.4 6 5.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
   function taskbarHTML(){
     var g = GROUPS[curGroup];
-    /* v8.14 — TANPA IKON DOBEL (perintah user 28 Nov 02:32, keputusan
-       final soal logo): logo Windows HANYA SATU — tombol Start yang
-       bisa dipencet di pojok kiri bawah (susunan v8.12b). Widget
-       pojok + Start di deret tengah (v8.13 plek-foto) dibatalkan
-       karena glyph-nya sama persis = dobel. Deret tengah tetap
-       samakan set foto: Cari, Task View, Edge, Explorer, Chrome,
-       Store, pusaran, tombol aplikasi grup; tray + jam kanan. */
-    return '<div class="taskbar"><button class="tb-left" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button><div class="tb-center">'
+    /* v8.15 — SAMAKAN + TANPA DOBEL, dua-duanya (perintah final user
+       28 Nov 02:47 dari rekaman HP-nya): taskbar desktop plek foto —
+       deret rapat DI TENGAH mulai dari logo Windows Start, lalu
+       Cari, Task View, Edge, Explorer, Chrome, Store, pusaran,
+       tombol aplikasi grup; tray + jam kecil di kanan; pojok kiri
+       KOSONG. Logo Windows hanya SATU di tiap keadaan: widget
+       pojok foto ditutup tambalan tekstur strip di lapisan .rest
+       (lihat .tbpatch di CSS), jadi sebelum dipencet pun tidak
+       ada ikon dobel. */
+    return '<div class="taskbar"><div class="tb-center">'
+      + '<button class="tb-btn" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button>'
       + PIN_SVGS
       + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="rgba(87,200,222,.22)" stroke="#57c8de" stroke-width="1.5"/><path d="M3.5 8.6h17" stroke="#57c8de" stroke-width="1.5"/></svg></button>'
       + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
@@ -731,7 +734,9 @@
     for(var i = 0; i < tabList.length; i++){
       h += '<div class="rest-ic">' + FOLDER_SVG + '<span>' + esc(tabList[i]) + '</span></div>';
     }
-    return h + '</div>';
+    /* v8.15 — tambalan penutup widget pojok foto (tanpa ikon dobel
+       sebelum dipencet); ikut ter-warp bersama lapisan .rest. */
+    return h + '</div><span class="tbpatch tbpatch-' + g + '" aria-hidden="true"></span>';
   }
   function buildRest(){
     ["brand", "web", "video"].forEach(function(g){
