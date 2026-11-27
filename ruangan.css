@@ -131,10 +131,10 @@ body.awake .glow{opacity:1}
 .rest{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transform-origin:0 0;
   opacity:1;transition:opacity .45s ease}
 .stage.zoomed .rest{opacity:0}
-.rest-icons{position:absolute;left:4.5%;top:6%;display:flex;flex-direction:column;gap:10px}
-.rest-ic{display:flex;flex-direction:column;align-items:center;gap:2px;width:66px}
+.rest-icons{position:absolute;left:1.5%;top:2.5%;display:flex;flex-direction:column;gap:7px}
+.rest-ic{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:66px;padding-left:2px}
 .rest-ic svg{width:36px;height:29px;filter:drop-shadow(0 1px 3px rgba(2,10,18,.55))}
-.rest-ic span{font-size:12.5px;font-weight:600;color:#eaf6fb;text-align:center;line-height:1.15;
+.rest-ic span{font-size:12.5px;font-weight:600;color:#eaf6fb;text-align:left;line-height:1.15;
   text-shadow:0 1px 4px rgba(3,16,26,.9),0 0 8px rgba(3,16,26,.6)}
 .veil{position:absolute;inset:0;z-index:6;background:rgba(3,6,9,.28);opacity:0;pointer-events:none;transition:opacity .5s ease}
 .stage.zoomed .veil{opacity:1}
@@ -224,7 +224,7 @@ body.awake .glow{opacity:1}
 .winbtn:hover{background:rgba(255,255,255,.13);color:#fff}
 .winbtn.close:hover{background:#e81123;color:#fff}
 /* ikon desktop: folder kategori grup (= tab, berfungsi penuh) */
-.deskicons{position:absolute;left:5px;top:6px;z-index:1;display:flex;flex-direction:column;gap:4px;max-height:calc(100% - 34px);overflow:hidden}
+.deskicons{position:absolute;left:2px;top:3px;z-index:1;display:flex;flex-direction:column;gap:4px;max-height:calc(100% - 34px);overflow:hidden}
 .dicon{width:39px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:3px 1px 2px;
   background:transparent;border:1px solid transparent;border-radius:4px;cursor:pointer;color:#fff;
   font:inherit;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
