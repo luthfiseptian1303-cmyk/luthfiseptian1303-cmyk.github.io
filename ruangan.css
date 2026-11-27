@@ -131,7 +131,8 @@ body.awake .glow{opacity:1}
 .rest{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transform-origin:0 0;
   opacity:1;transition:opacity .45s ease}
 .stage.zoomed .rest{opacity:0}
-.rest-icons{position:absolute;left:1.5%;top:2.5%;display:flex;flex-direction:column;gap:7px}
+.rest-icons{position:absolute;left:1.5%;top:2.5%;display:flex;flex-direction:column;flex-wrap:wrap;
+  max-height:95%;column-gap:4px;gap:7px}
 .rest-ic{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:66px;padding-left:2px}
 .rest-ic svg{width:36px;height:29px;filter:drop-shadow(0 1px 3px rgba(2,10,18,.55))}
 .rest-ic span{font-size:12.5px;font-weight:600;color:#eaf6fb;text-align:left;line-height:1.15;
