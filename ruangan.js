@@ -1435,8 +1435,7 @@
   var langBtn = document.getElementById("langBtn");
   function applyLang(){
     document.documentElement.lang = LANG;
-    document.title = T("CarlLab — Pencet Monitornya, Kamera Mendekat",
-                       "CarlLab — Tap a Monitor, the Camera Moves In");
+    document.title = "CarlLab";
     var md = document.querySelector('meta[name="description"]');
     if(md) md.setAttribute("content", T(
       "Ruangan foto realistis CarlLab dengan tiga monitor. Pencet satu monitor: kamera meluncur mendekat dan identitas grupnya tampil di dalam layar itu — kiri Brand & Logo, tengah Websites, kanan Video Editing.",
