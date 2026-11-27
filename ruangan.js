@@ -449,9 +449,10 @@
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.4" y="5" width="11" height="14" rx="1.6" fill="#9fb6c4"/><rect x="8.6" y="3.4" width="12" height="14" rx="1.6" fill="#e8f2f8"/></svg></span>'
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.6 13.2c-.3 3.4-2.9 5.6-6.4 5.6-4.2 0-7.4-3-7.4-7.2 0-3.9 2.9-7 6.7-7 3.9 0 6.6 2.6 6.6 6.4H9.4c.2 2.3 1.8 3.7 4 3.7 1.9 0 3.2-.7 4.2-2.1z" fill="#37c6f4"/><path d="M13.5 4.6c-3.8 0-6.7 3.1-6.7 7 0 .4 0 .8.1 1.1.9-1 2.3-1.6 3.8-1.6h9.9c0-3.8-2.7-6.5-7.1-6.5z" fill="#0c88c3"/></svg></span>'
     + '<span class="tb-pin" aria-hidden="true">' + FOLDER_SVG + '</span>'
-    + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12L5.2 4.6A11 11 0 0 1 21.5 8L12 12z" fill="#ef4136"/><path d="M12 12l8.5 4.7A11 11 0 0 1 4 17.5L12 12z" fill="#fbbc05"/><path d="M12 12L3.6 17.9A11 11 0 0 1 5.2 4.6L12 12z" fill="#34a853"/><circle cx="12" cy="12" r="4.1" fill="#1a73e8" stroke="#fff" stroke-width="1.4"/></svg></span>'
-    + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.2 7.4L5 20.2A1.6 1.6 0 0 0 6.6 22h10.8a1.6 1.6 0 0 0 1.6-1.8L17.8 7.4z" fill="#2b88d8"/><path d="M8.4 7.4V6.2a3.6 3.6 0 0 1 7.2 0v1.2" fill="none" stroke="#2b88d8" stroke-width="1.8"/><rect x="8.6" y="11" width="3" height="3" fill="#fff"/><rect x="12.4" y="11" width="3" height="3" fill="#fff"/><rect x="8.6" y="14.8" width="3" height="3" fill="#fff"/><rect x="12.4" y="14.8" width="3" height="3" fill="#fff"/></svg></span>'
-    + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19.8 8.2a8.4 8.4 0 1 0 .9 6.4" fill="none" stroke="#37c6f4" stroke-width="2.6" stroke-linecap="round"/><path d="M20.9 3.6a8.4 8.4 0 0 1 1 5.4" fill="none" stroke="#7bd6a0" stroke-width="2.6" stroke-linecap="round" transform="rotate(72 12 12)"/></svg></span>';
+    + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12L5.2 4.6A11 11 0 0 1 21.5 8L12 12z" fill="#ef4136"/><path d="M12 12l8.5 4.7A11 11 0 0 1 4 17.5L12 12z" fill="#fbbc05"/><path d="M12 12L3.6 17.9A11 11 0 0 1 5.2 4.6L12 12z" fill="#34a853"/><circle cx="12" cy="12" r="4.1" fill="#1a73e8" stroke="#fff" stroke-width="1.4"/></svg></span>';
+  /* v8.17 — pin Store (tas belanja) + pin pusaran DIHAPUS atas
+     perintah user 28 Nov 04:59 dari screenshot zoom-nya ("Tiga
+     icon ini hapus aja buy": tas, pusaran, tombol aplikasi). */
   var CHEVRON_SVG = '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M6 14.4l6-5.4 6 5.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
   var APP_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="rgba(87,200,222,.22)" stroke="#57c8de" stroke-width="1.5"/><path d="M3.5 8.6h17" stroke="#57c8de" stroke-width="1.5"/></svg>';
   function taskbarHTML(){
@@ -459,8 +460,9 @@
     /* v8.15 — SAMAKAN + TANPA DOBEL, dua-duanya (perintah final user
        28 Nov 02:47 dari rekaman HP-nya): taskbar desktop plek foto —
        deret rapat DI TENGAH mulai dari logo Windows Start, lalu
-       Cari, Task View, Edge, Explorer, Chrome, Store, pusaran,
-       tombol aplikasi grup; tray + jam kecil di kanan; pojok kiri
+       Cari, Task View, Edge, Explorer, Chrome (Store, pusaran +
+       tombol aplikasi dihapus di v8.17); tray + jam kecil di
+       kanan; pojok kiri
        KOSONG. Logo Windows hanya SATU di tiap keadaan: sebelum
        dipencet, lapisan .rest menimpa seluruh strip foto dengan
        salinan taskbar ini juga (restTaskbarHTML, v8.16) — jadi
@@ -468,7 +470,6 @@
     return '<div class="taskbar"><div class="tb-center">'
       + '<button class="tb-btn" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button>'
       + PIN_SVGS
-      + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '">' + APP_SVG + '</button>'
       + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
       + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
       + '</div></div>';
@@ -483,7 +484,6 @@
     return '<div class="rest-taskbar"><div class="rest-tb-in"><div class="taskbar"><div class="tb-center">'
       + '<span class="tb-btn" aria-hidden="true">' + WINLOGO_SVG + '</span>'
       + PIN_SVGS
-      + '<span class="tb-btn tb-app" aria-hidden="true">' + APP_SVG + '</span>'
       + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
       + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
       + '</div></div></div></div>';
