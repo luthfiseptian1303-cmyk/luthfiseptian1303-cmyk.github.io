@@ -147,6 +147,15 @@
          dan tertabrak baris tombol kembali/stepper. Maksud desainnya memang
          intro+hint hilang penuh selama detail terbuka. */
       body.detail-open .intro,body.detail-open .hint{opacity:0 !important;pointer-events:none}
+      /* Detail terbuka = dunia berhenti: scroll jendela dikunci dan footer
+         disembunyikan, supaya tidak ada konten halaman (footer kaca) yang
+         menembus layer detail saat halaman sedang ter-scroll ke bawah.
+         Footer pakai display:none (bukan visibility): tinggi dokumen
+         runtuh ke spacer 100svh saja, jadi tidak ada sisa overflow yang
+         bisa di-scroll — overflow:hidden sendiri tidak menahan scroll
+         programatik (window.scrollTo tetap jalan di atasnya). */
+      body.detail-open{overflow:hidden}
+      body.detail-open footer{display:none}
       @media (max-width:760px){
         .intro{left:18px;right:18px;bottom:15svh;max-width:none}
         .intro h1{font-size:clamp(1.7rem,8.4vw,2.3rem)}
@@ -217,7 +226,17 @@
         border-bottom:2px solid var(--accent);transition:color .4s var(--ease),border-color .6s;
       }
       .add-btn:hover{color:var(--accent)}
-      .s-foot{display:flex;align-items:center;gap:18px;margin-top:30px;flex-wrap:wrap}
+      /* Blok aksi MENEMPEL di dasar sheet (sticky): Tambah ke Tas + Kembali +
+         stepper selalu terlihat tanpa scroll apa pun, setinggi apa pun isi
+         sheet dan sependek apa pun viewport — dulu mereka jatuh di bawah
+         lipatan scroll internal sheet yang scrollbarnya disembunyikan. */
+      .s-foot{
+        position:sticky;bottom:0;z-index:3;
+        display:flex;flex-direction:column;align-items:flex-start;gap:15px;
+        margin:26px -4px -6px;padding:20px 4px 8px;
+        background:linear-gradient(180deg,rgba(6,5,8,0) 0%,rgba(6,5,8,.8) 32%,rgba(6,5,8,.96) 100%);
+      }
+      .s-foot-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;width:100%}
       .back-btn{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);min-height:44px;display:inline-flex;align-items:center;transition:color .4s}
       .back-btn:hover{color:var(--ink)}
       .stepper{margin-left:auto;display:inline-flex;align-items:center;gap:6px}
@@ -234,7 +253,7 @@
         .s-name{font-size:clamp(2rem,9.6vw,2.7rem)}
         .s-poem{font-size:.92rem;margin-bottom:18px}
         .s-notes{display:none}
-        .s-foot{margin-top:20px}
+        .s-foot{margin:18px -20px calc(-20px - env(safe-area-inset-bottom));padding:16px 20px calc(12px + env(safe-area-inset-bottom))}
       }
 
       /* ================= BAG DRAWER ================= */
@@ -433,13 +452,15 @@
           <span class="s-price" id="s-price"></span>
           <span class="s-size">Extrait · 100 ml</span>
         </div>
-        <button type="button" class="st add-btn" style="--i:5" id="addBtn"><span data-i18n="add">Tambah ke Tas</span><span aria-hidden="true">→</span></button>
-        <div class="st s-foot" style="--i:6">
-          <button type="button" class="back-btn" id="backBtn"><span aria-hidden="true">←</span>&nbsp;<span data-i18n="back">Kembali ke dinding</span></button>
-          <div class="stepper">
-            <button type="button" id="prevBtn" aria-label="Sebelumnya">‹</button>
-            <span class="cnt" id="s-count">01 / 05</span>
-            <button type="button" id="nextBtn" aria-label="Berikutnya">›</button>
+        <div class="st s-foot" style="--i:5">
+          <button type="button" class="add-btn" id="addBtn"><span data-i18n="add">Tambah ke Tas</span><span aria-hidden="true">→</span></button>
+          <div class="s-foot-row">
+            <button type="button" class="back-btn" id="backBtn"><span aria-hidden="true">←</span>&nbsp;<span data-i18n="back">Kembali ke dinding</span></button>
+            <div class="stepper">
+              <button type="button" id="prevBtn" aria-label="Sebelumnya">‹</button>
+              <span class="cnt" id="s-count">01 / 05</span>
+              <button type="button" id="nextBtn" aria-label="Berikutnya">›</button>
+            </div>
           </div>
         </div>
       </div>
@@ -879,6 +900,10 @@
           document.documentElement.style.setProperty("--accent", PRODUCTS[i].accent);
           fillSheet(i);
           detail.hidden = false;
+          /* Paksa ke puncak SEBELUM kunci scroll (body.detail-open) dipasang:
+             halaman yang sedang ter-scroll ke footer tidak boleh membawa
+             footer itu masuk ke dalam tampilan detail. */
+          try{ window.scrollTo({ top: 0, behavior: "instant" }); }catch(e){ window.scrollTo(0, 0); }
           document.body.classList.add("detail-open");
           /* Lapisan detail = render ulang relung ini pada resolusi penuh;
              memudar masuk penuh di 62% perjalanan kamera. */
