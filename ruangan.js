@@ -615,8 +615,8 @@
        dari rekaman HP-nya: "Jangan di buat kotak tapi di sesuain
        monitornya"). Hub tidak lagi persegi sumbu-lurus + rotateY:
        keempat sudutnya di-warp HOMOGRAPHY persis ke sudut kaca
-       monitor di foto (CORNERS terukur, di-inset 2% ke pusat kaca
-       agar tidak menutupi bezel) — tepi atas/bawah/samping hub
+       monitor di foto (CORNERS terukur, inset nyaris nol sejak
+       27 Nov 23:29 — tengah 1,5%, samping 0,8%) — tepi hub
        miring mengikuti panelnya, termasuk lengkung trapesium
        monitor samping. Ukuran layout hub = bbox quad ter-inset
        (px bingkai), transform-origin 0 0, matriks dari solver yang
@@ -638,22 +638,24 @@
     if(cs){
       var cx = (cs[0][0] + cs[1][0] + cs[2][0] + cs[3][0]) / 4;
       var cy = (cs[0][1] + cs[1][1] + cs[2][1] + cs[3][1]) / 4;
-      /* Monitor tengah: inset diperbesar (5%) — verdict user
-         26 Nov 22:22 'Kegedean dikit': jendela tengah sedikit
-         melewati kaca monitornya; susutkan sedikit ke pusat kaca.
-         Monitor samping tetap 2% (sudah pas). */
-      var insetF = lastDive.key === "web" ? 0.05 : 0.02;
+      /* Inset nyaris nol — verdict user 27 Nov 23:29 dari foto
+         laptopnya: 'sisi-sisinya ga sesuai monitornya'. Cek overlay
+         lokal membuktikan CORNERS memang pas di tepi kaca; yang bikin
+         kotaknya mengambang = inset lama (tengah 5%, samping 2%).
+         Kini tengah 1,5%, samping 0,8% — sisa tipis pengaman bezel
+         (jejak verdict 26 Nov 'Kegedean dikit'). */
+      var insetF = lastDive.key === "web" ? 0.015 : 0.008;
       var dst = cs.map(function(p){
         var ix = p[0] + (cx - p[0]) * insetF, iy = p[1] + (cy - p[1]) * insetF;
         return [ix / 100 * frame.w, iy / 100 * frame.h];
       });
       /* Monitor tengah, tepi BAWAH diangkat ekstra (verdict user
          27 Nov 12:18 'Bawahnya kelewatan monitor'): sudut bawah
-         warp-nya naik 0.45% tinggi bingkai agar tepi bawah jendela
+         warp-nya naik 0,25% tinggi bingkai agar tepi bawah jendela
          berhenti di dalam kaca, tidak melewati batas bawah monitor.
          Sisi lain tidak berubah. */
       if(lastDive.key === "web"){
-        var liftB = 0.0045 * frame.h;
+        var liftB = 0.0025 * frame.h;
         dst[2][1] -= liftB;
         dst[3][1] -= liftB;
       }
@@ -690,7 +692,7 @@
      tampilin file-file-nya bisa ga buy"). Lapisan .rest per monitor:
      ikon folder grupnya (ikon yang sama seperti desktop hub) di-warp
      HOMOGRAPHY ke kaca monitor yang sama persis dengan hub (inset
-     sama: tengah 5% + angkat bawah 0.45%, samping 2%), di atas foto —
+     sama: tengah 1,5% + angkat bawah 0,25%, samping 0,8%), di atas foto —
      wallpaper Bloom-nya memang sudah menyala di foto. pointer-events
      none: zona pencet tetap yang menerima ketukan. Panggung .zoomed
      (dive / grup terbuka) -> .rest memudar; kamera pulang -> muncul
@@ -729,12 +731,12 @@
       el.style.height = RH + "px";
       var cx = (cs[0][0] + cs[1][0] + cs[2][0] + cs[3][0]) / 4;
       var cy = (cs[0][1] + cs[1][1] + cs[2][1] + cs[3][1]) / 4;
-      var insetF = g === "web" ? 0.05 : 0.02;
+      var insetF = g === "web" ? 0.015 : 0.008;
       var dst = cs.map(function(p){
         return [ (p[0] + (cx - p[0]) * insetF) / 100 * frame.w,
                  (p[1] + (cy - p[1]) * insetF) / 100 * frame.h ];
       });
-      if(g === "web"){ var liftB = 0.0045 * frame.h; dst[2][1] -= liftB; dst[3][1] -= liftB; }
+      if(g === "web"){ var liftB = 0.0025 * frame.h; dst[2][1] -= liftB; dst[3][1] -= liftB; }
       el.style.transform = homography(REST_W, RH, dst);
     }
   }
