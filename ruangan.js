@@ -589,11 +589,15 @@
     return h + "</dl>";
   }
   function listHTML(){
+    /* v8.2 — LUMÉRA = FILE di dalam folder Toko Online (perintah user
+       27 Nov 18:47: "Lumera nya taro di grup file toko online"):
+       isi jendela folder tampil ala File Explorer — petak file
+       (thumbnail + nama di bawahnya), bukan baris daftar. Dipencet
+       -> situs livenya kebuka layar penuh, seperti sebelumnya. */
     return '<p class="note">' + T("Toko Online — 1 karya", "Online Store — 1 work") + '</p>'
-      + '<div class="rows">'
-      + '<button class="row" type="button" data-work="0"><img class="timg sq" alt="" src="' + LUMERA.img + '">'
-      + '<span class="rtx"><span class="rnm">' + esc(LUMERA.nm) + '</span><span class="rsb">' + esc(LUMERA.sb) + "</span></span>"
-      + '<span class="arw">\u203a</span></button>'
+      + '<div class="files">'
+      + '<button class="file" type="button" data-work="0"><img class="fimg" alt="" src="' + LUMERA.img + '">'
+      + '<span class="fnm">' + esc(LUMERA.nm) + "</span></button>"
       + "</div>"
       + '<p class="foot">' + T("1 karya — ditampilkan langsung di HP ini.", "1 work — shown live on this phone.") + "</p>";
   }
@@ -797,7 +801,13 @@
     /* Websites dibuka langsung di tab Toko Online — tab satu-satunya
        yang berisi (LUMÉRA). Grup lain mulai dari tab pertama. */
     activeTab = (curGroup === "web") ? WEB_TOKO : 0;
-    winState = "normal";   /* jendela selalu terbuka normal saat grup baru dibuka */
+    /* v8.1 — DESKTOP DULU (perintah user 27 Nov 18:45: "buat kaya
+       gambar ke dua"): dive mendarat di DESKTOP BERSIH persis
+       gambar kedua — wallpaper + ikon folder + taskbar, TANPA
+       jendela. Jendela grup baru muncul bila ikon aplikasinya di
+       taskbar dipencet, atau ikon folder desktopnya dipencet
+       (folder kebuka di kategorinya). */
+    winState = "min";
     view = webContent() ? "list" : "main";
     renderScreen();
   }
@@ -938,8 +948,11 @@
     if(tb){
       /* ganti tab aktif: Websites tab Toko Online membuka daftar
          LUMÉRA; tab/grup lain kembali ke identitas (area di bawah
-         tab tetap kosong) */
+         tab tetap kosong). v8.1: ketukan pada IKON FOLDER DESKTOP
+         juga MEMBUKA jendelanya (seperti membuka folder di Windows);
+         tab di dalam jendela hanya mengganti kategori. */
       activeTab = +tb.getAttribute("data-tab");
+      if(tb.classList.contains("dicon")) winState = "normal";
       view = webContent() ? "list" : "main";
       renderScreen();
       blurIfTouch();
