@@ -125,6 +125,17 @@ body.awake .glow{opacity:1}
    bisa terlihat — yang tampil hanya teks, langsung di atas piksel layar
    monitor sendiri, dengan pose trapesium rotateY yang sama seperti zona
    .scr (TIDAK diluruskan di akhir). Radius sudut mengikuti sudut display. */
+/* v8.3 — ikon file DIAM di kaca monitor (terlihat dari ruangan):
+   kolom folder grupnya, di-warp JS ke kaca yang sama dengan hub.
+   Memudar saat kamera dive (.stage.zoomed), muncul lagi saat pulang. */
+.rest{position:absolute;left:0;top:0;z-index:4;pointer-events:none;transform-origin:0 0;
+  opacity:1;transition:opacity .45s ease}
+.stage.zoomed .rest{opacity:0}
+.rest-icons{position:absolute;left:4.5%;top:6%;display:flex;flex-direction:column;gap:10px}
+.rest-ic{display:flex;flex-direction:column;align-items:center;gap:2px;width:66px}
+.rest-ic svg{width:36px;height:29px;filter:drop-shadow(0 1px 3px rgba(2,10,18,.55))}
+.rest-ic span{font-size:12.5px;font-weight:600;color:#eaf6fb;text-align:center;line-height:1.15;
+  text-shadow:0 1px 4px rgba(3,16,26,.9),0 0 8px rgba(3,16,26,.6)}
 .veil{position:absolute;inset:0;z-index:6;background:rgba(3,6,9,.28);opacity:0;pointer-events:none;transition:opacity .5s ease}
 .stage.zoomed .veil{opacity:1}
 .hub{position:absolute;z-index:9;overflow:hidden;color:#eef6fa;display:flex;flex-direction:column;

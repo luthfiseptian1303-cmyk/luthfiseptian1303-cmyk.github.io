@@ -414,6 +414,7 @@
     breath.style.left = frame.x + "px"; breath.style.top = frame.y + "px";
     breath.style.width = frame.w + "px"; breath.style.height = frame.h + "px";
     layoutScreens();   /* v6: kunci layar DOM ke sudut kaca foto aktif */
+    placeRest();       /* v8.3: ikon file diam ikut menempel ke kaca monitor */
   }
 
   var state = "idle";            /* idle | diving | open | returning */
@@ -582,6 +583,64 @@
       sc.style.transform = "scale(" + k.toFixed(4) + ")";
     }
   }
+  /* ---------- v8.3: FILE-FILE KELIHATAN DI MONITOR SAAT RUANGAN DIAM
+     (perintah user 27 Nov 19:06 dari screenshot HP-nya: "Disini juga
+     tampilin file-file-nya bisa ga buy"). Lapisan .rest per monitor:
+     ikon folder grupnya (ikon yang sama seperti desktop hub) di-warp
+     HOMOGRAPHY ke kaca monitor yang sama persis dengan hub (inset
+     sama: tengah 5% + angkat bawah 0.45%, samping 2%), di atas foto —
+     wallpaper Bloom-nya memang sudah menyala di foto. pointer-events
+     none: zona pencet tetap yang menerima ketukan. Panggung .zoomed
+     (dive / grup terbuka) -> .rest memudar; kamera pulang -> muncul
+     lagi. Label mengikuti bahasa aktif (refreshRest di applyLang). */
+  var REST_W = 480;
+  var restEls = {};
+  function restHTML(g){
+    var tabList = (LANG === "en" && TAB_EN[g]) ? TAB_EN[g] : GROUPS[g].tabs;
+    var h = '<div class="rest-icons">';
+    for(var i = 0; i < tabList.length; i++){
+      h += '<div class="rest-ic">' + FOLDER_SVG + '<span>' + esc(tabList[i]) + '</span></div>';
+    }
+    return h + '</div>';
+  }
+  function buildRest(){
+    ["brand", "web", "video"].forEach(function(g){
+      var el = document.createElement("div");
+      el.className = "rest";
+      el.setAttribute("aria-hidden", "true");
+      el.innerHTML = restHTML(g);
+      breath.appendChild(el);
+      restEls[g] = el;
+    });
+  }
+  function placeRest(){
+    for(var g in restEls){
+      var el = restEls[g], q = quad(g), cs = corners(g);
+      if(!cs || !frame.w) continue;
+      var Hw = q.w * (1 - 2 * HUB_INSET) / 100 * frame.w;
+      var Hh = q.h * (1 - 2 * HUB_INSET) / 100 * frame.h;
+      var RH = Math.round(REST_W * Hh / Hw);
+      RH = Math.max(240, Math.min(400, RH));
+      el.style.left = "0px";
+      el.style.top = "0px";
+      el.style.width = REST_W + "px";
+      el.style.height = RH + "px";
+      var cx = (cs[0][0] + cs[1][0] + cs[2][0] + cs[3][0]) / 4;
+      var cy = (cs[0][1] + cs[1][1] + cs[2][1] + cs[3][1]) / 4;
+      var insetF = g === "web" ? 0.05 : 0.02;
+      var dst = cs.map(function(p){
+        return [ (p[0] + (cx - p[0]) * insetF) / 100 * frame.w,
+                 (p[1] + (cy - p[1]) * insetF) / 100 * frame.h ];
+      });
+      if(g === "web"){ var liftB = 0.0045 * frame.h; dst[2][1] -= liftB; dst[3][1] -= liftB; }
+      el.style.transform = homography(REST_W, RH, dst);
+    }
+  }
+  function refreshRest(){
+    for(var g in restEls) restEls[g].innerHTML = restHTML(g);
+  }
+  buildRest();
+
   /* ---------- LUMÉRA: baris / detail / showcase lokal (v3s) ---------- */
   function metaHTML(meta, cls){
     var h = '<dl class="dmeta' + (cls ? " " + cls : "") + '">';
@@ -1192,6 +1251,7 @@
                                               "Photo of the CarlLab gaming room with three monitors lit"));
     if(hub) hub.setAttribute("aria-label", T("Identitas grup di dalam monitor", "Group identity inside the monitor"));
     if(langBtn) langBtn.textContent = (LANG === "en") ? "ID" : "EN";
+    refreshRest();   /* v8.3: label ikon file diam ikut bahasa aktif */
   }
   if(langBtn) langBtn.addEventListener("click", function(){
     LANG = (LANG === "en") ? "id" : "en";
