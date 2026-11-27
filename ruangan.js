@@ -158,6 +158,7 @@
      show (showcase lokal — fallback otomatis) | prod (produk).
      Grup lain selalu "main". */
   var view = "main";
+  var winState = "normal";   /* jendela Windows di desktop monitor: normal | min | max (v8) */
   var curProd = 0;     /* produk yang sedang dibuka di tampilan produk */
   var ABS = "https://carllab.web.id/";
   var WEB_TOKO = 2;    /* indeks tab "Toko Online" pada grup Websites */
@@ -297,6 +298,76 @@
   var DIVE_MS = 1600, RETURN_MS = 900;
 
   function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+  /* ================= v8 — DESKTOP WINDOWS ASLI =================
+     Perintah user 27 Nov 18:40: "pas di pencet layar aku pengennya
+     kaya windows asli — tampilannya". Jadi isi monitor yang dizoom
+     BUKAN lagi jendela melayang: ia DESKTOP Windows 11 utuh —
+     wallpaper Bloom yang sama dengan foto (deskbg), ikon folder
+     kategori di kiri (berfungsi = tab grup), jendela aplikasi
+     ber-title-bar Windows (perkecil / perbesar / tutup ala Win11)
+     berisi konten grup seperti sebelumnya, menu Start berisi tiga
+     grup (berfungsi = pindah monitor), dan taskbar bawah lengkap:
+     tombol Start logo Windows, ikon aplikasi berjalan, tray, dan
+     JAM + TANGGAL LIVE (Asia/Jakarta). Semua kontrol berfungsi;
+     tidak ada tombol pajangan. */
+  var FOLDER_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.8A1.8 1.8 0 0 1 4.3 5h4.9l2.1 2.3h8.4a1.8 1.8 0 0 1 1.8 1.8V17a1.8 1.8 0 0 1-1.8 1.8H4.3A1.8 1.8 0 0 1 2.5 17z" fill="#f5c04a" stroke="#cf9413" stroke-width=".7"/></svg>';
+  var WINLOGO_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="8.4" height="8.4" fill="#4cc2ff"/><rect x="12.4" y="3.2" width="8.4" height="8.4" fill="#4cc2ff"/><rect x="3.2" y="12.4" width="8.4" height="8.4" fill="#4cc2ff"/><rect x="12.4" y="12.4" width="8.4" height="8.4" fill="#4cc2ff"/></svg>';
+  var TRAY_SVG = '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M4 10.5a12 12 0 0 1 16 0M6.8 13.8a8 8 0 0 1 10.4 0M9.6 17a4 4 0 0 1 4.8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="19.4" r="1.3" fill="currentColor"/></svg>'
+    + '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.6V5.4L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.8a7.4 7.4 0 0 1 0 10.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
+    + '<svg viewBox="0 0 28 24" class="tb-icb" aria-hidden="true"><rect x="2" y="7" width="21" height="10" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="9" width="13" height="6" rx="1.2" fill="currentColor"/><path d="M25.4 10.4v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  function winBtnsHTML(){
+    return '<span class="winbtns">'
+      + '<button class="winbtn" type="button" data-winmin aria-label="' + T("Perkecil", "Minimize") + '"><svg viewBox="0 0 10 10"><path d="M1 5h8" stroke="currentColor" stroke-width="1"/></svg></button>'
+      + '<button class="winbtn" type="button" data-winmax aria-label="' + T("Perbesar", "Maximize") + '"><svg viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1"/></svg></button>'
+      + '<button class="winbtn close" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '"><svg viewBox="0 0 10 10"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" stroke-width="1"/></svg></button>'
+      + '</span>';
+  }
+  function deskIconsHTML(){
+    var g = GROUPS[curGroup];
+    var tabList = (LANG === "en" && TAB_EN[curGroup]) ? TAB_EN[curGroup] : g.tabs;
+    var h = '<div class="deskicons">';
+    tabList.forEach(function(t, i){
+      h += '<button class="dicon' + (activeTab === i ? " on" : "") + '" type="button" data-tab="' + i + '">' + FOLDER_SVG + '<span>' + esc(t) + '</span></button>';
+    });
+    return h + '</div>';
+  }
+  function taskbarHTML(){
+    var g = GROUPS[curGroup];
+    return '<div class="taskbar"><div class="tb-center">'
+      + '<button class="tb-btn" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button>'
+      + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '"><span class="tb-appglyph">' + g.no + '</span></button>'
+      + '</div><div class="tb-tray">' + TRAY_SVG
+      + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
+      + '</div></div>';
+  }
+  function startMenuHTML(){
+    var rows = [["brand", "01", "Brand & Logo"], ["web", "02", "Websites"], ["video", "03", "Video Editing"]];
+    var h = '<div class="startmenu" id="startMenu"><p class="sm-h">' + T("Disematkan", "Pinned") + '</p>';
+    rows.forEach(function(r){
+      h += '<button class="sm-row' + (curGroup === r[0] ? " on" : "") + '" type="button" data-goto="' + r[0] + '"><span class="sm-ic">' + r[1] + '</span>' + r[2] + '</button>';
+    });
+    return h + '<div class="sm-f"><span class="sm-user"><i></i>Carl</span>'
+      + '<button class="sm-power" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '"><svg viewBox="0 0 24 24"><path d="M12 3.5v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></div>';
+  }
+  function applyWinState(){
+    var w = document.getElementById("win");
+    if(w){ w.classList.toggle("min", winState === "min"); w.classList.toggle("max", winState === "max"); }
+    var ab = hub.querySelector("[data-tbapp]");
+    if(ab) ab.classList.toggle("idle", winState === "min");
+  }
+  function closeStart(){ var sm = document.getElementById("startMenu"); if(sm) sm.classList.remove("open"); }
+  function tickClock(){
+    try {
+      var now = new Date();
+      var loc = (LANG === "en") ? "en-US" : "id-ID";
+      var tm = new Intl.DateTimeFormat(loc, { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", hour12: false }).format(now);
+      var dt = new Intl.DateTimeFormat(loc, { timeZone: "Asia/Jakarta", day: "2-digit", month: "2-digit", year: "numeric" }).format(now);
+      hub.querySelectorAll(".tb-time").forEach(function(e){ e.textContent = tm; });
+      hub.querySelectorAll(".tb-date").forEach(function(e){ e.textContent = dt; });
+    } catch(e){}
+  }
+  setInterval(tickClock, 15000);
   function tabsHTML(){
     var g = GROUPS[curGroup], h = "";
     var tabList = (LANG === "en" && TAB_EN[curGroup]) ? TAB_EN[curGroup] : g.tabs;
@@ -681,10 +752,10 @@
     if(view === "prod"){
       top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>\u2039 ' + T("Koleksi", "Collection") + '</button>'
         + '<span class="prodpos">' + (curProd + 1) + " / " + LUMERA_PRODUCTS.length + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '">\u2715</button></div>';
+        + winBtnsHTML() + '</div>';
     } else {
       top = '<div class="scr-top"><span class="scr-label"><span class="no">' + g.no + '</span> \u00b7 ' + g.label + '</span>'
-        + '<button class="xbtn" type="button" data-close aria-label="' + T("Tutup grup", "Close group") + '">\u2715</button></div>';
+        + winBtnsHTML() + '</div>';
     }
     /* Wallpaper desktop di dalam monitor DISAMAKAN dengan wallpaper
        monitornya di foto (perintah user 26 Nov 18:38): file yang sama
@@ -692,7 +763,10 @@
        dan tiap monitor menampilkan sepertiga bagiannya sendiri
        (kiri 0% / tengah 50% / kanan 100%). */
     var wallPos = curGroup === "brand" ? "0%" : (curGroup === "video" ? "100%" : "50%");
+    var winCls = (winState === "min") ? " min" : (winState === "max") ? " max" : "";
     var h = '<div class="view scr-view"><img class="deskbg" src="desk-wallpaper.jpg" alt="" aria-hidden="true" style="object-position:' + wallPos + ' 50%"><div class="power" aria-hidden="true"></div><div class="screen' + (content ? " content" : "") + '" id="screen">'
+      + deskIconsHTML()
+      + '<div class="win' + winCls + '" id="win">'
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
@@ -714,14 +788,16 @@
         + '<div class="scr-head"><span class="l1">' + esc(g.l1) + '</span><span class="l2">' + esc(g.l2) + '</span></div></div>'
         + '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
     }
-    hub.innerHTML = h + "</div></div>";
+    hub.innerHTML = h + "</div>" + startMenuHTML() + taskbarHTML() + "</div></div>";
     placeHub();   /* skala kanvas .screen dihitung ulang tiap render */
+    tickClock();   /* jam taskbar langsung terisi, tidak menunggu interval */
     if(view === "live"){ showTakeover(); armLiveFrame(); }
   }
   function renderHub(){
     /* Websites dibuka langsung di tab Toko Online — tab satu-satunya
        yang berisi (LUMÉRA). Grup lain mulai dari tab pertama. */
     activeTab = (curGroup === "web") ? WEB_TOKO : 0;
+    winState = "normal";   /* jendela selalu terbuka normal saat grup baru dibuka */
     view = webContent() ? "list" : "main";
     renderScreen();
   }
@@ -849,6 +925,15 @@
     if(Date.now() - lastViewChange < 600) return false;
     if(t.closest("[data-close]")){ backOrClose(); return true; }
     if(state !== "open") return false;
+    /* v8 — kontrol desktop Windows: perkecil/perbesar jendela, ikon
+       aplikasi di taskbar (pulihkan/perkecil), tombol Start, dan baris
+       grup di menu Start (pindah monitor lewat openGroup). */
+    if(t.closest("[data-winmin]")){ winState = "min"; applyWinState(); closeStart(); return true; }
+    if(t.closest("[data-winmax]")){ winState = (winState === "max") ? "normal" : "max"; applyWinState(); closeStart(); return true; }
+    if(t.closest("[data-tbapp]")){ winState = (winState === "min") ? "normal" : "min"; applyWinState(); closeStart(); return true; }
+    if(t.closest("[data-start]")){ var sm0 = document.getElementById("startMenu"); if(sm0) sm0.classList.toggle("open"); return true; }
+    var gt = t.closest("[data-goto]");
+    if(gt){ closeStart(); var gk = gt.getAttribute("data-goto"); if(gk !== curGroup) openGroup(gk); return true; }
     var tb = t.closest("[data-tab]");
     if(tb){
       /* ganti tab aktif: Websites tab Toko Online membuka daftar
@@ -964,7 +1049,7 @@
     if(dx * dx + dy * dy > 144 || dt > 600) return;   /* ini scroll, bukan ketuk */
     var el = document.elementFromPoint(t.clientX, t.clientY);
     if(!el || !hub.contains(el)) return;
-    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close]")) return;
+    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close],[data-winmin],[data-winmax],[data-tbapp],[data-start],[data-goto]")) return;
     if(hubAction(el)){
       e.preventDefault();
       lastTouchAction = Date.now();

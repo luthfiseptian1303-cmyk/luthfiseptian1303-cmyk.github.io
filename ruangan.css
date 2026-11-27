@@ -174,8 +174,8 @@ body.awake .glow{opacity:1}
    menskalakan kanvas ini agar pas di dalam hub (scale k dihitung dari
    ukuran lokal hub + skala dive, dengan CAP skala-tergambar 1.2) —
    teks TIDAK lagi membesar mengikuti zoom kamera seperti bug cqw v3m. */
-.screen{flex:none;width:340px;height:280px;transform-origin:center center;display:flex;flex-direction:column;
-  padding:10px 14px;color:#eef6fa;position:relative;z-index:2;
+.screen{flex:none;width:340px;height:280px;transform-origin:center center;display:block;
+  padding:0;color:#eef6fa;position:relative;z-index:2;overflow:hidden;
   opacity:0;transition:opacity .5s ease}
 /* ================================================================
    v6 — LAYAR JADI DESKTOP WINDOWS ASLI (perintah user 26 Nov 03:31:
@@ -186,11 +186,86 @@ body.awake .glow{opacity:1}
    di dalam JENDELA akrilik gelap ala Windows 11 (panel + title bar
    + tombol tutup), bukan lagi teks melayang di kehampaan. */
 .deskbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-.screen{background:rgba(22,26,42,.90);border:1px solid rgba(255,255,255,.16);border-radius:6px;
-  box-shadow:0 18px 50px rgba(2,6,14,.55), inset 0 1px 0 rgba(255,255,255,.08)}
+/* ================================================================
+   v8 — DESKTOP WINDOWS ASLI (perintah user 27 Nov 18:40: "pas di
+   pencet layar aku pengennya kaya windows asli — tampilannya").
+   Kanvas .screen kini PERMUKAAN DESKTOP (transparan — wallpaper
+   deskbg di belakangnya yang terlihat): ikon folder kategori di
+   kiri, JENDELA aplikasi (.win) melayang di atasnya dengan title
+   bar Windows (tombol perkecil/perbesar/tutup; tutup merah saat
+   hover, persis Win11), menu Start di atas taskbar, dan TASKBAR
+   bawah (Start logo Windows + ikon aplikasi berjalan + tray +
+   jam/tanggal live). Jendela bisa diperkecil ke taskbar (klik
+   ikon aplikasinya untuk memulihkan) dan diperbesar memenuhi
+   desktop di atas taskbar. */
+.win{position:absolute;left:47px;right:8px;top:8px;bottom:35px;z-index:2;display:flex;flex-direction:column;
+  padding:9px 13px;color:#eef6fa;background:rgba(22,26,42,.93);border:1px solid rgba(255,255,255,.15);border-radius:8px;
+  box-shadow:0 18px 50px rgba(2,6,14,.55), inset 0 1px 0 rgba(255,255,255,.08);
+  transition:transform .3s cubic-bezier(.22,.8,.2,1), opacity .3s ease, left .3s ease, right .3s ease, top .3s ease, bottom .3s ease, border-radius .3s ease}
+.win.min{transform:translateY(52px) scale(.5);opacity:0;pointer-events:none}
+.win.max{left:0;right:0;top:0;bottom:26px;border-radius:0}
 .scr-top{border-bottom:1px solid rgba(255,255,255,.10);padding-bottom:7px}
-.xbtn{border-radius:6px}
-.xbtn:hover{background:#e81123;color:#fff;text-shadow:none}
+.winbtns{flex:none;display:flex;gap:2px;margin-left:auto}
+.winbtn{width:27px;height:19px;border:0;background:transparent;color:rgba(233,246,251,.78);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;border-radius:4px;padding:0;
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.winbtn svg{width:9px;height:9px;display:block}
+.winbtn:hover{background:rgba(255,255,255,.13);color:#fff}
+.winbtn.close:hover{background:#e81123;color:#fff}
+/* ikon desktop: folder kategori grup (= tab, berfungsi penuh) */
+.deskicons{position:absolute;left:5px;top:6px;z-index:1;display:flex;flex-direction:column;gap:4px;max-height:calc(100% - 34px);overflow:hidden}
+.dicon{width:39px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:3px 1px 2px;
+  background:transparent;border:1px solid transparent;border-radius:4px;cursor:pointer;color:#fff;
+  font:inherit;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.dicon svg{width:16px;height:16px;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+.dicon span{font-size:6.8px;line-height:1.15;font-weight:600;text-align:center;max-width:38px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.dicon.on{background:rgba(140,200,240,.25);border-color:rgba(255,255,255,.28)}
+.dicon:hover{background:rgba(140,200,240,.16)}
+/* taskbar Windows 11 */
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:5;display:flex;align-items:center;justify-content:center;
+  background:rgba(15,19,33,.85);border-top:1px solid rgba(255,255,255,.09);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.tb-center{display:flex;align-items:center;gap:3px}
+.tb-btn{width:27px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;
+  display:flex;align-items:center;justify-content:center;color:#eef6fa;padding:0;
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.tb-btn:hover{background:rgba(255,255,255,.10)}
+.tb-btn>svg{width:15px;height:15px;display:block}
+.tb-appglyph{font-size:8.5px;font-weight:800;letter-spacing:.04em;background:rgba(87,200,222,.22);
+  border:1px solid rgba(87,200,222,.4);border-radius:4px;padding:2.5px 4px;line-height:1}
+.tb-app::after{content:"";position:absolute;bottom:1.5px;left:50%;transform:translateX(-50%);
+  width:13px;height:2.5px;border-radius:2px;background:var(--cyan-l)}
+.tb-app.idle::after{width:6px;background:rgba(220,235,245,.4)}
+.tb-tray{position:absolute;right:7px;top:0;height:26px;display:flex;align-items:center;gap:6px;color:rgba(233,244,250,.88)}
+.tb-ic{width:13px;height:13px;display:block}
+.tb-icb{width:16px;height:13px;display:block}
+.tb-clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
+.tb-time{font-size:8.5px;font-weight:600}
+.tb-date{font-size:8.5px;color:rgba(233,244,250,.75)}
+/* menu Start */
+.startmenu{position:absolute;left:50%;bottom:32px;z-index:6;width:198px;padding:10px 10px 8px;
+  background:rgba(19,23,39,.95);border:1px solid rgba(255,255,255,.13);border-radius:10px;
+  box-shadow:0 18px 44px rgba(2,6,14,.6);opacity:0;pointer-events:none;
+  transform:translate(-50%,10px);transition:opacity .22s ease, transform .22s cubic-bezier(.22,.8,.2,1)}
+.startmenu.open{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+.sm-h{font-size:8.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(190,225,240,.6);margin:0 2px 6px}
+.sm-row{display:flex;align-items:center;gap:9px;width:100%;padding:6px 7px;border:0;border-radius:6px;cursor:pointer;
+  background:transparent;color:#eef6fa;font:inherit;font-size:11.5px;font-weight:600;text-align:left;
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.sm-row:hover{background:rgba(255,255,255,.08)}
+.sm-row.on{background:rgba(87,200,222,.13)}
+.sm-ic{flex:none;font-size:8.5px;font-weight:800;background:rgba(87,200,222,.2);border:1px solid rgba(87,200,222,.38);
+  border-radius:4px;padding:2.5px 4px;line-height:1}
+.sm-f{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding:7px 4px 1px;border-top:1px solid rgba(255,255,255,.09)}
+.sm-user{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600}
+.sm-user i{width:17px;height:17px;border-radius:50%;background:linear-gradient(135deg,#57c8de,#0e9db8);display:block}
+.sm-power{width:24px;height:24px;border:0;background:transparent;border-radius:5px;color:rgba(233,246,251,.8);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;
+  -webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.sm-power svg{width:13px;height:13px;display:block}
+.sm-power:hover{background:rgba(255,255,255,.1);color:#fff}
 .hub.show .screen{opacity:1}
 .hub [hidden]{display:none!important}
 .scr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:none;margin-bottom:6px}
@@ -397,6 +472,7 @@ body.awake .glow{opacity:1}
   .zone:focus-visible{outline:2px solid rgba(87,200,222,.95);outline-offset:-3px;
     box-shadow:inset 0 0 0 2px rgba(87,200,222,.6), inset 0 0 2.6cqw rgba(46,170,200,.22)}
   .xbtn:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
+  .winbtn:focus-visible,.tb-btn:focus-visible,.dicon:focus-visible,.sm-row:focus-visible,.sm-power:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:1px}
   .tab:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
   .row:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:1px}
   .backbar:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
