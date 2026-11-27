@@ -265,9 +265,10 @@ body.awake .glow{opacity:1}
 /* v8.12 — widget ujung kiri + deret pin taskbar (samakan foto);
    ukuran diperkecil supaya seluruh baris + tray + jam muat di
    lebar internal hub tanpa overflow (terukur: total ≤ 338px) */
-/* v8.13 — widget kecil pojok kiri bawah (samakan foto) */
-.tb-widget{flex:none;width:20px;height:24px;display:flex;align-items:center;justify-content:center}
-.tb-widget>svg{width:11px;height:11px;display:block}
+/* v8.14 — Start tunggal di pojok kiri bawah (tanpa ikon dobel) */
+.tb-left{flex:none;width:21px;height:24px;display:flex;align-items:center;justify-content:center;border:0;background:transparent;border-radius:4px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;outline:none;touch-action:manipulation}
+.tb-left:hover{background:rgba(255,255,255,.10)}
+.tb-left>svg{width:13px;height:13px;display:block}
 .tb-pin{width:19px;height:24px;display:flex;align-items:center;justify-content:center;flex:none}
 .tb-pin>svg{width:12px;height:12px;display:block}
 .tb-btn{width:21px;height:24px;border:0;background:transparent;border-radius:4px;cursor:pointer;position:relative;

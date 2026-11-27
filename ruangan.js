@@ -452,19 +452,17 @@
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12L5.2 4.6A11 11 0 0 1 21.5 8L12 12z" fill="#ef4136"/><path d="M12 12l8.5 4.7A11 11 0 0 1 4 17.5L12 12z" fill="#fbbc05"/><path d="M12 12L3.6 17.9A11 11 0 0 1 5.2 4.6L12 12z" fill="#34a853"/><circle cx="12" cy="12" r="4.1" fill="#1a73e8" stroke="#fff" stroke-width="1.4"/></svg></span>'
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.2 7.4L5 20.2A1.6 1.6 0 0 0 6.6 22h10.8a1.6 1.6 0 0 0 1.6-1.8L17.8 7.4z" fill="#2b88d8"/><path d="M8.4 7.4V6.2a3.6 3.6 0 0 1 7.2 0v1.2" fill="none" stroke="#2b88d8" stroke-width="1.8"/><rect x="8.6" y="11" width="3" height="3" fill="#fff"/><rect x="12.4" y="11" width="3" height="3" fill="#fff"/><rect x="8.6" y="14.8" width="3" height="3" fill="#fff"/><rect x="12.4" y="14.8" width="3" height="3" fill="#fff"/></svg></span>'
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19.8 8.2a8.4 8.4 0 1 0 .9 6.4" fill="none" stroke="#37c6f4" stroke-width="2.6" stroke-linecap="round"/><path d="M20.9 3.6a8.4 8.4 0 0 1 1 5.4" fill="none" stroke="#7bd6a0" stroke-width="2.6" stroke-linecap="round" transform="rotate(72 12 12)"/></svg></span>';
-  var WIDGET_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.4" y="3.4" width="8" height="8" fill="#4cc2ff"/><rect x="12.6" y="3.4" width="8" height="8" fill="#4cc2ff"/><rect x="3.4" y="12.6" width="8" height="8" fill="#4cc2ff"/><rect x="12.6" y="12.6" width="8" height="8" fill="#4cc2ff"/></svg>';
   var CHEVRON_SVG = '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M6 14.4l6-5.4 6 5.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
   function taskbarHTML(){
     var g = GROUPS[curGroup];
-    /* v8.13 — SAMAKAN PLEK SAMA FOTO (pilihan eksplisit user 28 Nov
-       01:55, menggantikan v8.12b): ikon bawah harus sama persis
-       sebelum dipencet (foto) dan sesudah dipencet (desktop ini),
-       di ketiga monitor. Susunan foto: ikon kecil di pojok kiri
-       bawah + deret tengah MULAI dari logo Windows Start, lalu
-       Cari, Task View, Edge, Explorer, Chrome, Store, pusaran,
-       tombol aplikasi grup + tray ^ wifi speaker baterai jam. */
-    return '<div class="taskbar"><span class="tb-widget" aria-hidden="true">' + WIDGET_SVG + '</span><div class="tb-center">'
-      + '<button class="tb-btn" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button>'
+    /* v8.14 — TANPA IKON DOBEL (perintah user 28 Nov 02:32, keputusan
+       final soal logo): logo Windows HANYA SATU — tombol Start yang
+       bisa dipencet di pojok kiri bawah (susunan v8.12b). Widget
+       pojok + Start di deret tengah (v8.13 plek-foto) dibatalkan
+       karena glyph-nya sama persis = dobel. Deret tengah tetap
+       samakan set foto: Cari, Task View, Edge, Explorer, Chrome,
+       Store, pusaran, tombol aplikasi grup; tray + jam kanan. */
+    return '<div class="taskbar"><button class="tb-left" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button><div class="tb-center">'
       + PIN_SVGS
       + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="rgba(87,200,222,.22)" stroke="#57c8de" stroke-width="1.5"/><path d="M3.5 8.6h17" stroke="#57c8de" stroke-width="1.5"/></svg></button>'
       + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
