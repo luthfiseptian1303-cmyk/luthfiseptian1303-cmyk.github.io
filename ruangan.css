@@ -80,8 +80,16 @@ body.ready .stage-hint{opacity:1}
 .zone{position:absolute;inset:0;width:100%;height:100%;display:block;border:0;border-radius:inherit;
   background:transparent;cursor:pointer;padding:0;transition:box-shadow .25s ease;-webkit-tap-highlight-color:transparent}
 .zone:focus:not(:focus-visible){outline:none}
-.zone:hover{box-shadow:inset 0 0 0 2px rgba(87,200,222,.45), inset 0 0 2.6cqw rgba(46,170,200,.18)}
-@media(hover:none){.zone:hover{box-shadow:none}}
+/* v8.11 — TANPA BINGKAI KOTAK di monitor (perintah user 27 Nov 23:41
+   dari screenshot laptopnya: 'ini masih belum berubah' — bingkai
+   hover/fokus zona menggambar kotak sudut-bulat + glow di atas
+   monitor SEBELUM dipencet; bentuknya persegi bbox, tidak mengikuti
+   trapesium kaca monitor samping, jadi terbaca sebagai kotak yang
+   tidak sesuai monitornya). Zona kini tak terlihat total di semua
+   keadaan; satu-satunya petunjuk pencet = kursor tangan + teks
+   petunjuk. Bingkai fokus keyboard untuk kontrol DI DALAM hub
+   (tab/tombol jendela) tidak berubah. */
+.zone:hover{box-shadow:none}
 
 /* ---------- v6 — LAYAR DOM (cara baru atas perintah user: layar
    monitor = elemen asli web, BUKAN tempelan gambar di foto) ----------
@@ -532,8 +540,7 @@ body.awake .glow{opacity:1}
    keyboard/mouse lewat :focus-visible khusus pointer halus. */
 .stage :focus,.hub :focus{outline:none!important}
 @media (hover:hover) and (pointer:fine){
-  .zone:focus-visible{outline:2px solid rgba(87,200,222,.95);outline-offset:-3px;
-    box-shadow:inset 0 0 0 2px rgba(87,200,222,.6), inset 0 0 2.6cqw rgba(46,170,200,.22)}
+  .zone:focus-visible{outline:none;box-shadow:none}   /* v8.11: bingkai zona dihapus total (lihat catatan .zone:hover) */
   .xbtn:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
   .winbtn:focus-visible,.tb-btn:focus-visible,.dicon:focus-visible,.sm-row:focus-visible,.sm-power:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:1px}
   .tab:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
