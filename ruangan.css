@@ -588,3 +588,34 @@ body.live-open nav{opacity:0;pointer-events:none}
 @media (hover:hover) and (pointer:fine){
   .backchip:focus-visible{outline:2px solid rgba(87,200,222,.9);outline-offset:2px}
 }
+
+/* v8.7 — ISI FOLDER ASLI: subjudul petak file, chip durasi video,
+   sampul tipografi (KELAM/KAVUNA tanpa thumbnail foto), detail logo
+   (sampul + palet), dan pemutar video di dalam jendela. */
+.file .fsb{font-size:8.5px;line-height:1.25;color:rgba(190,225,240,.6);text-align:center;
+  text-shadow:0 1px 6px rgba(4,20,30,.5)}
+.file .fwrap{position:relative;display:block;line-height:0}
+.file .fdur{position:absolute;right:3px;bottom:3px;font-size:8px;font-weight:700;line-height:1;
+  padding:2px 4px;border-radius:4px;background:rgba(2,8,12,.78);color:#eaf6fc}
+.file .ftile{display:flex;align-items:center;justify-content:center;font-family:Georgia,'Times New Roman',serif;
+  font-size:10px;font-weight:700;letter-spacing:.08em}
+.cover{position:relative;border-radius:10px;overflow:hidden;margin:6px 0 7px;flex:none}
+.cover img{width:100%;height:72px;object-fit:contain;display:block;padding:6px 0}
+.dnm{font-size:16px;font-weight:800;letter-spacing:.03em;color:#fff;margin:1px 0 2px;
+  text-shadow:0 1px 8px rgba(4,20,30,.55)}
+.dsub{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(190,225,240,.62);margin:9px 0 3px}
+.dsub .hint{text-transform:none;letter-spacing:0;color:rgba(190,225,240,.45)}
+.pal{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
+.sw{display:flex;align-items:center;gap:6px;padding:4px 8px 4px 4px;border-radius:6px;cursor:pointer;
+  background:rgba(140,200,240,.08);border:1px solid rgba(255,255,255,.12);color:#eef6fa;font:inherit;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.sw i{width:16px;height:16px;border-radius:4px;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.sw b{font-size:9.5px;font-weight:700}
+.sw span{font-size:8.5px;color:rgba(190,225,240,.6)}
+.vidwrap{display:flex;justify-content:center;margin:6px 0 7px;flex:none}
+.vidwrap video{max-width:100%;max-height:200px;border-radius:8px;background:#000;box-shadow:0 4px 18px rgba(0,0,0,.45)}
+@media (orientation:landscape){
+  .file .fsb{text-align:left}
+  .vidwrap video{max-height:120px}
+  .cover img{height:44px}
+}

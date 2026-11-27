@@ -194,6 +194,126 @@
   ];
   function webContent(){ return curGroup === "web" && activeTab === WEB_TOKO; }
 
+  /* ================= v8.7 — ISI ASLI TIAP FOLDER =================
+     Perintah user 27 Nov 19:43 (screenshot folder Culinary yang isinya
+     malah halaman identitas 01): "Pas bagian pencet file jangan
+     begini buy, buat sesuai isi filenya aja yang muncul" + "langsung
+     isinya aja pas pencet file". Jadi: SETIAP folder langsung membuka
+     ISINYA — tidak ada lagi halaman identitas sebagai isi folder.
+     Data = isi asli CarlLab (sama seperti halaman layanan live):
+     Brand 15 logo demo (data v3p, thumbnail brand-media/ yang masih
+     live), Websites 10 demo website-* + KELAM/KAVUNA + 6 undangan,
+     Video 5 edit (MP4 + poster di video-editing/media/, live). */
+  var BRAND_KEYS = ["kuliner", "beauty", "jasa"];
+  var BRAND_GNAME = { kuliner:"grup kuliner", beauty:"grup beauty", jasa:"grup jasa & tech" };
+  var BRAND_GNAME_EN = { kuliner:"culinary group", beauty:"beauty group", jasa:"services & tech group" };
+  var LOGOS = [
+    { id:"gigit", g:"kuliner", nm:"GIGIT!", rl:"Cookies & Crumble — ceria dan berani",
+      en:{ rl:"Cookies & Crumble — cheerful and bold", ds:"This is the original finished set, not a mock-up: nineteen panels from one design system — the feed carousel, the 9:16 stories, and the darker Chocolate Edition. One system that stretches across every post the brand will ever make.", pal:["Orange","Cream","Edition Chocolate","Caramel"] },
+      ds:"Ini file aslinya, bukan reka ulang: set jadi GIGIT! berisi sembilan belas panel dari satu sistem desain — carousel feed, story 9:16, dan Edisi Cokelat. Satu sistem yang meregang ke semua postingan brand ini.",
+      pal:[["Oranye","#F96A0D"],["Krem","#FFF3E0"],["Cokelat Edisi","#2B170B"],["Karamel","#E8A33D"]], bg:"#F96A0D" },
+    { id:"rawitara", g:"kuliner", nm:"RAWITARA", rl:"Sambal Nusantara — berani dan menggugah",
+      en:{ rl:"Nusantara Sambal — bold and appetising", ds:"Made for a home sambal brand moving up to retail packaging. Its single chilli emblem is drawn thick, with no fine detail, so it stays legible on a 3 cm bottle label and on a warung banner metres away.", pal:["Chilli Red","Stem Green","Charred Brown"] },
+      ds:"Dibuat untuk brand sambal rumahan yang naik kelas ke kemasan retail. Lengkung cabainya digambar tebal tanpa detail kecil, jadi tetap terbaca jelas di label botol 3 cm maupun di papan warung dari jarak beberapa meter.",
+      pal:[["Merah Cabai","#D8432B"],["Hijau Tangkai","#3E7C4F"],["Cokelat Bakar","#2A1409"]], bg:"#D8432B" },
+    { id:"lunara", g:"kuliner", nm:"LUNARA", rl:"Bakehouse — hangat dan artisan",
+      en:{ rl:"Bakehouse — warm and artisan", ds:"Made for a bakehouse that fires its ovens before dawn: the crescent marks the baker's hours, the wheat marks the ingredients. Two simple marks that stamp cleanly on boxes, bread paper, and greeting cards without losing their shape.", pal:["Amber Gold","Caramel","Dough Brown"] },
+      ds:"Dibuat untuk bakehouse yang memanggang dari dini hari: bulan sabit menandai jam kerja sang baker, gandum menandai bahannya. Dua ikon sederhana ini gampang distempel di box, kertas roti, dan kartu ucapan tanpa kehilangan bentuk.",
+      pal:[["Emas Amber","#E39A1B"],["Karamel","#B97A0F"],["Cokelat Adonan","#241806"]], bg:"#E39A1B" },
+    { id:"arunika", g:"kuliner", nm:"ARUNIKA", rl:"Kopi susu & roastery — segar dan berani",
+      en:{ rl:"Kopi susu & roastery — fresh and bold", ds:"Made for a kopi susu shop in Semarang that roasts its own beans. The wordmark is thick and friendly — legible on plastic cups, seal stickers, and the menu board behind the bar — and its tosca field stands apart from the usual brown-and-cream coffee shops.", pal:["Vivid Tosca","Burnt Orange","Roast Brown"] },
+      ds:"Dibuat untuk kedai kopi susu yang menyangrai bijinya sendiri di Semarang. Wordmark-nya tebal dan ramah, terbaca jelas di cup plastik, stiker segel, sampai papan menu di belakang bar — dan bidang toscanya langsung beda dari kedai kopi cokelat-krem pada umumnya.",
+      pal:[["Tosca Vivid","#0E9594"],["Oranye Bakar","#D95F16"],["Cokelat Sangrai","#241611"]], bg:"#0E9594" },
+    { id:"kuwah", g:"kuliner", nm:"KUWAH!", rl:"Bakso & mie kuah — panas dan nampol",
+      en:{ rl:"Bakso & noodle soup — hot and punchy", ds:"Made for a bakso stall in Malang levelling up without losing its street-food soul. The wordmark is big and loud — readable across the street, on the stall banner, and on takeaway bowl stickers.", pal:["Vivid Fuchsia","Deep Magenta","Rich Broth"] },
+      ds:"Dibuat untuk warung bakso di Malang yang ingin naik kelas tanpa kehilangan rasa kaki limanya. Wordmark-nya besar dan berani — terbaca dari seberang jalan, di spanduk warung, sampai di stiker mangkuk bungkus untuk dibawa pulang.",
+      pal:[["Fuchsia Vivid","#D81B9A"],["Magenta Dalam","#A30D72"],["Kaldu Pekat","#1E1210"]], bg:"#D81B9A" },
+    { id:"sekar", g:"beauty", nm:"SEKAR", rl:"Skincare alami — lembut dan natural",
+      en:{ rl:"Natural skincare — soft and natural", ds:"Made for a natural skincare brand that sells calm, not overpromises. Its three petals are symmetrical and open, staying tidy on small bottle labels, pouch seals, and shipping stickers.", pal:["Vivid Terracotta","Sage","Shaded Forest"] },
+      ds:"Dibuat untuk brand skincare alami yang menjual ketenangan, bukan janji berlebihan. Tiga kelopaknya simetris dan terbuka, terbaca rapi di label botol kecil, segel pouch, sampai stiker paket pengiriman.",
+      pal:[["Terakota Vivid","#D97757"],["Sage","#A8B79A"],["Hutan Teduh","#22301F"]], bg:"#D97757" },
+    { id:"vanara", g:"beauty", nm:"VANARA", rl:"Salon & spa — segar dan elegan",
+      en:{ rl:"Salon & spa — fresh and elegant", ds:"Made for a premium salon & spa that wants to feel fresh without looking generic. The V monogram works as a booking-app icon, a mirror engraving, and a member-card pattern — one form for every touchpoint.", pal:["Vivid Emerald","Fresh Mint","Deep Emerald"] },
+      ds:"Dibuat untuk salon & spa premium yang ingin terasa segar tanpa terlihat generik. Monogram V-nya bekerja sebagai ikon aplikasi booking, grafir di cermin, dan pola di kartu member — satu bentuk untuk semua titik sentuh.",
+      pal:[["Zamrud Vivid","#17A06B"],["Mint Segar","#7FBF9E"],["Zamrud Dalam","#0C2B1E"]], bg:"#17A06B" },
+    { id:"klar", g:"beauty", nm:"KLAR", rl:"Skin lab — klinis dan terukur",
+      en:{ rl:"Skin lab — clinical and measured", ds:"Made for a skin clinic that sells precision, not sweet promises. The wordmark is tight and firm like a lab instrument label, and the drop icon stays legible as a booking-app favicon or a stamp on packaging.", pal:["Ice Blue","Clinical Cyan","Lab Navy"] },
+      ds:"Dibuat untuk klinik perawatan kulit yang menjual ketepatan, bukan janji manis. Wordmark-nya rapat dan tegas seperti label alat lab, dan ikon tetesnya tetap terbaca sebagai favicon aplikasi booking maupun cap di kemasan.",
+      pal:[["Biru Es","#DCEBF5"],["Sian Klinis","#12A5C4"],["Navy Lab","#0C2D48"]], bg:"#0C2D48" },
+    { id:"wulan", g:"beauty", nm:"WULAN", rl:"Jamu & botanicals — hangat dan berakar",
+      en:{ rl:"Jamu & botanicals — warm and rooted", ds:"Made for a modern jamu brand levelling up without losing its roots. The italic serif feels like the maker's handwriting, and the moon mark is simple enough to embroider on aprons or stamp on wrapping paper.", pal:["Turmeric Gold","Silk Cream","Bark Brown"] },
+      ds:"Dibuat untuk brand jamu modern yang ingin naik kelas tanpa kehilangan akarnya. Huruf serif miringnya terasa seperti tulisan tangan peracik, dan ikon bulannya cukup sederhana untuk dibordir di apron maupun dicap di kertas pembungkus.",
+      pal:[["Kunyit Emas","#C99012"],["Krem Sutra","#F1E3C8"],["Cokelat Kulit Kayu","#3A2410"]], bg:"#C99012" },
+    { id:"bara", g:"beauty", nm:"BARA", rl:"Barber co. — tegas dan maskulin",
+      en:{ rl:"Barber co. — firm and masculine", ds:"Made for a barbershop that sells precision. The letters are wide and anchored like a classic workshop sign, and the razor line works as a divider on price lists, queue-card stamps, and comb-handle engraving.", pal:["Ember Charcoal","Cold Steel","Antique Brass"] },
+      ds:"Dibuat untuk barbershop yang menjual ketepatan. Hurufnya lebar dan berjangkar seperti papan nama bengkel klasik, dan garis pisaunya bekerja sebagai pembatas di price list, stempel kartu antrian, sampai grafir di gagang sisir.",
+      pal:[["Arang Bara","#1B1C1E"],["Baja Dingin","#9AA3AD"],["Kuningan Antik","#B08D4A"]], bg:"#1B1C1E" },
+    { id:"arus", g:"jasa", nm:"ARUS", rl:"Logistik — cepat dan tegas",
+      en:{ rl:"Logistics — fast and firm", ds:"Made for an intercity logistics service competing on speed. The letter A stands solid like a fleet frame, and the arrow through it marks direction and motion — readable at a glance on a moving truck sticker or a 16-pixel dashboard favicon.", pal:["Arus Blue","Steel Blue","Deep Sea"] },
+      ds:"Dibuat untuk jasa logistik yang bersaing di kecepatan. Huruf A-nya kokoh seperti rangka armada, panah di tengahnya menegaskan arah dan gerak — terbaca sekilas di stiker truk yang sedang melaju maupun favicon dashboard 16 piksel.",
+      pal:[["Biru Arus","#1B7BD4"],["Biru Baja","#5EA9E6"],["Laut Dalam","#0F2740"]], bg:"#1B7BD4" },
+    { id:"artha", g:"jasa", nm:"ARTHA", rl:"Konsultan keuangan — terpercaya dan mapan",
+      en:{ rl:"Financial consulting — trusted and established", ds:"Made for an independent financial consultant who must look established from the first business card. The stacked coins form a stable triangle and the letter A at once, and stay polite printed in gold on cards and annual-report covers.", pal:["Vivid Gold","Pale Gold","Vault Brown"] },
+      ds:"Dibuat untuk konsultan keuangan independen yang perlu terlihat mapan sejak kartu nama pertama. Tumpukan koinnya membentuk segitiga stabil sekaligus huruf A, dan tetap sopan tercetak emas di kartu nama maupun sampul laporan tahunan.",
+      pal:[["Emas Vivid","#DFA81E"],["Emas Muda","#E3C878"],["Cokelat Brankas","#241B06"]], bg:"#DFA81E" },
+    { id:"kilau", g:"jasa", nm:"KILAU", rl:"Home care — segar dan cerah",
+      en:{ rl:"Home care — fresh and bright", ds:"Made for a home-cleaning service competing on trust. The sparkle star is simple and friendly, easy to recognise on team uniforms, door-seal stickers after a clean, and the booking-app icon.", pal:["Fresh Aqua","Pale Mint","Deep Teal"] },
+      ds:"Dibuat untuk layanan home cleaning yang bersaing di kepercayaan. Bintang kilanya sederhana dan ramah, mudah dikenali di seragam tim, stiker segel pintu setelah pembersihan, dan ikon aplikasi pemesanan.",
+      pal:[["Aqua Segar","#12B5A5"],["Mint Muda","#A9E8DF"],["Teal Dalam","#0B3B3F"]], bg:"#12B5A5" },
+    { id:"sektor", g:"jasa", nm:"SEKTOR", rl:"Coworking — arsitektural dan tegas",
+      en:{ rl:"Coworking — architectural and firm", ds:"Made for a coworking space that wants to feel architectural, not like a café with Wi-Fi. The window grid becomes a graphic system for desk numbering, floor signage, and member access cards.", pal:["Signal Yellow","Warm Concrete","Structure Black"] },
+      ds:"Dibuat untuk ruang kerja bersama yang ingin terasa arsitektural, bukan kafe yang kebetulan ada Wi-Fi. Grid jendelanya menjadi sistem grafis untuk penomoran meja, signage lantai, dan kartu akses member.",
+      pal:[["Kuning Sinyal","#E4B33C"],["Beton Hangat","#CFC6B4"],["Hitam Struktur","#1A1A1A"]], bg:"#E4B33C" },
+    { id:"pawon", g:"jasa", nm:"PAWON", rl:"Pet care — ramah dan playful",
+      en:{ rl:"Pet care — friendly and playful", ds:"Made for pet grooming and daycare selling peace of mind. The letters are round and humble, and the paw mark becomes a stamp on member cards, a pattern on pet bandanas, and a marker on every photo report.", pal:["Pawon Forest","Cheerful Apricot","Warm Cream"] },
+      ds:"Dibuat untuk grooming dan daycare hewan yang menjual rasa aman. Hurufnya bulat dan rendah hati, ikon jejaknya menjadi stempel di kartu member, pola di bandana anabul, dan tanda di setiap laporan foto.",
+      pal:[["Hutan Pawon","#23402F"],["Aprikot Ceria","#E8A05C"],["Krem Hangat","#F3E9D2"]], bg:"#23402F" }
+  ];
+  function logoById(id){ for(var i = 0; i < LOGOS.length; i++) if(LOGOS[i].id === id) return LOGOS[i]; return null; }
+  /* Websites per folder (indeks tab): 0 Company, 1 Landing,
+     3 Undangan, 4 Portofolio. Tab 2 (Toko Online) tetap LUMÉRA. */
+  var SITE_TABS = {
+    0: [
+      { nm:"CRUMB", sb:"Bakery — Copenhagen", img:"hub-thumbs/crumb.jpg", url:ABS + "website-crumb/", path:"website-crumb" },
+      { nm:"EMBER", sb:"Fine Dining — London", img:"hub-thumbs/ember.jpg", url:ABS + "website-ember/", path:"website-ember" },
+      { nm:"HALDEN", sb:"Home Builder — Melbourne", img:"hub-thumbs/halden.jpg", url:ABS + "website-halden/", path:"website-halden" },
+      { nm:"HARLOW", sb:"Real Estate — Sydney", img:"hub-thumbs/harlow.jpg", url:ABS + "website-harlow/", path:"website-harlow" },
+      { nm:"LUMEN", sb:"Photography Studio — Berlin", img:"hub-thumbs/lumen.jpg", url:ABS + "website-lumen/", path:"website-lumen" }
+    ],
+    1: [
+      { nm:"KELAM", sb:"Parfum — Landing Page", tile:{ bg:"#141114", fg:"#ece5d8" }, url:ABS + "kelam/", path:"kelam" },
+      { nm:"KAVUNA", sb:"Parfum — Landing Page", tile:{ bg:"#8a5a1d", fg:"#f9edd6" }, url:ABS + "kavuna/", path:"kavuna" }
+    ],
+    3: [
+      { nm:"KOVRA", sb:"Grand Opening", img:"hub-thumbs/kovra.jpg", url:ABS + "grand-opening-kovra/", path:"grand-opening-kovra" },
+      { nm:"SENJA", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/senja.jpg", url:ABS + "undangan-senja/", path:"undangan-senja" },
+      { nm:"VELA", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/vela.jpg", url:ABS + "undangan-vela/", path:"undangan-vela" },
+      { nm:"PETAL", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/petal.jpg", url:ABS + "undangan-petal/", path:"undangan-petal" },
+      { nm:"LAUREL", sb:"Undangan Pernikahan", sbEn:"Wedding Invitation", img:"hub-thumbs/laurel.jpg", url:ABS + "undangan-laurel/", path:"undangan-laurel" },
+      { nm:"PAGI SORE", sb:"Grand Opening — Klien Asli", sbEn:"Grand Opening — Real Client", img:"hub-thumbs/pagi-sore.jpg", url:ABS + "pagi-sore.html", path:"pagi-sore" }
+    ],
+    4: [
+      { nm:"CAMILLE", sb:"Private Chef — Lyon", img:"hub-thumbs/camille.jpg", url:ABS + "website-camille/", path:"website-camille" },
+      { nm:"ELIAS", sb:"Jazz Pianist — New Orleans", img:"hub-thumbs/elias.jpg", url:ABS + "website-elias/", path:"website-elias" },
+      { nm:"LENA", sb:"Strength Coach — Hamburg", img:"hub-thumbs/lena.jpg", url:ABS + "website-lena/", path:"website-lena" },
+      { nm:"MARA", sb:"Filmmaker — Lisbon", img:"hub-thumbs/mara.jpg", url:ABS + "website-mara/", path:"website-mara" },
+      { nm:"TOMAS", sb:"Architect — Prague", img:"hub-thumbs/tomas.jpg", url:ABS + "website-tomas/", path:"website-tomas" }
+    ]
+  };
+  /* Video Editing per folder (indeks tab): MP4 + poster live di
+     video-editing/media/<m>.mp4|.jpg; Drive hanya tautan cadangan. */
+  var VID_TABS = [
+    [ { t:"Sam Altman Got Addicted to TikTok", d:"0:31", m:"sam-altman-tiktok", drv:"1F7QB5xWQSYFn8KVbKn_ae4FKMj8rSE9x" },
+      { t:"ChatGPT's First Million Users", d:"0:28", m:"chatgpt-first-million", drv:"1U8DubczgtF2HhjQ06Ly851ReFp2X-6mG" },
+      { t:"212 Weekends Left With My Son", d:"0:33", m:"212-weekends", drv:"1Ukx3-6kQtBDhqQ469-W3Jt_xXPbgNvT5" } ],
+    [ { t:"Computers That Run on Brain Cells", d:"0:35", m:"brain-cells-explainer", drv:"1Mw2qrlAA3G7LWZHUcAPI9gZkA8j_mf7m" } ],
+    [ { t:"Elon Musk on the Future of Work", d:"0:36", m:"elon-musk-future-work", drv:"1Gj-p8tCHaMIKbUr1fDwZQNldt2Lvjkyb" } ]
+  ];
+  var curLogo = null;   /* logo yang sedang dibuka di view "ldetail" */
+  var curVid = null;    /* video yang sedang diputar di view "vplay" */
+  var liveItem = null;  /* situs yang sedang di takeover: {nm,url,path,lumera} */
+  var LUMERA_LIVE = { nm:"LUMÉRA", url:"/lumera.html", path:"lumera.html", lumera:true };
+
   /* Quad DISPLAY tiap monitor (persen dari foto, hasil ukur):
      BASIS BARU v4 — ruangan biasa (meja kayu, dinding krem).
      LANDSCAPE room-final.jpg 1920x1280 — kiri x 20.3-39.0
@@ -647,18 +767,89 @@
     meta.forEach(function(m){ h += "<div><dt>" + esc(m[0]) + "</dt><dd>" + esc(m[1]) + "</dd></div>"; });
     return h + "</dl>";
   }
+  function tabLabel(){
+    var g = GROUPS[curGroup];
+    return (LANG === "en" && TAB_EN[curGroup]) ? TAB_EN[curGroup][activeTab] : g.tabs[activeTab];
+  }
   function listHTML(){
-    /* v8.2 — LUMÉRA = FILE di dalam folder Toko Online (perintah user
-       27 Nov 18:47: "Lumera nya taro di grup file toko online"):
-       isi jendela folder tampil ala File Explorer — petak file
-       (thumbnail + nama di bawahnya), bukan baris daftar. Dipencet
-       -> situs livenya kebuka layar penuh, seperti sebelumnya. */
-    return '<p class="note">' + T("Toko Online — 1 karya", "Online Store — 1 work") + '</p>'
-      + '<div class="files">'
-      + '<button class="file" type="button" data-work="0"><img class="fimg" alt="" src="' + LUMERA.img + '">'
-      + '<span class="fnm">' + esc(LUMERA.nm) + "</span></button>"
-      + "</div>"
-      + '<p class="foot">' + T("1 karya — ditampilkan langsung di HP ini.", "1 work — shown live on this phone.") + "</p>";
+    /* v8.7 — SETIAP folder langsung menampilkan ISINYA (perintah user
+       27 Nov 19:43): petak file ala File Explorer; isi per folder =
+       karya asli CarlLab di kategori itu. */
+    var h = "", foot = "";
+    if(curGroup === "brand"){
+      var key = BRAND_KEYS[activeTab];
+      var items = LOGOS.filter(function(l){ return l.g === key; });
+      h += '<p class="note">' + items.length + (LANG === "en" ? " logos · " : " logo · ")
+        + esc(LANG === "en" ? BRAND_GNAME_EN[key] : BRAND_GNAME[key]) + '</p><div class="files">';
+      items.forEach(function(l){
+        h += '<button class="file" type="button" data-logo="' + l.id + '"><img class="fimg" alt="" loading="lazy" src="' + ABS + "brand-media/thumb-" + l.id + '.jpeg" style="background:' + l.bg + '">'
+          + '<span class="fnm">' + esc(l.nm) + '</span><span class="fsb">' + esc(LANG === "en" ? l.en.rl : l.rl) + "</span></button>";
+      });
+      h += "</div>";
+      foot = T("Pencet satu logo untuk melihat detail + palet warnanya.", "Tap a logo to see its detail and colour palette.");
+    } else if(curGroup === "video"){
+      var vids = VID_TABS[activeTab] || [];
+      h += '<p class="note">' + esc(tabLabel()) + " — " + vids.length + " video</p>" + '<div class="files">';
+      vids.forEach(function(v, i){
+        h += '<button class="file" type="button" data-vid="' + i + '"><span class="fwrap"><img class="fimg" alt="" loading="lazy" src="' + ABS + "video-editing/media/" + v.m + '.jpg"><span class="fdur">' + v.d + '</span></span>'
+          + '<span class="fnm">' + esc(v.t) + '</span><span class="fsb">' + v.d + " · " + T("Vertikal", "Vertical") + "</span></button>";
+      });
+      h += "</div>";
+      foot = T("Pencet satu video untuk memutarnya di layar ini.", "Tap a video to play it on this screen.");
+    } else if(activeTab === WEB_TOKO){
+      /* LUMÉRA = FILE di folder Toko Online (v8.2, perintah user
+         27 Nov 18:47). Dipencet -> situs livenya kebuka layar penuh. */
+      h += '<p class="note">' + T("Toko Online — 1 karya", "Online Store — 1 work") + '</p>'
+        + '<div class="files">'
+        + '<button class="file" type="button" data-work="0"><img class="fimg" alt="" src="' + LUMERA.img + '">'
+        + '<span class="fnm">' + esc(LUMERA.nm) + '</span><span class="fsb">' + esc(LUMERA.sb) + "</span></button>"
+        + "</div>";
+      foot = T("1 karya — ditampilkan langsung di HP ini.", "1 work — shown live on this phone.");
+    } else {
+      var sites = SITE_TABS[activeTab] || [];
+      h += '<p class="note">' + esc(tabLabel()) + " — " + sites.length + T(" karya", " works") + '</p><div class="files">';
+      sites.forEach(function(s, i){
+        var cover = s.img
+          ? '<img class="fimg" alt="" loading="lazy" src="' + s.img + '">'
+          : '<span class="fimg ftile" style="background:' + s.tile.bg + ";color:" + s.tile.fg + '">' + esc(s.nm) + "</span>";
+        h += '<button class="file" type="button" data-site="' + i + '">' + cover
+          + '<span class="fnm">' + esc(s.nm) + '</span><span class="fsb">' + esc(LANG === "en" && s.sbEn ? s.sbEn : s.sb) + "</span></button>";
+      });
+      h += "</div>";
+      foot = T("Pencet satu karya untuk membukanya langsung di HP ini.", "Tap a work to open it live on this phone.");
+    }
+    return h + '<p class="foot">' + foot + "</p>";
+  }
+  /* Detail logo (v8.7): sampul warna brand + thumbnail asli, nama,
+     garis peran, deskripsi, palet (pencet swatch = salin hex). */
+  function logoDetailHTML(){
+    var l = curLogo; if(!l) return listHTML();
+    var en = LANG === "en";
+    var h = '<div class="cover" style="background:' + l.bg + '"><img alt="" src="' + ABS + "brand-media/thumb-" + l.id + '.jpeg"></div>'
+      + '<div class="dnm">' + esc(l.nm) + "</div>"
+      + '<p class="rsb" style="white-space:normal">' + esc(en ? l.en.rl : l.rl) + "</p>"
+      + '<p class="dsub">' + T("Tentang logo ini", "About this logo") + '</p><p class="dds">' + esc(en ? l.en.ds : l.ds) + "</p>"
+      + '<p class="dsub">' + T("Palet warna", "Colour palette") + ' <span class="hint">— ' + T("pencet untuk salin hex", "tap to copy the hex") + '</span></p><div class="pal">';
+    l.pal.forEach(function(p, i){
+      h += '<button class="sw" type="button" data-hex="' + p[1] + '"><i style="background:' + p[1] + '"></i><b>' + esc(en ? l.en.pal[i] : p[0]) + "</b><span>" + p[1] + "</span></button>";
+    });
+    h += "</div>";
+    if(l.id === "gigit") h += '<a class="lbtn" href="' + ABS + 'gigit-carousel.html" target="_blank" rel="noopener">' + T("Lihat set lengkapnya \\u2197", "See the full set \\u2197") + "</a>";
+    return h;
+  }
+  /* Pemutar video di dalam jendela (v8.7): MP4 live dari halaman
+     Video Editing CarlLab sendiri; Drive hanya cadangan. */
+  function videoPlayHTML(){
+    var v = curVid; if(!v) return listHTML();
+    var poster = ABS + "video-editing/media/" + v.m + ".jpg";
+    var src = ABS + "video-editing/media/" + v.m + ".mp4";
+    return '<div class="vidwrap"><video id="scrVideo" controls playsinline preload="none" poster="' + poster + '" src="' + src + '"></video></div>'
+      + '<p class="rsb" style="white-space:normal">' + esc(tabLabel()) + " · " + v.d + " · " + T("Vertikal", "Vertical") + "</p>"
+      + '<a class="lbtn" href="https://drive.google.com/file/d/' + v.drv + '/view" target="_blank" rel="noopener">' + T("Tidak berputar? Buka di Google Drive \\u2197", "Not playing? Open in Google Drive \\u2197") + "</a>";
+  }
+  function stopVideo(){
+    var v = hub.querySelector("video");
+    if(v){ try{ v.pause(); }catch(e){} v.removeAttribute("src"); try{ v.load(); }catch(e){} }
   }
   function detailHTML(){
     /* v3u: bar kembali BUKAN di sini lagi — ia tetap (viewbar) di
@@ -733,6 +924,9 @@
     if(seq !== liveSeq) return;
     if(view !== "live" || (state !== "open" && state !== "diving")) return;
     hideTakeover();
+    /* v8.7: fallback showcase lokal hanya ada untuk LUMÉRA; situs
+       folder lain yang gagal dimuat kembali ke daftar foldernya. */
+    if(liveItem && !liveItem.lumera){ view = "list"; renderScreen(); return; }
     view = "show"; renderScreen();
   }
   /* TAKEOVER (v3w): tampilkan/sembunyikan lapisan layar penuh.
@@ -742,7 +936,7 @@
      liveSeq++ — pola yang sama seperti liveSeq++ di closeGroup. */
   function showTakeover(){
     takeover.innerHTML = liveHTML()
-      + '<button class="backchip" type="button" data-backlive aria-label="' + T("Kembali ke detail LUM\u00c9RA", "Back to the LUM\u00c9RA detail") + '">\u2039 ' + T("Kembali", "Back") + '</button>';
+      + '<button class="backchip" type="button" data-backlive aria-label="' + T("Kembali ke folder", "Back to the folder") + '">\u2039 ' + T("Kembali", "Back") + '</button>';
     takeover.hidden = false;
     document.body.classList.add("live-open");   /* pil nav disembunyikan selama takeover (lihat CSS) */
   }
@@ -776,8 +970,9 @@
       var ok = false;
       try {
         var d = f.contentWindow.document;
-        ok = !!d && /lumera\.html/.test(d.URL || "") && !!d.body
-             && /LUM\u00c9RA/.test(d.body.innerText || "");
+        var path = liveItem ? liveItem.path : "lumera.html";
+        ok = !!d && (d.URL || "").indexOf(path) !== -1 && !!d.body
+             && (liveItem && !liveItem.lumera ? (d.body.innerText || "").length > 20 : /LUM\u00c9RA/.test(d.body.innerText || ""));
       } catch(e){ ok = false; }
       if(ok){ done = true; clearLiveTimer(); return; }
       /* dokumen termuat tapi terbukti BUKAN LUMÉRA (mis. halaman 404):
@@ -791,7 +986,8 @@
     liveTimer = setTimeout(function(){ if(!done) liveFallback(seq); }, 4000);
   }
   function liveHTML(){
-    return '<iframe class="liveframe" src="/lumera.html" title="' + T("Situs live LUM\u00c9RA di dalam monitor", "Live LUM\u00c9RA site inside the monitor") + '" loading="eager"></iframe>';
+    var it = liveItem || LUMERA_LIVE;
+    return '<iframe class="liveframe" src="' + it.url + '" title="' + T("Situs live ", "Live site ") + esc(it.nm) + T(" di dalam monitor", " inside the monitor") + '" loading="eager"></iframe>';
   }
   /* Render seluruh isi layar. Mode identitas (view "main") = markup
      v3q persis: label + angka + headline + tab, tanpa badan isi.
@@ -799,6 +995,7 @@
      diganti badan layar (daftar/detail/showcase/produk) di bawah tab. */
   function renderScreen(){
     clearLiveTimer();
+    stopVideo();   /* v8.7: video folder tidak boleh terus bersuara saat view berganti */
     lastViewChange = Date.now();   /* v4.1 */
     var g = GROUPS[curGroup];
     var content = (view !== "main");
@@ -834,8 +1031,10 @@
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
       if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
+      if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
+      if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
       if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 ' + T("Grup", "Group") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
-      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 ' + T("Detail", "Detail") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 ' + T("Folder", "Folder") + '</button><b>' + esc(liveItem ? liveItem.nm : LUMERA.nm) + '</b></div>';
       if(view === "live"){
         /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
            di lapisan TAKEOVER layar penuh di atas seluruh panggung
@@ -843,7 +1042,7 @@
         h += '<div class="scr-body fill" id="uiBody"><p class="note">' + T("Situs live dibuka memenuhi layar\u2026", "Opening the live site full-screen\u2026") + '</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
-          + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "show" ? showHTML() : prodHTML())
+          + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "ldetail" ? logoDetailHTML() : view === "vplay" ? videoPlayHTML() : view === "show" ? showHTML() : prodHTML())
           + "</div>";
       }
     } else {
@@ -855,6 +1054,7 @@
     placeHub();   /* skala kanvas .screen dihitung ulang tiap render */
     tickClock();   /* jam taskbar langsung terisi, tidak menunggu interval */
     if(view === "live"){ showTakeover(); armLiveFrame(); }
+    if(view === "vplay"){ var sv = document.getElementById("scrVideo"); if(sv){ var pr = sv.play(); if(pr && pr.catch) pr.catch(function(){}); } }
   }
   function renderHub(){
     /* Websites dibuka langsung di tab Toko Online — tab satu-satunya
@@ -867,7 +1067,7 @@
        taskbar dipencet, atau ikon folder desktopnya dipencet
        (folder kebuka di kategorinya). */
     winState = "min";
-    view = webContent() ? "list" : "main";
+    view = "list";   /* v8.7: semua grup mendarat di ISI folder aktifnya — tidak ada lagi view identitas "main" sebagai isi */
     renderScreen();
   }
   /* Tutup bertahap: produk -> showcase -> detail -> daftar ->
@@ -878,6 +1078,8 @@
     if(view === "live"){ exitLive(); return; }
     if(view === "show"){ view = "list"; renderScreen(); return; }
     if(view === "detail"){ view = "list"; renderScreen(); return; }
+    if(view === "ldetail"){ view = "list"; renderScreen(); return; }
+    if(view === "vplay"){ view = "list"; renderScreen(); return; }
     closeGroup();
   }
   function openGroup(key){
@@ -1019,21 +1221,34 @@
     if(gt){ closeStart(); var gk = gt.getAttribute("data-goto"); if(gk !== curGroup) openGroup(gk); return true; }
     var tb = t.closest("[data-tab]");
     if(tb){
-      /* ganti tab aktif: Websites tab Toko Online membuka daftar
-         LUMÉRA; tab/grup lain kembali ke identitas (area di bawah
-         tab tetap kosong). v8.1: ketukan pada IKON FOLDER DESKTOP
-         juga MEMBUKA jendelanya (seperti membuka folder di Windows);
-         tab di dalam jendela hanya mengganti kategori. */
+      /* v8.7: ganti folder = langsung ISI folder itu (semua grup,
+         semua tab). v8.1 tetap: ketukan pada IKON FOLDER DESKTOP
+         juga MEMBUKA jendelanya; tab di dalam jendela hanya
+         mengganti folder. */
       activeTab = +tb.getAttribute("data-tab");
       if(tb.classList.contains("dicon")) winState = "normal";
-      view = webContent() ? "list" : "main";
+      view = "list";
       renderScreen();
       blurIfTouch();
       return true;
     }
-    if(!webContent()) return false;
-    if(t.closest("[data-work]")){ view = "live"; renderScreen(); return true; }
-    if(t.closest("[data-play]")){ view = "live"; renderScreen(); return true; }
+    /* v8.7 — aksi isi folder (dulu gerbang webContent() membatasi
+       semua aksi hanya untuk LUMÉRA; sekarang tiap folder hidup). */
+    var lg = t.closest("[data-logo]");
+    if(lg){ curLogo = logoById(lg.getAttribute("data-logo")); view = "ldetail"; renderScreen(); return true; }
+    var st = t.closest("[data-site]");
+    if(st){ var sit = (SITE_TABS[activeTab] || [])[+st.getAttribute("data-site")]; if(sit){ liveItem = { nm:sit.nm, url:sit.url, path:sit.path, lumera:false }; view = "live"; renderScreen(); } return true; }
+    var vd = t.closest("[data-vid]");
+    if(vd){ curVid = (VID_TABS[activeTab] || [])[+vd.getAttribute("data-vid")] || null; view = "vplay"; renderScreen(); return true; }
+    var hx = t.closest("[data-hex]");
+    if(hx){
+      var hex = hx.getAttribute("data-hex");
+      try { if(navigator.clipboard) navigator.clipboard.writeText(hex); } catch(e){}
+      var sp = hx.querySelector("span"); if(sp){ var old = sp.textContent; sp.textContent = T("Disalin", "Copied"); setTimeout(function(){ sp.textContent = old; }, 1200); }
+      return true;
+    }
+    if(t.closest("[data-work]")){ liveItem = LUMERA_LIVE; view = "live"; renderScreen(); return true; }
+    if(t.closest("[data-play]")){ liveItem = LUMERA_LIVE; view = "live"; renderScreen(); return true; }
     if(t.closest("[data-backlive]")){ exitLive(); return true; }
     var pr = t.closest("[data-prod]");
     if(pr){ curProd = +pr.getAttribute("data-prod"); view = "prod"; renderScreen(); return true; }
@@ -1135,7 +1350,7 @@
     if(dx * dx + dy * dy > 144 || dt > 600) return;   /* ini scroll, bukan ketuk */
     var el = document.elementFromPoint(t.clientX, t.clientY);
     if(!el || !hub.contains(el)) return;
-    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close],[data-winmin],[data-winmax],[data-tbapp],[data-start],[data-goto]")) return;
+    if(!el.closest || !el.closest("[data-prod],[data-work],[data-play],[data-tab],[data-back],[data-backshow],[data-backprod],[data-backlive],[data-close],[data-winmin],[data-winmax],[data-tbapp],[data-start],[data-goto],[data-logo],[data-site],[data-vid],[data-hex]")) return;
     if(hubAction(el)){
       e.preventDefault();
       lastTouchAction = Date.now();
