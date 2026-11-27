@@ -453,6 +453,7 @@
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.2 7.4L5 20.2A1.6 1.6 0 0 0 6.6 22h10.8a1.6 1.6 0 0 0 1.6-1.8L17.8 7.4z" fill="#2b88d8"/><path d="M8.4 7.4V6.2a3.6 3.6 0 0 1 7.2 0v1.2" fill="none" stroke="#2b88d8" stroke-width="1.8"/><rect x="8.6" y="11" width="3" height="3" fill="#fff"/><rect x="12.4" y="11" width="3" height="3" fill="#fff"/><rect x="8.6" y="14.8" width="3" height="3" fill="#fff"/><rect x="12.4" y="14.8" width="3" height="3" fill="#fff"/></svg></span>'
     + '<span class="tb-pin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19.8 8.2a8.4 8.4 0 1 0 .9 6.4" fill="none" stroke="#37c6f4" stroke-width="2.6" stroke-linecap="round"/><path d="M20.9 3.6a8.4 8.4 0 0 1 1 5.4" fill="none" stroke="#7bd6a0" stroke-width="2.6" stroke-linecap="round" transform="rotate(72 12 12)"/></svg></span>';
   var CHEVRON_SVG = '<svg viewBox="0 0 24 24" class="tb-ic" aria-hidden="true"><path d="M6 14.4l6-5.4 6 5.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  var APP_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="rgba(87,200,222,.22)" stroke="#57c8de" stroke-width="1.5"/><path d="M3.5 8.6h17" stroke="#57c8de" stroke-width="1.5"/></svg>';
   function taskbarHTML(){
     var g = GROUPS[curGroup];
     /* v8.15 — SAMAKAN + TANPA DOBEL, dua-duanya (perintah final user
@@ -460,17 +461,32 @@
        deret rapat DI TENGAH mulai dari logo Windows Start, lalu
        Cari, Task View, Edge, Explorer, Chrome, Store, pusaran,
        tombol aplikasi grup; tray + jam kecil di kanan; pojok kiri
-       KOSONG. Logo Windows hanya SATU di tiap keadaan: widget
-       pojok foto ditutup tambalan tekstur strip di lapisan .rest
-       (lihat .tbpatch di CSS), jadi sebelum dipencet pun tidak
-       ada ikon dobel. */
+       KOSONG. Logo Windows hanya SATU di tiap keadaan: sebelum
+       dipencet, lapisan .rest menimpa seluruh strip foto dengan
+       salinan taskbar ini juga (restTaskbarHTML, v8.16) — jadi
+       tampilan belum dipencet = tampilan sudah dipencet. */
     return '<div class="taskbar"><div class="tb-center">'
       + '<button class="tb-btn" type="button" data-start aria-label="Start">' + WINLOGO_SVG + '</button>'
       + PIN_SVGS
-      + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="rgba(87,200,222,.22)" stroke="#57c8de" stroke-width="1.5"/><path d="M3.5 8.6h17" stroke="#57c8de" stroke-width="1.5"/></svg></button>'
+      + '<button class="tb-btn tb-app' + (winState === "min" ? " idle" : "") + '" type="button" data-tbapp aria-label="' + esc(g.label) + '">' + APP_SVG + '</button>'
       + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
       + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
       + '</div></div>';
+  }
+  /* v8.16 — salinan STATIS taskbar untuk lapisan .rest (perintah
+     user 28 Nov 03:03 dari screenshot HP-nya: "tampilan belum di
+     kliknya samakan juga tampilan sudah di klik"). Strip foto
+     tertutup PENUH oleh taskbar yang sama persis seperti di hub
+     (span, bukan tombol — .rest memang pointer-events none);
+     skala dihitung di placeRest supaya proporsinya plek hub. */
+  function restTaskbarHTML(){
+    return '<div class="rest-taskbar"><div class="rest-tb-in"><div class="taskbar"><div class="tb-center">'
+      + '<span class="tb-btn" aria-hidden="true">' + WINLOGO_SVG + '</span>'
+      + PIN_SVGS
+      + '<span class="tb-btn tb-app" aria-hidden="true">' + APP_SVG + '</span>'
+      + '</div><div class="tb-tray">' + CHEVRON_SVG + TRAY_SVG
+      + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
+      + '</div></div></div></div>';
   }
   function startMenuHTML(){
     var rows = [["brand", "Brand & Logo"], ["web", "Websites"], ["video", "Video Editing"]];
@@ -494,8 +510,8 @@
       var loc = (LANG === "en") ? "en-US" : "id-ID";
       var tm = new Intl.DateTimeFormat(loc, { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", hour12: false }).format(now);
       var dt = new Intl.DateTimeFormat(loc, { timeZone: "Asia/Jakarta", day: "2-digit", month: "2-digit", year: "numeric" }).format(now);
-      hub.querySelectorAll(".tb-time").forEach(function(e){ e.textContent = tm; });
-      hub.querySelectorAll(".tb-date").forEach(function(e){ e.textContent = dt; });
+      document.querySelectorAll(".tb-time").forEach(function(e){ e.textContent = tm; });
+      document.querySelectorAll(".tb-date").forEach(function(e){ e.textContent = dt; });
     } catch(e){}
   }
   setInterval(tickClock, 15000);
@@ -734,9 +750,9 @@
     for(var i = 0; i < tabList.length; i++){
       h += '<div class="rest-ic">' + FOLDER_SVG + '<span>' + esc(tabList[i]) + '</span></div>';
     }
-    /* v8.15 — tambalan penutup widget pojok foto (tanpa ikon dobel
-       sebelum dipencet); ikut ter-warp bersama lapisan .rest. */
-    return h + '</div><span class="tbpatch tbpatch-' + g + '" aria-hidden="true"></span>';
+    /* v8.16 — strip bawah .rest = salinan taskbar hub (menutup
+       seluruh taskbar bawaan foto, termasuk widget pojoknya). */
+    return h + '</div>' + restTaskbarHTML();
   }
   function buildRest(){
     ["brand", "web", "video"].forEach(function(g){
@@ -769,10 +785,20 @@
       });
       if(g === "web"){ var liftB = 0.0025 * frame.h; dst[2][1] -= liftB; dst[3][1] -= liftB; }
       el.style.transform = homography(REST_W, RH, dst);
+      /* v8.16 — skala salinan taskbar .rest: tingginya 12,5% dari
+         tinggi lapisan (menutup strip foto), lebar batinnya
+         menyesuaikan supaya proporsi ikon plek hub. */
+      var tin = el.querySelector(".rest-tb-in");
+      if(tin){
+        var k = (0.125 * RH) / 26;
+        tin.style.width = (REST_W / k).toFixed(1) + "px";
+        tin.style.transform = "scale(" + k.toFixed(4) + ")";
+      }
     }
   }
   function refreshRest(){
     for(var g in restEls) restEls[g].innerHTML = restHTML(g);
+    placeRest();   /* v8.16: skala salinan taskbar .rest ikut dihitung ulang */
   }
   buildRest();
 
