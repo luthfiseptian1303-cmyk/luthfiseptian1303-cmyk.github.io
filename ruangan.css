@@ -151,9 +151,11 @@ body.awake .glow{opacity:1}
 /* v8.27 — penempatan kolom ikon DISAMAKAN di 3 monitor (perintah user 28 Nov 15:41: 'yang tengah rada ke kanan dikit... samain 3 monitor penempatannya').
    left dasar sama (1,5%), tapi proyeksi homografi + inset warp per kaca membuat jarak kolom dari tepi kiri
    kacanya beda (terukur via proyeksi kode sendiri: brand 2,58% / web 2,62% / video 2,09% lebar kaca).
-   Nilai per monitor di bawah dipecahkan dari proyeksi itu supaya ketiganya mendarat di 2,60% lebar kaca (potret & lanskap). */
+   Nilai per monitor di bawah dipecahkan dari proyeksi itu supaya ketiganya mendarat di 2,60% lebar kaca (potret & lanskap).
+   v8.28 (28 Nov 15:47): koreksi dari foto HP user — kolom TENGAH terukur cuma 3px dari jahitan bezel (KIRI 26px, KANAN 38px):
+   tepi kiri kaca tengah tertutup bezel monitor kiri di foto, jadi kolom web digeser kanan ke 6% supaya celah TAMPAKNYA sama. */
 .rest[data-g="brand"] .rest-icons{left:1.53%}
-.rest[data-g="web"] .rest-icons{left:1.48%}
+.rest[data-g="web"] .rest-icons{left:6%}
 .rest[data-g="video"] .rest-icons{left:2.07%}
 /* v8.16 — strip bawah .rest = salinan taskbar hub yang sama persis
    (menutup SELURUH taskbar bawaan foto): tampilan belum dipencet
