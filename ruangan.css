@@ -265,10 +265,10 @@ body.awake .glow{opacity:1}
 .dicon.on{background:rgba(140,200,240,.25);border-color:rgba(255,255,255,.28)}
 .dicon:hover{background:rgba(140,200,240,.16)}
 /* taskbar Windows 11 */
-.taskbar{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:5;display:flex;align-items:center;justify-content:center;
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:5;display:flex;align-items:center;justify-content:flex-start;padding-left:5px;
   background:rgba(15,19,33,.85);border-top:1px solid rgba(255,255,255,.09);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.tb-center{display:flex;align-items:center;gap:1px;margin:0 auto}
+.tb-center{display:flex;align-items:center;gap:1px;margin:0}   /* v8.24 — deret ikon taskbar menempel KIRI (perintah user 28 Nov 13:11: di monitor tengah deret tengah menabrak tray+jam; geser ke kiri di 3 monitor, rest + dived — kelas ini dipakai taskbar hub & salinan rest, jadi keduanya berubah sama) */
 /* v8.12 — widget ujung kiri + deret pin taskbar (samakan foto);
    ukuran diperkecil supaya seluruh baris + tray + jam muat di
    lebar internal hub tanpa overflow (terukur: total ≤ 338px) */
