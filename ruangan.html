@@ -20,7 +20,7 @@
 <meta name="twitter:description" content="Portfolio CarlLab dalam ruangan tiga monitor yang bisa dijelajahi: pencet monitornya, kamera meluncur mendekat dan karyanya tampil di dalam layar.">
 <meta name="twitter:image" content="https://carllab.web.id/og-image.jpg">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="ruangan.css?v=127">
+<link rel="stylesheet" href="ruangan.css?v=128">
 </head>
 <body>
 
@@ -39,6 +39,11 @@
         <div class="breath">
         <img id="room" src="room-nyala-l.jpg" alt="Foto ruangan gaming CarlLab dengan tiga monitor menyala" width="1920" height="1280">
         <img id="roomP" src="room-nyala-p.jpg" alt="" aria-hidden="true" width="1184" height="2096">
+
+        <!-- v8.30 REALISME #1: pendar cahaya tiap monitor jatuh ke meja -->
+        <div class="spill spill-b" aria-hidden="true"></div>
+        <div class="spill spill-w" aria-hidden="true"></div>
+        <div class="spill spill-v" aria-hidden="true"></div>
 
         <!-- MONITOR KIRI — BRAND & LOGO (zona pencet tak terlihat: diam = foto bersih) -->
         <div class="scr scr-l">
@@ -79,6 +84,9 @@
            di HP panggung memang 100vw x 100dvh, jadi situs asli tampil
            persis seperti dibuka layar penuh. Kosong + hidden saat diam. -->
       <div class="takeover" id="takeover" hidden></div>
+
+      <!-- v8.30 REALISME #7: grain film halus di atas panggung -->
+      <div class="grain" aria-hidden="true"></div>
     </div>
 
     <p class="stage-hint">Pencet salah satu monitornya — kamera akan mendekat.</p>
@@ -87,6 +95,6 @@
 
 </main>
 
-<script src="ruangan.js?v=127"></script>
+<script src="ruangan.js?v=128"></script>
 </body>
 </html>
