@@ -44,9 +44,9 @@ nav .cta i{width:8px;height:8px;border-radius:50%;background:var(--cyan);display
   transition:transform 1600ms cubic-bezier(.22,.8,.2,1), opacity 900ms cubic-bezier(.22,.8,.2,1)}
 body.ready .cam{opacity:1}
 .stage.returning .cam{transition-duration:900ms}
-.breath{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform;animation:none}
+.breath{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform;animation:none;transform:translate(var(--parx,0px),var(--pary,0px))}
 body.ready .breath{animation:kb 24s ease-in-out infinite}
-@keyframes kb{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes kb{0%{transform:translate(var(--parx,0px),var(--pary,0px)) scale(1)}50%{transform:translate(var(--parx,0px),var(--pary,0px)) scale(1.05)}100%{transform:translate(var(--parx,0px),var(--pary,0px)) scale(1)}}
 /* Saat zoom: napas dimatikan total (bukan pause) — foto menetap di
    scale 1.0 persis, skala yang dipakai matematika dive; kalau hanya
    di-pause di tengah siklus (s/d 1.05), monitor asli membesar s/d 5%
@@ -674,3 +674,84 @@ body.live-open nav{opacity:0;pointer-events:none}
   .setfig{margin:0}
   .setfig img{width:100%;height:auto;display:block;border-radius:8px;background:rgba(255,255,255,.06)}
   .setfig figcaption{font-size:10px;color:rgba(238,243,246,.75);margin-top:4px}
+
+/* ================================================================
+   v8.30 — REALISME (perintah user 28 Nov 17:27: "Terapkan semua
+   untuk realistisnya"): 8 lapis fisik di atas foto + layar diam.
+   (1) pendar cahaya monitor ke meja, (2) kilau kaca bergerak saat
+   dive, (3) tarikan fokus saat dive (yang lain blur, target tajam),
+   (4) blur gerak di tengah dive, (5) parallax mikro penunjuk,
+   (6) bayangan tepi dalam kaca, (7) grain film halus,
+   (8) terang layar + pendar mengikuti jam WIB (--scr-f/--spill-k
+   ditulis JS applyDaypart). Semua pointer-events:none; gerak
+   dimatikan untuk prefers-reduced-motion. */
+
+/* (1) PENDAR — elips cahaya layar jatuh ke meja di bawah tiap
+   monitor; anak .breath (posisi % foto) jadi ikut kamera. Warna
+   biru wallpaper Bloom, blend screen, intensitas dari --spill-k. */
+.spill{position:absolute;z-index:2;pointer-events:none;mix-blend-mode:screen;
+  opacity:calc(var(--spill-k,.85) * .5);transition:opacity 1.2s ease;
+  background:radial-gradient(ellipse at center, rgba(110,175,255,.55), rgba(110,175,255,.18) 52%, rgba(110,175,255,0) 72%)}
+.spill-b{left:11%;top:60.5%;width:32%;height:17%}
+.spill-w{left:32.5%;top:61%;width:28%;height:16%}
+.spill-v{left:51%;top:61%;width:33%;height:17%}
+@media (max-width:640px), (max-aspect-ratio:4/5){
+  .spill-b{left:8%;top:61.5%;width:34%;height:13%}
+  .spill-w{left:31%;top:62%;width:31%;height:12.5%}
+  .spill-v{left:52%;top:62%;width:34%;height:13%}
+}
+
+/* (8) terang layar diam mengikuti jam: JS menulis --scr-f di :root */
+.rest{filter:brightness(var(--scr-f,1))}
+
+/* (2)+(6) KACA — satu lapisan di atas ikon+taskbar di dalam .rest
+   (ikut warp homografi = menempel di kaca): gradien kilau diagonal
+   yang MENYAPU selama dive (background-position bertransisi dengan
+   durasi+kurva yang sama seperti kamera) + bayangan tepi dalam
+   dari bezel (bawah terkuat, layar menengadah; kanan dari arah
+   lampu). Diam: kilau parkir di posisi wajar 18%. */
+.rest-fx{position:absolute;inset:0;pointer-events:none;z-index:6;
+  background:linear-gradient(112deg, rgba(190,220,255,0) 30%, rgba(190,220,255,.13) 45%, rgba(255,255,255,.05) 53%, rgba(190,220,255,0) 66%);
+  background-size:280% 100%;background-position:18% 0;
+  box-shadow:inset 12px 0 16px -12px rgba(0,0,0,.32), inset -8px 0 14px -10px rgba(0,0,0,.20), inset 0 -16px 20px -12px rgba(0,0,0,.38), inset 0 10px 14px -10px rgba(0,0,0,.16);
+  transition:background-position 1600ms cubic-bezier(.22,.8,.2,1)}
+.stage.diving .rest-fx{background-position:84% 0}
+.stage.returning .rest-fx{transition-duration:900ms;background-position:18% 0}
+
+/* (4) BLUR GERAK — seluruh kamera ber-blur tipis di tengah dive
+   (kecepatan puncak), bersih di awal/akhir; sama saat pulang. */
+@keyframes mblur{0%{filter:blur(0)}35%{filter:blur(1.6px)}70%{filter:blur(1.1px)}100%{filter:blur(0)}}
+.stage.diving .cam{animation:mblur 1600ms cubic-bezier(.22,.8,.2,1)}
+.stage.returning .cam{animation:mblur 900ms cubic-bezier(.22,.8,.2,1)}
+
+/* (3) TARIKAN FOKUS — foto + dua monitor BUKAN target ber-blur
+   lebih dalam di tengah dive; monitor target tetap tajam
+   (animation:none mengalahkan defocus, brightness --scr-f tetap). */
+@keyframes defocus{0%{filter:blur(0)}45%{filter:blur(3px)}100%{filter:blur(0)}}
+.stage.diving .breath img{animation:defocus 1600ms cubic-bezier(.22,.8,.2,1)}
+.stage.diving .rest{animation:defocus 1600ms cubic-bezier(.22,.8,.2,1)}
+.stage.diving[data-dive="brand"] .rest[data-g="brand"],
+.stage.diving[data-dive="web"] .rest[data-g="web"],
+.stage.diving[data-dive="video"] .rest[data-g="video"]{animation:none}
+
+/* (2b) KACA HUB — setelah kamera tiba, layar yang terbuka tetap
+   kaca fisik: pantulan miring sangat tipis + vignette tepi dalam.
+   ::after di atas .screen (z 5), tak menghalangi klik. */
+.hub .view::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+  background:linear-gradient(112deg, rgba(190,220,255,0) 55%, rgba(190,220,255,.055) 74%, rgba(190,220,255,0) 90%);
+  box-shadow:inset 0 0 90px rgba(0,0,0,.36), inset 0 0 18px rgba(0,0,0,.22)}
+
+/* (7) GRAIN — ubin noise 128px di atas seluruh panggung (di bawah
+   nav yang di luar panggung), overlay 5.5%, bergetar langkah
+   halus ala film. inset negatif = tepi tak kosong saat bergetar. */
+.grain{position:absolute;inset:-70px;z-index:60;pointer-events:none;opacity:.055;
+  mix-blend-mode:overlay;background-image:url("noise.png");background-repeat:repeat;
+  animation:grain 1.15s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-22px,14px)}50%{transform:translate(16px,-20px)}75%{transform:translate(-12px,-10px)}100%{transform:translate(0,0)}}
+
+@media (prefers-reduced-motion: reduce){
+  .grain{animation:none}
+  .stage.diving .cam,.stage.returning .cam,
+  .stage.diving .breath img,.stage.diving .rest{animation:none}
+  .rest-fx{transition:none}
+}
