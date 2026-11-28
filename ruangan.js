@@ -706,6 +706,7 @@
     ["brand", "web", "video"].forEach(function(g){
       var el = document.createElement("div");
       el.className = "rest";
+      el.setAttribute("data-g", g);   /* v8.27: kunci kompensasi posisi kolom ikon per monitor (lihat ruangan.css) */
       el.setAttribute("aria-hidden", "true");
       el.innerHTML = restHTML(g);
       breath.appendChild(el);

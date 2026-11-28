@@ -148,6 +148,13 @@ body.awake .glow{opacity:1}
    .stage.zoomed .rest{opacity:0} adalah separuh penyebab kedip. */
 .rest-icons{position:absolute;left:1.5%;top:2.5%;display:flex;flex-direction:column;flex-wrap:wrap;
   max-height:95%;column-gap:4px;gap:7px}
+/* v8.27 — penempatan kolom ikon DISAMAKAN di 3 monitor (perintah user 28 Nov 15:41: 'yang tengah rada ke kanan dikit... samain 3 monitor penempatannya').
+   left dasar sama (1,5%), tapi proyeksi homografi + inset warp per kaca membuat jarak kolom dari tepi kiri
+   kacanya beda (terukur via proyeksi kode sendiri: brand 2,58% / web 2,62% / video 2,09% lebar kaca).
+   Nilai per monitor di bawah dipecahkan dari proyeksi itu supaya ketiganya mendarat di 2,60% lebar kaca (potret & lanskap). */
+.rest[data-g="brand"] .rest-icons{left:1.53%}
+.rest[data-g="web"] .rest-icons{left:1.48%}
+.rest[data-g="video"] .rest-icons{left:2.07%}
 /* v8.16 — strip bawah .rest = salinan taskbar hub yang sama persis
    (menutup SELURUH taskbar bawaan foto): tampilan belum dipencet
    disamakan ke tampilan sudah dipencet. Tinggi 12,5% lapisan;
