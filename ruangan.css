@@ -163,6 +163,11 @@ body.awake .glow{opacity:1}
    .rest-tb-in diskala JS (placeRest) supaya proporsinya plek hub,
    nilai bawaan CSS ini untuk RH tipikal. */
 .rest-taskbar{position:absolute;left:0;bottom:0;width:100%;height:12.5%;pointer-events:none}
+/* v8.31 — strip .rest SOLID penuh (bukan akrilik 85%): ikon taskbar
+   bawaan FOTO tembus jadi "bayangan" di kanan Chrome pada salinan
+      diam (screenshot HP user 28 Nov 17:39). Taskbar hub tetap akrilik
+   (di belakangnya wallpaper, bukan ikon foto). */
+.rest-taskbar .taskbar{background:#0f1321}
 .rest-tb-in{position:absolute;left:0;bottom:0;width:346px;height:26px;transform:scale(1.385);transform-origin:0 100%}
 .rest-ic{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:66px;padding-left:2px}
 .rest-ic svg{width:36px;height:29px;filter:drop-shadow(0 1px 3px rgba(2,10,18,.55))}
