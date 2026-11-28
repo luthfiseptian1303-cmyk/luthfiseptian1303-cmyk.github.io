@@ -304,6 +304,7 @@
     video: [[56.8,53.9],[77.6,54.0],[77.6,65.4],[56.8,64.0]]
   };
   function corners(key){ return (portrait() ? CORNERS_P : CORNERS_L)[key]; }
+
   /* Homografi: petakan persegi sumber (0,0),(w,0),(w,h),(0,h) ke
      empat titik tujuan (px bingkai foto). Selesaikan sistem 8x8
      (eliminasi Gauss) untuk koefisien a..h dengan penyebut
@@ -382,6 +383,7 @@
     });
     return h + '</div>';
   }
+
   /* v8.12 — ikon bawah DISAMAKAN dengan taskbar di foto monitornya
      (perintah user 27 Nov 23:47 dari screenshot desktop hub: 'Icon
      icon di bawahnya juga samain buy'). Taskbar foto = widget kecil
@@ -422,6 +424,7 @@
       + '<span class="tb-clock"><span class="tb-time"></span><span class="tb-date"></span></span>'
       + '</div></div>';
   }
+
   /* v8.16 — salinan STATIS taskbar untuk lapisan .rest (perintah
      user 28 Nov 03:03 dari screenshot HP-nya: "tampilan belum di
      kliknya samakan juga tampilan sudah di klik"). Strip foto
@@ -547,6 +550,7 @@
     diveT = { x:r.width/2 - px, y:r.height/2 - py };
     applyCam();
   }
+
   /* KOREKSI COVER BERBASIS UKURAN NYATA (v3v; menggantikan koreksi
      fit v3m yang MENYUSUTKAN display ke dalam [8, W-8]x[6, H-6]).
      Setelah dive mendarat: (1) rect HUB diukur lalu digelembungkan
@@ -587,6 +591,7 @@
     cam.style.transition = "none"; applyCam(); void cam.offsetWidth; cam.style.transition = "";
     placeHub();   /* skala kanvas .screen bergantung pada s — hitung ulang */
   }
+
   /* Hub v3i = teks display di DALAM bingkai foto (anak .breath).
      Akar masalah v3h: hub adalah elemen stage-level ber-background yang
      ukurannya = bounding box sumbu-lurus dari quad, lalu pose trapesiumnya
@@ -657,6 +662,7 @@
       hub.style.transform = "";
     }
     hub.classList.toggle("tilt", q.rotY !== 0);
+
     /* v7.1 — KOTAK MENYESUAIKAN MONITOR (perintah user 26 Nov 14:30:
        "Kotaknya sesuaikan monitornya buy"). Kanvas tidak lagi ukuran
        tetap 340x280 yang mengambang di tengah layar: lebar kanvas
@@ -700,7 +706,9 @@
     }
     /* v8.16 — strip bawah .rest = salinan taskbar hub (menutup
        seluruh taskbar bawaan foto, termasuk widget pojoknya). */
-    return h + '</div>' + restTaskbarHTML();
+    /* v8.30 — lapisan kaca (kilau + bayangan tepi) paling atas di
+       dalam .rest: ikut warp kaca, di atas ikon + taskbar. */
+    return h + '</div>' + restTaskbarHTML() + '<div class="rest-fx" aria-hidden="true"></div>';
   }
   function buildRest(){
     ["brand", "web", "video"].forEach(function(g){
@@ -827,6 +835,7 @@
     if(l.sets) h += '<button class="lbtn" type="button" data-setview>' + T("Lihat set lengkapnya", "See the full set") + "</button>";   /* v8.23: set tampil NATIV di dalam jendela monitor (view lset), bukan takeover/iframe — perintah user 28 Nov 05:57 (screenshot HP: takeover kebuka tapi isi tak turun di koneksi 1,44 K/s) */   /* v8.22: full set tampil DI DALAM ruangan (takeover bermesin sama dengan situs live), bukan tab baru — perintah user 28 Nov 05:38 dari screenshot HP-nya */
     return h;
   }
+
   /* Pemutar video di dalam jendela (v8.7): MP4 live dari halaman
      Video Editing CarlLab sendiri; Drive hanya cadangan. */
   function logoSetHTML(){
@@ -859,8 +868,9 @@
       + metaHTML(LANG === "en" ? LUMERA_EN.meta : LUMERA.meta)
       + '<p class="dds" style="margin-top:7px">' + esc(LANG === "en" ? LUMERA_EN.ds : LUMERA.ds) + "</p>"
       + '<button class="pbtn" type="button" data-play>' + T("Lihat di HP ini", "View on this phone") + '</button>'
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya \u2197", "Open the original site \u2197") + '</a>';
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya ↗", "Open the original site ↗") + '</a>';
   }
+
   /* Showcase LOKAL: kepala LUMÉRA + The Night Collection, hero wide,
      lalu 5 produk sebagai daftar ala HP (gambar + nama + garis
      keluarga). Semua gambar berkas lokal / data URI — nol jaringan.
@@ -875,16 +885,16 @@
   function showHTML(){
     /* v3u: bar (‹ Detail + nama) dihoist jadi viewbar tetap oleh
        renderScreen — di sini tinggal isi scroll-nya. */
-    var h = '<p class="note">' + T("The Night Collection \u00b7 5 wewangian", "The Night Collection \u00b7 5 fragrances") + '</p>'
+    var h = '<p class="note">' + T("The Night Collection · 5 wewangian", "The Night Collection · 5 fragrances") + '</p>'
       + '<div class="hero"><img alt="" src="' + LUMERA.wide + '"><b>The Night Collection</b>' + heroZonesHTML() + '</div>'
       + '<div class="rows">';
     LUMERA_PRODUCTS.forEach(function(p, i){
       h += '<button class="row" type="button" data-prod="' + i + '"><img class="timg" alt="" src="' + p.img + '">'
         + '<span class="rtx"><span class="rnm">' + esc(p.nm) + '</span><span class="rsb">' + esc(LANG === "en" ? PROD_EN[i].notes[1][1] : p.notes[1][1]) + "</span></span>"
-        + '<span class="arw">\u203a</span></button>';
+        + '<span class="arw">›</span></button>';
     });
     return h + "</div>"
-      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya \u2197", "Open the original site \u2197") + '</a>';
+      + '<a class="lbtn" href="' + LUMERA.url + '" target="_blank" rel="noopener">' + T("Buka situs aslinya ↗", "Open the original site ↗") + '</a>';
   }
   /* Tampilan produk (v3u): bar atas (‹ Koleksi + posisi n / 5 + ✕)
      adalah .scr-top kanvas — tetap, di luar scroll (lihat
@@ -929,6 +939,7 @@
     if(liveItem && !liveItem.lumera){ view = "list"; renderScreen(); return; }
     view = "show"; renderScreen();
   }
+
   /* TAKEOVER (v3w): tampilkan/sembunyikan lapisan layar penuh.
      showTakeover merender iframe + chip "‹ Kembali" ke .takeover;
      hideTakeover mengosongkannya lagi (iframe dibuang = muatannya
@@ -936,7 +947,7 @@
      liveSeq++ — pola yang sama seperti liveSeq++ di closeGroup. */
   function showTakeover(){
     takeover.innerHTML = liveHTML()
-      + '<button class="backchip" type="button" data-backlive aria-label="' + T("Kembali ke folder", "Back to the folder") + '">\u2039 ' + T("Kembali", "Back") + '</button>';
+      + '<button class="backchip" type="button" data-backlive aria-label="' + T("Kembali ke folder", "Back to the folder") + '">‹ ' + T("Kembali", "Back") + '</button>';
     takeover.hidden = false;
     document.body.classList.add("live-open");   /* pil nav disembunyikan selama takeover (lihat CSS) */
   }
@@ -972,7 +983,7 @@
         var d = f.contentWindow.document;
         var path = liveItem ? liveItem.path : "lumera.html";
         ok = !!d && (d.URL || "").indexOf(path) !== -1 && !!d.body
-             && (liveItem && !liveItem.lumera ? (d.body.innerText || "").length > 20 : /LUM\u00c9RA/.test(d.body.innerText || ""));
+             && (liveItem && !liveItem.lumera ? (d.body.innerText || "").length > 20 : /LUMÉRA/.test(d.body.innerText || ""));
       } catch(e){ ok = false; }
       if(ok){ done = true; clearLiveTimer(); return; }
       /* dokumen termuat tapi terbukti BUKAN LUMÉRA (mis. halaman 404):
@@ -989,6 +1000,7 @@
     var it = liveItem || LUMERA_LIVE;
     return '<iframe class="liveframe" src="' + it.url + '" title="' + T("Situs live ", "Live site ") + esc(it.nm) + T(" di dalam monitor", " inside the monitor") + '" loading="eager"></iframe>';
   }
+
   /* Render seluruh isi layar. Mode identitas (view "main") = markup
      v3q persis: label + angka + headline + tab, tanpa badan isi.
      Mode isi (khusus Websites tab Toko Online): angka/headline
@@ -1010,7 +1022,7 @@
          ia di dalam scroll: ikut terseret dan terpotong di tepi). */
     var top;
     if(view === "prod"){
-      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>\u2039 ' + T("Koleksi", "Collection") + '</button>'
+      top = '<div class="scr-top"><button class="backbar" type="button" data-backprod>‹ ' + T("Koleksi", "Collection") + '</button>'
         + '<span class="prodpos">' + (curProd + 1) + " / " + LUMERA_PRODUCTS.length + '</span>'
         + winBtnsHTML() + '</div>';
     } else {
@@ -1030,17 +1042,17 @@
       + top;
     if(content){
       if(view !== "prod") h += '<div class="tabs" id="uiTabs">' + tabsHTML() + '</div>';
-      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Grup", "Group") + '</button></div>';
-      if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
-      if(view === "lset") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backdetail>\u2039 ' + esc(curLogo ? curLogo.nm : "") + '</button><b>' + T("Set Lengkap", "Full Set") + '</b></div>';
-      if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>\u2039 ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
-      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>\u2039 ' + T("Grup", "Group") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
-      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>\u2039 ' + T("Folder", "Folder") + '</button><b>' + esc(liveItem ? liveItem.nm : LUMERA.nm) + '</b></div>';
+      if(view === "detail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>‹ ' + T("Grup", "Group") + '</button></div>';
+      if(view === "ldetail") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>‹ ' + T("Semua logo", "All logos") + '</button><b>' + esc(curLogo ? curLogo.nm : "") + '</b></div>';
+      if(view === "lset") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backdetail>‹ ' + esc(curLogo ? curLogo.nm : "") + '</button><b>' + T("Set Lengkap", "Full Set") + '</b></div>';
+      if(view === "vplay") h += '<div class="bar viewbar"><button class="backbar" type="button" data-back>‹ ' + T("Semua video", "All videos") + '</button><b>' + esc(curVid ? curVid.t : "") + '</b></div>';
+      if(view === "show") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backshow>‹ ' + T("Grup", "Group") + '</button><b>' + esc(LUMERA.nm) + '</b></div>';
+      if(view === "live") h += '<div class="bar viewbar"><button class="backbar" type="button" data-backlive>‹ ' + T("Folder", "Folder") + '</button><b>' + esc(liveItem ? liveItem.nm : LUMERA.nm) + '</b></div>';
       if(view === "live"){
         /* v3w: badan kanvas hanya placeholder — situs aslinya tampil
            di lapisan TAKEOVER layar penuh di atas seluruh panggung
            (showTakeover di akhir render ini), bukan di sini lagi. */
-        h += '<div class="scr-body fill" id="uiBody"><p class="note">' + T("Situs live dibuka memenuhi layar\u2026", "Opening the live site full-screen\u2026") + '</p></div>';
+        h += '<div class="scr-body fill" id="uiBody"><p class="note">' + T("Situs live dibuka memenuhi layar…", "Opening the live site full-screen…") + '</p></div>';
       } else {
         h += '<div class="scr-body" id="uiBody">'
           + (view === "list" ? listHTML() : view === "detail" ? detailHTML() : view === "ldetail" ? logoDetailHTML() : view === "lset" ? logoSetHTML() : view === "vplay" ? videoPlayHTML() : view === "show" ? showHTML() : prodHTML())
@@ -1057,6 +1069,7 @@
     if(view === "live"){ showTakeover(); armLiveFrame(); }
     if(view === "vplay"){ var sv = document.getElementById("scrVideo"); if(sv){ var pr = sv.play(); if(pr && pr.catch) pr.catch(function(){}); } }
   }
+
   function renderHub(){
     /* Websites dibuka langsung di tab Toko Online — tab satu-satunya
        yang berisi (LUMÉRA). Grup lain mulai dari tab pertama. */
@@ -1097,6 +1110,14 @@
     state = "diving";
     stage.classList.remove("returning");
     stage.classList.add("zoomed");
+    /* v8.30 — penanda dive untuk lapisan realisme: data-dive =
+       monitor target (tetap tajam), kelas .diving menyalakan blur
+       gerak + tarikan fokus + sapuan kilau kaca. Parallax penunjuk
+       dinolkan SEBELUM transform dive dihitung (matematika dive
+       menuntut .breath tepat di translate(0,0)). */
+    stage.setAttribute("data-dive", key);
+    stage.classList.add("diving");
+    parReset();
     diveTransform(key);
     renderHub();
     placeHub();                                   /* geometri foto + pose trapesium, tetap sampai akhir */
@@ -1114,6 +1135,7 @@
     later(function(){
       if(state === "diving"){
         state = "open";
+        stage.classList.remove("diving");   /* v8.30: blur/kilau selesai bersama kamera tiba */
         hub.classList.add("arrive");
         hub.classList.add("powering");
         hub.classList.add("show");
@@ -1135,6 +1157,7 @@
     clearTimers(); clearLiveTimer(); liveSeq++;
     hideTakeover();   /* v3w: takeover live tidak boleh tertinggal di atas ruangan */
     state = "returning";
+    stage.classList.remove("diving"); stage.removeAttribute("data-dive");   /* v8.30: jaring pengaman lapisan realisme */
     hub.classList.remove("arrive");   /* v8.6: penanda kedatangan lepas bersama jalan pulang */
     hub.classList.remove("show");   /* isi meredup duluan (ramp .screen) */
     /* v4 power-off: cahaya layar menyusul padam di tengah jalan
@@ -1234,6 +1257,7 @@
       blurIfTouch();
       return true;
     }
+
     /* v8.7 — aksi isi folder (dulu gerbang webContent() membatasi
        semua aksi hanya untuk LUMÉRA; sekarang tiap folder hidup). */
     var lg = t.closest("[data-logo]");
@@ -1289,6 +1313,7 @@
       exitLive();
     }
   });
+
   /* v4.1 — PENJAGA CAPTURE: klik apa pun yang targetnya di dalam
      lapisan takeover dikonsumsi pada fase capture di dokumen, sebelum
      handler bubble mana pun (termasuk klik-luar panggung) melihatnya;
@@ -1387,11 +1412,68 @@
     hideTakeover();   /* v3w: ganti mode portrait/landscape juga menutup takeover */
     hub.classList.remove("show"); hub.classList.remove("powering"); hub.classList.remove("arrive"); hub.hidden = true; hub.innerHTML = "";
     stage.classList.remove("zoomed"); stage.classList.remove("returning");
+    stage.classList.remove("diving"); stage.removeAttribute("data-dive");   /* v8.30 */
     cam.style.transform = "";
     state = "idle"; curGroup = null; view = "main";
     stage.classList.toggle("awake", woke);   /* v4.6 */
   }
   if(MQ.addEventListener) MQ.addEventListener("change", function(){ hardReset(); layout(); });
+
+  /* v8.30 — PARALLAX MIKRO PENUNJUK (realisme #5): .breath bergeser
+     maks ±3px/±2px mengikuti penunjuk, dilicinkan lerp rAF; variabel
+     --parx/--pary dikomposisikan ke keyframes kb + transform diam
+     .breath. Hanya pointer halus, hanya saat idle, mati untuk
+     reduced-motion. parReset() dipanggil openGroup SEBELUM
+     diveTransform: saat zoom animasi kb mati dan transform diam
+     membaca var ini — wajib 0 agar matematika dive tetap tepat. */
+  var parTX = 0, parTY = 0, parX = 0, parY = 0;
+  var parOK = window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+              !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function parReset(){
+    parTX = 0; parTY = 0; parX = 0; parY = 0;
+    breath.style.setProperty("--parx", "0px");
+    breath.style.setProperty("--pary", "0px");
+  }
+  if(parOK){
+    stage.addEventListener("pointermove", function(e){
+      if(state !== "idle") return;
+      var r = stage.getBoundingClientRect();
+      if(!r.width) return;
+      parTX = ((e.clientX - r.left) / r.width - .5) * -6;
+      parTY = ((e.clientY - r.top) / r.height - .5) * -4;
+    });
+    stage.addEventListener("pointerleave", function(){ parTX = 0; parTY = 0; });
+    (function parLoop(){
+      var dx = parTX - parX, dy = parTY - parY;
+      if(Math.abs(dx) > .01 || Math.abs(dy) > .01){
+        parX += dx * .045; parY += dy * .045;
+        breath.style.setProperty("--parx", parX.toFixed(2) + "px");
+        breath.style.setProperty("--pary", parY.toFixed(2) + "px");
+      }
+      requestAnimationFrame(parLoop);
+    })();
+  }
+
+  /* v8.30 — LAYAR IKUT WAKTU (realisme #8): jam Asia/Jakarta
+     menentukan --scr-f (terang layar diam) + --spill-k (kuat
+     pendar ke meja). Siang: layar sedikit kalah terang dari
+     ruangan + pendar lemah. Malam: layar relatif lebih terang +
+     pendar lebih kuat. Dicek ulang tiap 5 menit. */
+  function applyDaypart(){
+    var h;
+    try{
+      h = Number(new Intl.DateTimeFormat("en-GB", { hour:"numeric", hour12:false, timeZone:"Asia/Jakarta" }).format(new Date())) % 24;
+    }catch(e){ h = new Date().getHours(); }
+    var scr, spill;
+    if(h >= 19 || h < 5){ scr = 1.05; spill = 1.15; }        /* malam */
+    else if(h >= 17){ scr = 1.01; spill = .9; }              /* sore */
+    else if(h >= 9){ scr = .97; spill = .6; }                /* siang */
+    else { scr = 1.0; spill = .85; }                         /* pagi */
+    document.documentElement.style.setProperty("--scr-f", scr);
+    document.documentElement.style.setProperty("--spill-k", spill);
+  }
+  applyDaypart();
+  setInterval(applyDaypart, 5 * 60 * 1000);
 
   /* v4.6 — MONITOR MENYALA SEJAK MASUK, DI FOTONYA SENDIRI
      (perintah user final): cahaya bukan lapisan geometris — piksel
@@ -1493,8 +1575,8 @@
       if(view === "live"){
         var chip = takeover.querySelector("[data-backlive]");
         if(chip){
-          chip.textContent = "\u2039 " + T("Kembali", "Back");
-          chip.setAttribute("aria-label", T("Kembali ke detail LUM\u00c9RA", "Back to the LUM\u00c9RA detail"));
+          chip.textContent = "‹ " + T("Kembali", "Back");
+          chip.setAttribute("aria-label", T("Kembali ke detail LUMÉRA", "Back to the LUMÉRA detail"));
         }
       } else {
         renderScreen();
